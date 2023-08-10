@@ -1,0 +1,32 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "post",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "post_category",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "post_time_posted",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "post",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "post_creator",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "post_time_posted",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ]
+}

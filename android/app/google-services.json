@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "4600268702",
+    "project_id": "guiid-metier",
+    "storage_bucket": "guiid-metier.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4600268702:android:a3860d4a787f4c3737b88f",
+        "android_client_info": {
+          "package_name": "com.gmsm.guiidmetier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4600268702-52kpf6r9h780mhe4nu43n58ipgubeelh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gmsm.guiidmetier",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "4600268702-e6bmhhiulglhmf72bn6pdp5dqquob2i8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeXC6q2pCxZnojLKz4TywxaGWbZgS9qHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4600268702-e6bmhhiulglhmf72bn6pdp5dqquob2i8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "4600268702-4e8dg0s3mk6h0icr5p542ll4p69frshv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gmsm.guiidmetier"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
