@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
@@ -121,8 +122,18 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                     code: '1111',
                     onCompleted: () async {
                       GoRouter.of(context).prepareAuthEvent();
+                      if ('123456' != '123456') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Passwords don\'t match!',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
 
-                      final user = await authManager.signInWithEmail(
+                      final user = await authManager.createAccountWithEmail(
                         context,
                         '${widget.userPhone}@gmail.com',
                         '123456',
@@ -130,6 +141,17 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                       if (user == null) {
                         return;
                       }
+
+                      await UsersRecord.collection
+                          .doc(user.uid)
+                          .update(createUsersRecordData(
+                            phoneNumber: widget.userPhone,
+                            photoUrl: widget.profilePhoto,
+                            userType: widget.userType,
+                            userCountryCode: widget.codeCountry,
+                            displayName: widget.userName,
+                            createdTime: getCurrentTimestamp,
+                          ));
 
                       context.pushNamedAuth('SpashScreen', context.mounted);
                     },

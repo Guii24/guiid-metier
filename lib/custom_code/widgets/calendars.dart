@@ -67,7 +67,7 @@ class _CalendarsState extends State<Calendars> {
                 FFAppState().bornDate = dates[0];
                 FFAppState().activeCalendar = true;
               });
-              Future.delayed(Duration(seconds: 1), () {
+              Future.delayed(Duration(milliseconds: 500), () {
                 Navigator.pop(context); // Close the current screen
               });
             }),
