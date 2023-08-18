@@ -320,17 +320,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => MainPageWidget(),
         ),
         FFRoute(
-          name: 'PostPageUser',
-          path: '/postPageUser',
-          builder: (context, params) => PostPageUserWidget(
+          name: 'PostPage',
+          path: '/postPage',
+          builder: (context, params) => PostPageWidget(
             postRef: params.getParam(
                 'postRef', ParamType.DocumentReference, false, ['post']),
           ),
         ),
         FFRoute(
-          name: 'PostPageUserCopy',
-          path: '/postPageUserCopy',
-          builder: (context, params) => PostPageUserCopyWidget(
+          name: 'PostPageReposted',
+          path: '/postPageReposted',
+          builder: (context, params) => PostPageRepostedWidget(
             postRef: params.getParam(
                 'postRef', ParamType.DocumentReference, false, ['post']),
           ),

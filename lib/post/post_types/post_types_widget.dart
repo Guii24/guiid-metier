@@ -66,20 +66,20 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
           );
         }
         final columnUsersRecord = snapshot.data!;
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (columnUsersRecord.userType == 'User')
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-                child: InkWell(
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if ((columnUsersRecord.userType == 'User') &&
+                  (widget.postDoc?.postIsReposted == false))
+                InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
                     context.pushNamed(
-                      'PostPageUser',
+                      'PostPage',
                       queryParameters: {
                         'postRef': serializeParam(
                           widget.postDoc?.reference,
@@ -96,18 +96,15 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
                     ),
                   ),
                 ),
-              ),
-            if (columnUsersRecord.userType != 'User')
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-                child: InkWell(
+              if (columnUsersRecord.userType != 'User')
+                InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
                     context.pushNamed(
-                      'PostPageUser',
+                      'PostPage',
                       queryParameters: {
                         'postRef': serializeParam(
                           widget.postDoc?.reference,
@@ -119,17 +116,38 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
                   child: wrapWithModel(
                     model: _model.componentPostCompanyModel,
                     updateCallback: () => setState(() {}),
-                    child: ComponentPostCompanyWidget(),
+                    child: ComponentPostCompanyWidget(
+                      postCompany: widget.postDoc?.reference,
+                    ),
                   ),
                 ),
-              ),
-            if (widget.postDoc?.postIsReposted == true)
-              wrapWithModel(
-                model: _model.componentPostRepostedModel,
-                updateCallback: () => setState(() {}),
-                child: ComponentPostRepostedWidget(),
-              ),
-          ],
+              if (widget.postDoc?.postIsReposted == true)
+                InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.pushNamed(
+                      'PostPageReposted',
+                      queryParameters: {
+                        'postRef': serializeParam(
+                          widget.postDoc?.reference,
+                          ParamType.DocumentReference,
+                        ),
+                      }.withoutNulls,
+                    );
+                  },
+                  child: wrapWithModel(
+                    model: _model.componentPostRepostedModel,
+                    updateCallback: () => setState(() {}),
+                    child: ComponentPostRepostedWidget(
+                      postReposted: widget.postDoc?.reference,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         );
       },
     );

@@ -2,6 +2,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/report/bottom_report/bottom_report_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,16 @@ import 'bottom_report_post_model.dart';
 export 'bottom_report_post_model.dart';
 
 class BottomReportPostWidget extends StatefulWidget {
-  const BottomReportPostWidget({Key? key}) : super(key: key);
+  const BottomReportPostWidget({
+    Key? key,
+    this.post,
+    this.commentPost,
+    this.typeReport,
+  }) : super(key: key);
+
+  final DocumentReference? post;
+  final DocumentReference? commentPost;
+  final String? typeReport;
 
   @override
   _BottomReportPostWidgetState createState() => _BottomReportPostWidgetState();
@@ -72,12 +82,15 @@ class _BottomReportPostWidgetState extends State<BottomReportPostWidget> {
                   await showModalBottomSheet(
                     isScrollControlled: true,
                     backgroundColor: Colors.transparent,
-                    enableDrag: false,
                     context: context,
                     builder: (context) {
                       return Padding(
                         padding: MediaQuery.viewInsetsOf(context),
-                        child: BottomReportWidget(),
+                        child: BottomReportWidget(
+                          commentPost: widget.commentPost,
+                          type: widget.typeReport!,
+                          post: widget.post,
+                        ),
                       );
                     },
                   ).then((value) => setState(() {}));

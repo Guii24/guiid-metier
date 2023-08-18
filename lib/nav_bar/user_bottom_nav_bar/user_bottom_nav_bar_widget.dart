@@ -535,7 +535,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                 child: Stack(
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(0.0, 0.97),
+                      alignment: AlignmentDirectional(0.0, 1.0),
                       child: Material(
                         color: Colors.transparent,
                         elevation: 0.0,
@@ -544,7 +544,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                         ),
                         child: Container(
                           width: double.infinity,
-                          height: 84.0,
+                          height: 90.5,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
@@ -911,7 +911,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(0.0, 0.67),
+                      alignment: AlignmentDirectional(0.0, 0.65),
                       child: Material(
                         color: Colors.transparent,
                         elevation: 0.0,

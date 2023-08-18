@@ -498,7 +498,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                                       Colors.transparent,
                                                   onTap: () async {
                                                     context.pushNamed(
-                                                      'PostPageUser',
+                                                      'PostPage',
                                                       queryParameters: {
                                                         'postRef':
                                                             serializeParam(

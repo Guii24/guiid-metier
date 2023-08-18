@@ -1,9 +1,9 @@
-import '/components/take_photo_p_post_user_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
+import '/post/take_photo_p_post_user/take_photo_p_post_user_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

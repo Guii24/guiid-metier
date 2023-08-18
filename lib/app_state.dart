@@ -263,6 +263,53 @@ class FFAppState extends ChangeNotifier {
   set countryCode(String _value) {
     _countryCode = _value;
   }
+
+  List<String> _listTypeReport = [
+    'Misleading Promotions',
+    'Counterfeit or Unauthentic Products',
+    'Violence, Abuse & Criminal Activity',
+    'Hate Speech & Harassment',
+    'Self-harm & Suicidal Content',
+    'Body Image & Eating Disorders',
+    'Dangerous Challenges & Activities',
+    'Nudity & Sexual Content',
+    'Graphic or Shocking Content',
+    'Misinformation',
+    'Spam & Deceptive Behavior',
+    'Illegal or Regulated Goods',
+    'Fraud & Scams',
+    'Unauthorized Personal Information Sharing',
+    'Other'
+  ];
+  List<String> get listTypeReport => _listTypeReport;
+  set listTypeReport(List<String> _value) {
+    _listTypeReport = _value;
+  }
+
+  void addToListTypeReport(String _value) {
+    _listTypeReport.add(_value);
+  }
+
+  void removeFromListTypeReport(String _value) {
+    _listTypeReport.remove(_value);
+  }
+
+  void removeAtIndexFromListTypeReport(int _index) {
+    _listTypeReport.removeAt(_index);
+  }
+
+  void updateListTypeReportAtIndex(
+    int _index,
+    String Function(String) updateFn,
+  ) {
+    _listTypeReport[_index] = updateFn(_listTypeReport[_index]);
+  }
+
+  String _choosenListReport = '';
+  String get choosenListReport => _choosenListReport;
+  set choosenListReport(String _value) {
+    _choosenListReport = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

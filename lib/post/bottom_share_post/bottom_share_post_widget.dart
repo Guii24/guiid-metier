@@ -1,6 +1,9 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +11,14 @@ import 'bottom_share_post_model.dart';
 export 'bottom_share_post_model.dart';
 
 class BottomSharePostWidget extends StatefulWidget {
-  const BottomSharePostWidget({Key? key}) : super(key: key);
+  const BottomSharePostWidget({
+    Key? key,
+    required this.repostpost,
+    required this.user,
+  }) : super(key: key);
+
+  final DocumentReference? repostpost;
+  final DocumentReference? user;
 
   @override
   _BottomSharePostWidgetState createState() => _BottomSharePostWidgetState();
@@ -83,16 +93,21 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 40.0,
-                    height: 40.0,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Image.network(
-                      'https://picsum.photos/seed/27/600',
-                      fit: BoxFit.cover,
+                  AuthUserStreamWidget(
+                    builder: (context) => Container(
+                      width: 40.0,
+                      height: 40.0,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.network(
+                        valueOrDefault<String>(
+                          currentUserPhoto,
+                          'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   Expanded(
@@ -175,95 +190,126 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                 ],
               ),
             ),
-            Material(
-              color: Colors.transparent,
-              elevation: 0.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Container(
-                width: double.infinity,
-                height: 64.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  border: Border.all(
-                    color: FlutterFlowTheme.of(context).dark12,
-                    width: 1.0,
-                  ),
-                ),
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Icon(
-                        FFIcons.kproperty1Repost,
-                        color: Colors.black,
-                        size: 24.0,
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
-                        child: Container(
-                          width: 40.0,
-                          height: 40.0,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.network(
-                            'https://picsum.photos/seed/27/600',
-                            fit: BoxFit.cover,
-                          ),
+            StreamBuilder<UsersRecord>(
+              stream: UsersRecord.getDocument(widget.user!),
+              builder: (context, snapshot) {
+                // Customize what your widget looks like when it's loading.
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: SizedBox(
+                      width: 30.0,
+                      height: 30.0,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          FlutterFlowTheme.of(context).primary,
                         ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 0.0, 0.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'LOUIS VUITTON',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Libre Franklin',
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                    ),
+                  );
+                }
+                final containerUsersRecord = snapshot.data!;
+                return Material(
+                  color: Colors.transparent,
+                  elevation: 0.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  child: Container(
+                    width: double.infinity,
+                    height: 64.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      border: Border.all(
+                        color: FlutterFlowTheme.of(context).dark12,
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          12.0, 12.0, 12.0, 12.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Icon(
+                            FFIcons.kproperty1Repost,
+                            color: Colors.black,
+                            size: 24.0,
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 0.0, 0.0),
+                            child: Container(
+                              width: 40.0,
+                              height: 40.0,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 3.0, 0.0, 0.0),
-                                child: Text(
-                                  'Post',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color:
-                                            FlutterFlowTheme.of(context).dark68,
-                                        fontSize: 14.0,
-                                      ),
+                              child: Image.network(
+                                valueOrDefault<String>(
+                                  containerUsersRecord.photoUrl,
+                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
                                 ),
+                                fit: BoxFit.cover,
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 0.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    containerUsersRecord.displayName,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 3.0, 0.0, 0.0),
+                                    child: Text(
+                                      'Post',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Libre Franklin',
+                                            color: FlutterFlowTheme.of(context)
+                                                .dark68,
+                                            fontSize: 14.0,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
+                  await PostRecord.collection.doc().set(createPostRecordData(
+                        postText: _model.textController.text,
+                        postCreator: currentUserReference,
+                        postTimePosted: getCurrentTimestamp,
+                        postIsReposted: true,
+                        postRepostedCreator: widget.user,
+                        postRepostedPost: widget.repostpost,
+                      ));
                   Navigator.pop(context);
                 },
                 text: 'SHARE NOW',
@@ -276,14 +322,12 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Libre Franklin',
-                        color: Colors.white,
+                        color: FlutterFlowTheme.of(context).dark88,
                         fontSize: 14.0,
-                        letterSpacing: 0.5,
                         fontWeight: FontWeight.normal,
                       ),
-                  elevation: 0.0,
                   borderSide: BorderSide(
-                    color: Colors.transparent,
+                    color: FlutterFlowTheme.of(context).dark88,
                     width: 1.0,
                   ),
                   borderRadius: BorderRadius.circular(4.0),

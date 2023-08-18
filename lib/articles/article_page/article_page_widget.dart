@@ -438,6 +438,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                         0,
                                         30.0,
                                       ),
+                                      reverse: true,
                                       primary: false,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
@@ -708,7 +709,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                     child: Image.network(
                                       valueOrDefault<String>(
                                         currentUserPhoto,
-                                        'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Avatar%3DWithout%20pic%2C%20SIze%3D35.png?alt=media&token=546929f4-9bce-4782-874d-49bc34b5e041',
+                                        'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
                                       ),
                                       fit: BoxFit.cover,
                                     ),

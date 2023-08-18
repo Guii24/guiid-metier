@@ -68,7 +68,6 @@ export '/test/test_widget.dart' show TestWidget;
 export '/onboarding_sign_in/verification_login/verification_login_widget.dart'
     show VerificationLoginWidget;
 export '/nav_bar/main_page/main_page_widget.dart' show MainPageWidget;
-export '/post/post_page_user/post_page_user_widget.dart'
-    show PostPageUserWidget;
-export '/post/post_page_user_copy/post_page_user_copy_widget.dart'
-    show PostPageUserCopyWidget;
+export '/post/post_page/post_page_widget.dart' show PostPageWidget;
+export '/post/post_page_reposted/post_page_reposted_widget.dart'
+    show PostPageRepostedWidget;

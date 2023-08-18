@@ -50,37 +50,40 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             automaticallyImplyLeading: false,
-            leading: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
-              child: AuthUserStreamWidget(
-                builder: (context) => InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    if (valueOrDefault(currentUserDocument?.userType, '') ==
-                        'Company') {
-                      context.pushNamed('MyProfileCompany');
-                    } else {
-                      context.pushNamed('MyProfile');
-                    }
-                  },
-                  child: Container(
-                    width: 34.0,
-                    height: 34.0,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: CachedNetworkImage(
-                      fadeInDuration: Duration(milliseconds: 500),
-                      fadeOutDuration: Duration(milliseconds: 500),
-                      imageUrl: valueOrDefault<String>(
-                        currentUserPhoto,
-                        'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+            leading: Align(
+              alignment: AlignmentDirectional(0.0, 0.0),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                child: AuthUserStreamWidget(
+                  builder: (context) => InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      if (valueOrDefault(currentUserDocument?.userType, '') ==
+                          'Company') {
+                        context.pushNamed('MyProfileCompany');
+                      } else {
+                        context.pushNamed('MyProfile');
+                      }
+                    },
+                    child: Container(
+                      width: 34.0,
+                      height: 34.0,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
                       ),
-                      fit: BoxFit.cover,
+                      child: CachedNetworkImage(
+                        fadeInDuration: Duration(milliseconds: 500),
+                        fadeOutDuration: Duration(milliseconds: 500),
+                        imageUrl: valueOrDefault<String>(
+                          currentUserPhoto,
+                          'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -245,72 +248,30 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 23.0, 20.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        '01 / 05',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Libre Franklin',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .white88,
-                                              fontSize: 15.0,
-                                            ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        await _model.pageViewController
-                                            ?.previousPage(
-                                          duration: Duration(milliseconds: 300),
-                                          curve: Curves.ease,
-                                        );
-                                      },
-                                      child: Icon(
-                                        FFIcons.kchevronLeftSm,
-                                        color: Color(0x1FFFFFFF),
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        await _model.pageViewController
-                                            ?.nextPage(
-                                          duration: Duration(milliseconds: 300),
-                                          curve: Curves.ease,
-                                        );
-                                      },
-                                      child: Icon(
-                                        FFIcons.kchevronRightSm,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 9.0, 16.0, 0.0),
+                                    16.0, 30.0, 16.0, 0.0),
                                 child: Container(
                                   width: double.infinity,
                                   height: 4.0,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context).white12,
+                                    borderRadius: BorderRadius.circular(21.0),
+                                  ),
+                                  child: Align(
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
+                                    child: Container(
+                                      width: 96.0,
+                                      height: 4.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(21.0),
+                                          bottomRight: Radius.circular(0.0),
+                                          topLeft: Radius.circular(21.0),
+                                          topRight: Radius.circular(0.0),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),

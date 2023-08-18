@@ -10,6 +10,7 @@ import 'schema/post_record.dart';
 import 'schema/comment_post_record.dart';
 import 'schema/articles_record.dart';
 import 'schema/comment_article_record.dart';
+import 'schema/report_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,7 @@ export 'schema/post_record.dart';
 export 'schema/comment_post_record.dart';
 export 'schema/articles_record.dart';
 export 'schema/comment_article_record.dart';
+export 'schema/report_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -209,6 +211,43 @@ Future<List<CommentArticleRecord>> queryCommentArticleRecordOnce({
     queryCollectionOnce(
       CommentArticleRecord.collection(parent),
       CommentArticleRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query ReportRecords (as a Stream and as a Future).
+Future<int> queryReportRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ReportRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ReportRecord>> queryReportRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ReportRecord.collection,
+      ReportRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ReportRecord>> queryReportRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ReportRecord.collection,
+      ReportRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

@@ -1,12 +1,12 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/take_photo_p_post_user_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/create_post/botton_select_category/botton_select_category_widget.dart';
 import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
+import '/post/take_photo_p_post_user/take_photo_p_post_user_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -70,7 +70,6 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
           leading: Builder(
             builder: (context) => FlutterFlowIconButton(
               borderColor: Colors.transparent,
-              borderRadius: 30.0,
               borderWidth: 1.0,
               buttonSize: 54.0,
               icon: Icon(
@@ -102,7 +101,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
             ),
           ),
           title: Text(
-            'NEW POST',
+            'NEW POST-',
             style: FlutterFlowTheme.of(context).titleMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
@@ -117,8 +116,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                 child: FFButtonWidget(
                   onPressed: (_model.textController.text == null ||
                               _model.textController.text == '') ||
-                          (FFAppState().choosenPreference.length == 0) ||
-                          (FFAppState().uploadPhotoPost.length == 0)
+                          (FFAppState().choosenPreference.length == 0)
                       ? null
                       : () async {
                           if ((_model.textController.text != null &&
@@ -206,51 +204,50 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (FFAppState().uploadPhotoPost.length != 0)
+                    if (FFAppState().uploadPhotoPost.length >= 1)
                       Container(
                         width: MediaQuery.sizeOf(context).width * 1.0,
                         height: MediaQuery.sizeOf(context).height * 0.345,
                         child: Stack(
                           children: [
-                            if (FFAppState().uploadPhotoPost.length >= 1)
-                              Builder(
-                                builder: (context) {
-                                  final images =
-                                      FFAppState().uploadPhotoPost.toList();
-                                  return Container(
-                                    width: double.infinity,
-                                    height: MediaQuery.sizeOf(context).height *
-                                        0.345,
-                                    child: PageView.builder(
-                                      controller: _model.pageViewController ??=
-                                          PageController(
-                                              initialPage:
-                                                  min(0, images.length - 1)),
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: images.length,
-                                      itemBuilder: (context, imagesIndex) {
-                                        final imagesItem = images[imagesIndex];
-                                        return ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(0.0),
-                                            bottomRight: Radius.circular(0.0),
-                                            topLeft: Radius.circular(5.0),
-                                            topRight: Radius.circular(5.0),
-                                          ),
-                                          child: Image.network(
-                                            imagesItem,
-                                            width: double.infinity,
-                                            height: MediaQuery.sizeOf(context)
-                                                    .height *
-                                                0.345,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
+                            Builder(
+                              builder: (context) {
+                                final images =
+                                    FFAppState().uploadPhotoPost.toList();
+                                return Container(
+                                  width: double.infinity,
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.345,
+                                  child: PageView.builder(
+                                    controller: _model.pageViewController ??=
+                                        PageController(
+                                            initialPage:
+                                                min(0, images.length - 1)),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: images.length,
+                                    itemBuilder: (context, imagesIndex) {
+                                      final imagesItem = images[imagesIndex];
+                                      return ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(0.0),
+                                          bottomRight: Radius.circular(0.0),
+                                          topLeft: Radius.circular(5.0),
+                                          topRight: Radius.circular(5.0),
+                                        ),
+                                        child: Image.network(
+                                          imagesItem,
+                                          width: double.infinity,
+                                          height: MediaQuery.sizeOf(context)
+                                                  .height *
+                                              0.345,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
                             if (FFAppState().uploadPhotoPost.length > 1)
                               Align(
                                 alignment: AlignmentDirectional(-1.0, 1.0),
@@ -302,8 +299,8 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                   elevation: 0.0,
                                   shape: const CircleBorder(),
                                   child: Container(
-                                    width: 40.0,
-                                    height: 40.0,
+                                    width: 30.0,
+                                    height: 30.0,
                                     decoration: BoxDecoration(
                                       color:
                                           FlutterFlowTheme.of(context).dark20,
@@ -328,7 +325,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                           FFIcons.kproperty1trash,
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
-                                          size: 24.0,
+                                          size: 22.0,
                                         ),
                                       ),
                                     ),
@@ -586,7 +583,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 0.0, 6.0, 0.0),
                                         child: Row(
-                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisSize: MainAxisSize.min,
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [

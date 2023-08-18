@@ -4,8 +4,10 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/post/bottom_editop_delete_post/bottom_editop_delete_post_widget.dart';
 import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import '/post/bottom_share_post/bottom_share_post_widget.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -97,6 +99,99 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  if (containerPostRecord.postImagesList.length >= 1)
+                    Container(
+                      width: double.infinity,
+                      height: MediaQuery.sizeOf(context).height * 0.317,
+                      child: Stack(
+                        children: [
+                          Builder(
+                            builder: (context) {
+                              final images = containerPostRecord.postImagesList
+                                  .toList()
+                                  .take(5)
+                                  .toList();
+                              return Container(
+                                width: double.infinity,
+                                child: PageView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  controller: _model.pageViewController ??=
+                                      PageController(
+                                          initialPage:
+                                              min(0, images.length - 1)),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: images.length,
+                                  itemBuilder: (context, imagesIndex) {
+                                    final imagesItem = images[imagesIndex];
+                                    return Container(
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      child: Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(0.0),
+                                              bottomRight: Radius.circular(0.0),
+                                              topLeft: Radius.circular(5.0),
+                                              topRight: Radius.circular(5.0),
+                                            ),
+                                            child: Image.network(
+                                              imagesItem,
+                                              width: double.infinity,
+                                              height: double.infinity,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                          if (containerPostRecord.postImagesList.length > 1)
+                            Align(
+                              alignment: AlignmentDirectional(1.0, 1.0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 16.0, 16.0),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  elevation: 0.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Container(
+                                    width: 35.0,
+                                    height: 28.0,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          FlutterFlowTheme.of(context).dark20,
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Align(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Text(
+                                        '${(_model.pageViewCurrentIndex + 1).toString()}/${containerPostRecord.postImagesList.length.toString()}',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBackground,
+                                              fontSize: 13.0,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 12.0),
@@ -173,6 +268,9 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                     'user_following': FieldValue.arrayUnion(
                                         [columnUsersRecord.reference]),
                                   });
+                                  await actions.updatePage(
+                                    context,
+                                  );
                                 },
                                 text: 'FOLLOW',
                                 options: FFButtonOptions(
@@ -207,18 +305,41 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            await showModalBottomSheet(
-                              isScrollControlled: true,
-                              backgroundColor: Color(0x01000000),
-                              barrierColor: FlutterFlowTheme.of(context).dark38,
-                              context: context,
-                              builder: (context) {
-                                return Padding(
-                                  padding: MediaQuery.viewInsetsOf(context),
-                                  child: BottomReportPostWidget(),
-                                );
-                              },
-                            ).then((value) => setState(() {}));
+                            if (currentUserReference ==
+                                columnUsersRecord.reference) {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Color(0x01000000),
+                                barrierColor:
+                                    FlutterFlowTheme.of(context).dark38,
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: BottomEditopDeletePostWidget(
+                                      postref: containerPostRecord.reference,
+                                    ),
+                                  );
+                                },
+                              ).then((value) => setState(() {}));
+                            } else {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Color(0x01000000),
+                                barrierColor:
+                                    FlutterFlowTheme.of(context).dark38,
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: BottomReportPostWidget(
+                                      post: containerPostRecord.reference,
+                                      typeReport: 'Post',
+                                    ),
+                                  );
+                                },
+                              ).then((value) => setState(() {}));
+                            }
                           },
                           child: Icon(
                             FFIcons.kproperty1more,
@@ -229,108 +350,18 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                       ],
                     ),
                   ),
-                  if (containerPostRecord.postImagesList.length >= 1)
-                    Builder(
-                      builder: (context) {
-                        final images = containerPostRecord.postImagesList
-                            .toList()
-                            .take(5)
-                            .toList();
-                        return Container(
-                          width: double.infinity,
-                          height: 268.0,
-                          child: PageView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            controller: _model.pageViewController ??=
-                                PageController(
-                                    initialPage: min(0, images.length - 1)),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: images.length,
-                            itemBuilder: (context, imagesIndex) {
-                              final imagesItem = images[imagesIndex];
-                              return Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                child: Stack(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(0.0),
-                                        bottomRight: Radius.circular(0.0),
-                                        topLeft: Radius.circular(5.0),
-                                        topRight: Radius.circular(5.0),
-                                      ),
-                                      child: Image.network(
-                                        imagesItem,
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    if (imagesIndex <= 1)
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(1.0, 1.0),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 16.0, 16.0),
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            elevation: 0.0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                            ),
-                                            child: Container(
-                                              width: 35.0,
-                                              height: 28.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark20,
-                                                borderRadius:
-                                                    BorderRadius.circular(20.0),
-                                              ),
-                                              child: Align(
-                                                alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
-                                                child: Text(
-                                                  '${(imagesIndex + 1).toString()}/${containerPostRecord.postImagesList.length.toString()}',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Libre Franklin',
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .primaryBackground,
-                                                        fontSize: 13.0,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
+                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 15.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          containerPostRecord.postText,
+                          containerPostRecord.postText.maybeHandleOverflow(
+                            maxChars: 84,
+                            replacement: '…',
+                          ),
                           maxLines: 2,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -355,11 +386,10 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                     List.generate(item.length, (itemIndex) {
                                   final itemItem = item[itemIndex];
                                   return Text(
-                                    itemItem ==
+                                    itemIndex ==
                                             (containerPostRecord
-                                                        .postCategory.length -
-                                                    1)
-                                                .toString()
+                                                    .postCategory.length -
+                                                1)
                                         ? itemItem
                                         : '${itemItem}・',
                                     style: FlutterFlowTheme.of(context)
@@ -486,7 +516,11 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                   builder: (context) {
                                     return Padding(
                                       padding: MediaQuery.viewInsetsOf(context),
-                                      child: BottomSharePostWidget(),
+                                      child: BottomSharePostWidget(
+                                        repostpost:
+                                            containerPostRecord.reference,
+                                        user: columnUsersRecord.reference,
+                                      ),
                                     );
                                   },
                                 ).then((value) => setState(() {}));

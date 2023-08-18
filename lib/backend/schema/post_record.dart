@@ -61,6 +61,11 @@ class PostRecord extends FirestoreRecord {
   DocumentReference? get postRepostedCreator => _postRepostedCreator;
   bool hasPostRepostedCreator() => _postRepostedCreator != null;
 
+  // "post_reposted_post" field.
+  DocumentReference? _postRepostedPost;
+  DocumentReference? get postRepostedPost => _postRepostedPost;
+  bool hasPostRepostedPost() => _postRepostedPost != null;
+
   void _initializeFields() {
     _postImagesList = getDataList(snapshotData['post_images_list']);
     _postText = snapshotData['post_text'] as String?;
@@ -72,6 +77,8 @@ class PostRecord extends FirestoreRecord {
     _postIsReposted = snapshotData['post_isReposted'] as bool?;
     _postRepostedCreator =
         snapshotData['post_reposted_creator'] as DocumentReference?;
+    _postRepostedPost =
+        snapshotData['post_reposted_post'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -113,6 +120,7 @@ Map<String, dynamic> createPostRecordData({
   DocumentReference? postCreator,
   bool? postIsReposted,
   DocumentReference? postRepostedCreator,
+  DocumentReference? postRepostedPost,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -121,6 +129,7 @@ Map<String, dynamic> createPostRecordData({
       'post_creator': postCreator,
       'post_isReposted': postIsReposted,
       'post_reposted_creator': postRepostedCreator,
+      'post_reposted_post': postRepostedPost,
     }.withoutNulls,
   );
 
@@ -141,7 +150,8 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         listEquality.equals(e1?.postCommentsList, e2?.postCommentsList) &&
         listEquality.equals(e1?.postCategory, e2?.postCategory) &&
         e1?.postIsReposted == e2?.postIsReposted &&
-        e1?.postRepostedCreator == e2?.postRepostedCreator;
+        e1?.postRepostedCreator == e2?.postRepostedCreator &&
+        e1?.postRepostedPost == e2?.postRepostedPost;
   }
 
   @override
@@ -154,7 +164,8 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         e?.postCommentsList,
         e?.postCategory,
         e?.postIsReposted,
-        e?.postRepostedCreator
+        e?.postRepostedCreator,
+        e?.postRepostedPost
       ]);
 
   @override

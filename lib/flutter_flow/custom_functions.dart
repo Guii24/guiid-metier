@@ -480,3 +480,12 @@ String getFileNameFromFirebaseStorageLink(String url) {
   RegExp regex = RegExp(r'[^/]+(?=\?)');
   return regex.stringMatch(Uri.decodeFull(url)) ?? url;
 }
+
+List<PostRecord> combineTwoList(
+  List<PostRecord> list1,
+  List<PostRecord> list2,
+) {
+  // combine two list and return one
+  List<PostRecord> combinedList = [...list1, ...list2];
+  return combinedList;
+}

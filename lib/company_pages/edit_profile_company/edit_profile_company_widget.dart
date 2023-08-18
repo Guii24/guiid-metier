@@ -1,9 +1,9 @@
-import '/components/take_photo_p_post_user_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/onboarding_sign_in/country_code/country_code_widget.dart';
+import '/post/take_photo_p_post_user/take_photo_p_post_user_widget.dart';
 import '/sign_u_p/sign_up_location/sign_up_location_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
