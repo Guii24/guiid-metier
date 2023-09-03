@@ -1,10 +1,18 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import '/onboarding_sign_in/country_code/country_code_widget.dart';
 import '/sourcing/popup_sourcing/popup_sourcing_widget.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:aligned_dialog/aligned_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_debounce/easy_debounce.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +22,12 @@ import 'job_form_model.dart';
 export 'job_form_model.dart';
 
 class JobFormWidget extends StatefulWidget {
-  const JobFormWidget({Key? key}) : super(key: key);
+  const JobFormWidget({
+    Key? key,
+    required this.jobDoc,
+  }) : super(key: key);
+
+  final JobRecord? jobDoc;
 
   @override
   _JobFormWidgetState createState() => _JobFormWidgetState();
@@ -33,7 +46,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
     _model.textController1 ??= TextEditingController();
     _model.textController2 ??= TextEditingController();
     _model.textController3 ??= TextEditingController();
-    _model.textController4 ??= TextEditingController(text: '(319) 555-0115');
+    _model.textController4 ??= TextEditingController();
     _model.textController5 ??= TextEditingController();
     _model.textController6 ??= TextEditingController();
     _model.textController7 ??= TextEditingController();
@@ -116,6 +129,11 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController1,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.textController1',
+                              Duration(milliseconds: 10),
+                              () => setState(() {}),
+                            ),
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -145,7 +163,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context).dark12,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(4.0),
@@ -185,6 +203,11 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController2,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.textController2',
+                              Duration(milliseconds: 10),
+                              () => setState(() {}),
+                            ),
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -214,7 +237,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context).dark12,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(4.0),
@@ -254,6 +277,11 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController3,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.textController3',
+                              Duration(milliseconds: 10),
+                              () => setState(() {}),
+                            ),
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -283,7 +311,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context).dark12,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(4.0),
@@ -311,6 +339,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   fontWeight: FontWeight.w500,
                                 ),
                             minLines: 1,
+                            keyboardType: TextInputType.emailAddress,
                             validator: _model.textController3Validator
                                 .asValidator(context),
                           ),
@@ -431,6 +460,11 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   Expanded(
                                     child: TextFormField(
                                       controller: _model.textController4,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.textController4',
+                                        Duration(milliseconds: 10),
+                                        () => setState(() {}),
+                                      ),
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         isDense: true,
@@ -520,49 +554,105 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Material(
-                              color: Colors.transparent,
-                              elevation: 0.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              child: Container(
-                                height: 35.0,
-                                decoration: BoxDecoration(
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                final selectedFiles = await selectFiles(
+                                  multiFile: false,
+                                );
+                                if (selectedFiles != null) {
+                                  setState(
+                                      () => _model.isDataUploading1 = true);
+                                  var selectedUploadedFiles =
+                                      <FFUploadedFile>[];
+
+                                  var downloadUrls = <String>[];
+                                  try {
+                                    selectedUploadedFiles = selectedFiles
+                                        .map((m) => FFUploadedFile(
+                                              name:
+                                                  m.storagePath.split('/').last,
+                                              bytes: m.bytes,
+                                            ))
+                                        .toList();
+
+                                    downloadUrls = (await Future.wait(
+                                      selectedFiles.map(
+                                        (f) async => await uploadData(
+                                            f.storagePath, f.bytes),
+                                      ),
+                                    ))
+                                        .where((u) => u != null)
+                                        .map((u) => u!)
+                                        .toList();
+                                  } finally {
+                                    _model.isDataUploading1 = false;
+                                  }
+                                  if (selectedUploadedFiles.length ==
+                                          selectedFiles.length &&
+                                      downloadUrls.length ==
+                                          selectedFiles.length) {
+                                    setState(() {
+                                      _model.uploadedLocalFile1 =
+                                          selectedUploadedFiles.first;
+                                      _model.uploadedFileUrl1 =
+                                          downloadUrls.first;
+                                    });
+                                  } else {
+                                    setState(() {});
+                                    return;
+                                  }
+                                }
+                              },
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 0.0,
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.of(context).dark12,
-                                    width: 1.0,
-                                  ),
                                 ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 6.0, 10.0, 6.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        FFIcons.kproperty1file,
-                                        color: Colors.black,
-                                        size: 22.0,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            4.0, 0.0, 0.0, 0.0),
-                                        child: Text(
-                                          'Upload file',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark88,
-                                                fontSize: 15.0,
-                                              ),
+                                child: Container(
+                                  height: 35.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(
+                                      color:
+                                          FlutterFlowTheme.of(context).dark12,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 6.0, 10.0, 6.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          FFIcons.kproperty1file,
+                                          color: Colors.black,
+                                          size: 22.0,
                                         ),
-                                      ),
-                                    ],
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  4.0, 0.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Upload file',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark88,
+                                                  fontSize: 15.0,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -585,56 +675,77 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-                        child: Material(
-                          color: Colors.transparent,
-                          elevation: 0.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Container(
-                            height: 35.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              border: Border.all(
-                                color: FlutterFlowTheme.of(context).dark12,
-                                width: 1.0,
+                      if (_model.uploadedFileUrl1 != null &&
+                          _model.uploadedFileUrl1 != '')
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 10.0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 0.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
                               ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 6.0, 10.0, 6.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'Rachel_Geller’s_CV...pdf',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Libre Franklin',
-                                          color: FlutterFlowTheme.of(context)
-                                              .dark88,
-                                          fontSize: 15.0,
+                              child: Container(
+                                height: 35.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context).dark12,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 6.0, 10.0, 6.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          functions
+                                              .getFileNameFromFirebaseStorageLink(
+                                                  _model.uploadedFileUrl1),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Libre Franklin',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .dark88,
+                                                fontSize: 15.0,
+                                              ),
                                         ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 0.0, 0.0, 0.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await FirebaseStorage.instance
+                                                .refFromURL(
+                                                    _model.uploadedFileUrl1)
+                                                .delete();
+                                          },
+                                          child: FaIcon(
+                                            FontAwesomeIcons.solidTimesCircle,
+                                            color: Colors.black,
+                                            size: 16.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8.0, 0.0, 0.0, 0.0),
-                                    child: FaIcon(
-                                      FontAwesomeIcons.solidTimesCircle,
-                                      color: Colors.black,
-                                      size: 16.0,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 6.0, 0.0, 0.0),
@@ -689,7 +800,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context).dark12,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(4.0),
@@ -735,49 +846,105 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Material(
-                              color: Colors.transparent,
-                              elevation: 0.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              child: Container(
-                                height: 35.0,
-                                decoration: BoxDecoration(
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                final selectedFiles = await selectFiles(
+                                  multiFile: false,
+                                );
+                                if (selectedFiles != null) {
+                                  setState(
+                                      () => _model.isDataUploading2 = true);
+                                  var selectedUploadedFiles =
+                                      <FFUploadedFile>[];
+
+                                  var downloadUrls = <String>[];
+                                  try {
+                                    selectedUploadedFiles = selectedFiles
+                                        .map((m) => FFUploadedFile(
+                                              name:
+                                                  m.storagePath.split('/').last,
+                                              bytes: m.bytes,
+                                            ))
+                                        .toList();
+
+                                    downloadUrls = (await Future.wait(
+                                      selectedFiles.map(
+                                        (f) async => await uploadData(
+                                            f.storagePath, f.bytes),
+                                      ),
+                                    ))
+                                        .where((u) => u != null)
+                                        .map((u) => u!)
+                                        .toList();
+                                  } finally {
+                                    _model.isDataUploading2 = false;
+                                  }
+                                  if (selectedUploadedFiles.length ==
+                                          selectedFiles.length &&
+                                      downloadUrls.length ==
+                                          selectedFiles.length) {
+                                    setState(() {
+                                      _model.uploadedLocalFile2 =
+                                          selectedUploadedFiles.first;
+                                      _model.uploadedFileUrl2 =
+                                          downloadUrls.first;
+                                    });
+                                  } else {
+                                    setState(() {});
+                                    return;
+                                  }
+                                }
+                              },
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 0.0,
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.of(context).dark12,
-                                    width: 1.0,
-                                  ),
                                 ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 6.0, 10.0, 6.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        FFIcons.kproperty1file,
-                                        color: Colors.black,
-                                        size: 22.0,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            4.0, 0.0, 0.0, 0.0),
-                                        child: Text(
-                                          'Upload file',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark88,
-                                                fontSize: 15.0,
-                                              ),
+                                child: Container(
+                                  height: 35.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    border: Border.all(
+                                      color:
+                                          FlutterFlowTheme.of(context).dark12,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 6.0, 10.0, 6.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          FFIcons.kproperty1file,
+                                          color: Colors.black,
+                                          size: 22.0,
                                         ),
-                                      ),
-                                    ],
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  4.0, 0.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Upload file',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark88,
+                                                  fontSize: 15.0,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -800,6 +967,77 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                           ],
                         ),
                       ),
+                      if (_model.uploadedFileUrl2 != null &&
+                          _model.uploadedFileUrl2 != '')
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 10.0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 0.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: Container(
+                                height: 35.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context).dark12,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 6.0, 10.0, 6.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          functions
+                                              .getFileNameFromFirebaseStorageLink(
+                                                  _model.uploadedFileUrl2),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Libre Franklin',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .dark88,
+                                                fontSize: 15.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 0.0, 0.0, 0.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await FirebaseStorage.instance
+                                                .refFromURL(
+                                                    _model.uploadedFileUrl2)
+                                                .delete();
+                                          },
+                                          child: FaIcon(
+                                            FontAwesomeIcons.solidTimesCircle,
+                                            color: Colors.black,
+                                            size: 16.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
@@ -841,7 +1079,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context).dark12,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(4.0),
@@ -908,7 +1146,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context).dark12,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(4.0),
@@ -975,7 +1213,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context).dark12,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(4.0),
@@ -1041,42 +1279,89 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 10.0, 16.0, 10.0),
                         child: FFButtonWidget(
-                          onPressed: () async {
-                            context.goNamed(
-                              'MainPage',
-                              extra: <String, dynamic>{
-                                kTransitionInfoKey: TransitionInfo(
-                                  hasTransition: true,
-                                  transitionType: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                ),
-                              },
-                            );
+                          onPressed: (_model.textController1.text == null ||
+                                      _model.textController1.text == '') ||
+                                  (_model.textController2.text == null ||
+                                      _model.textController2.text == '') ||
+                                  (_model.textController3.text == null ||
+                                      _model.textController3.text == '') ||
+                                  (_model.textController4.text == null ||
+                                      _model.textController4.text == '') ||
+                                  (_model.uploadedFileUrl1 == null ||
+                                      _model.uploadedFileUrl1 == '')
+                              ? null
+                              : () async {
+                                  await JobApplicantsRecord.createDoc(
+                                          widget.jobDoc!.reference)
+                                      .set(createJobApplicantsRecordData(
+                                    jobApplicantsCreationDate:
+                                        getCurrentTimestamp,
+                                    jobApplicantUser: currentUserReference,
+                                    jobApplicantName:
+                                        _model.textController1.text,
+                                    jobApplicantTittle:
+                                        _model.textController2.text,
+                                    jobApplicantEmail:
+                                        _model.textController3.text,
+                                    jobApplicantCv: _model.uploadedFileUrl1,
+                                    jobApplicantPhoneNumber:
+                                        _model.textController4.text,
+                                    jobApplicantPortfolio:
+                                        _model.uploadedFileUrl2,
+                                    jobApplicantPortfolioLink:
+                                        _model.textController5.text,
+                                    jobApplicantInsatgram:
+                                        _model.textController6.text,
+                                    jobApplicantTiktok:
+                                        _model.textController7.text,
+                                    jobApplicantLinkedin:
+                                        _model.textController8.text,
+                                    jobApplicantJobRef:
+                                        widget.jobDoc?.reference,
+                                  ));
 
-                            FFAppState().update(() {
-                              FFAppState().page = 'Sourcing';
-                              FFAppState().pageIndex = 2;
-                            });
-                            await showAlignedDialog(
-                              context: context,
-                              isGlobal: true,
-                              avoidOverflow: false,
-                              targetAnchor: AlignmentDirectional(0.0, 0.0)
-                                  .resolve(Directionality.of(context)),
-                              followerAnchor: AlignmentDirectional(0.0, 0.0)
-                                  .resolve(Directionality.of(context)),
-                              builder: (dialogContext) {
-                                return Material(
-                                  color: Colors.transparent,
-                                  child: GestureDetector(
-                                    onTap: () => FocusScope.of(context)
-                                        .requestFocus(_model.unfocusNode),
-                                    child: PopupSourcingWidget(),
-                                  ),
-                                );
-                              },
-                            ).then((value) => setState(() {}));
-                          },
+                                  await widget.jobDoc!.reference.update({
+                                    'job_applicants_user_list':
+                                        FieldValue.arrayUnion(
+                                            [currentUserReference]),
+                                  });
+                                  FFAppState().update(() {
+                                    FFAppState().page = 'Sourcing';
+                                    FFAppState().pageIndex = 2;
+                                  });
+
+                                  context.goNamed(
+                                    'MainPage',
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType: PageTransitionType.fade,
+                                        duration: Duration(milliseconds: 0),
+                                      ),
+                                    },
+                                  );
+
+                                  await showAlignedDialog(
+                                    context: context,
+                                    isGlobal: true,
+                                    avoidOverflow: false,
+                                    targetAnchor: AlignmentDirectional(0.0, 0.0)
+                                        .resolve(Directionality.of(context)),
+                                    followerAnchor: AlignmentDirectional(
+                                            0.0, 0.0)
+                                        .resolve(Directionality.of(context)),
+                                    builder: (dialogContext) {
+                                      return Material(
+                                        color: Colors.transparent,
+                                        child: GestureDetector(
+                                          onTap: () => FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode),
+                                          child: PopupSourcingWidget(),
+                                        ),
+                                      );
+                                    },
+                                  ).then((value) => setState(() {}));
+                                },
                           text: 'SUBMIT',
                           options: FFButtonOptions(
                             width: double.infinity,
@@ -1099,6 +1384,10 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                               color: Colors.transparent,
                             ),
                             borderRadius: BorderRadius.circular(5.0),
+                            disabledColor:
+                                FlutterFlowTheme.of(context).disbledColor,
+                            disabledTextColor:
+                                FlutterFlowTheme.of(context).primary,
                           ),
                         ),
                       ),

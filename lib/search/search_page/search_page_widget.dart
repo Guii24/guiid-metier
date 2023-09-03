@@ -1,5 +1,9 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,9 +58,39 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                 controller: _model.textController,
                 onChanged: (_) => EasyDebounce.debounce(
                   '_model.textController',
-                  Duration(milliseconds: 2000),
+                  Duration(milliseconds: 10),
                   () => setState(() {}),
                 ),
+                onFieldSubmitted: (_) async {
+                  await currentUserReference!.update({
+                    'user_recent_search': FieldValue.arrayUnion([
+                      getRecentSearchFirestoreData(
+                        updateRecentSearchStruct(
+                          RecentSearchStruct(
+                            searchText: _model.textController.text,
+                            searchDate: getCurrentTimestamp,
+                          ),
+                          clearUnsetFields: false,
+                        ),
+                        true,
+                      )
+                    ]),
+                  });
+
+                  context.pushNamed(
+                    'SearchResultPage',
+                    queryParameters: {
+                      'searchingText': serializeParam(
+                        _model.textController.text,
+                        ParamType.String,
+                      ),
+                    }.withoutNulls,
+                  );
+
+                  setState(() {
+                    _model.textController?.clear();
+                  });
+                },
                 obscureText: false,
                 decoration: InputDecoration(
                   hintText: 'Search',
@@ -135,109 +169,120 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 15.0, 0.0, 10.0),
-                          child: Text(
-                            'Recent searches',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: FlutterFlowTheme.of(context).dark88,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 6.0, 0.0, 0.0),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.pushNamed('SearchResultPage');
-                            },
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.search_sharp,
-                                  color: Colors.black,
-                                  size: 22.0,
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 10.0, 0.0, 10.0),
-                                    child: Text(
-                                      'Luxury bags Louis Vuitton',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Libre Franklin',
-                                            color: FlutterFlowTheme.of(context)
-                                                .dark88,
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
+                      child: Text(
+                        'Recent searches',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Libre Franklin',
+                              color: FlutterFlowTheme.of(context).dark88,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ),
+                    ),
+                    Expanded(
+                      child: AuthUserStreamWidget(
+                        builder: (context) => Builder(
+                          builder: (context) {
+                            final search = (currentUserDocument
+                                        ?.userRecentSearch
+                                        ?.toList() ??
+                                    [])
+                                .toList();
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: search.length,
+                              itemBuilder: (context, searchIndex) {
+                                final searchItem = search[searchIndex];
+                                return Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 6.0, 0.0, 0.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed(
+                                        'SearchResultPage',
+                                        queryParameters: {
+                                          'searchingText': serializeParam(
+                                            searchItem.searchText,
+                                            ParamType.String,
                                           ),
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.search_sharp,
+                                          color: Colors.black,
+                                          size: 22.0,
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    10.0, 10.0, 0.0, 10.0),
+                                            child: Text(
+                                              searchItem.searchText,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .dark88,
+                                                      ),
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await currentUserReference!.update({
+                                              'user_recent_search':
+                                                  FieldValue.arrayRemove([
+                                                getRecentSearchFirestoreData(
+                                                  updateRecentSearchStruct(
+                                                    searchItem,
+                                                    clearUnsetFields: false,
+                                                  ),
+                                                  true,
+                                                )
+                                              ]),
+                                            });
+                                          },
+                                          child: Icon(
+                                            FFIcons.kdismiss,
+                                            color: Colors.black,
+                                            size: 18.0,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ),
-                                Icon(
-                                  FFIcons.kdismiss,
-                                  color: Colors.black,
-                                  size: 18.0,
-                                ),
-                              ],
-                            ),
-                          ),
+                                );
+                              },
+                            );
+                          },
                         ),
-                      ],
-                    ),
-                    ListView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 6.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.search_sharp,
-                                color: Colors.black,
-                                size: 22.0,
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 10.0, 0.0, 10.0),
-                                  child: Text(
-                                    'Luxury bags Louis Vuitton',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Libre Franklin',
-                                          color: FlutterFlowTheme.of(context)
-                                              .dark88,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ],
                 ),

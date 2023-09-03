@@ -12,20 +12,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CreatePostModel extends FlutterFlowModel {
-  ///  Local state fields for this page.
-
-  List<String> createImagesPost = [];
-  void addToCreateImagesPost(String item) => createImagesPost.add(item);
-  void removeFromCreateImagesPost(String item) => createImagesPost.remove(item);
-  void removeAtIndexFromCreateImagesPost(int index) =>
-      createImagesPost.removeAt(index);
-  void updateCreateImagesPostAtIndex(int index, Function(String) updateFn) =>
-      createImagesPost[index] = updateFn(createImagesPost[index]);
-
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

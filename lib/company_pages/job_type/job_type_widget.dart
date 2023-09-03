@@ -102,198 +102,76 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                 ],
               ),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 19.0, 0.0, 19.0),
-                  child: Text(
-                    'Remote',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Libre Franklin',
-                          color: FlutterFlowTheme.of(context).dark88,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                  ),
-                ),
-                Icon(
-                  Icons.check_box_outline_blank_outlined,
-                  color: FlutterFlowTheme.of(context).dark12,
-                  size: 24.0,
-                ),
-                Icon(
-                  Icons.check_box_rounded,
-                  color: FlutterFlowTheme.of(context).dark88,
-                  size: 24.0,
-                ),
-              ],
-            ),
-            Divider(
-              height: 1.0,
-              thickness: 1.0,
-              color: FlutterFlowTheme.of(context).line,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 19.0, 0.0, 19.0),
-                  child: Text(
-                    'Onsite',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Libre Franklin',
-                          color: FlutterFlowTheme.of(context).dark88,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                  ),
-                ),
-                Icon(
-                  Icons.check_box_outline_blank_outlined,
-                  color: FlutterFlowTheme.of(context).dark12,
-                  size: 24.0,
-                ),
-                Icon(
-                  Icons.check_box_rounded,
-                  color: FlutterFlowTheme.of(context).dark88,
-                  size: 24.0,
-                ),
-              ],
-            ),
-            Divider(
-              height: 1.0,
-              thickness: 1.0,
-              color: FlutterFlowTheme.of(context).line,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 19.0, 0.0, 19.0),
-                  child: Text(
-                    'Hybrid',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Libre Franklin',
-                          color: FlutterFlowTheme.of(context).dark88,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                  ),
-                ),
-                Icon(
-                  Icons.check_box_outline_blank_outlined,
-                  color: FlutterFlowTheme.of(context).dark12,
-                  size: 24.0,
-                ),
-                Icon(
-                  Icons.check_box_rounded,
-                  color: FlutterFlowTheme.of(context).dark88,
-                  size: 24.0,
-                ),
-              ],
-            ),
-            Divider(
-              height: 1.0,
-              thickness: 1.0,
-              color: FlutterFlowTheme.of(context).line,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 19.0, 0.0, 19.0),
-                  child: Text(
-                    'Part-time',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Libre Franklin',
-                          color: FlutterFlowTheme.of(context).dark88,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                  ),
-                ),
-                Icon(
-                  Icons.check_box_outline_blank_outlined,
-                  color: FlutterFlowTheme.of(context).dark12,
-                  size: 24.0,
-                ),
-                Icon(
-                  Icons.check_box_rounded,
-                  color: FlutterFlowTheme.of(context).dark88,
-                  size: 24.0,
-                ),
-              ],
-            ),
-            Divider(
-              height: 1.0,
-              thickness: 1.0,
-              color: FlutterFlowTheme.of(context).line,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 19.0, 0.0, 19.0),
-                  child: Text(
-                    'Full-time',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Libre Franklin',
-                          color: FlutterFlowTheme.of(context).dark88,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                  ),
-                ),
-                Icon(
-                  Icons.check_box_outline_blank_outlined,
-                  color: FlutterFlowTheme.of(context).dark12,
-                  size: 24.0,
-                ),
-                Icon(
-                  Icons.check_box_rounded,
-                  color: FlutterFlowTheme.of(context).dark88,
-                  size: 24.0,
-                ),
-              ],
-            ),
-            Divider(
-              height: 1.0,
-              thickness: 1.0,
-              color: FlutterFlowTheme.of(context).line,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 19.0, 0.0, 19.0),
-                  child: Text(
-                    'Project based',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Libre Franklin',
-                          color: FlutterFlowTheme.of(context).dark88,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                  ),
-                ),
-                Icon(
-                  Icons.check_box_outline_blank_outlined,
-                  color: FlutterFlowTheme.of(context).dark12,
-                  size: 24.0,
-                ),
-                Icon(
-                  Icons.check_box_rounded,
-                  color: FlutterFlowTheme.of(context).dark88,
-                  size: 24.0,
-                ),
-              ],
+            Builder(
+              builder: (context) {
+                final jobTypes = FFAppState().jobTypeList.toList();
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: jobTypes.length,
+                  itemBuilder: (context, jobTypesIndex) {
+                    final jobTypesItem = jobTypes[jobTypesIndex];
+                    return InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        if (FFAppState()
+                            .selectedJobType
+                            .contains(jobTypesItem)) {
+                          setState(() {
+                            FFAppState()
+                                .removeFromSelectedJobType(jobTypesItem);
+                          });
+                        } else {
+                          setState(() {
+                            FFAppState().addToSelectedJobType(jobTypesItem);
+                          });
+                        }
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 19.0, 0.0, 19.0),
+                            child: Text(
+                              jobTypesItem,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Libre Franklin',
+                                    color: FlutterFlowTheme.of(context).dark88,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                          if (!FFAppState()
+                              .selectedJobType
+                              .contains(jobTypesItem))
+                            Icon(
+                              Icons.check_box_outline_blank_outlined,
+                              color: FlutterFlowTheme.of(context).dark12,
+                              size: 24.0,
+                            ),
+                          if (FFAppState()
+                              .selectedJobType
+                              .contains(jobTypesItem))
+                            Icon(
+                              Icons.check_box_rounded,
+                              color: FlutterFlowTheme.of(context).dark88,
+                              size: 24.0,
+                            ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
             ),
             Divider(
               height: 1.0,

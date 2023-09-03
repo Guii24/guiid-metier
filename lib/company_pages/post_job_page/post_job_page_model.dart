@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/company_pages/job_type/job_type_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -5,8 +7,10 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/onboarding_sign_in/country_code/country_code_widget.dart';
 import '/sign_u_p/sign_up_location/sign_up_location_widget.dart';
-import '/sourcing/popup_sourcing/popup_sourcing_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -27,16 +31,13 @@ class PostJobPageModel extends FlutterFlowModel {
   // State field(s) for TextField widget.
   TextEditingController? textController4;
   String? Function(BuildContext, String?)? textController4Validator;
-  // State field(s) for TextField widget.
-  TextEditingController? textController5;
-  String? Function(BuildContext, String?)? textController5Validator;
+  // State field(s) for UserPhone widget.
+  TextEditingController? userPhoneController;
+  final userPhoneMask = MaskTextInputFormatter(mask: '(###) ###-####');
+  String? Function(BuildContext, String?)? userPhoneControllerValidator;
   // State field(s) for TextField widget.
   TextEditingController? textController6;
-  final textFieldMask6 = MaskTextInputFormatter(mask: '(###) ###-####');
   String? Function(BuildContext, String?)? textController6Validator;
-  // State field(s) for TextField widget.
-  TextEditingController? textController7;
-  String? Function(BuildContext, String?)? textController7Validator;
 
   /// Initialization and disposal methods.
 
@@ -48,9 +49,8 @@ class PostJobPageModel extends FlutterFlowModel {
     textController2?.dispose();
     textController3?.dispose();
     textController4?.dispose();
-    textController5?.dispose();
+    userPhoneController?.dispose();
     textController6?.dispose();
-    textController7?.dispose();
   }
 
   /// Action blocks are added here.

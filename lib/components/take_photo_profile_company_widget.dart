@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -95,25 +96,56 @@ class _TakePhotoProfileCompanyWidgetState
                       }
                     }
 
-                    if (_model.uploadedLocalFile1 != null &&
-                        (_model.uploadedLocalFile1.bytes?.isNotEmpty ??
-                            false)) {
+                    _model.resultCompany = await actions.returnSizeInBytes(
+                      _model.uploadedLocalFile1,
+                    );
+                    if (_model.resultCompany! > 10485760) {
                       Navigator.pop(context);
-                      await showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        enableDrag: false,
-                        context: context,
-                        builder: (context) {
-                          return Padding(
-                            padding: MediaQuery.viewInsetsOf(context),
-                            child: CropBusinessWidget(
-                              img: _model.uploadedLocalFile1,
-                            ),
-                          );
-                        },
-                      ).then((value) => setState(() {}));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'File size must be less than 10 MB',
+                            style: FlutterFlowTheme.of(context)
+                                .titleMedium
+                                .override(
+                                  fontFamily: 'Libre Franklin',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                          ),
+                          duration: Duration(milliseconds: 3000),
+                          backgroundColor: Color(0xDA000000),
+                        ),
+                      );
+                      setState(() {
+                        _model.isDataUploading1 = false;
+                        _model.uploadedLocalFile1 =
+                            FFUploadedFile(bytes: Uint8List.fromList([]));
+                      });
+                    } else {
+                      if (_model.uploadedLocalFile1 != null &&
+                          (_model.uploadedLocalFile1.bytes?.isNotEmpty ??
+                              false)) {
+                        Navigator.pop(context);
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: CropBusinessWidget(
+                                img: _model.uploadedLocalFile1,
+                              ),
+                            );
+                          },
+                        ).then((value) => setState(() {}));
+                      }
                     }
+
+                    setState(() {});
                   },
                   text: 'Take a photo',
                   options: FFButtonOptions(
@@ -185,6 +217,55 @@ class _TakePhotoProfileCompanyWidgetState
                       }
                     }
 
+                    _model.resultgallCompany = await actions.returnSizeInBytes(
+                      _model.uploadedLocalFile2,
+                    );
+                    if (_model.resultgallCompany! > 10485760) {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'File size must be less than 10 MB',
+                            style: FlutterFlowTheme.of(context)
+                                .titleMedium
+                                .override(
+                                  fontFamily: 'Libre Franklin',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                          ),
+                          duration: Duration(milliseconds: 3000),
+                          backgroundColor: Color(0xDA000000),
+                        ),
+                      );
+                      setState(() {
+                        _model.isDataUploading2 = false;
+                        _model.uploadedLocalFile2 =
+                            FFUploadedFile(bytes: Uint8List.fromList([]));
+                      });
+                    } else {
+                      if (_model.uploadedLocalFile2 != null &&
+                          (_model.uploadedLocalFile2.bytes?.isNotEmpty ??
+                              false)) {
+                        Navigator.pop(context);
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: CropBusinessWidget(
+                                img: _model.uploadedLocalFile2,
+                              ),
+                            );
+                          },
+                        ).then((value) => setState(() {}));
+                      }
+                    }
+
                     if (_model.uploadedLocalFile2 != null &&
                         (_model.uploadedLocalFile2.bytes?.isNotEmpty ??
                             false)) {
@@ -204,6 +285,8 @@ class _TakePhotoProfileCompanyWidgetState
                         },
                       ).then((value) => setState(() {}));
                     }
+
+                    setState(() {});
                   },
                   text: 'Choose from gallery',
                   options: FFButtonOptions(

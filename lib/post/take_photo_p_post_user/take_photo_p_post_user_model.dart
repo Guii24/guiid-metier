@@ -16,7 +16,7 @@ class TakePhotoPPostUserModel extends FlutterFlowModel {
 
   // Stores action output result for [Custom Action - returnSizeInBytes] action in Button widget.
   int? result;
-  // Stores action output result for [Custom Action - uploadData] action in Button widget.
+  // Stores action output result for [Custom Action - uploadDatatoFireBase] action in Button widget.
   String? uploadDateout;
   bool isDataUploading2 = false;
   FFUploadedFile uploadedLocalFile2 =
@@ -24,7 +24,7 @@ class TakePhotoPPostUserModel extends FlutterFlowModel {
 
   // Stores action output result for [Custom Action - returnSizeInBytes] action in Button widget.
   int? resultGallary;
-  // Stores action output result for [Custom Action - uploadData] action in Button widget.
+  // Stores action output result for [Custom Action - uploadDatatoFireBase] action in Button widget.
   String? uploadDateoutGallery;
 
   /// Initialization and disposal methods.

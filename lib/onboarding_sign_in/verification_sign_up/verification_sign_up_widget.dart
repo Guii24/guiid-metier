@@ -20,15 +20,23 @@ class VerificationSignUpWidget extends StatefulWidget {
     this.userName,
     this.userPhone,
     this.profilePhoto,
-    this.codeCountry,
     this.userType,
+    this.phoneoriginal,
+    required this.phoneName,
+    required this.phoneCode,
+    required this.phoneFlag,
+    required this.phoneDialCode,
   }) : super(key: key);
 
   final String? userName;
   final String? userPhone;
   final String? profilePhoto;
-  final int? codeCountry;
   final String? userType;
+  final String? phoneoriginal;
+  final String? phoneName;
+  final String? phoneCode;
+  final String? phoneFlag;
+  final String? phoneDialCode;
 
   @override
   _VerificationSignUpWidgetState createState() =>
@@ -145,15 +153,18 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                       await UsersRecord.collection
                           .doc(user.uid)
                           .update(createUsersRecordData(
-                            phoneNumber: widget.userPhone,
+                            phoneNumber: widget.phoneoriginal,
                             photoUrl: widget.profilePhoto,
                             userType: widget.userType,
-                            userCountryCode: widget.codeCountry,
                             displayName: widget.userName,
                             createdTime: getCurrentTimestamp,
+                            userPhoneName: widget.phoneName,
+                            userPhoneCode: widget.phoneCode,
+                            userPhoneFlag: widget.phoneFlag,
+                            userPhoneDialCode: widget.phoneDialCode,
                           ));
 
-                      context.pushNamedAuth('SpashScreen', context.mounted);
+                      context.goNamedAuth('signupBioUser', context.mounted);
                     },
                     onChange: () async {},
                   ),

@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -73,29 +74,36 @@ class _FollowersWidgetState extends State<FollowersWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                      child: wrapWithModel(
-                        model: _model.componentFollowModel,
-                        updateCallback: () => setState(() {}),
-                        child: ComponentFollowWidget(),
-                      ),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            child: AuthUserStreamWidget(
+              builder: (context) => Builder(
+                builder: (context) {
+                  final followers =
+                      (currentUserDocument?.userFollowers?.toList() ?? [])
+                          .toList();
+                  return ListView.separated(
+                    padding: EdgeInsets.fromLTRB(
+                      0,
+                      20.0,
+                      0,
+                      0,
                     ),
-                  ],
-                ),
+                    scrollDirection: Axis.vertical,
+                    itemCount: followers.length,
+                    separatorBuilder: (_, __) => SizedBox(height: 20.0),
+                    itemBuilder: (context, followersIndex) {
+                      final followersItem = followers[followersIndex];
+                      return ComponentFollowWidget(
+                        key: Key(
+                            'Keyxd4_${followersIndex}_of_${followers.length}'),
+                        userRef: followersItem,
+                      );
+                    },
+                  );
+                },
               ),
-            ],
+            ),
           ),
         ),
       ),

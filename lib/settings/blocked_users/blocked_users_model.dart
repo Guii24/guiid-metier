@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -10,19 +11,13 @@ class BlockedUsersModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Model for ComponentBlockedUsers component.
-  late ComponentBlockedUsersModel componentBlockedUsersModel;
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {
-    componentBlockedUsersModel =
-        createModel(context, () => ComponentBlockedUsersModel());
-  }
+  void initState(BuildContext context) {}
 
   void dispose() {
     unfocusNode.dispose();
-    componentBlockedUsersModel.dispose();
   }
 
   /// Action blocks are added here.

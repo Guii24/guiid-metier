@@ -15,11 +15,13 @@ class BottomReportPostWidget extends StatefulWidget {
     this.post,
     this.commentPost,
     this.typeReport,
+    this.user,
   }) : super(key: key);
 
   final DocumentReference? post;
   final DocumentReference? commentPost;
   final String? typeReport;
+  final DocumentReference? user;
 
   @override
   _BottomReportPostWidgetState createState() => _BottomReportPostWidgetState();
@@ -90,6 +92,7 @@ class _BottomReportPostWidgetState extends State<BottomReportPostWidget> {
                           commentPost: widget.commentPost,
                           type: widget.typeReport!,
                           post: widget.post,
+                          userRef: widget.user,
                         ),
                       );
                     },

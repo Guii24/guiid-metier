@@ -119,19 +119,7 @@ class _AboutUsWidgetState extends State<AboutUsWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 0.0),
                       child: Text(
-                        'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Libre Franklin',
-                              color: FlutterFlowTheme.of(context).dark68,
-                              fontSize: 15.0,
-                            ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 0.0),
-                      child: Text(
-                        'Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many.',
+                        'Guiid Metier is social media for the Fashion industry. We work in partnership with our members to create a more informed industry. Consumers use our application to obtain and share a vitrine of  most coveted pieces creating a more meaningful experience when getting dressed. Professionals use our network to find and be found for business opportunities, to connect with others and operate and create more eco friendly.',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,

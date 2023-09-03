@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -73,29 +74,31 @@ class _BlockedUsersWidgetState extends State<BlockedUsersWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 0.0),
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 25.0),
-                      child: wrapWithModel(
-                        model: _model.componentBlockedUsersModel,
-                        updateCallback: () => setState(() {}),
-                        child: ComponentBlockedUsersWidget(),
-                      ),
-                    ),
-                  ],
-                ),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 0.0),
+            child: AuthUserStreamWidget(
+              builder: (context) => Builder(
+                builder: (context) {
+                  final blockedUser =
+                      (currentUserDocument?.userBlockedUser?.toList() ?? [])
+                          .toList();
+                  return ListView.separated(
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.vertical,
+                    itemCount: blockedUser.length,
+                    separatorBuilder: (_, __) => SizedBox(height: 24.0),
+                    itemBuilder: (context, blockedUserIndex) {
+                      final blockedUserItem = blockedUser[blockedUserIndex];
+                      return ComponentBlockedUsersWidget(
+                        key: Key(
+                            'Key29j_${blockedUserIndex}_of_${blockedUser.length}'),
+                        userRef: blockedUserItem,
+                      );
+                    },
+                  );
+                },
               ),
-            ],
+            ),
           ),
         ),
       ),

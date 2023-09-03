@@ -1,7 +1,7 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,7 @@ class PopupDeletePostWidget extends StatefulWidget {
     this.postfer,
   }) : super(key: key);
 
-  final DocumentReference? postfer;
+  final PostRecord? postfer;
 
   @override
   _PopupDeletePostWidgetState createState() => _PopupDeletePostWidgetState();
@@ -89,8 +89,9 @@ class _PopupDeletePostWidgetState extends State<PopupDeletePostWidget> {
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 7.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            await widget.postfer!.delete();
+                            await widget.postfer!.reference.delete();
                             Navigator.pop(context);
+                            context.safePop();
                           },
                           text: 'YES',
                           options: FFButtonOptions(

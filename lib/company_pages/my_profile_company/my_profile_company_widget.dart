@@ -1,7 +1,16 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/company_pages/component_post_company/component_post_company_widget.dart';
+import '/company_pages/empty_jobs/empty_jobs_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
+import '/post/component_post_reposted/component_post_reposted_widget.dart';
+import '/sourcing/component_sourcing/component_sourcing_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'my_profile_company_model.dart';
@@ -24,6 +33,11 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => MyProfileCompanyModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() {});
+    });
 
     _model.tabBarController = TabController(
       vsync: this,
@@ -86,7 +100,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                 size: 24.0,
               ),
               onPressed: () async {
-                context.pushNamed('EditProfile');
+                context.pushNamed('EditProfileCompany');
               },
             ),
             FlutterFlowIconButton(
@@ -130,8 +144,13 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                             ),
-                            child: Image.network(
-                              'https://picsum.photos/seed/550/600',
+                            child: CachedNetworkImage(
+                              fadeInDuration: Duration(milliseconds: 500),
+                              fadeOutDuration: Duration(milliseconds: 500),
+                              imageUrl: valueOrDefault<String>(
+                                FFAppState().profilePhotoCompany,
+                                'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                              ),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -167,45 +186,57 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                         ],
                       ),
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'ZARA',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: FlutterFlowTheme.of(context).dark88,
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 5.0, 0.0, 0.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                  'San Diego, CA',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color:
-                                            FlutterFlowTheme.of(context).dark68,
-                                        fontSize: 14.0,
-                                      ),
-                                ),
-                              ],
+                    Expanded(
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AuthUserStreamWidget(
+                              builder: (context) => Text(
+                                currentUserDisplayName,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Libre Franklin',
+                                      color:
+                                          FlutterFlowTheme.of(context).dark88,
+                                      fontSize: 19.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 5.0, 0.0, 0.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        valueOrDefault(
+                                            currentUserDocument?.userLocation,
+                                            ''),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark68,
+                                              fontSize: 14.0,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -241,15 +272,46 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  '6',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color: Color(0xFF171A1F),
-                                        fontSize: 15.0,
+                                FutureBuilder<int>(
+                                  future: queryPostRecordCount(
+                                    queryBuilder: (postRecord) => postRecord
+                                        .where('post_creator',
+                                            isEqualTo: currentUserReference)
+                                        .orderBy('post_time_posted',
+                                            descending: true),
+                                  ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 30.0,
+                                          height: 30.0,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    int textCount = snapshot.data!;
+                                    return Text(
+                                      formatNumber(
+                                        textCount,
+                                        formatType: FormatType.compact,
                                       ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Libre Franklin',
+                                            color: Color(0xFF171A1F),
+                                            fontSize: 15.0,
+                                          ),
+                                    );
+                                  },
                                 ),
                                 Text(
                                   'Posts',
@@ -284,15 +346,26 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    '176',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Libre Franklin',
-                                          color: Color(0xFF171A1F),
-                                          fontSize: 15.0,
+                                  AuthUserStreamWidget(
+                                    builder: (context) => Text(
+                                      valueOrDefault<String>(
+                                        formatNumber(
+                                          (currentUserDocument?.userFollowers
+                                                      ?.toList() ??
+                                                  [])
+                                              .length,
+                                          formatType: FormatType.compact,
                                         ),
+                                        '0',
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Libre Franklin',
+                                            color: Color(0xFF171A1F),
+                                            fontSize: 15.0,
+                                          ),
+                                    ),
                                   ),
                                   Text(
                                     'Followers',
@@ -339,7 +412,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                             text: 'About',
                           ),
                           Tab(
-                            text: 'Job',
+                            text: 'Jobs',
                           ),
                         ],
                         controller: _model.tabBarController,
@@ -351,369 +424,533 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                         controller: _model.tabBarController,
                         physics: const NeverScrollableScrollPhysics(),
                         children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Divider(
-                                height: 1.0,
-                                thickness: 1.0,
-                                color: FlutterFlowTheme.of(context).line,
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 20.0, 0.0, 0.0),
-                                child: Text(
-                                  'About (bio)',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color:
-                                            FlutterFlowTheme.of(context).dark88,
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.w600,
+                          StreamBuilder<List<PostRecord>>(
+                            stream: queryPostRecord(
+                              queryBuilder: (postRecord) => postRecord
+                                  .where('post_creator',
+                                      isEqualTo: currentUserReference)
+                                  .where('post_type', isEqualTo: 'post')
+                                  .orderBy('post_time_posted',
+                                      descending: true),
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 30.0,
+                                    height: 30.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
                                       ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 8.0, 0.0, 0.0),
-                                child: Text(
-                                  'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color:
-                                            FlutterFlowTheme.of(context).dark68,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.normal,
-                                        lineHeight: 1.5,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 32.0, 0.0, 0.0),
-                                child: Text(
-                                  'Preferences',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color:
-                                            FlutterFlowTheme.of(context).dark88,
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 10.0, 0.0, 32.0),
-                                child: Wrap(
-                                  spacing: 10.0,
-                                  runSpacing: 10.0,
-                                  alignment: WrapAlignment.start,
-                                  crossAxisAlignment: WrapCrossAlignment.start,
-                                  direction: Axis.horizontal,
-                                  runAlignment: WrapAlignment.start,
-                                  verticalDirection: VerticalDirection.down,
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Material(
-                                      color: Colors.transparent,
-                                      elevation: 0.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      child: Container(
-                                        height: 39.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .line,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 8.0, 12.0, 8.0),
-                                          child: Text(
-                                            'Fashion',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark88,
-                                                  fontSize: 15.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Material(
-                                      color: Colors.transparent,
-                                      elevation: 0.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      child: Container(
-                                        height: 39.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .line,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 8.0, 12.0, 8.0),
-                                          child: Text(
-                                            'Collecting',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark88,
-                                                  fontSize: 15.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Material(
-                                      color: Colors.transparent,
-                                      elevation: 0.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      child: Container(
-                                        height: 39.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .line,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 8.0, 12.0, 8.0),
-                                          child: Text(
-                                            'Design',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark88,
-                                                  fontSize: 15.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Material(
-                                      color: Colors.transparent,
-                                      elevation: 0.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      child: Container(
-                                        height: 39.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .line,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 8.0, 12.0, 8.0),
-                                          child: Text(
-                                            'Art',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark88,
-                                                  fontSize: 15.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Material(
-                                      color: Colors.transparent,
-                                      elevation: 0.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      child: Container(
-                                        height: 39.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .line,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 8.0, 12.0, 8.0),
-                                          child: Text(
-                                            'Bags',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark88,
-                                                  fontSize: 15.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 16.0),
-                                child: Text(
-                                  'Contact',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color:
-                                            FlutterFlowTheme.of(context).dark88,
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 16.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 16.0, 0.0),
-                                      child: Icon(
-                                        FFIcons.kproperty1phone,
-                                        color: Colors.black,
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    Text(
-                                      '+ 1 (319) 555-0115',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Libre Franklin',
-                                            color: FlutterFlowTheme.of(context)
-                                                .dark68,
-                                            fontSize: 15.0,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 16.0, 0.0),
-                                    child: Icon(
-                                      FFIcons.kproperty1email,
-                                      color: Colors.black,
-                                      size: 24.0,
                                     ),
                                   ),
-                                  Text(
-                                    'contact@zara.com',
+                                );
+                              }
+                              List<PostRecord> listViewPostRecordList =
+                                  snapshot.data!;
+                              if (listViewPostRecordList.isEmpty) {
+                                return Container(
+                                  width: double.infinity,
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.65,
+                                  child: EmptyPostMyProfWidget(),
+                                );
+                              }
+                              return ListView.separated(
+                                padding: EdgeInsets.fromLTRB(
+                                  0,
+                                  16.0,
+                                  0,
+                                  35.0,
+                                ),
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: listViewPostRecordList.length,
+                                separatorBuilder: (_, __) =>
+                                    SizedBox(height: 10.0),
+                                itemBuilder: (context, listViewIndex) {
+                                  final listViewPostRecord =
+                                      listViewPostRecordList[listViewIndex];
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      if (!listViewPostRecord.postIsReposted)
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              'PostPage',
+                                              queryParameters: {
+                                                'postRef': serializeParam(
+                                                  listViewPostRecord.reference,
+                                                  ParamType.DocumentReference,
+                                                ),
+                                              }.withoutNulls,
+                                            );
+                                          },
+                                          child: ComponentPostCompanyWidget(
+                                            key: Key(
+                                                'Keyxa8_${listViewIndex}_of_${listViewPostRecordList.length}'),
+                                            postCompany:
+                                                listViewPostRecord.reference,
+                                          ),
+                                        ),
+                                      if (listViewPostRecord.postIsReposted)
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              'PostPageReposted',
+                                              queryParameters: {
+                                                'postRef': serializeParam(
+                                                  listViewPostRecord.reference,
+                                                  ParamType.DocumentReference,
+                                                ),
+                                              }.withoutNulls,
+                                            );
+                                          },
+                                          child: ComponentPostRepostedWidget(
+                                            key: Key(
+                                                'Keyhv5_${listViewIndex}_of_${listViewPostRecordList.length}'),
+                                            postReposted:
+                                                listViewPostRecord.reference,
+                                          ),
+                                        ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 0.0),
+                                  child: Text(
+                                    'About (bio)',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Libre Franklin',
                                           color: FlutterFlowTheme.of(context)
-                                              .dark68,
-                                          fontSize: 15.0,
+                                              .dark88,
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          GridView(
-                            padding: EdgeInsets.zero,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 5.0,
-                              mainAxisSpacing: 5.0,
-                              childAspectRatio: 1.0,
-                            ),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(5.0),
-                                child: Image.network(
-                                  'https://picsum.photos/seed/996/600',
-                                  width: 116.0,
-                                  height: 113.0,
-                                  fit: BoxFit.cover,
                                 ),
+                                if (valueOrDefault(
+                                            currentUserDocument?.userBio, '') !=
+                                        null &&
+                                    valueOrDefault(
+                                            currentUserDocument?.userBio, '') !=
+                                        '')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 0.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        valueOrDefault(
+                                            currentUserDocument?.userBio, ''),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark68,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                              lineHeight: 1.5,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                if (valueOrDefault(
+                                            currentUserDocument?.userBio, '') ==
+                                        null ||
+                                    valueOrDefault(
+                                            currentUserDocument?.userBio, '') ==
+                                        '')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 0.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        'Information is not available',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark68,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Preferences',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                                if ((currentUserDocument?.userPreferences
+                                                ?.toList() ??
+                                            [])
+                                        .length !=
+                                    0)
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 10.0, 0.0, 0.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Builder(
+                                        builder: (context) {
+                                          final prefs = (currentUserDocument
+                                                      ?.userPreferences
+                                                      ?.toList() ??
+                                                  [])
+                                              .toList();
+                                          return Wrap(
+                                            spacing: 10.0,
+                                            runSpacing: 10.0,
+                                            alignment: WrapAlignment.start,
+                                            crossAxisAlignment:
+                                                WrapCrossAlignment.start,
+                                            direction: Axis.horizontal,
+                                            runAlignment: WrapAlignment.start,
+                                            verticalDirection:
+                                                VerticalDirection.down,
+                                            clipBehavior: Clip.none,
+                                            children: List.generate(
+                                                prefs.length, (prefsIndex) {
+                                              final prefsItem =
+                                                  prefs[prefsIndex];
+                                              return Material(
+                                                color: Colors.transparent,
+                                                elevation: 0.0,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
+                                                ),
+                                                child: Container(
+                                                  height: 39.0,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                    border: Border.all(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .line,
+                                                      width: 1.0,
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(12.0, 8.0,
+                                                                12.0, 8.0),
+                                                    child: Text(
+                                                      prefsItem,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .dark88,
+                                                                fontSize: 15.0,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                if ((currentUserDocument?.userPreferences
+                                                ?.toList() ??
+                                            [])
+                                        .length ==
+                                    0)
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 10.0, 0.0, 0.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        'Information is not available',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark68,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 16.0),
+                                  child: Text(
+                                    'Contact',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 16.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 16.0, 0.0),
+                                        child: Icon(
+                                          FFIcons.kproperty1phone,
+                                          color: Colors.black,
+                                          size: 24.0,
+                                        ),
+                                      ),
+                                      AuthUserStreamWidget(
+                                        builder: (context) => Text(
+                                          valueOrDefault(
+                                              currentUserDocument
+                                                  ?.userContactPhone,
+                                              ''),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Libre Franklin',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .dark68,
+                                                fontSize: 15.0,
+                                              ),
+                                        ),
+                                      ),
+                                      if (valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.userContactPhone,
+                                                  '') ==
+                                              null ||
+                                          valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.userContactPhone,
+                                                  '') ==
+                                              '')
+                                        AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            'Information is not available',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 40.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 16.0, 0.0),
+                                        child: Icon(
+                                          FFIcons.kproperty1email,
+                                          color: Colors.black,
+                                          size: 24.0,
+                                        ),
+                                      ),
+                                      if (valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.userEmail,
+                                                  '') !=
+                                              null &&
+                                          valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.userEmail,
+                                                  '') !=
+                                              '')
+                                        AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            valueOrDefault(
+                                                currentUserDocument?.userEmail,
+                                                ''),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 15.0,
+                                                ),
+                                          ),
+                                        ),
+                                      if (valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.userEmail,
+                                                  '') ==
+                                              null ||
+                                          valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.userEmail,
+                                                  '') ==
+                                              '')
+                                        AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            'Information is not available',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          StreamBuilder<List<JobRecord>>(
+                            stream: _model.jobs(
+                              overrideCache: true,
+                              requestFn: () => queryJobRecord(
+                                queryBuilder: (jobRecord) => jobRecord.where(
+                                    'company_creator',
+                                    isEqualTo: currentUserReference),
                               ),
-                            ],
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 30.0,
+                                    height: 30.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<JobRecord> listViewJobRecordList =
+                                  snapshot.data!;
+                              if (listViewJobRecordList.isEmpty) {
+                                return Center(
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: EmptyJobsWidget(),
+                                  ),
+                                );
+                              }
+                              return ListView.separated(
+                                padding: EdgeInsets.fromLTRB(
+                                  0,
+                                  16.0,
+                                  0,
+                                  35.0,
+                                ),
+                                scrollDirection: Axis.vertical,
+                                itemCount: listViewJobRecordList.length,
+                                separatorBuilder: (_, __) =>
+                                    SizedBox(height: 10.0),
+                                itemBuilder: (context, listViewIndex) {
+                                  final listViewJobRecord =
+                                      listViewJobRecordList[listViewIndex];
+                                  return InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed(
+                                        'SourcingMyJobDetails',
+                                        queryParameters: {
+                                          'jobDoc': serializeParam(
+                                            listViewJobRecord,
+                                            ParamType.Document,
+                                          ),
+                                        }.withoutNulls,
+                                        extra: <String, dynamic>{
+                                          'jobDoc': listViewJobRecord,
+                                        },
+                                      );
+                                    },
+                                    child: ComponentSourcingWidget(
+                                      key: Key(
+                                          'Keywfc_${listViewIndex}_of_${listViewJobRecordList.length}'),
+                                      jobDoc: listViewJobRecord,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
                         ],
                       ),

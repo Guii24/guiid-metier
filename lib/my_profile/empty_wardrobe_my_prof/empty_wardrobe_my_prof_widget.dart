@@ -40,37 +40,41 @@ class _EmptyWardrobeMyProfWidgetState extends State<EmptyWardrobeMyProfWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Container(
-          width: 56.0,
-          height: 56.0,
-          decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).dark6,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
-            child: Icon(
-              FFIcons.kproperty1wardrobe,
-              color: Colors.black,
-              size: 26.0,
+    return Align(
+      alignment: AlignmentDirectional(0.0, 0.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 56.0,
+            height: 56.0,
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).dark6,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Align(
+              alignment: AlignmentDirectional(0.0, 0.0),
+              child: Icon(
+                FFIcons.kproperty1wardrobe,
+                color: Colors.black,
+                size: 26.0,
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 0.0),
-          child: Text(
-            'There are no uploaded wardrobe',
-            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                  fontFamily: 'Libre Franklin',
-                  color: FlutterFlowTheme.of(context).dark68,
-                  fontSize: 15.0,
-                ),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 0.0),
+            child: Text(
+              'There are no uploaded wear items',
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Libre Franklin',
+                    color: FlutterFlowTheme.of(context).dark68,
+                    fontSize: 15.0,
+                  ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

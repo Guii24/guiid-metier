@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
@@ -109,8 +110,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             userName: params.getParam('userName', ParamType.String),
             userPhone: params.getParam('userPhone', ParamType.String),
             profilePhoto: params.getParam('profilePhoto', ParamType.String),
-            codeCountry: params.getParam('codeCountry', ParamType.int),
             userType: params.getParam('userType', ParamType.String),
+            phoneoriginal: params.getParam('phoneoriginal', ParamType.String),
+            phoneName: params.getParam('phoneName', ParamType.String),
+            phoneCode: params.getParam('phoneCode', ParamType.String),
+            phoneFlag: params.getParam('phoneFlag', ParamType.String),
+            phoneDialCode: params.getParam('phoneDialCode', ParamType.String),
           ),
         ),
         FFRoute(
@@ -152,9 +157,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => CreatePostWidget(),
         ),
         FFRoute(
-          name: 'CreateWardrobe',
-          path: '/createWardrobe',
-          builder: (context, params) => CreateWardrobeWidget(),
+          name: 'CreateWear',
+          path: '/createWear',
+          builder: (context, params) => CreateWearWidget(),
         ),
         FFRoute(
           name: 'SourcingPage',
@@ -164,7 +169,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'JobForm',
           path: '/jobForm',
-          builder: (context, params) => JobFormWidget(),
+          asyncParams: {
+            'jobDoc': getDoc(['job'], JobRecord.fromSnapshot),
+          },
+          builder: (context, params) => JobFormWidget(
+            jobDoc: params.getParam('jobDoc', ParamType.Document),
+          ),
         ),
         FFRoute(
           name: 'SearchPage',
@@ -172,19 +182,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => SearchPageWidget(),
         ),
         FFRoute(
-          name: 'SearchResultPage',
-          path: '/searchResultPage',
-          builder: (context, params) => SearchResultPageWidget(),
+          name: 'SearchResultPageOLD',
+          path: '/searchResultPageOLD',
+          builder: (context, params) => SearchResultPageOLDWidget(
+            searchingText: params.getParam('searchingText', ParamType.String),
+          ),
         ),
         FFRoute(
           name: 'Notifications',
           path: '/notifications',
           builder: (context, params) => NotificationsWidget(),
-        ),
-        FFRoute(
-          name: 'Subscription',
-          path: '/subscription',
-          builder: (context, params) => SubscriptionWidget(),
         ),
         FFRoute(
           name: 'MyProfile',
@@ -197,9 +204,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => WardrobeCommentPageWidget(),
         ),
         FFRoute(
-          name: 'EditWardrobe',
-          path: '/editWardrobe',
-          builder: (context, params) => EditWardrobeWidget(),
+          name: 'EditWear',
+          path: '/editWear',
+          asyncParams: {
+            'postDoc': getDoc(['post'], PostRecord.fromSnapshot),
+          },
+          builder: (context, params) => EditWearWidget(
+            postDoc: params.getParam('postDoc', ParamType.Document),
+          ),
         ),
         FFRoute(
           name: 'Followers',
@@ -219,7 +231,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'EditPost',
           path: '/editPost',
-          builder: (context, params) => EditPostWidget(),
+          asyncParams: {
+            'postRef': getDoc(['post'], PostRecord.fromSnapshot),
+          },
+          builder: (context, params) => EditPostWidget(
+            postRef: params.getParam('postRef', ParamType.Document),
+          ),
         ),
         FFRoute(
           name: 'Settings',
@@ -269,12 +286,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'OtherProfile',
           path: '/otherProfile',
-          builder: (context, params) => OtherProfileWidget(),
+          builder: (context, params) => OtherProfileWidget(
+            userRef: params.getParam(
+                'userRef', ParamType.DocumentReference, false, ['users']),
+          ),
         ),
         FFRoute(
           name: 'OtherProfileCompany',
           path: '/otherProfileCompany',
-          builder: (context, params) => OtherProfileCompanyWidget(),
+          builder: (context, params) => OtherProfileCompanyWidget(
+            userRef: params.getParam(
+                'userRef', ParamType.DocumentReference, false, ['users']),
+          ),
         ),
         FFRoute(
           name: 'PostJobPage',
@@ -284,12 +307,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'SourcingMyJobDetails',
           path: '/sourcingMyJobDetails',
-          builder: (context, params) => SourcingMyJobDetailsWidget(),
+          asyncParams: {
+            'jobDoc': getDoc(['job'], JobRecord.fromSnapshot),
+          },
+          builder: (context, params) => SourcingMyJobDetailsWidget(
+            jobDoc: params.getParam('jobDoc', ParamType.Document),
+          ),
         ),
         FFRoute(
           name: 'EditPostJobPage',
           path: '/editPostJobPage',
-          builder: (context, params) => EditPostJobPageWidget(),
+          asyncParams: {
+            'jobDoc': getDoc(['job'], JobRecord.fromSnapshot),
+          },
+          builder: (context, params) => EditPostJobPageWidget(
+            jobDoc: params.getParam('jobDoc', ParamType.Document),
+          ),
         ),
         FFRoute(
           name: 'MyProfileCompany',
@@ -304,7 +337,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'test',
           path: '/test',
-          builder: (context, params) => TestWidget(),
+          builder: (context, params) => TestWidget(
+            img: params.getParam('img', ParamType.FFUploadedFile),
+          ),
         ),
         FFRoute(
           name: 'VerificationLogin',
@@ -333,6 +368,78 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => PostPageRepostedWidget(
             postRef: params.getParam(
                 'postRef', ParamType.DocumentReference, false, ['post']),
+          ),
+        ),
+        FFRoute(
+          name: 'FollowersOtherUsers',
+          path: '/followersOtherUsers',
+          asyncParams: {
+            'userDoc': getDoc(['users'], UsersRecord.fromSnapshot),
+          },
+          builder: (context, params) => FollowersOtherUsersWidget(
+            userDoc: params.getParam('userDoc', ParamType.Document),
+          ),
+        ),
+        FFRoute(
+          name: 'FollowingOtherUsers',
+          path: '/followingOtherUsers',
+          asyncParams: {
+            'userDoc': getDoc(['users'], UsersRecord.fromSnapshot),
+          },
+          builder: (context, params) => FollowingOtherUsersWidget(
+            userDoc: params.getParam('userDoc', ParamType.Document),
+          ),
+        ),
+        FFRoute(
+          name: 'VerificationEditPhone',
+          path: '/verificationEditPhone',
+          builder: (context, params) => VerificationEditPhoneWidget(
+            phoneOrifinal: params.getParam('phoneOrifinal', ParamType.String),
+            phoneNumberEdited:
+                params.getParam('phoneNumberEdited', ParamType.String),
+            phoneName: params.getParam('phoneName', ParamType.String),
+            phoneCode: params.getParam('phoneCode', ParamType.String),
+            phoneFlag: params.getParam('phoneFlag', ParamType.String),
+            phoneDialCode: params.getParam('phoneDialCode', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'SupportFromAdmin',
+          path: '/supportFromAdmin',
+          asyncParams: {
+            'chatDoc': getDoc(['chat'], ChatRecord.fromSnapshot),
+          },
+          builder: (context, params) => SupportFromAdminWidget(
+            chatDoc: params.getParam('chatDoc', ParamType.Document),
+          ),
+        ),
+        FFRoute(
+          name: 'SupportAllChats',
+          path: '/supportAllChats',
+          builder: (context, params) => SupportAllChatsWidget(),
+        ),
+        FFRoute(
+          name: 'WearPage',
+          path: '/wearPage',
+          asyncParams: {
+            'postDoc': getDoc(['post'], PostRecord.fromSnapshot),
+          },
+          builder: (context, params) => WearPageWidget(
+            postDoc: params.getParam('postDoc', ParamType.Document),
+          ),
+        ),
+        FFRoute(
+          name: 'tesst',
+          path: '/tesst',
+          builder: (context, params) => TesstWidget(
+            searchingText: params.getParam('searchingText', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'SearchResultPage',
+          path: '/searchResultPage',
+          builder: (context, params) => SearchResultPageWidget(
+            searchingText: params.getParam('searchingText', ParamType.String),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

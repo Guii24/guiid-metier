@@ -1,6 +1,9 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +11,14 @@ import 'popup_unblock_user_model.dart';
 export 'popup_unblock_user_model.dart';
 
 class PopupUnblockUserWidget extends StatefulWidget {
-  const PopupUnblockUserWidget({Key? key}) : super(key: key);
+  const PopupUnblockUserWidget({
+    Key? key,
+    required this.name,
+    required this.user,
+  }) : super(key: key);
+
+  final String? name;
+  final DocumentReference? user;
 
   @override
   _PopupUnblockUserWidgetState createState() => _PopupUnblockUserWidgetState();
@@ -69,7 +79,7 @@ class _PopupUnblockUserWidgetState extends State<PopupUnblockUserWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                       child: Text(
-                        'Are you sure you want to unblock\nMarvin McKinney?',
+                        'Are you sure you want to unblock ${widget.name}?',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Libre Franklin',
@@ -124,8 +134,12 @@ class _PopupUnblockUserWidgetState extends State<PopupUnblockUserWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 7.0, 0.0, 0.0, 0.0),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                await currentUserReference!.update({
+                                  'user_blocked_user':
+                                      FieldValue.arrayRemove([widget.user]),
+                                });
+                                Navigator.pop(context);
                               },
                               text: 'YES',
                               options: FFButtonOptions(

@@ -255,96 +255,158 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                             ),
                           ),
                         ),
-                        if (!(currentUserDocument?.userFollowing?.toList() ??
-                                [])
-                            .contains(columnUsersRecord.reference))
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 15.0, 0.0),
-                            child: AuthUserStreamWidget(
-                              builder: (context) => FFButtonWidget(
-                                onPressed: () async {
-                                  await currentUserReference!.update({
-                                    'user_following': FieldValue.arrayUnion(
-                                        [columnUsersRecord.reference]),
-                                  });
-                                  await actions.updatePage(
-                                    context,
-                                  );
-                                },
-                                text: 'FOLLOW',
-                                options: FFButtonOptions(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 6.0, 10.0, 6.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: Color(0x00FFFFFF),
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
+                        if (valueOrDefault(currentUserDocument?.userType, '') ==
+                            'User')
+                          AuthUserStreamWidget(
+                            builder: (context) => Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                if (!(currentUserDocument?.userFollowing
+                                                ?.toList() ??
+                                            [])
+                                        .contains(
+                                            columnUsersRecord.reference) &&
+                                    (containerPostRecord.postCreator !=
+                                        currentUserReference))
+                                  FFButtonWidget(
+                                    onPressed: () async {
+                                      await currentUserReference!.update({
+                                        'user_following': FieldValue.arrayUnion(
+                                            [columnUsersRecord.reference]),
+                                      });
+
+                                      await columnUsersRecord.reference.update({
+                                        'user_followers': FieldValue.arrayUnion(
+                                            [currentUserReference]),
+                                      });
+                                      await actions.updatePage(
+                                        context,
+                                      );
+                                    },
+                                    text: 'FOLLOW',
+                                    options: FFButtonOptions(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10.0, 6.0, 10.0, 6.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: Color(0x00FFFFFF),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Libre Franklin',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      elevation: 0.0,
+                                      borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.normal,
+                                        width: 1.0,
                                       ),
-                                  elevation: 0.0,
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    width: 1.0,
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                              ),
+                                if ((currentUserDocument?.userFollowing
+                                                ?.toList() ??
+                                            [])
+                                        .contains(
+                                            columnUsersRecord.reference) &&
+                                    (containerPostRecord.postCreator !=
+                                        currentUserReference))
+                                  FFButtonWidget(
+                                    onPressed: () async {
+                                      await currentUserReference!.update({
+                                        'user_following':
+                                            FieldValue.arrayRemove(
+                                                [columnUsersRecord.reference]),
+                                      });
+
+                                      await columnUsersRecord.reference.update({
+                                        'user_followers':
+                                            FieldValue.arrayRemove(
+                                                [currentUserReference]),
+                                      });
+                                      await actions.updatePage(
+                                        context,
+                                      );
+                                    },
+                                    text: 'FOLLOWING',
+                                    options: FFButtonOptions(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10.0, 6.0, 10.0, 6.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: Color(0x0A000000),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Libre Franklin',
+                                            color: FlutterFlowTheme.of(context)
+                                                .dark52,
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            if (currentUserReference ==
-                                columnUsersRecord.reference) {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Color(0x01000000),
-                                barrierColor:
-                                    FlutterFlowTheme.of(context).dark38,
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.viewInsetsOf(context),
-                                    child: BottomEditopDeletePostWidget(
-                                      postref: containerPostRecord.reference,
-                                    ),
-                                  );
-                                },
-                              ).then((value) => setState(() {}));
-                            } else {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Color(0x01000000),
-                                barrierColor:
-                                    FlutterFlowTheme.of(context).dark38,
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.viewInsetsOf(context),
-                                    child: BottomReportPostWidget(
-                                      post: containerPostRecord.reference,
-                                      typeReport: 'Post',
-                                    ),
-                                  );
-                                },
-                              ).then((value) => setState(() {}));
-                            }
-                          },
-                          child: Icon(
-                            FFIcons.kproperty1more,
-                            color: Colors.black,
-                            size: 24.0,
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              15.0, 0.0, 0.0, 0.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              if (currentUserReference ==
+                                  containerPostRecord.postCreator) {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Color(0x01000000),
+                                  barrierColor:
+                                      FlutterFlowTheme.of(context).dark38,
+                                  context: context,
+                                  builder: (context) {
+                                    return Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: BottomEditopDeletePostWidget(
+                                        post: containerPostRecord,
+                                      ),
+                                    );
+                                  },
+                                ).then((value) => setState(() {}));
+                              } else {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Color(0x01000000),
+                                  barrierColor:
+                                      FlutterFlowTheme.of(context).dark38,
+                                  context: context,
+                                  builder: (context) {
+                                    return Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: BottomReportPostWidget(
+                                        post: containerPostRecord.reference,
+                                        typeReport: 'Post',
+                                      ),
+                                    );
+                                  },
+                                ).then((value) => setState(() {}));
+                              }
+                            },
+                            child: Icon(
+                              FFIcons.kproperty1more,
+                              color: Colors.black,
+                              size: 24.0,
+                            ),
                           ),
                         ),
                       ],
@@ -359,10 +421,9 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                       children: [
                         Text(
                           containerPostRecord.postText.maybeHandleOverflow(
-                            maxChars: 84,
+                            maxChars: 125,
                             replacement: '…',
                           ),
-                          maxLines: 2,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Libre Franklin',

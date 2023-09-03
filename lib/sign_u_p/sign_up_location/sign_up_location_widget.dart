@@ -268,19 +268,37 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                                               return '${getJsonField(
                                                 locationsItem,
                                                 r'''$[0].value''',
-                                              ).toString()}, ${getJsonField(
-                                                locationsItem,
-                                                r'''$[1].value''',
-                                              ).toString()}';
+                                              ).toString()}${valueOrDefault<String>(
+                                                getJsonField(
+                                                          locationsItem,
+                                                          r'''$[1].value''',
+                                                        ) ==
+                                                        null
+                                                    ? ' '
+                                                    : ', ',
+                                                'error',
+                                              )}${valueOrDefault<String>(
+                                                getJsonField(
+                                                          locationsItem,
+                                                          r'''$[1].value''',
+                                                        ) ==
+                                                        null
+                                                    ? ' '
+                                                    : getJsonField(
+                                                        locationsItem,
+                                                        r'''$[1].value''',
+                                                      ).toString(),
+                                                'error',
+                                              )}';
                                             } else if (getJsonField(
                                                   locationsItem,
                                                   r'''$[1].value''',
                                                 ) ==
                                                 null) {
-                                              return getJsonField(
+                                              return '${getJsonField(
                                                 locationsItem,
                                                 r'''$[0].value''',
-                                              ).toString();
+                                              ).toString()}';
                                             } else {
                                               return '${getJsonField(
                                                 locationsItem,
@@ -324,19 +342,37 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                                                     return '${getJsonField(
                                                       locationsItem,
                                                       r'''$[0].value''',
-                                                    ).toString()}, ${getJsonField(
-                                                      locationsItem,
-                                                      r'''$[1].value''',
-                                                    ).toString()}';
+                                                    ).toString()}${valueOrDefault<String>(
+                                                      getJsonField(
+                                                                locationsItem,
+                                                                r'''$[1].value''',
+                                                              ) ==
+                                                              null
+                                                          ? ' '
+                                                          : ', ',
+                                                      'error',
+                                                    )}${valueOrDefault<String>(
+                                                      getJsonField(
+                                                                locationsItem,
+                                                                r'''$[1].value''',
+                                                              ) ==
+                                                              null
+                                                          ? ' '
+                                                          : getJsonField(
+                                                              locationsItem,
+                                                              r'''$[1].value''',
+                                                            ).toString(),
+                                                      'error',
+                                                    )}';
                                                   } else if (getJsonField(
                                                         locationsItem,
                                                         r'''$[1].value''',
                                                       ) ==
                                                       null) {
-                                                    return getJsonField(
+                                                    return '${getJsonField(
                                                       locationsItem,
                                                       r'''$[0].value''',
-                                                    ).toString();
+                                                    ).toString()}';
                                                   } else {
                                                     return '${getJsonField(
                                                       locationsItem,

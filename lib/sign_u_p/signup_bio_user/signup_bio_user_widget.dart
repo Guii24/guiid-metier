@@ -99,6 +99,13 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                         ),
                       },
                     );
+
+                    setState(() {
+                      FFAppState().bornDate =
+                          DateTime.fromMillisecondsSinceEpoch(1691612040000);
+                      FFAppState().selectedlocation = '';
+                      FFAppState().choosenPreference = [];
+                    });
                   },
                   child: Text(
                     'SKIP',
@@ -311,24 +318,30 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                         10.0, 0.0, 0.0, 0.0),
                                     child: Container(
                                       width: 92.0,
+                                      height: 25.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .primaryBackground,
                                       ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            3.0, 0.0, 3.0, 0.0),
-                                        child: Text(
-                                          'Date of birth',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark68,
-                                                fontSize: 14.0,
-                                              ),
+                                      child: Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  3.0, 0.0, 3.0, 0.0),
+                                          child: Text(
+                                            'Date of birth',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 14.0,
+                                                ),
+                                          ),
                                         ),
                                       ),
                                     ),

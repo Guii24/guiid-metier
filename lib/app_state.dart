@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import 'backend/api_requests/api_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
@@ -240,7 +241,8 @@ class FFAppState extends ChangeNotifier {
     _activitiesPost[_index] = updateFn(_activitiesPost[_index]);
   }
 
-  dynamic _countryInfoCompany;
+  dynamic _countryInfoCompany = jsonDecode(
+      '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
   dynamic get countryInfoCompany => _countryInfoCompany;
   set countryInfoCompany(dynamic _value) {
     _countryInfoCompany = _value;
@@ -309,6 +311,119 @@ class FFAppState extends ChangeNotifier {
   String get choosenListReport => _choosenListReport;
   set choosenListReport(String _value) {
     _choosenListReport = _value;
+  }
+
+  List<DocumentReference> _listPostWear = [];
+  List<DocumentReference> get listPostWear => _listPostWear;
+  set listPostWear(List<DocumentReference> _value) {
+    _listPostWear = _value;
+  }
+
+  void addToListPostWear(DocumentReference _value) {
+    _listPostWear.add(_value);
+  }
+
+  void removeFromListPostWear(DocumentReference _value) {
+    _listPostWear.remove(_value);
+  }
+
+  void removeAtIndexFromListPostWear(int _index) {
+    _listPostWear.removeAt(_index);
+  }
+
+  void updateListPostWearAtIndex(
+    int _index,
+    DocumentReference Function(DocumentReference) updateFn,
+  ) {
+    _listPostWear[_index] = updateFn(_listPostWear[_index]);
+  }
+
+  List<String> _jobTypeList = [
+    'Remote',
+    'Onsite',
+    'Hybrid',
+    'Part-time',
+    'Full-time',
+    'Project based'
+  ];
+  List<String> get jobTypeList => _jobTypeList;
+  set jobTypeList(List<String> _value) {
+    _jobTypeList = _value;
+  }
+
+  void addToJobTypeList(String _value) {
+    _jobTypeList.add(_value);
+  }
+
+  void removeFromJobTypeList(String _value) {
+    _jobTypeList.remove(_value);
+  }
+
+  void removeAtIndexFromJobTypeList(int _index) {
+    _jobTypeList.removeAt(_index);
+  }
+
+  void updateJobTypeListAtIndex(
+    int _index,
+    String Function(String) updateFn,
+  ) {
+    _jobTypeList[_index] = updateFn(_jobTypeList[_index]);
+  }
+
+  List<String> _selectedJobType = [];
+  List<String> get selectedJobType => _selectedJobType;
+  set selectedJobType(List<String> _value) {
+    _selectedJobType = _value;
+  }
+
+  void addToSelectedJobType(String _value) {
+    _selectedJobType.add(_value);
+  }
+
+  void removeFromSelectedJobType(String _value) {
+    _selectedJobType.remove(_value);
+  }
+
+  void removeAtIndexFromSelectedJobType(int _index) {
+    _selectedJobType.removeAt(_index);
+  }
+
+  void updateSelectedJobTypeAtIndex(
+    int _index,
+    String Function(String) updateFn,
+  ) {
+    _selectedJobType[_index] = updateFn(_selectedJobType[_index]);
+  }
+
+  List<WearItemsStruct> _wearItems = [];
+  List<WearItemsStruct> get wearItems => _wearItems;
+  set wearItems(List<WearItemsStruct> _value) {
+    _wearItems = _value;
+  }
+
+  void addToWearItems(WearItemsStruct _value) {
+    _wearItems.add(_value);
+  }
+
+  void removeFromWearItems(WearItemsStruct _value) {
+    _wearItems.remove(_value);
+  }
+
+  void removeAtIndexFromWearItems(int _index) {
+    _wearItems.removeAt(_index);
+  }
+
+  void updateWearItemsAtIndex(
+    int _index,
+    WearItemsStruct Function(WearItemsStruct) updateFn,
+  ) {
+    _wearItems[_index] = updateFn(_wearItems[_index]);
+  }
+
+  String _imgBase64 = '';
+  String get imgBase64 => _imgBase64;
+  set imgBase64(String _value) {
+    _imgBase64 = _value;
   }
 }
 

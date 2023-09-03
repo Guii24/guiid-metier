@@ -43,7 +43,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
       setState(() {
         FFAppState().countryInfo = jsonDecode(
             '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-        FFAppState().countryInfoCompany = null;
+        FFAppState().countryInfoCompany = jsonDecode(
+            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
       });
       await actions.lockOrientation();
     });
@@ -602,6 +603,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                   userType:
                                                                       'User',
                                                                   signin: false,
+                                                                  editprofCompany:
+                                                                      false,
                                                                 ),
                                                               ),
                                                             );
@@ -613,50 +616,31 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
-                                                          if (FFAppState()
-                                                                  .countryInfo ==
-                                                              null)
-                                                            Text(
+                                                          Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              '${getJsonField(
+                                                                FFAppState()
+                                                                    .countryInfo,
+                                                                r'''$.code''',
+                                                              ).toString()} ${getJsonField(
+                                                                FFAppState()
+                                                                    .countryInfo,
+                                                                r'''$.dial_code''',
+                                                              ).toString()}',
                                                               'US +1',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Libre Franklin',
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
                                                             ),
-                                                          if (FFAppState()
-                                                                  .countryInfo !=
-                                                              null)
-                                                            Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                '${getJsonField(
-                                                                  FFAppState()
-                                                                      .countryInfo,
-                                                                  r'''$.code''',
-                                                                ).toString()} ${getJsonField(
-                                                                  FFAppState()
-                                                                      .countryInfo,
-                                                                  r'''$.dial_code''',
-                                                                ).toString()}',
-                                                                'US +1',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Libre Franklin',
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
-                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Libre Franklin',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                          ),
                                                           Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
@@ -1079,15 +1063,52 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                             .profilePhoto,
                                                         ParamType.String,
                                                       ),
-                                                      'codeCountry':
-                                                          serializeParam(
-                                                        FFAppState()
-                                                            .countryInfo,
-                                                        ParamType.int,
-                                                      ),
                                                       'userType':
                                                           serializeParam(
                                                         'User',
+                                                        ParamType.String,
+                                                      ),
+                                                      'phoneoriginal':
+                                                          serializeParam(
+                                                        _model
+                                                            .userPhoneController
+                                                            .text,
+                                                        ParamType.String,
+                                                      ),
+                                                      'phoneName':
+                                                          serializeParam(
+                                                        getJsonField(
+                                                          FFAppState()
+                                                              .countryInfo,
+                                                          r'''$.name''',
+                                                        ).toString(),
+                                                        ParamType.String,
+                                                      ),
+                                                      'phoneCode':
+                                                          serializeParam(
+                                                        getJsonField(
+                                                          FFAppState()
+                                                              .countryInfo,
+                                                          r'''$.code''',
+                                                        ).toString(),
+                                                        ParamType.String,
+                                                      ),
+                                                      'phoneFlag':
+                                                          serializeParam(
+                                                        getJsonField(
+                                                          FFAppState()
+                                                              .countryInfo,
+                                                          r'''$.flag''',
+                                                        ).toString(),
+                                                        ParamType.String,
+                                                      ),
+                                                      'phoneDialCode':
+                                                          serializeParam(
+                                                        getJsonField(
+                                                          FFAppState()
+                                                              .countryInfo,
+                                                          r'''$.dial_code''',
+                                                        ).toString(),
                                                         ParamType.String,
                                                       ),
                                                     }.withoutNulls,
@@ -1612,6 +1633,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                 userType:
                                                                     'Company',
                                                                 signin: false,
+                                                                editprofCompany:
+                                                                    false,
                                                               ),
                                                             ),
                                                           );
@@ -1623,46 +1646,27 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       mainAxisSize:
                                                           MainAxisSize.max,
                                                       children: [
-                                                        if (FFAppState()
-                                                                .countryInfoCompany ==
-                                                            null)
-                                                          Text(
-                                                            'US +1',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Libre Franklin',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                          ),
-                                                        if (FFAppState()
-                                                                .countryInfoCompany !=
-                                                            null)
-                                                          Text(
-                                                            '${getJsonField(
-                                                              FFAppState()
-                                                                  .countryInfoCompany,
-                                                              r'''$.code''',
-                                                            ).toString()} ${getJsonField(
-                                                              FFAppState()
-                                                                  .countryInfoCompany,
-                                                              r'''$.dial_code''',
-                                                            ).toString()}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Libre Franklin',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                          ),
+                                                        Text(
+                                                          '${getJsonField(
+                                                            FFAppState()
+                                                                .countryInfoCompany,
+                                                            r'''$.code''',
+                                                          ).toString()} ${getJsonField(
+                                                            FFAppState()
+                                                                .countryInfoCompany,
+                                                            r'''$.dial_code''',
+                                                          ).toString()}',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                        ),
                                                         Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
@@ -2037,21 +2041,19 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               'VerificationSignUp',
                                               queryParameters: {
                                                 'userPhone': serializeParam(
-                                                  functions.deleteSpaceAndDivider(
-                                                      _model
-                                                          .phoneCompanyController
-                                                          .text),
+                                                  functions
+                                                      .deleteSpaceAndDivider(
+                                                          '${getJsonField(
+                                                    FFAppState()
+                                                        .countryInfoCompany,
+                                                    r'''$.dial_code''',
+                                                  ).toString()}${_model.phoneCompanyController.text}'),
                                                   ParamType.String,
                                                 ),
                                                 'profilePhoto': serializeParam(
                                                   FFAppState()
                                                       .profilePhotoCompany,
                                                   ParamType.String,
-                                                ),
-                                                'codeCountry': serializeParam(
-                                                  FFAppState()
-                                                      .countryInfoCompany,
-                                                  ParamType.int,
                                                 ),
                                                 'userType': serializeParam(
                                                   'Company',
@@ -2060,6 +2062,43 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                 'userName': serializeParam(
                                                   _model.companyNameController
                                                       .text,
+                                                  ParamType.String,
+                                                ),
+                                                'phoneoriginal': serializeParam(
+                                                  _model.phoneCompanyController
+                                                      .text,
+                                                  ParamType.String,
+                                                ),
+                                                'phoneName': serializeParam(
+                                                  getJsonField(
+                                                    FFAppState()
+                                                        .countryInfoCompany,
+                                                    r'''$.name''',
+                                                  ).toString(),
+                                                  ParamType.String,
+                                                ),
+                                                'phoneCode': serializeParam(
+                                                  getJsonField(
+                                                    FFAppState()
+                                                        .countryInfoCompany,
+                                                    r'''$.code''',
+                                                  ).toString(),
+                                                  ParamType.String,
+                                                ),
+                                                'phoneFlag': serializeParam(
+                                                  getJsonField(
+                                                    FFAppState()
+                                                        .countryInfoCompany,
+                                                    r'''$.flag''',
+                                                  ).toString(),
+                                                  ParamType.String,
+                                                ),
+                                                'phoneDialCode': serializeParam(
+                                                  getJsonField(
+                                                    FFAppState()
+                                                        .countryInfoCompany,
+                                                    r'''$.dial_code''',
+                                                  ).toString(),
                                                   ParamType.String,
                                                 ),
                                               }.withoutNulls,

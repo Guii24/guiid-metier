@@ -438,7 +438,6 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                         0,
                                         30.0,
                                       ),
-                                      reverse: true,
                                       primary: false,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
@@ -680,7 +679,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                       elevation: 0.0,
                       child: Container(
                         width: double.infinity,
-                        height: 90.0,
+                        height: 65.0,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -797,7 +796,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                       .dark88,
                                               fontSize: 15.0,
                                             ),
-                                        maxLines: 2,
+                                        maxLines: 3,
                                         minLines: 1,
                                         validator: _model
                                             .textControllerValidator

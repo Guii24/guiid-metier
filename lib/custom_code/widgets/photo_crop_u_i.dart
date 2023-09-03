@@ -1,5 +1,6 @@
 // Automatic FlutterFlow imports
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom widgets
@@ -11,7 +12,7 @@ import 'package:flutter/material.dart';
 
 import 'dart:io';
 import 'dart:typed_data';
-
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:crop_your_image/crop_your_image.dart';
 import 'package:path_provider/path_provider.dart';
 

@@ -9,6 +9,7 @@ class FFIcons {
   static const String _gMIconsSubsFamily = 'GMIconsSubs';
   static const String _gMIconsbatteryFamily = 'GMIconsbattery';
   static const String _onboardingGMFamily = 'OnboardingGM';
+  static const String _icomoonFamily = 'Icomoon';
 
   // GMIcons
   static const IconData kproperty1aboutUs =
@@ -139,4 +140,8 @@ class FFIcons {
   // onboardingGM
   static const IconData kicononboarding =
       IconData(0xe900, fontFamily: _onboardingGMFamily);
+
+  // icomoon
+  static const IconData kwriteIcon1767131 =
+      IconData(0xe900, fontFamily: _icomoonFamily);
 }

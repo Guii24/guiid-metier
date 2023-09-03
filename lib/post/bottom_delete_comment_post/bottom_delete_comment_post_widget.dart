@@ -13,12 +13,12 @@ export 'bottom_delete_comment_post_model.dart';
 class BottomDeleteCommentPostWidget extends StatefulWidget {
   const BottomDeleteCommentPostWidget({
     Key? key,
-    this.commentref,
     this.postref,
+    this.commentref,
   }) : super(key: key);
 
-  final DocumentReference? commentref;
   final DocumentReference? postref;
+  final DocumentReference? commentref;
 
   @override
   _BottomDeleteCommentPostWidgetState createState() =>
@@ -96,8 +96,8 @@ class _BottomDeleteCommentPostWidgetState
                           return Material(
                             color: Colors.transparent,
                             child: PopupDeleteCommentPostWidget(
-                              commentPostref: widget.commentref,
                               postref: widget.postref,
+                              commentPostref: widget.commentref,
                             ),
                           );
                         },

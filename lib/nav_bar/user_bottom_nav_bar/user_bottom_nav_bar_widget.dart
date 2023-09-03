@@ -55,7 +55,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
             if (isWeb || isAndroid)
               Container(
                 width: double.infinity,
-                height: MediaQuery.sizeOf(context).height * 1.0,
+                height: double.infinity,
                 child: Stack(
                   children: [
                     Align(
@@ -68,7 +68,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                         ),
                         child: Container(
                           width: double.infinity,
-                          height: 60.0,
+                          height: 74.0,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
@@ -98,6 +98,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       FFAppState().page = 'Articles';
                                       FFAppState().pageIndex = 0;
                                     });
+                                    Navigator.pop(context);
                                   },
                                   child: Container(
                                     width: 70.0,
@@ -106,7 +107,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                           .secondaryBackground,
                                     ),
                                     child: Column(
-                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
@@ -166,16 +167,16 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       FFAppState().page = 'Posts';
                                       FFAppState().pageIndex = 1;
                                     });
+                                    Navigator.pop(context);
                                   },
                                   child: Container(
                                     width: 70.0,
-                                    height: 70.0,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
                                     ),
                                     child: Column(
-                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
@@ -242,6 +243,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       FFAppState().page = 'Sourcing';
                                       FFAppState().pageIndex = 2;
                                     });
+                                    Navigator.pop(context);
                                   },
                                   child: Container(
                                     width: 70.0,
@@ -250,7 +252,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                           .secondaryBackground,
                                     ),
                                     child: Column(
-                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       crossAxisAlignment:
@@ -312,6 +314,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       FFAppState().page = 'Directory';
                                       FFAppState().pageIndex = 3;
                                     });
+                                    Navigator.pop(context);
                                   },
                                   child: Container(
                                     width: 70.0,
@@ -320,7 +323,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                           .secondaryBackground,
                                     ),
                                     child: Column(
-                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       crossAxisAlignment:
@@ -375,7 +378,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(0.0, 0.97),
+                      alignment: AlignmentDirectional(0.0, 0.92),
                       child: Container(
                         width: 66.0,
                         height: 66.0,
@@ -410,7 +413,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(0.0, 0.72),
+                      alignment: AlignmentDirectional(0.0, 0.67),
                       child: Material(
                         color: Colors.transparent,
                         elevation: 0.0,
@@ -488,7 +491,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                 onTap: () async {
                                   Navigator.pop(context);
 
-                                  context.pushNamed('CreateWardrobe');
+                                  context.pushNamed('CreateWear');
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -807,6 +810,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                         FFAppState().page = 'Directory';
                                         FFAppState().pageIndex = 3;
                                       });
+                                      Navigator.pop(context);
                                     },
                                     child: Container(
                                       width: 70.0,
@@ -989,7 +993,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                 onTap: () async {
                                   Navigator.pop(context);
 
-                                  context.pushNamed('CreateWardrobe');
+                                  context.pushNamed('CreateWear');
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,

@@ -192,7 +192,6 @@ class _TakePhotoPPostUserWidgetState extends State<TakePhotoPPostUserWidget> {
                 FFButtonWidget(
                   onPressed: () async {
                     final selectedMedia = await selectMedia(
-                      imageQuality: 100,
                       mediaSource: MediaSource.photoGallery,
                       multiImage: false,
                     );
@@ -255,8 +254,8 @@ class _TakePhotoPPostUserWidgetState extends State<TakePhotoPPostUserWidget> {
                             FFUploadedFile(bytes: Uint8List.fromList([]));
                       });
                     } else {
-                      if (_model.uploadedLocalFile1 != null &&
-                          (_model.uploadedLocalFile1.bytes?.isNotEmpty ??
+                      if (_model.uploadedLocalFile2 != null &&
+                          (_model.uploadedLocalFile2.bytes?.isNotEmpty ??
                               false)) {
                         _model.uploadDateoutGallery =
                             await actions.uploadDatatoFireBase(

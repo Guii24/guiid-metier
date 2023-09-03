@@ -1,6 +1,10 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +12,12 @@ import 'component_companies_model.dart';
 export 'component_companies_model.dart';
 
 class ComponentCompaniesWidget extends StatefulWidget {
-  const ComponentCompaniesWidget({Key? key}) : super(key: key);
+  const ComponentCompaniesWidget({
+    Key? key,
+    required this.companyDoc,
+  }) : super(key: key);
+
+  final UsersRecord? companyDoc;
 
   @override
   _ComponentCompaniesWidgetState createState() =>
@@ -72,7 +81,7 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
                         shape: BoxShape.circle,
                       ),
                       child: Image.network(
-                        'https://picsum.photos/seed/471/600',
+                        widget.companyDoc!.photoUrl,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -84,7 +93,10 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'NETFLIX',
+                            valueOrDefault<String>(
+                              widget.companyDoc?.displayName,
+                              'name error',
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -108,53 +120,122 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
                                   ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 3.0, 0.0, 0.0),
-                            child: Text(
-                              'Los angelas | California',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark68,
-                                    fontSize: 14.0,
-                                  ),
+                          if (widget.companyDoc?.userLocation != null &&
+                              widget.companyDoc?.userLocation != '')
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 3.0, 0.0, 0.0),
+                              child: Text(
+                                valueOrDefault<String>(
+                                  widget.companyDoc?.userLocation,
+                                  'location error',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Libre Franklin',
+                                      color:
+                                          FlutterFlowTheme.of(context).dark68,
+                                      fontSize: 14.0,
+                                    ),
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-              FFButtonWidget(
-                onPressed: () {
-                  print('Button pressed ...');
-                },
-                text: 'FOLLOW',
-                options: FFButtonOptions(
-                  width: double.infinity,
-                  height: 33.0,
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primary,
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Libre Franklin',
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        fontSize: 14.0,
-                        letterSpacing: 0.5,
-                        fontWeight: FontWeight.normal,
-                      ),
-                  elevation: 0.0,
-                  borderSide: BorderSide(
-                    color: FlutterFlowTheme.of(context).dark52,
-                    width: 1.0,
+              if (valueOrDefault(currentUserDocument?.userType, '') == 'User')
+                AuthUserStreamWidget(
+                  builder: (context) => Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      if (!(currentUserDocument?.userFollowing?.toList() ?? [])
+                          .contains(widget.companyDoc?.reference))
+                        FFButtonWidget(
+                          onPressed: () async {
+                            await currentUserReference!.update({
+                              'user_following': FieldValue.arrayUnion(
+                                  [widget.companyDoc?.reference]),
+                            });
+
+                            await widget.companyDoc!.reference.update({
+                              'user_followers':
+                                  FieldValue.arrayUnion([currentUserReference]),
+                            });
+                            await actions.updatePage(
+                              context,
+                            );
+                          },
+                          text: 'FOLLOW',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 33.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Libre Franklin',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.5,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                            elevation: 0.0,
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).dark52,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                        ),
+                      if ((currentUserDocument?.userFollowing?.toList() ?? [])
+                          .contains(widget.companyDoc?.reference))
+                        FFButtonWidget(
+                          onPressed: () async {
+                            await currentUserReference!.update({
+                              'user_following': FieldValue.arrayRemove(
+                                  [widget.companyDoc?.reference]),
+                            });
+
+                            await widget.companyDoc!.reference.update({
+                              'user_followers': FieldValue.arrayRemove(
+                                  [currentUserReference]),
+                            });
+                            await actions.updatePage(
+                              context,
+                            );
+                          },
+                          text: 'FOLLOWING',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 33.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: Color(0x0A000000),
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Libre Franklin',
+                                  color: FlutterFlowTheme.of(context).dark68,
+                                  fontSize: 13.0,
+                                  letterSpacing: 0.5,
+                                ),
+                            elevation: 0.0,
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                    ],
                   ),
-                  borderRadius: BorderRadius.circular(4.0),
                 ),
-              ),
             ],
           ),
         ),

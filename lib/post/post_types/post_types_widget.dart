@@ -68,10 +68,11 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
         final columnUsersRecord = snapshot.data!;
         return SingleChildScrollView(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             children: [
               if ((columnUsersRecord.userType == 'User') &&
-                  (widget.postDoc?.postIsReposted == false))
+                  (widget.postDoc?.postIsReposted == false) &&
+                  (widget.postDoc?.postType == 'post'))
                 InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -96,7 +97,9 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
                     ),
                   ),
                 ),
-              if (columnUsersRecord.userType != 'User')
+              if ((columnUsersRecord.userType == 'Company') &&
+                  (widget.postDoc?.postIsReposted == false) &&
+                  (widget.postDoc?.postType == 'post'))
                 InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -121,7 +124,8 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
                     ),
                   ),
                 ),
-              if (widget.postDoc?.postIsReposted == true)
+              if ((widget.postDoc?.postType == 'post') &&
+                  widget.postDoc!.postIsReposted)
                 InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,

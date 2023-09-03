@@ -17,21 +17,19 @@ export '/articles/article_page/article_page_widget.dart' show ArticlePageWidget;
 export '/post/post_user/post_user_widget.dart' show PostUserWidget;
 export '/post/create_post/create_post/create_post_widget.dart'
     show CreatePostWidget;
-export '/post/create_post/create_wardrobe/create_wardrobe_widget.dart'
-    show CreateWardrobeWidget;
+export '/post/create_post/create_wear/create_wear_widget.dart'
+    show CreateWearWidget;
 export '/sourcing/sourcing_page/sourcing_page_widget.dart'
     show SourcingPageWidget;
 export '/sourcing/job_form/job_form_widget.dart' show JobFormWidget;
 export '/search/search_page/search_page_widget.dart' show SearchPageWidget;
-export '/search/search_result_page/search_result_page_widget.dart'
-    show SearchResultPageWidget;
+export '/search/search_result_page_o_l_d/search_result_page_o_l_d_widget.dart'
+    show SearchResultPageOLDWidget;
 export '/notifications/notifications_widget.dart' show NotificationsWidget;
-export '/subscription/subscription_widget.dart' show SubscriptionWidget;
 export '/my_profile/my_profile/my_profile_widget.dart' show MyProfileWidget;
 export '/my_profile/wardrobe_comment_page/wardrobe_comment_page_widget.dart'
     show WardrobeCommentPageWidget;
-export '/my_profile/edit_wardrobe/edit_wardrobe_widget.dart'
-    show EditWardrobeWidget;
+export '/my_profile/edit_wear/edit_wear_widget.dart' show EditWearWidget;
 export '/my_profile/followers/followers_widget.dart' show FollowersWidget;
 export '/my_profile/following/following_widget.dart' show FollowingWidget;
 export '/my_profile/edit_profile/edit_profile_widget.dart'
@@ -71,3 +69,17 @@ export '/nav_bar/main_page/main_page_widget.dart' show MainPageWidget;
 export '/post/post_page/post_page_widget.dart' show PostPageWidget;
 export '/post/post_page_reposted/post_page_reposted_widget.dart'
     show PostPageRepostedWidget;
+export '/my_profile/followers_other_users/followers_other_users_widget.dart'
+    show FollowersOtherUsersWidget;
+export '/my_profile/following_other_users/following_other_users_widget.dart'
+    show FollowingOtherUsersWidget;
+export '/settings/verification_edit_phone/verification_edit_phone_widget.dart'
+    show VerificationEditPhoneWidget;
+export '/settings/support_from_admin/support_from_admin_widget.dart'
+    show SupportFromAdminWidget;
+export '/settings/support_all_chats/support_all_chats_widget.dart'
+    show SupportAllChatsWidget;
+export '/my_profile/wear_page/wear_page_widget.dart' show WearPageWidget;
+export '/tesst/tesst_widget.dart' show TesstWidget;
+export '/search/search_result_page/search_result_page_widget.dart'
+    show SearchResultPageWidget;

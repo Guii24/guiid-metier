@@ -66,6 +66,16 @@ class PostRecord extends FirestoreRecord {
   DocumentReference? get postRepostedPost => _postRepostedPost;
   bool hasPostRepostedPost() => _postRepostedPost != null;
 
+  // "post_wear_items" field.
+  List<WearItemsStruct>? _postWearItems;
+  List<WearItemsStruct> get postWearItems => _postWearItems ?? const [];
+  bool hasPostWearItems() => _postWearItems != null;
+
+  // "post_type" field.
+  String? _postType;
+  String get postType => _postType ?? '';
+  bool hasPostType() => _postType != null;
+
   void _initializeFields() {
     _postImagesList = getDataList(snapshotData['post_images_list']);
     _postText = snapshotData['post_text'] as String?;
@@ -79,6 +89,11 @@ class PostRecord extends FirestoreRecord {
         snapshotData['post_reposted_creator'] as DocumentReference?;
     _postRepostedPost =
         snapshotData['post_reposted_post'] as DocumentReference?;
+    _postWearItems = getStructList(
+      snapshotData['post_wear_items'],
+      WearItemsStruct.fromMap,
+    );
+    _postType = snapshotData['post_type'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -121,6 +136,7 @@ Map<String, dynamic> createPostRecordData({
   bool? postIsReposted,
   DocumentReference? postRepostedCreator,
   DocumentReference? postRepostedPost,
+  String? postType,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -130,6 +146,7 @@ Map<String, dynamic> createPostRecordData({
       'post_isReposted': postIsReposted,
       'post_reposted_creator': postRepostedCreator,
       'post_reposted_post': postRepostedPost,
+      'post_type': postType,
     }.withoutNulls,
   );
 
@@ -151,7 +168,9 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         listEquality.equals(e1?.postCategory, e2?.postCategory) &&
         e1?.postIsReposted == e2?.postIsReposted &&
         e1?.postRepostedCreator == e2?.postRepostedCreator &&
-        e1?.postRepostedPost == e2?.postRepostedPost;
+        e1?.postRepostedPost == e2?.postRepostedPost &&
+        listEquality.equals(e1?.postWearItems, e2?.postWearItems) &&
+        e1?.postType == e2?.postType;
   }
 
   @override
@@ -165,7 +184,9 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         e?.postCategory,
         e?.postIsReposted,
         e?.postRepostedCreator,
-        e?.postRepostedPost
+        e?.postRepostedPost,
+        e?.postWearItems,
+        e?.postType
       ]);
 
   @override

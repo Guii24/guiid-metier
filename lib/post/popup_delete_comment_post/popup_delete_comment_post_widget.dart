@@ -95,13 +95,12 @@ class _PopupDeleteCommentPostWidgetState
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 7.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            Navigator.pop(context);
-                            await widget.commentPostref!.delete();
-
                             await widget.postref!.update({
                               'post_comments_list': FieldValue.arrayRemove(
                                   [widget.commentPostref]),
                             });
+                            await widget.commentPostref!.delete();
+                            Navigator.pop(context);
                           },
                           text: 'YES',
                           options: FFButtonOptions(

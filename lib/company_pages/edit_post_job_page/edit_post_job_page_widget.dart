@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/company_pages/job_type/job_type_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -5,8 +7,11 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/onboarding_sign_in/country_code/country_code_widget.dart';
 import '/sign_u_p/sign_up_location/sign_up_location_widget.dart';
-import '/sourcing/popup_sourcing/popup_sourcing_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +19,12 @@ import 'edit_post_job_page_model.dart';
 export 'edit_post_job_page_model.dart';
 
 class EditPostJobPageWidget extends StatefulWidget {
-  const EditPostJobPageWidget({Key? key}) : super(key: key);
+  const EditPostJobPageWidget({
+    Key? key,
+    required this.jobDoc,
+  }) : super(key: key);
+
+  final JobRecord? jobDoc;
 
   @override
   _EditPostJobPageWidgetState createState() => _EditPostJobPageWidgetState();
@@ -30,16 +40,30 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
     super.initState();
     _model = createModel(context, () => EditPostJobPageModel());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        FFAppState().selectedlocation = valueOrDefault<String>(
+          widget.jobDoc?.jobLocation,
+          'job location error',
+        );
+        FFAppState().selectedJobType =
+            widget.jobDoc!.jobType.toList().cast<String>();
+      });
+    });
+
     _model.textController1 ??=
-        TextEditingController(text: 'Corporate Assistant Stylist');
-    _model.textController2 ??= TextEditingController(
-        text:
-            'We are a tight-knit team looking for someone who is not afraid to roll up their sleeves and help with all things style. This is the perfect role for a problem solver who is obsessed with fashion. You\'ll be picking out the perfect outfits for the most stylish people around and won\'t stop.');
-    _model.textController3 ??= TextEditingController(text: '\$70 - \$110 / hr');
-    _model.textController4 ??= TextEditingController(text: 'New York, NY');
-    _model.textController5 ??= TextEditingController(text: 'Hybrid, Full-time');
-    _model.textController6 ??= TextEditingController(text: '(319) 555-0115');
-    _model.textController7 ??= TextEditingController();
+        TextEditingController(text: widget.jobDoc?.jobTittle);
+    _model.textController2 ??=
+        TextEditingController(text: widget.jobDoc?.jobDescription);
+    _model.textController3 ??=
+        TextEditingController(text: widget.jobDoc?.jobSalaryRate);
+    _model.textController4 ??=
+        TextEditingController(text: FFAppState().selectedlocation);
+    _model.textController5 ??=
+        TextEditingController(text: widget.jobDoc?.jobContactPhoneNumber);
+    _model.textController6 ??=
+        TextEditingController(text: widget.jobDoc?.jobContactEmail);
   }
 
   @override
@@ -98,19 +122,6 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
-                        child: Text(
-                          'Contrary to popular belief, Lorem Ipsum',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark68,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                        ),
-                      ),
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 22.0, 0.0, 0.0),
@@ -118,6 +129,11 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController1,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.textController1',
+                              Duration(milliseconds: 10),
+                              () => setState(() {}),
+                            ),
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -147,7 +163,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context).dark12,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(4.0),
@@ -201,6 +217,11 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController2,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.textController2',
+                              Duration(milliseconds: 10),
+                              () => setState(() {}),
+                            ),
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -222,7 +243,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context).dark12,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(3.0),
@@ -256,6 +277,10 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                             maxLines: 6,
                             validator: _model.textController2Validator
                                 .asValidator(context),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp('^.{1,250}'))
+                            ],
                           ),
                         ),
                       ),
@@ -274,6 +299,11 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController3,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.textController3',
+                              Duration(milliseconds: 10),
+                              () => setState(() {}),
+                            ),
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -294,7 +324,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context).dark12,
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(4.0),
@@ -340,6 +370,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                 width: double.infinity,
                                 child: TextFormField(
                                   controller: _model.textController4,
+                                  readOnly: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
@@ -433,110 +464,114 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 15.0, 0.0, 16.0),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                         child: Container(
                           width: double.infinity,
-                          height: 42.0,
+                          height: 56.0,
                           child: Stack(
                             children: [
-                              Container(
-                                width: double.infinity,
-                                child: TextFormField(
-                                  controller: _model.textController5,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    isDense: true,
-                                    hintText: 'Job type *',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .override(
-                                          fontFamily: 'Libre Franklin',
+                              Align(
+                                alignment: AlignmentDirectional(0.0, 1.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      barrierColor:
+                                          FlutterFlowTheme.of(context).dark38,
+                                      context: context,
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () => FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode),
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: JobTypeWidget(),
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => setState(() {}));
+                                  },
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    elevation: 0.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 42.0,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
+                                        border: Border.all(
                                           color: FlutterFlowTheme.of(context)
-                                              .dark38,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.normal,
+                                              .dark12,
                                         ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            FlutterFlowTheme.of(context).dark12,
-                                        width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        child: Builder(
+                                          builder: (context) {
+                                            final jobTypes = FFAppState()
+                                                .selectedJobType
+                                                .toList();
+                                            return SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: List.generate(
+                                                    jobTypes.length,
+                                                    (jobTypesIndex) {
+                                                  final jobTypesItem =
+                                                      jobTypes[jobTypesIndex];
+                                                  return Visibility(
+                                                    visible: FFAppState()
+                                                                .selectedlocation !=
+                                                            null &&
+                                                        FFAppState()
+                                                                .selectedlocation !=
+                                                            '',
+                                                    child: Text(
+                                                      FFAppState()
+                                                          .selectedlocation
+                                                          .maybeHandleOverflow(
+                                                            maxChars: 38,
+                                                            replacement: '…',
+                                                          ),
+                                                      maxLines: 1,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .dark88,
+                                                                fontSize: 15.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                    ),
+                                                  );
+                                                }).divide(SizedBox(width: 4.0)),
+                                              ),
+                                            );
+                                          },
+                                        ),
                                       ),
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                    suffixIcon: Icon(
-                                      FFIcons.kchevronBottomSm,
-                                      color:
-                                          FlutterFlowTheme.of(context).dark68,
-                                      size: 24.0,
                                     ),
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color:
-                                            FlutterFlowTheme.of(context).dark88,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                  minLines: 1,
-                                  validator: _model.textController5Validator
-                                      .asValidator(context),
-                                ),
-                              ),
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context)
-                                            .customColorBottomSh,
-                                    barrierColor:
-                                        FlutterFlowTheme.of(context).dark38,
-                                    context: context,
-                                    builder: (context) {
-                                      return GestureDetector(
-                                        onTap: () => FocusScope.of(context)
-                                            .requestFocus(_model.unfocusNode),
-                                        child: Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: JobTypeWidget(),
-                                        ),
-                                      );
-                                    },
-                                  ).then((value) => setState(() {}));
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 43.0,
-                                  decoration: BoxDecoration(),
                                 ),
                               ),
                             ],
@@ -671,7 +706,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                   ),
                                   Expanded(
                                     child: TextFormField(
-                                      controller: _model.textController6,
+                                      controller: _model.textController5,
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         isDense: true,
@@ -726,13 +761,14 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                             fontFamily: 'Libre Franklin',
                                             color: FlutterFlowTheme.of(context)
                                                 .dark88,
+                                            fontSize: 15.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                       minLines: 1,
                                       keyboardType: TextInputType.number,
-                                      validator: _model.textController6Validator
+                                      validator: _model.textController5Validator
                                           .asValidator(context),
-                                      inputFormatters: [_model.textFieldMask6],
+                                      inputFormatters: [_model.textFieldMask5],
                                     ),
                                   ),
                                 ],
@@ -744,7 +780,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                       Container(
                         width: double.infinity,
                         child: TextFormField(
-                          controller: _model.textController7,
+                          controller: _model.textController6,
                           obscureText: false,
                           decoration: InputDecoration(
                             isDense: true,
@@ -762,7 +798,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                 .override(
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark38,
-                                  fontSize: 16.0,
+                                  fontSize: 15.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             enabledBorder: OutlineInputBorder(
@@ -774,7 +810,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: FlutterFlowTheme.of(context).dark12,
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(4.0),
@@ -802,7 +838,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                   ),
                           minLines: 1,
                           keyboardType: TextInputType.emailAddress,
-                          validator: _model.textController7Validator
+                          validator: _model.textController6Validator
                               .asValidator(context),
                         ),
                       ),
@@ -831,31 +867,18 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(
                           16.0, 10.0, 16.0, 10.0),
                       child: FFButtonWidget(
-                        onPressed: () async {
-                          context.pushNamed('SourcingPage');
-
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: FlutterFlowTheme.of(context)
-                                .customColorBottomSh,
-                            barrierColor: FlutterFlowTheme.of(context).dark38,
-                            context: context,
-                            builder: (context) {
-                              return GestureDetector(
-                                onTap: () => FocusScope.of(context)
-                                    .requestFocus(_model.unfocusNode),
-                                child: Padding(
-                                  padding: MediaQuery.viewInsetsOf(context),
-                                  child: Container(
-                                    height:
-                                        MediaQuery.sizeOf(context).height * 1.0,
-                                    child: PopupSourcingWidget(),
-                                  ),
-                                ),
-                              );
-                            },
-                          ).then((value) => setState(() {}));
-                        },
+                        onPressed: (_model.textController1.text == null ||
+                                    _model.textController1.text == '') ||
+                                (_model.textController3.text == null ||
+                                    _model.textController3.text == '') ||
+                                (_model.textController4.text == null ||
+                                    _model.textController4.text == '')
+                            ? null
+                            : () async {
+                                await widget.jobDoc!.reference
+                                    .update(createJobRecordData());
+                                context.safePop();
+                              },
                         text: 'SUBMIT',
                         options: FFButtonOptions(
                           width: double.infinity,
@@ -877,6 +900,10 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                             color: Colors.transparent,
                           ),
                           borderRadius: BorderRadius.circular(5.0),
+                          disabledColor:
+                              FlutterFlowTheme.of(context).disbledColor,
+                          disabledTextColor:
+                              FlutterFlowTheme.of(context).primary,
                         ),
                       ),
                     ),

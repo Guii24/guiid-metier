@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -26,7 +27,7 @@ class _PhoneNumberPageWidgetState extends State<PhoneNumberPageWidget> {
     super.initState();
     _model = createModel(context, () => PhoneNumberPageModel());
 
-    _model.textController ??= TextEditingController(text: '(319) 555-0115');
+    _model.textController ??= TextEditingController(text: currentPhoneNumber);
   }
 
   @override
@@ -107,15 +108,18 @@ class _PhoneNumberPageWidgetState extends State<PhoneNumberPageWidget> {
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              'US +1',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark52,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                            AuthUserStreamWidget(
+                              builder: (context) => Text(
+                                '${valueOrDefault(currentUserDocument?.userPhoneCode, '')} ${valueOrDefault(currentUserDocument?.userPhoneDialCode, '')}',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Libre Franklin',
+                                      color:
+                                          FlutterFlowTheme.of(context).dark52,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -137,66 +141,68 @@ class _PhoneNumberPageWidgetState extends State<PhoneNumberPageWidget> {
                               ),
                             ),
                             Expanded(
-                              child: TextFormField(
-                                controller: _model.textController,
-                                readOnly: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  hintText: 'Phone number *',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .bodySmall
+                              child: AuthUserStreamWidget(
+                                builder: (context) => TextFormField(
+                                  controller: _model.textController,
+                                  readOnly: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: 'Phone number *',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodySmall
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark38,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.normal,
+                                          lineHeight: 1.0,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
                                       .override(
                                         fontFamily: 'Libre Franklin',
                                         color:
-                                            FlutterFlowTheme.of(context).dark38,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.normal,
+                                            FlutterFlowTheme.of(context).dark52,
+                                        fontWeight: FontWeight.w500,
                                         lineHeight: 1.0,
                                       ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(4.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(4.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(4.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(4.0),
-                                  ),
+                                  minLines: 1,
+                                  keyboardType: TextInputType.number,
+                                  validator: _model.textControllerValidator
+                                      .asValidator(context),
+                                  inputFormatters: [_model.textFieldMask],
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Libre Franklin',
-                                      color:
-                                          FlutterFlowTheme.of(context).dark52,
-                                      fontWeight: FontWeight.w500,
-                                      lineHeight: 1.0,
-                                    ),
-                                minLines: 1,
-                                keyboardType: TextInputType.number,
-                                validator: _model.textControllerValidator
-                                    .asValidator(context),
-                                inputFormatters: [_model.textFieldMask],
                               ),
                             ),
                           ],
@@ -205,29 +211,34 @@ class _PhoneNumberPageWidgetState extends State<PhoneNumberPageWidget> {
                     ),
                   ),
                 ),
-                FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
-                  },
-                  text: 'CHANGE PHONE NUMBER',
-                  options: FFButtonOptions(
-                    width: double.infinity,
-                    height: 48.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Libre Franklin',
-                          color: Colors.white,
-                          fontSize: 15.0,
-                          letterSpacing: 0.5,
-                        ),
-                    elevation: 0.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      context.pushNamed('PhoneNumberEdit');
+                    },
+                    text: 'CHANGE PHONE NUMBER',
+                    options: FFButtonOptions(
+                      width: double.infinity,
+                      height: 48.0,
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      iconPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Libre Franklin',
+                                color: Colors.white,
+                                fontSize: 15.0,
+                                letterSpacing: 0.5,
+                              ),
+                      elevation: 0.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
               ],

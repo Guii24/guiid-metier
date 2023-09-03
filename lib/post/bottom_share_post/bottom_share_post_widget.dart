@@ -309,6 +309,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                         postIsReposted: true,
                         postRepostedCreator: widget.user,
                         postRepostedPost: widget.repostpost,
+                        postType: 'post',
                       ));
                   Navigator.pop(context);
                 },
@@ -326,6 +327,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                         fontSize: 14.0,
                         fontWeight: FontWeight.normal,
                       ),
+                  elevation: 0.0,
                   borderSide: BorderSide(
                     color: FlutterFlowTheme.of(context).dark88,
                     width: 1.0,

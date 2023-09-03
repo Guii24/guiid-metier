@@ -1,9 +1,9 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/popup_delete_post/popup_delete_post_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -13,10 +13,10 @@ export 'bottom_editop_delete_post_model.dart';
 class BottomEditopDeletePostWidget extends StatefulWidget {
   const BottomEditopDeletePostWidget({
     Key? key,
-    this.postref,
+    this.post,
   }) : super(key: key);
 
-  final DocumentReference? postref;
+  final PostRecord? post;
 
   @override
   _BottomEditopDeletePostWidgetState createState() =>
@@ -99,7 +99,7 @@ class _BottomEditopDeletePostWidgetState
                                 return Material(
                                   color: Colors.transparent,
                                   child: PopupDeletePostWidget(
-                                    postfer: widget.postref,
+                                    postfer: widget.post,
                                   ),
                                 );
                               },
@@ -140,6 +140,19 @@ class _BottomEditopDeletePostWidgetState
                       child: FFButtonWidget(
                         onPressed: () async {
                           Navigator.pop(context);
+
+                          context.pushNamed(
+                            'EditPost',
+                            queryParameters: {
+                              'postRef': serializeParam(
+                                widget.post,
+                                ParamType.Document,
+                              ),
+                            }.withoutNulls,
+                            extra: <String, dynamic>{
+                              'postRef': widget.post,
+                            },
+                          );
                         },
                         text: 'EDIT',
                         options: FFButtonOptions(

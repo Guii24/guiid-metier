@@ -13,10 +13,12 @@ class CountryCodeWidget extends StatefulWidget {
     Key? key,
     this.userType,
     this.signin,
+    this.editprofCompany,
   }) : super(key: key);
 
   final String? userType;
   final bool? signin;
+  final bool? editprofCompany;
 
   @override
   _CountryCodeWidgetState createState() => _CountryCodeWidgetState();
@@ -223,16 +225,34 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                     });
                                     Navigator.pop(context);
                                   } else {
-                                    setState(() {
-                                      FFAppState().countryInfoCompany =
-                                          countryCodeItem;
-                                      FFAppState().countryCode =
-                                          functions.deleteSPlus(getJsonField(
-                                        countryCodeItem,
-                                        r'''$.dial_code''',
-                                      ).toString());
-                                    });
-                                    Navigator.pop(context);
+                                    if (widget.editprofCompany!) {
+                                      setState(() {
+                                        FFAppState().countryInfoCompany =
+                                            countryCodeItem;
+                                      });
+                                      setState(() {
+                                        FFAppState().countryCode =
+                                            '${getJsonField(
+                                          FFAppState().countryInfoCompany,
+                                          r'''$.code''',
+                                        ).toString()} ${getJsonField(
+                                          FFAppState().countryInfoCompany,
+                                          r'''$.dial_code''',
+                                        ).toString()}';
+                                      });
+                                      Navigator.pop(context);
+                                    } else {
+                                      setState(() {
+                                        FFAppState().countryInfoCompany =
+                                            countryCodeItem;
+                                        FFAppState().countryCode =
+                                            functions.deleteSPlus(getJsonField(
+                                          countryCodeItem,
+                                          r'''$.dial_code''',
+                                        ).toString());
+                                      });
+                                      Navigator.pop(context);
+                                    }
                                   }
                                 }
                               },

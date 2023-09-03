@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -10,19 +11,13 @@ class FollowingModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Model for ComponentFollowing component.
-  late ComponentFollowingModel componentFollowingModel;
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {
-    componentFollowingModel =
-        createModel(context, () => ComponentFollowingModel());
-  }
+  void initState(BuildContext context) {}
 
   void dispose() {
     unfocusNode.dispose();
-    componentFollowingModel.dispose();
   }
 
   /// Action blocks are added here.

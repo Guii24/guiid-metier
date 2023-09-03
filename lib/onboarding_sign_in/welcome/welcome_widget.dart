@@ -128,7 +128,8 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                         setState(() {
                           FFAppState().countryInfo = jsonDecode(
                               '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-                          FFAppState().countryInfoCompany = null;
+                          FFAppState().countryInfoCompany = jsonDecode(
+                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
                         });
                         await showModalBottomSheet(
                           isScrollControlled: true,

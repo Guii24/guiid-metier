@@ -1,7 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,58 +32,32 @@ class _SpashScreenWidgetState extends State<SpashScreenWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await actions.lockOrientation();
-      await Future.delayed(const Duration(milliseconds: 1000));
-      if (valueOrDefault(currentUserDocument?.userType, '') == 'User') {
-        if (valueOrDefault(currentUserDocument?.userBio, '') == null ||
-            valueOrDefault(currentUserDocument?.userBio, '') == '') {
-          context.goNamed(
-            'signupBioUser',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
-          );
-        } else {
-          context.goNamed(
-            'MainPage',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
-          );
+      if (isiOS) {
+        final isEntitled = await revenue_cat.isEntitled('Premium');
+        if (isEntitled == null) {
+          return;
+        } else if (!isEntitled) {
+          await revenue_cat.loadOfferings();
         }
-      } else {
-        if (valueOrDefault(currentUserDocument?.userLocation, '') == null ||
-            valueOrDefault(currentUserDocument?.userLocation, '') == '') {
-          context.goNamed(
-            'signupBioCompany',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
-          );
-        } else {
-          context.goNamed(
-            'MainPage',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
-          );
+
+        if (!isEntitled) {
+          await currentUserReference!.update(createUsersRecordData(
+            userSubscription: false,
+          ));
         }
       }
+      await Future.delayed(const Duration(milliseconds: 1000));
+
+      context.goNamed(
+        'MainPage',
+        extra: <String, dynamic>{
+          kTransitionInfoKey: TransitionInfo(
+            hasTransition: true,
+            transitionType: PageTransitionType.fade,
+            duration: Duration(milliseconds: 0),
+          ),
+        },
+      );
     });
   }
 

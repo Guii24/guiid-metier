@@ -169,7 +169,7 @@ class _CommentPostWidgetState extends State<CommentPostWidget> {
                         highlightColor: Colors.transparent,
                         onTap: () async {
                           if (currentUserReference ==
-                              columnUsersRecord.reference) {
+                              containerCommentPostRecord.commentPostUser) {
                             await showModalBottomSheet(
                               isScrollControlled: true,
                               backgroundColor: Color(0x01000000),

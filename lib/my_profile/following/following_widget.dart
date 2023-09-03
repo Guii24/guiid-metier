@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -73,29 +74,36 @@ class _FollowingWidgetState extends State<FollowingWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                      child: wrapWithModel(
-                        model: _model.componentFollowingModel,
-                        updateCallback: () => setState(() {}),
-                        child: ComponentFollowingWidget(),
-                      ),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            child: AuthUserStreamWidget(
+              builder: (context) => Builder(
+                builder: (context) {
+                  final following =
+                      (currentUserDocument?.userFollowing?.toList() ?? [])
+                          .toList();
+                  return ListView.separated(
+                    padding: EdgeInsets.fromLTRB(
+                      0,
+                      20.0,
+                      0,
+                      0,
                     ),
-                  ],
-                ),
+                    scrollDirection: Axis.vertical,
+                    itemCount: following.length,
+                    separatorBuilder: (_, __) => SizedBox(height: 20.0),
+                    itemBuilder: (context, followingIndex) {
+                      final followingItem = following[followingIndex];
+                      return ComponentFollowingWidget(
+                        key: Key(
+                            'Key31l_${followingIndex}_of_${following.length}'),
+                        userRef: followingItem,
+                      );
+                    },
+                  );
+                },
               ),
-            ],
+            ),
           ),
         ),
       ),

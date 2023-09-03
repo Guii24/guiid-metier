@@ -14,11 +14,13 @@ class BottomReportWidget extends StatefulWidget {
     this.post,
     this.commentPost,
     required this.type,
+    this.userRef,
   }) : super(key: key);
 
   final DocumentReference? post;
   final DocumentReference? commentPost;
   final String? type;
+  final DocumentReference? userRef;
 
   @override
   _BottomReportWidgetState createState() => _BottomReportWidgetState();
@@ -54,6 +56,7 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 80.0, 0.0, 0.0),
       child: Container(
         width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primary,
           borderRadius: BorderRadius.only(
@@ -66,7 +69,7 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(16.0, 13.0, 16.0, 53.0),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 width: 32.0,
@@ -104,7 +107,12 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                   builder: (context) {
                     final listreport = FFAppState().listTypeReport.toList();
                     return ListView.builder(
-                      padding: EdgeInsets.zero,
+                      padding: EdgeInsets.fromLTRB(
+                        0,
+                        0,
+                        0,
+                        20.0,
+                      ),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemCount: listreport.length,
@@ -252,6 +260,7 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                                         return 'Any other content concerns not specified in the other categories.';
                                       }
                                     }(),
+                                    userRef: widget.userRef,
                                   ),
                                 );
                               },

@@ -129,7 +129,7 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                         return;
                       }
 
-                      context.pushNamedAuth('SpashScreen', context.mounted);
+                      context.goNamedAuth('SpashScreen', context.mounted);
                     },
                     onChange: () async {},
                   ),

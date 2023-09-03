@@ -1,3 +1,5 @@
+import '/backend/backend.dart';
+import '/company_pages/bottom_editor_delete_job/bottom_editor_delete_job_widget.dart';
 import '/company_pages/bottom_job_details_applicant/bottom_job_details_applicant_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';

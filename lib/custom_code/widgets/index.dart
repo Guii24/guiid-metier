@@ -8,3 +8,4 @@ export 'popup_nav_bar_user.dart' show PopupNavBarUser;
 export 'bottom_nav_bar_with_f_a_b.dart' show BottomNavBarWithFAB;
 export 'calendars.dart' show Calendars;
 export 'pin_code.dart' show PinCode;
+export 'icon_managers.dart' show IconManagers;

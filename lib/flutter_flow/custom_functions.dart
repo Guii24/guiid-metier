@@ -10,6 +10,7 @@ import 'place.dart';
 import 'uploaded_file.dart';
 import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '/backend/schema/structs/index.dart';
 import '/auth/firebase_auth/auth_util.dart';
 
 List<dynamic>? getPhoneNumberCountriesList() {
@@ -449,7 +450,7 @@ List<dynamic> search(
     return countryCodes;
   }
   for (dynamic i in countryCodes) {
-    if (i['name']
+    if (i["name"]
         .toString()
         .toLowerCase()
         .contains(searchingText.toLowerCase())) {
@@ -488,4 +489,93 @@ List<PostRecord> combineTwoList(
   // combine two list and return one
   List<PostRecord> combinedList = [...list1, ...list2];
   return combinedList;
+}
+
+List<String> returnJobType(
+  String jobSalary,
+  List<String> jobType,
+) {
+  List<String> Info = [];
+  Info.add(jobSalary);
+  Info.addAll(jobType);
+  return Info;
+}
+
+String imageToString(String url) {
+  return url.toString();
+}
+
+List<PostRecord> searchPosts(
+  String searchingText,
+  List<PostRecord> posts,
+) {
+  List<PostRecord> filteredPosts = [];
+  for (PostRecord item in posts) {
+    String name = '${item.postText}'.toLowerCase();
+    if (name.contains(searchingText.toLowerCase())) {
+      filteredPosts.add(item);
+    }
+  }
+  return filteredPosts;
+}
+
+List<JobRecord> searchJob(
+  String searchingText,
+  List<JobRecord> jobs,
+) {
+  List<JobRecord> filteredjobs = [];
+  for (JobRecord item in jobs) {
+    String name = '${item.jobTittle} ${item.jobDescription}.'.toLowerCase();
+    if (name.contains(searchingText.toLowerCase())) {
+      filteredjobs.add(item);
+    }
+  }
+  return filteredjobs;
+}
+
+List<UsersRecord> searchUser(
+  String searchingText,
+  List<UsersRecord> users,
+) {
+  List<UsersRecord> filteredUsers = [];
+  for (UsersRecord item in users) {
+    String name = '${item.displayName}'.toLowerCase();
+    if (name.contains(searchingText.toLowerCase())) {
+      filteredUsers.add(item);
+    }
+  }
+  return filteredUsers;
+}
+
+String returnTextFromJson(
+  dynamic json,
+  String value,
+) {
+  // Access values from JSON
+
+  return json['$value'].toString();
+}
+
+dynamic jsonAsString(
+  String name,
+  String code,
+  String flag,
+  String dialCode,
+) {
+// {"name": "Afghanistan", "flag": "🇦🇫", "code": "AF", "dial_code": "+93"},
+  return '{"name": "$name", "flag": "🇦$flag", "code": "$code", "dial_code": "$dialCode"}';
+}
+
+List<ArticlesRecord> searchArticles(
+  String searchingText,
+  List<ArticlesRecord> articles,
+) {
+  List<ArticlesRecord> filteredArticles = [];
+  for (ArticlesRecord item in articles) {
+    String name = '${item.articleTitle}'.toLowerCase();
+    if (name.contains(searchingText.toLowerCase())) {
+      filteredArticles.add(item);
+    }
+  }
+  return filteredArticles;
 }

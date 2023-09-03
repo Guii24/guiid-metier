@@ -106,11 +106,6 @@ class UsersRecord extends FirestoreRecord {
   DateTime? get userSubscriptionFinalDate => _userSubscriptionFinalDate;
   bool hasUserSubscriptionFinalDate() => _userSubscriptionFinalDate != null;
 
-  // "user_country_code" field.
-  int? _userCountryCode;
-  int get userCountryCode => _userCountryCode ?? 0;
-  bool hasUserCountryCode() => _userCountryCode != null;
-
   // "user_isCompany" field.
   bool? _userIsCompany;
   bool get userIsCompany => _userIsCompany ?? false;
@@ -125,11 +120,6 @@ class UsersRecord extends FirestoreRecord {
   String? _userEmailCompany;
   String get userEmailCompany => _userEmailCompany ?? '';
   bool hasUserEmailCompany() => _userEmailCompany != null;
-
-  // "user_recent_search" field.
-  String? _userRecentSearch;
-  String get userRecentSearch => _userRecentSearch ?? '';
-  bool hasUserRecentSearch() => _userRecentSearch != null;
 
   // "user_repost_post" field.
   List<DocumentReference>? _userRepostPost;
@@ -150,6 +140,42 @@ class UsersRecord extends FirestoreRecord {
   String? _userLocation;
   String get userLocation => _userLocation ?? '';
   bool hasUserLocation() => _userLocation != null;
+
+  // "user_email" field.
+  String? _userEmail;
+  String get userEmail => _userEmail ?? '';
+  bool hasUserEmail() => _userEmail != null;
+
+  // "user_phone_name" field.
+  String? _userPhoneName;
+  String get userPhoneName => _userPhoneName ?? '';
+  bool hasUserPhoneName() => _userPhoneName != null;
+
+  // "user_phone_code" field.
+  String? _userPhoneCode;
+  String get userPhoneCode => _userPhoneCode ?? '';
+  bool hasUserPhoneCode() => _userPhoneCode != null;
+
+  // "user_phone_flag" field.
+  String? _userPhoneFlag;
+  String get userPhoneFlag => _userPhoneFlag ?? '';
+  bool hasUserPhoneFlag() => _userPhoneFlag != null;
+
+  // "user_phone_dial_code" field.
+  String? _userPhoneDialCode;
+  String get userPhoneDialCode => _userPhoneDialCode ?? '';
+  bool hasUserPhoneDialCode() => _userPhoneDialCode != null;
+
+  // "user_recent_search" field.
+  List<RecentSearchStruct>? _userRecentSearch;
+  List<RecentSearchStruct> get userRecentSearch =>
+      _userRecentSearch ?? const [];
+  bool hasUserRecentSearch() => _userRecentSearch != null;
+
+  // "user_contact_phone" field.
+  String? _userContactPhone;
+  String get userContactPhone => _userContactPhone ?? '';
+  bool hasUserContactPhone() => _userContactPhone != null;
 
   void _initializeFields() {
     _displayName = snapshotData['display_name'] as String?;
@@ -172,15 +198,23 @@ class UsersRecord extends FirestoreRecord {
         snapshotData['user_subscription_start_date'] as DateTime?;
     _userSubscriptionFinalDate =
         snapshotData['user_subscription_final_date'] as DateTime?;
-    _userCountryCode = castToType<int>(snapshotData['user_country_code']);
     _userIsCompany = snapshotData['user_isCompany'] as bool?;
     _userCompanyName = snapshotData['user_company_name'] as String?;
     _userEmailCompany = snapshotData['user_email_company'] as String?;
-    _userRecentSearch = snapshotData['user_recent_search'] as String?;
     _userRepostPost = getDataList(snapshotData['user_repost_post']);
     _userSharedPosts = getDataList(snapshotData['user_shared_posts']);
     _email = snapshotData['email'] as String?;
     _userLocation = snapshotData['user_location'] as String?;
+    _userEmail = snapshotData['user_email'] as String?;
+    _userPhoneName = snapshotData['user_phone_name'] as String?;
+    _userPhoneCode = snapshotData['user_phone_code'] as String?;
+    _userPhoneFlag = snapshotData['user_phone_flag'] as String?;
+    _userPhoneDialCode = snapshotData['user_phone_dial_code'] as String?;
+    _userRecentSearch = getStructList(
+      snapshotData['user_recent_search'],
+      RecentSearchStruct.fromMap,
+    );
+    _userContactPhone = snapshotData['user_contact_phone'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -231,13 +265,17 @@ Map<String, dynamic> createUsersRecordData({
   String? userSubscriptionType,
   DateTime? userSubscriptionStartDate,
   DateTime? userSubscriptionFinalDate,
-  int? userCountryCode,
   bool? userIsCompany,
   String? userCompanyName,
   String? userEmailCompany,
-  String? userRecentSearch,
   String? email,
   String? userLocation,
+  String? userEmail,
+  String? userPhoneName,
+  String? userPhoneCode,
+  String? userPhoneFlag,
+  String? userPhoneDialCode,
+  String? userContactPhone,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -255,13 +293,17 @@ Map<String, dynamic> createUsersRecordData({
       'user_subscription_type': userSubscriptionType,
       'user_subscription_start_date': userSubscriptionStartDate,
       'user_subscription_final_date': userSubscriptionFinalDate,
-      'user_country_code': userCountryCode,
       'user_isCompany': userIsCompany,
       'user_company_name': userCompanyName,
       'user_email_company': userEmailCompany,
-      'user_recent_search': userRecentSearch,
       'email': email,
       'user_location': userLocation,
+      'user_email': userEmail,
+      'user_phone_name': userPhoneName,
+      'user_phone_code': userPhoneCode,
+      'user_phone_flag': userPhoneFlag,
+      'user_phone_dial_code': userPhoneDialCode,
+      'user_contact_phone': userContactPhone,
     }.withoutNulls,
   );
 
@@ -292,15 +334,20 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.userSubscriptionType == e2?.userSubscriptionType &&
         e1?.userSubscriptionStartDate == e2?.userSubscriptionStartDate &&
         e1?.userSubscriptionFinalDate == e2?.userSubscriptionFinalDate &&
-        e1?.userCountryCode == e2?.userCountryCode &&
         e1?.userIsCompany == e2?.userIsCompany &&
         e1?.userCompanyName == e2?.userCompanyName &&
         e1?.userEmailCompany == e2?.userEmailCompany &&
-        e1?.userRecentSearch == e2?.userRecentSearch &&
         listEquality.equals(e1?.userRepostPost, e2?.userRepostPost) &&
         listEquality.equals(e1?.userSharedPosts, e2?.userSharedPosts) &&
         e1?.email == e2?.email &&
-        e1?.userLocation == e2?.userLocation;
+        e1?.userLocation == e2?.userLocation &&
+        e1?.userEmail == e2?.userEmail &&
+        e1?.userPhoneName == e2?.userPhoneName &&
+        e1?.userPhoneCode == e2?.userPhoneCode &&
+        e1?.userPhoneFlag == e2?.userPhoneFlag &&
+        e1?.userPhoneDialCode == e2?.userPhoneDialCode &&
+        listEquality.equals(e1?.userRecentSearch, e2?.userRecentSearch) &&
+        e1?.userContactPhone == e2?.userContactPhone;
   }
 
   @override
@@ -323,15 +370,20 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.userSubscriptionType,
         e?.userSubscriptionStartDate,
         e?.userSubscriptionFinalDate,
-        e?.userCountryCode,
         e?.userIsCompany,
         e?.userCompanyName,
         e?.userEmailCompany,
-        e?.userRecentSearch,
         e?.userRepostPost,
         e?.userSharedPosts,
         e?.email,
-        e?.userLocation
+        e?.userLocation,
+        e?.userEmail,
+        e?.userPhoneName,
+        e?.userPhoneCode,
+        e?.userPhoneFlag,
+        e?.userPhoneDialCode,
+        e?.userRecentSearch,
+        e?.userContactPhone
       ]);
 
   @override
