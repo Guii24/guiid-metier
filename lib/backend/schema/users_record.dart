@@ -177,6 +177,26 @@ class UsersRecord extends FirestoreRecord {
   String get userContactPhone => _userContactPhone ?? '';
   bool hasUserContactPhone() => _userContactPhone != null;
 
+  // "user_contact_name" field.
+  String? _userContactName;
+  String get userContactName => _userContactName ?? '';
+  bool hasUserContactName() => _userContactName != null;
+
+  // "user_contact_code" field.
+  String? _userContactCode;
+  String get userContactCode => _userContactCode ?? '';
+  bool hasUserContactCode() => _userContactCode != null;
+
+  // "user_contact_flag" field.
+  String? _userContactFlag;
+  String get userContactFlag => _userContactFlag ?? '';
+  bool hasUserContactFlag() => _userContactFlag != null;
+
+  // "user_contact_dial_code" field.
+  String? _userContactDialCode;
+  String get userContactDialCode => _userContactDialCode ?? '';
+  bool hasUserContactDialCode() => _userContactDialCode != null;
+
   void _initializeFields() {
     _displayName = snapshotData['display_name'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
@@ -215,6 +235,10 @@ class UsersRecord extends FirestoreRecord {
       RecentSearchStruct.fromMap,
     );
     _userContactPhone = snapshotData['user_contact_phone'] as String?;
+    _userContactName = snapshotData['user_contact_name'] as String?;
+    _userContactCode = snapshotData['user_contact_code'] as String?;
+    _userContactFlag = snapshotData['user_contact_flag'] as String?;
+    _userContactDialCode = snapshotData['user_contact_dial_code'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -276,6 +300,10 @@ Map<String, dynamic> createUsersRecordData({
   String? userPhoneFlag,
   String? userPhoneDialCode,
   String? userContactPhone,
+  String? userContactName,
+  String? userContactCode,
+  String? userContactFlag,
+  String? userContactDialCode,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -304,6 +332,10 @@ Map<String, dynamic> createUsersRecordData({
       'user_phone_flag': userPhoneFlag,
       'user_phone_dial_code': userPhoneDialCode,
       'user_contact_phone': userContactPhone,
+      'user_contact_name': userContactName,
+      'user_contact_code': userContactCode,
+      'user_contact_flag': userContactFlag,
+      'user_contact_dial_code': userContactDialCode,
     }.withoutNulls,
   );
 
@@ -347,7 +379,11 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.userPhoneFlag == e2?.userPhoneFlag &&
         e1?.userPhoneDialCode == e2?.userPhoneDialCode &&
         listEquality.equals(e1?.userRecentSearch, e2?.userRecentSearch) &&
-        e1?.userContactPhone == e2?.userContactPhone;
+        e1?.userContactPhone == e2?.userContactPhone &&
+        e1?.userContactName == e2?.userContactName &&
+        e1?.userContactCode == e2?.userContactCode &&
+        e1?.userContactFlag == e2?.userContactFlag &&
+        e1?.userContactDialCode == e2?.userContactDialCode;
   }
 
   @override
@@ -383,7 +419,11 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.userPhoneFlag,
         e?.userPhoneDialCode,
         e?.userRecentSearch,
-        e?.userContactPhone
+        e?.userContactPhone,
+        e?.userContactName,
+        e?.userContactCode,
+        e?.userContactFlag,
+        e?.userContactDialCode
       ]);
 
   @override

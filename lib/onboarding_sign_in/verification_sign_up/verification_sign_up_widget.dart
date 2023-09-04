@@ -162,6 +162,11 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                             userPhoneCode: widget.phoneCode,
                             userPhoneFlag: widget.phoneFlag,
                             userPhoneDialCode: widget.phoneDialCode,
+                            userContactPhone: widget.phoneoriginal,
+                            userContactName: widget.phoneName,
+                            userContactCode: widget.phoneCode,
+                            userContactFlag: widget.phoneFlag,
+                            userContactDialCode: widget.phoneDialCode,
                           ));
 
                       context.goNamedAuth('signupBioUser', context.mounted);

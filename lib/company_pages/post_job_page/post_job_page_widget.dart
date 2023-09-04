@@ -599,25 +599,24 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        if (FFAppState().countryInfo != null)
-                                          Text(
-                                            valueOrDefault<String>(
-                                              '${getJsonField(
-                                                FFAppState().countryInfo,
-                                                r'''$.code''',
-                                              ).toString()} ${getJsonField(
-                                                FFAppState().countryInfo,
-                                                r'''$.dial_code''',
-                                              ).toString()}',
-                                              'US +1',
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                        Text(
+                                          valueOrDefault<String>(
+                                            '${getJsonField(
+                                              FFAppState().countryInfo,
+                                              r'''$.code''',
+                                            ).toString()} ${getJsonField(
+                                              FFAppState().countryInfo,
+                                              r'''$.dial_code''',
+                                            ).toString()}',
+                                            'US +1',
                                           ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Libre Franklin',
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -844,6 +843,8 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                   FFAppState().update(() {
                                     FFAppState().page = 'Sourcing';
                                     FFAppState().pageIndex = 2;
+                                    FFAppState().countryInfo = jsonDecode(
+                                        '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
                                   });
 
                                   context.goNamed('MainPage');

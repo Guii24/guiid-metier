@@ -1077,7 +1077,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                           ),
                         ),
                       ),
-                      if (valueOrDefault(currentUserDocument?.userType, '') !=
+                      if (valueOrDefault(currentUserDocument?.userType, '') ==
                           'User')
                         Align(
                           alignment: AlignmentDirectional(0.0, 0.63),

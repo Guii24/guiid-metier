@@ -9,6 +9,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/onboarding_sign_in/country_code/country_code_widget.dart';
 import '/sign_u_p/bottom_preference/bottom_preference_widget.dart';
 import '/sign_u_p/sign_up_location/sign_up_location_widget.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -46,12 +47,15 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
         FFAppState().profilePhotoCompany = currentUserPhoto;
         FFAppState().selectedlocation =
             valueOrDefault(currentUserDocument?.userLocation, '');
-        FFAppState().countryCode =
-            '${valueOrDefault(currentUserDocument?.userPhoneCode, '')} ${valueOrDefault(currentUserDocument?.userPhoneDialCode, '')}';
         FFAppState().choosenPreference =
             (currentUserDocument?.userPreferences?.toList() ?? [])
                 .toList()
                 .cast<String>();
+        FFAppState().countryInfoCompany = functions.jsonAsString(
+            valueOrDefault(currentUserDocument?.userContactName, ''),
+            valueOrDefault(currentUserDocument?.userContactCode, ''),
+            valueOrDefault(currentUserDocument?.userContactFlag, ''),
+            valueOrDefault(currentUserDocument?.userContactDialCode, ''));
       });
     });
 
@@ -775,7 +779,13 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                         ).then((value) => setState(() {}));
                                       },
                                       child: Text(
-                                        FFAppState().countryCode,
+                                        '${getJsonField(
+                                          FFAppState().countryInfoCompany,
+                                          r'''$.code''',
+                                        ).toString()} ${getJsonField(
+                                          FFAppState().countryInfoCompany,
+                                          r'''$.dial_code''',
+                                        ).toString()}',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -1054,19 +1064,21 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                             FFAppState().selectedlocation,
                                         userEmail: _model.textController4.text,
                                         email: _model.textController3.text,
-                                        userPhoneName: getJsonField(
+                                        userContactPhone:
+                                            _model.textController3.text,
+                                        userContactName: getJsonField(
                                           FFAppState().countryInfoCompany,
                                           r'''$.name''',
                                         ).toString(),
-                                        userPhoneCode: getJsonField(
+                                        userContactCode: getJsonField(
                                           FFAppState().countryInfoCompany,
                                           r'''$.code''',
                                         ).toString(),
-                                        userPhoneFlag: getJsonField(
+                                        userContactFlag: getJsonField(
                                           FFAppState().countryInfoCompany,
                                           r'''$.flag''',
                                         ).toString(),
-                                        userPhoneDialCode: getJsonField(
+                                        userContactDialCode: getJsonField(
                                           FFAppState().countryInfoCompany,
                                           r'''$.dial_code''',
                                         ).toString(),

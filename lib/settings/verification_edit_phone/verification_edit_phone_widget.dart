@@ -4,9 +4,11 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/settings/custom_dialog_phone_change/custom_dialog_phone_change_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -109,53 +111,82 @@ class _VerificationEditPhoneWidgetState
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Container(
-                  width: double.infinity,
-                  height: 120.0,
-                  child: custom_widgets.PinCode(
+                Builder(
+                  builder: (context) => Container(
                     width: double.infinity,
                     height: 120.0,
-                    code: '1111',
-                    onCompleted: () async {
-                      await actions.reAuthUser(
-                        currentUserEmail,
-                        '123456',
-                      );
-
-                      await currentUserReference!.update(createUsersRecordData(
-                        phoneNumber: widget.phoneOrifinal,
-                        userPhoneName: widget.phoneName,
-                        userPhoneCode: widget.phoneCode,
-                        userPhoneFlag: widget.phoneFlag,
-                        userPhoneDialCode: widget.phoneDialCode,
-                      ));
-                      if ('${widget.phoneNumberEdited}@gmail.com'.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Email required!',
-                            ),
-                          ),
+                    child: custom_widgets.PinCode(
+                      width: double.infinity,
+                      height: 120.0,
+                      code: '1111',
+                      onCompleted: () async {
+                        await actions.reAuthUser(
+                          currentUserEmail,
+                          '123456',
                         );
-                        return;
-                      }
 
-                      await authManager.updateEmail(
-                        email: '${widget.phoneNumberEdited}@gmail.com',
-                        context: context,
-                      );
-                      setState(() {});
+                        await currentUserReference!
+                            .update(createUsersRecordData(
+                          phoneNumber: widget.phoneOrifinal,
+                          userPhoneName: widget.phoneName,
+                          userPhoneCode: widget.phoneCode,
+                          userPhoneFlag: widget.phoneFlag,
+                          userPhoneDialCode: widget.phoneDialCode,
+                        ));
+                        if ('${widget.phoneNumberEdited}@gmail.com'.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Email required!',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
 
-                      setState(() {
-                        FFAppState().countryInfo = jsonDecode(
-                            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-                        FFAppState().countryInfoCompany = jsonDecode(
-                            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-                      });
+                        await authManager.updateEmail(
+                          email: '${widget.phoneNumberEdited}@gmail.com',
+                          context: context,
+                        );
+                        setState(() {});
 
-                      context.goNamed('MainPage');
-                    },
-                    onChange: () async {},
+                        showAlignedDialog(
+                          barrierColor: Color(0x02000000),
+                          barrierDismissible: false,
+                          context: context,
+                          isGlobal: true,
+                          avoidOverflow: false,
+                          targetAnchor: AlignmentDirectional(0.0, 0.0)
+                              .resolve(Directionality.of(context)),
+                          followerAnchor: AlignmentDirectional(0.0, -1.0)
+                              .resolve(Directionality.of(context)),
+                          builder: (dialogContext) {
+                            return Material(
+                              color: Colors.transparent,
+                              child: GestureDetector(
+                                onTap: () => FocusScope.of(context)
+                                    .requestFocus(_model.unfocusNode),
+                                child: CustomDialogPhoneChangeWidget(),
+                              ),
+                            );
+                          },
+                        ).then((value) => setState(() {}));
+
+                        await Future.delayed(
+                            const Duration(milliseconds: 1200));
+                        setState(() {
+                          FFAppState().countryInfo = jsonDecode(
+                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+                          FFAppState().countryInfoCompany = jsonDecode(
+                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+                          FFAppState().page = 'Articles';
+                          FFAppState().pageIndex = 0;
+                        });
+
+                        context.goNamed('MainPage');
+                      },
+                      onChange: () async {},
+                    ),
                   ),
                 ),
                 Padding(

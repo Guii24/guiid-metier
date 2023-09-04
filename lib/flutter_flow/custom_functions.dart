@@ -562,8 +562,15 @@ dynamic jsonAsString(
   String flag,
   String dialCode,
 ) {
+// return '{"name": "$name", "flag": "🇦$flag", "code": "$code", "dial_code": "$dialCode"}';
 // {"name": "Afghanistan", "flag": "🇦🇫", "code": "AF", "dial_code": "+93"},
-  return '{"name": "$name", "flag": "🇦$flag", "code": "$code", "dial_code": "$dialCode"}';
+//  return '{\"name\":\"$name\",\"flag\":\"$flag\",\"code\":\"$code\",\"dial_code\":\"$dialCode\"}';
+  return {
+    "name": "$name",
+    "flag": "$flag",
+    "code": "$code",
+    "dial_code": "$dialCode"
+  };
 }
 
 List<ArticlesRecord> searchArticles(

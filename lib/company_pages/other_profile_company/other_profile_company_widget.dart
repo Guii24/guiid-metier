@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/company_pages/component_post_company/component_post_company_widget.dart';
+import '/company_pages/empty_jobs/empty_jobs_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -915,8 +916,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                           .userContactPhone !=
                                                       '')
                                                 Text(
-                                                  otherProfileCompanyUsersRecord
-                                                      .phoneNumber,
+                                                  '${otherProfileCompanyUsersRecord.userContactCode} ${otherProfileCompanyUsersRecord.userContactPhone}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -1053,6 +1053,19 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                         }
                                         List<JobRecord> listViewJobRecordList =
                                             snapshot.data!;
+                                        if (listViewJobRecordList.isEmpty) {
+                                          return Center(
+                                            child: Container(
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  1.0,
+                                              height: MediaQuery.sizeOf(context)
+                                                      .height *
+                                                  1.0,
+                                              child: EmptyJobsWidget(),
+                                            ),
+                                          );
+                                        }
                                         return ListView.separated(
                                           padding: EdgeInsets.zero,
                                           scrollDirection: Axis.vertical,

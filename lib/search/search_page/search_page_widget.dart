@@ -154,7 +154,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
           body: SafeArea(
             top: true,
             child: Column(
-              mainAxisSize: MainAxisSize.max,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   width: double.infinity,
