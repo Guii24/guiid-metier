@@ -153,91 +153,97 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
           ),
           body: SafeArea(
             top: true,
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFFEBE9DF),
-                    FlutterFlowTheme.of(context).primary
-                  ],
-                  stops: [0.0, 1.0],
-                  begin: AlignmentDirectional(0.0, -1.0),
-                  end: AlignmentDirectional(0, 1.0),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
-                      child: Text(
-                        'Recent searches',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Libre Franklin',
-                              color: FlutterFlowTheme.of(context).dark88,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w500,
-                            ),
-                      ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: MediaQuery.sizeOf(context).height * 0.9,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFFEBE9DF),
+                        FlutterFlowTheme.of(context).primary
+                      ],
+                      stops: [0.0, 1.0],
+                      begin: AlignmentDirectional(0.0, -1.0),
+                      end: AlignmentDirectional(0, 1.0),
                     ),
-                    Expanded(
-                      child: AuthUserStreamWidget(
-                        builder: (context) => Builder(
-                          builder: (context) {
-                            final search = (currentUserDocument
-                                        ?.userRecentSearch
-                                        ?.toList() ??
-                                    [])
-                                .toList();
-                            return ListView.builder(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: search.length,
-                              itemBuilder: (context, searchIndex) {
-                                final searchItem = search[searchIndex];
-                                return Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 6.0, 0.0, 0.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      context.pushNamed(
-                                        'SearchResultPage',
-                                        queryParameters: {
-                                          'searchingText': serializeParam(
-                                            searchItem.searchText,
-                                            ParamType.String,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.search_sharp,
-                                          color: Colors.black,
-                                          size: 22.0,
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10.0, 10.0, 0.0, 10.0),
-                                            child: Text(
-                                              searchItem.searchText,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
+                  ),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 15.0, 0.0, 10.0),
+                          child: Text(
+                            'Recent searches',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Libre Franklin',
+                                  color: FlutterFlowTheme.of(context).dark88,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ),
+                        Expanded(
+                          child: AuthUserStreamWidget(
+                            builder: (context) => Builder(
+                              builder: (context) {
+                                final search = (currentUserDocument
+                                            ?.userRecentSearch
+                                            ?.toList() ??
+                                        [])
+                                    .toList();
+                                return ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: search.length,
+                                  itemBuilder: (context, searchIndex) {
+                                    final searchItem = search[searchIndex];
+                                    return Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 6.0, 0.0, 0.0),
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            'SearchResultPage',
+                                            queryParameters: {
+                                              'searchingText': serializeParam(
+                                                searchItem.searchText,
+                                                ParamType.String,
+                                              ),
+                                            }.withoutNulls,
+                                          );
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.search_sharp,
+                                              color: Colors.black,
+                                              size: 22.0,
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 10.0, 0.0, 10.0),
+                                                child: Text(
+                                                  searchItem.searchText,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily:
@@ -247,47 +253,68 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                                     context)
                                                                 .dark88,
                                                       ),
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            FlutterFlowIconButton(
+                                              borderRadius: 20.0,
+                                              borderWidth: 1.0,
+                                              buttonSize: 32.0,
+                                              icon: Icon(
+                                                FFIcons.kdismiss,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                size: 18.0,
+                                              ),
+                                              onPressed: () async {
+                                                await currentUserReference!
+                                                    .update({
+                                                  'user_recent_search':
+                                                      FieldValue.arrayRemove([
+                                                    getRecentSearchFirestoreData(
+                                                      updateRecentSearchStruct(
+                                                        searchItem,
+                                                        clearUnsetFields: false,
+                                                      ),
+                                                      true,
+                                                    )
+                                                  ]),
+                                                });
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                        FlutterFlowIconButton(
-                                          borderRadius: 20.0,
-                                          borderWidth: 1.0,
-                                          buttonSize: 32.0,
-                                          icon: Icon(
-                                            FFIcons.kdismiss,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 18.0,
-                                          ),
-                                          onPressed: () async {
-                                            await currentUserReference!.update({
-                                              'user_recent_search':
-                                                  FieldValue.arrayRemove([
-                                                getRecentSearchFirestoreData(
-                                                  updateRecentSearchStruct(
-                                                    searchItem,
-                                                    clearUnsetFields: false,
-                                                  ),
-                                                  true,
-                                                )
-                                              ]),
-                                            });
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 );
                               },
-                            );
-                          },
+                            ),
+                          ),
                         ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    height: MediaQuery.sizeOf(context).height * 0.1,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFFEBE9DF),
+                          FlutterFlowTheme.of(context).primary
+                        ],
+                        stops: [0.0, 1.0],
+                        begin: AlignmentDirectional(0.0, -1.0),
+                        end: AlignmentDirectional(0, 1.0),
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),

@@ -1,7 +1,5 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/nav_bar/company_bottom_nav_bar/company_bottom_nav_bar_widget.dart';
 import '/nav_bar/user_bottom_nav_bar/user_bottom_nav_bar_widget.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:aligned_dialog/aligned_dialog.dart';
@@ -380,51 +378,26 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          if (valueOrDefault(
-                                  currentUserDocument?.userType, '') ==
-                              'User') {
-                            await showAlignedDialog(
-                              context: context,
-                              isGlobal: true,
-                              avoidOverflow: false,
-                              targetAnchor: AlignmentDirectional(0.0, 1.0)
-                                  .resolve(Directionality.of(context)),
-                              followerAnchor: AlignmentDirectional(0.0, 0.0)
-                                  .resolve(Directionality.of(context)),
-                              builder: (dialogContext) {
-                                return Material(
-                                  color: Colors.transparent,
-                                  child: Container(
-                                    height: double.infinity,
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    child: UserBottomNavBarWidget(),
-                                  ),
-                                );
-                              },
-                            ).then((value) => setState(() {}));
-                          } else {
-                            await showAlignedDialog(
-                              context: context,
-                              isGlobal: true,
-                              avoidOverflow: true,
-                              targetAnchor: AlignmentDirectional(0.0, 1.0)
-                                  .resolve(Directionality.of(context)),
-                              followerAnchor: AlignmentDirectional(0.0, 0.0)
-                                  .resolve(Directionality.of(context)),
-                              builder: (dialogContext) {
-                                return Material(
-                                  color: Colors.transparent,
-                                  child: Container(
-                                    height: double.infinity,
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    child: CompanyBottomNavBarWidget(),
-                                  ),
-                                );
-                              },
-                            ).then((value) => setState(() {}));
-                          }
+                          await showAlignedDialog(
+                            context: context,
+                            isGlobal: true,
+                            avoidOverflow: false,
+                            targetAnchor: AlignmentDirectional(0.0, 1.0)
+                                .resolve(Directionality.of(context)),
+                            followerAnchor: AlignmentDirectional(0.0, 0.0)
+                                .resolve(Directionality.of(context)),
+                            builder: (dialogContext) {
+                              return Material(
+                                color: Colors.transparent,
+                                child: Container(
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 1.0,
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  child: UserBottomNavBarWidget(),
+                                ),
+                              );
+                            },
+                          ).then((value) => setState(() {}));
                         },
                         child: Container(
                           width: 66.0,
@@ -808,53 +781,26 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          if (valueOrDefault(
-                                  currentUserDocument?.userType, '') ==
-                              'User') {
-                            await showAlignedDialog(
-                              context: context,
-                              isGlobal: true,
-                              avoidOverflow: false,
-                              targetAnchor: AlignmentDirectional(0.0, 1.0)
-                                  .resolve(Directionality.of(context)),
-                              followerAnchor: AlignmentDirectional(0.0, 0.0)
-                                  .resolve(Directionality.of(context)),
-                              builder: (dialogContext) {
-                                return Material(
-                                  color: Colors.transparent,
-                                  child: Container(
-                                    height:
-                                        MediaQuery.sizeOf(context).height * 1.0,
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    child: UserBottomNavBarWidget(),
-                                  ),
-                                );
-                              },
-                            ).then((value) => setState(() {}));
-                          } else {
-                            await showAlignedDialog(
-                              context: context,
-                              isGlobal: true,
-                              avoidOverflow: true,
-                              targetAnchor: AlignmentDirectional(0.0, 1.0)
-                                  .resolve(Directionality.of(context)),
-                              followerAnchor: AlignmentDirectional(0.0, 0.0)
-                                  .resolve(Directionality.of(context)),
-                              builder: (dialogContext) {
-                                return Material(
-                                  color: Colors.transparent,
-                                  child: Container(
-                                    height:
-                                        MediaQuery.sizeOf(context).height * 1.0,
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    child: CompanyBottomNavBarWidget(),
-                                  ),
-                                );
-                              },
-                            ).then((value) => setState(() {}));
-                          }
+                          await showAlignedDialog(
+                            context: context,
+                            isGlobal: true,
+                            avoidOverflow: false,
+                            targetAnchor: AlignmentDirectional(0.0, 1.0)
+                                .resolve(Directionality.of(context)),
+                            followerAnchor: AlignmentDirectional(0.0, 0.0)
+                                .resolve(Directionality.of(context)),
+                            builder: (dialogContext) {
+                              return Material(
+                                color: Colors.transparent,
+                                child: Container(
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 1.0,
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  child: UserBottomNavBarWidget(),
+                                ),
+                              );
+                            },
+                          ).then((value) => setState(() {}));
                         },
                         child: Container(
                           width: 66.0,

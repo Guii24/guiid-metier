@@ -1,7 +1,5 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/nav_bar/company_bottom_nav_bar/company_bottom_nav_bar_widget.dart';
 import '/nav_bar/user_bottom_nav_bar/user_bottom_nav_bar_widget.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:aligned_dialog/aligned_dialog.dart';
