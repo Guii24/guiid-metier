@@ -136,18 +136,18 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                           FlutterFlowTheme.of(context).titleMedium.override(
                                 fontFamily: 'Libre Franklin',
                                 fontSize: 15.0,
+                                fontWeight: FontWeight.normal,
                               ),
                       unselectedLabelStyle:
                           FlutterFlowTheme.of(context).titleMedium.override(
                                 fontFamily: 'Libre Franklin',
                                 fontSize: 15.0,
+                                fontWeight: FontWeight.normal,
                               ),
                       labelColor: FlutterFlowTheme.of(context).primary,
                       unselectedLabelColor:
                           FlutterFlowTheme.of(context).primaryText,
                       backgroundColor: FlutterFlowTheme.of(context).primaryText,
-                      unselectedBackgroundColor:
-                          FlutterFlowTheme.of(context).primary,
                       borderColor: FlutterFlowTheme.of(context).primaryText,
                       unselectedBorderColor:
                           FlutterFlowTheme.of(context).primaryText,
@@ -157,7 +157,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                       labelPadding:
                           EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
                       buttonMargin:
-                          EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(8.0, 10.0, 8.0, 0.0),
                       padding:
                           EdgeInsetsDirectional.fromSTEB(4.0, 4.0, 4.0, 4.0),
                       tabs: [
@@ -199,7 +199,12 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                             .toList())
                                     .toList();
                                 return ListView.separated(
-                                  padding: EdgeInsets.zero,
+                                  padding: EdgeInsets.fromLTRB(
+                                    0,
+                                    0,
+                                    0,
+                                    20.0,
+                                  ),
                                   primary: false,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
@@ -251,7 +256,12 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                             .toList())
                                     .toList();
                                 return ListView.separated(
-                                  padding: EdgeInsets.zero,
+                                  padding: EdgeInsets.fromLTRB(
+                                    0,
+                                    0,
+                                    0,
+                                    20.0,
+                                  ),
                                   primary: false,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
@@ -328,7 +338,12 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                     .toList())
                                             .toList();
                                         return ListView.separated(
-                                          padding: EdgeInsets.zero,
+                                          padding: EdgeInsets.fromLTRB(
+                                            0,
+                                            0,
+                                            0,
+                                            20.0,
+                                          ),
                                           primary: false,
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
@@ -408,7 +423,12 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                               containerPostRecordList.toList())
                                           .toList();
                                       return ListView.separated(
-                                        padding: EdgeInsets.zero,
+                                        padding: EdgeInsets.fromLTRB(
+                                          0,
+                                          0,
+                                          0,
+                                          20.0,
+                                        ),
                                         primary: false,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
@@ -465,7 +485,12 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                               containerJobRecordList.toList())
                                           .toList();
                                       return ListView.separated(
-                                        padding: EdgeInsets.zero,
+                                        padding: EdgeInsets.fromLTRB(
+                                          0,
+                                          0,
+                                          0,
+                                          20.0,
+                                        ),
                                         primary: false,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,

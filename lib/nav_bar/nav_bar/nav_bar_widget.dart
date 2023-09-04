@@ -395,8 +395,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                 return Material(
                                   color: Colors.transparent,
                                   child: Container(
-                                    height:
-                                        MediaQuery.sizeOf(context).height * 1.0,
+                                    height: double.infinity,
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
                                     child: UserBottomNavBarWidget(),
@@ -417,8 +416,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                 return Material(
                                   color: Colors.transparent,
                                   child: Container(
-                                    height:
-                                        MediaQuery.sizeOf(context).height * 1.0,
+                                    height: double.infinity,
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
                                     child: CompanyBottomNavBarWidget(),

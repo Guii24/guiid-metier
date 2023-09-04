@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -148,7 +149,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
               ),
             ],
             centerTitle: false,
-            elevation: 3.0,
+            elevation: 1.5,
           ),
           body: SafeArea(
             top: true,
@@ -249,12 +250,17 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             ),
                                           ),
                                         ),
-                                        InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
+                                        FlutterFlowIconButton(
+                                          borderRadius: 20.0,
+                                          borderWidth: 1.0,
+                                          buttonSize: 32.0,
+                                          icon: Icon(
+                                            FFIcons.kdismiss,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 18.0,
+                                          ),
+                                          onPressed: () async {
                                             await currentUserReference!.update({
                                               'user_recent_search':
                                                   FieldValue.arrayRemove([
@@ -268,11 +274,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                               ]),
                                             });
                                           },
-                                          child: Icon(
-                                            FFIcons.kdismiss,
-                                            color: Colors.black,
-                                            size: 18.0,
-                                          ),
                                         ),
                                       ],
                                     ),
