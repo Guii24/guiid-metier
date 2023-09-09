@@ -3,6 +3,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/post/post_types/post_types_widget.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
             SliverAppBar(
-              expandedHeight: 120.0,
+              expandedHeight: 125.0,
               pinned: false,
               floating: true,
               snap: true,
@@ -66,7 +67,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                     children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 0.0, 6.0, 19.0),
+                            16.0, 20.0, 6.0, 19.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,7 +177,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.00, 0.00),
                               child: FlutterFlowIconButton(
                                 borderColor: Colors.transparent,
                                 borderRadius: 30.0,
@@ -233,7 +234,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                     ),
                                   ),
                                   child: Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    alignment: AlignmentDirectional(0.00, 0.00),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           12.0, 5.0, 12.0, 5.0),
@@ -311,7 +312,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                             ),
                                             child: Align(
                                               alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
+                                                  0.00, 0.00),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(

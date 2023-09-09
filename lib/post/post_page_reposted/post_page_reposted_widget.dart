@@ -110,7 +110,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
               ),
               actions: [
                 Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.00, 0.00),
                   child: FlutterFlowIconButton(
                     borderRadius: 100.0,
                     buttonSize: 45.0,
@@ -560,7 +560,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                               ),
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    -1.0, 0.0),
+                                                    -1.00, 0.00),
                                                 child: Text(
                                                   postPageRepostedPostRecord
                                                       .postText,
@@ -653,7 +653,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            1.0, 1.0),
+                                                            1.00, 1.00),
                                                     child: Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
@@ -689,7 +689,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                           child: Align(
                                                             alignment:
                                                                 AlignmentDirectional(
-                                                                    0.0, 0.0),
+                                                                    0.00, 0.00),
                                                             child: Text(
                                                               '${(_model.pageViewCurrentIndex + 1).toString()}/${postPageRepostedPostRecord.postImagesList.length.toString()}',
                                                               style: FlutterFlowTheme
@@ -1246,7 +1246,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                     ),
                     if (!_model.commentShoePost)
                       Align(
-                        alignment: AlignmentDirectional(0.0, 1.0),
+                        alignment: AlignmentDirectional(0.00, 1.00),
                         child: Container(
                           width: double.infinity,
                           height: 91.0,
@@ -1483,7 +1483,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                       ),
                     if (_model.commentShoePost)
                       Align(
-                        alignment: AlignmentDirectional(0.0, 1.0),
+                        alignment: AlignmentDirectional(0.00, 1.00),
                         child: Material(
                           color: Colors.transparent,
                           elevation: 0.0,
@@ -1499,7 +1499,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                               ),
                             ),
                             child: Align(
-                              alignment: AlignmentDirectional(0.0, -1.0),
+                              alignment: AlignmentDirectional(0.00, -1.00),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     10.0, 7.5, 16.0, 10.0),

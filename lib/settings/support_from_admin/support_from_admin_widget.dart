@@ -4,6 +4,7 @@ import '/components/support_companent_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/settings/empty_support_messages/empty_support_messages_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -95,7 +96,7 @@ class _SupportFromAdminWidgetState extends State<SupportFromAdminWidget> {
           ),
           actions: [
             Align(
-              alignment: AlignmentDirectional(0.0, 0.0),
+              alignment: AlignmentDirectional(0.00, 0.00),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
                 child: Container(
@@ -106,7 +107,7 @@ class _SupportFromAdminWidgetState extends State<SupportFromAdminWidget> {
                     shape: BoxShape.circle,
                   ),
                   child: Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
+                    alignment: AlignmentDirectional(0.00, 0.00),
                     child: Icon(
                       FFIcons.kproperty1support2,
                       color: FlutterFlowTheme.of(context).primary,
@@ -212,7 +213,7 @@ class _SupportFromAdminWidgetState extends State<SupportFromAdminWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.0, 1.0),
+                alignment: AlignmentDirectional(0.00, 1.00),
                 child: Material(
                   color: Colors.transparent,
                   elevation: 0.0,

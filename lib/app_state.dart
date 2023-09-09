@@ -7,13 +7,17 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'dart:convert';
 
 class FFAppState extends ChangeNotifier {
-  static final FFAppState _instance = FFAppState._internal();
+  static FFAppState _instance = FFAppState._internal();
 
   factory FFAppState() {
     return _instance;
   }
 
   FFAppState._internal();
+
+  static void reset() {
+    _instance = FFAppState._internal();
+  }
 
   Future initializePersistedState() async {}
 
@@ -51,6 +55,10 @@ class FFAppState extends ChangeNotifier {
     String Function(String) updateFn,
   ) {
     _postreport[_index] = updateFn(_postreport[_index]);
+  }
+
+  void insertAtIndexInPostreport(int _index, String _value) {
+    _postreport.insert(_index, _value);
   }
 
   String _popupSelected = '';
@@ -104,6 +112,10 @@ class FFAppState extends ChangeNotifier {
     _preference[_index] = updateFn(_preference[_index]);
   }
 
+  void insertAtIndexInPreference(int _index, String _value) {
+    _preference.insert(_index, _value);
+  }
+
   dynamic _countryInfo = jsonDecode(
       '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
   dynamic get countryInfo => _countryInfo;
@@ -140,6 +152,10 @@ class FFAppState extends ChangeNotifier {
     String Function(String) updateFn,
   ) {
     _choosenPreference[_index] = updateFn(_choosenPreference[_index]);
+  }
+
+  void insertAtIndexInChoosenPreference(int _index, String _value) {
+    _choosenPreference.insert(_index, _value);
   }
 
   bool _activeCalendar = false;
@@ -191,6 +207,10 @@ class FFAppState extends ChangeNotifier {
     _activitiesArticle[_index] = updateFn(_activitiesArticle[_index]);
   }
 
+  void insertAtIndexInActivitiesArticle(int _index, DocumentReference _value) {
+    _activitiesArticle.insert(_index, _value);
+  }
+
   List<String> _uploadPhotoPost = [];
   List<String> get uploadPhotoPost => _uploadPhotoPost;
   set uploadPhotoPost(List<String> _value) {
@@ -216,6 +236,10 @@ class FFAppState extends ChangeNotifier {
     _uploadPhotoPost[_index] = updateFn(_uploadPhotoPost[_index]);
   }
 
+  void insertAtIndexInUploadPhotoPost(int _index, String _value) {
+    _uploadPhotoPost.insert(_index, _value);
+  }
+
   List<DocumentReference> _activitiesPost = [];
   List<DocumentReference> get activitiesPost => _activitiesPost;
   set activitiesPost(List<DocumentReference> _value) {
@@ -239,6 +263,10 @@ class FFAppState extends ChangeNotifier {
     DocumentReference Function(DocumentReference) updateFn,
   ) {
     _activitiesPost[_index] = updateFn(_activitiesPost[_index]);
+  }
+
+  void insertAtIndexInActivitiesPost(int _index, DocumentReference _value) {
+    _activitiesPost.insert(_index, _value);
   }
 
   dynamic _countryInfoCompany = jsonDecode(
@@ -307,6 +335,10 @@ class FFAppState extends ChangeNotifier {
     _listTypeReport[_index] = updateFn(_listTypeReport[_index]);
   }
 
+  void insertAtIndexInListTypeReport(int _index, String _value) {
+    _listTypeReport.insert(_index, _value);
+  }
+
   String _choosenListReport = '';
   String get choosenListReport => _choosenListReport;
   set choosenListReport(String _value) {
@@ -336,6 +368,10 @@ class FFAppState extends ChangeNotifier {
     DocumentReference Function(DocumentReference) updateFn,
   ) {
     _listPostWear[_index] = updateFn(_listPostWear[_index]);
+  }
+
+  void insertAtIndexInListPostWear(int _index, DocumentReference _value) {
+    _listPostWear.insert(_index, _value);
   }
 
   List<String> _jobTypeList = [
@@ -370,6 +406,10 @@ class FFAppState extends ChangeNotifier {
     _jobTypeList[_index] = updateFn(_jobTypeList[_index]);
   }
 
+  void insertAtIndexInJobTypeList(int _index, String _value) {
+    _jobTypeList.insert(_index, _value);
+  }
+
   List<String> _selectedJobType = [];
   List<String> get selectedJobType => _selectedJobType;
   set selectedJobType(List<String> _value) {
@@ -395,6 +435,10 @@ class FFAppState extends ChangeNotifier {
     _selectedJobType[_index] = updateFn(_selectedJobType[_index]);
   }
 
+  void insertAtIndexInSelectedJobType(int _index, String _value) {
+    _selectedJobType.insert(_index, _value);
+  }
+
   List<WearItemsStruct> _wearItems = [];
   List<WearItemsStruct> get wearItems => _wearItems;
   set wearItems(List<WearItemsStruct> _value) {
@@ -418,6 +462,10 @@ class FFAppState extends ChangeNotifier {
     WearItemsStruct Function(WearItemsStruct) updateFn,
   ) {
     _wearItems[_index] = updateFn(_wearItems[_index]);
+  }
+
+  void insertAtIndexInWearItems(int _index, WearItemsStruct _value) {
+    _wearItems.insert(_index, _value);
   }
 
   String _imgBase64 = '';

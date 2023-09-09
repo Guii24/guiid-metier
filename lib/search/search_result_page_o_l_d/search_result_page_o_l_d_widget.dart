@@ -4,6 +4,7 @@ import '/company_pages/component_companies/component_companies_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/post_types_for_search/post_types_for_search_widget.dart';
 import '/search/component_people/component_people_widget.dart';
 import '/sourcing/bottom_job_details/bottom_job_details_widget.dart';
@@ -165,7 +166,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                       ),
                                     ),
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment:
+                                          AlignmentDirectional(0.00, 0.00),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 6.0, 12.0, 6.0),
@@ -226,7 +228,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                       ),
                                     ),
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment:
+                                          AlignmentDirectional(0.00, 0.00),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 5.0, 12.0, 5.0),
@@ -287,7 +290,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                       ),
                                     ),
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment:
+                                          AlignmentDirectional(0.00, 0.00),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 5.0, 12.0, 5.0),
@@ -348,7 +352,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                       ),
                                     ),
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment:
+                                          AlignmentDirectional(0.00, 0.00),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 5.0, 12.0, 5.0),
@@ -409,7 +414,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                       ),
                                     ),
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment:
+                                          AlignmentDirectional(0.00, 0.00),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 5.0, 12.0, 5.0),

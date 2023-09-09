@@ -4,6 +4,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -169,7 +170,8 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                       },
                                     ),
                                     Align(
-                                      alignment: AlignmentDirectional(1.0, 1.0),
+                                      alignment:
+                                          AlignmentDirectional(1.00, 1.00),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 16.0, 16.0),
@@ -192,7 +194,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                             ),
                                             child: Align(
                                               alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
+                                                  0.00, 0.00),
                                               child: Text(
                                                 '${(_model.pageViewCurrentIndex + 1).toString()}/${articlePageArticlesRecord.articleImageList.length.toString()}',
                                                 style:
@@ -482,7 +484,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                 ),
                 if (!_model.commentShow)
                   Align(
-                    alignment: AlignmentDirectional(0.0, 1.0),
+                    alignment: AlignmentDirectional(0.00, 1.00),
                     child: Container(
                       width: double.infinity,
                       height: 91.0,
@@ -500,7 +502,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                         ),
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.0, 1.0),
+                        alignment: AlignmentDirectional(0.00, 1.00),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               20.0, 0.0, 20.0, 34.0),
@@ -673,7 +675,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                   ),
                 if (_model.commentShow)
                   Align(
-                    alignment: AlignmentDirectional(0.0, 1.0),
+                    alignment: AlignmentDirectional(0.00, 1.00),
                     child: Material(
                       color: Colors.transparent,
                       elevation: 0.0,
@@ -689,7 +691,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                           ),
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.0, -1.0),
+                          alignment: AlignmentDirectional(0.00, -1.00),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 10.0, 7.5, 16.0, 0.0),

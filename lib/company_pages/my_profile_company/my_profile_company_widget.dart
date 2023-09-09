@@ -5,6 +5,7 @@ import '/company_pages/empty_jobs/empty_jobs_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
 import '/post/component_post_reposted/component_post_reposted_widget.dart';
 import '/sourcing/component_sourcing/component_sourcing_widget.dart';
@@ -36,14 +37,16 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {});
+      setState(() {
+        FFAppState().profilePhotoCompany = currentUserPhoto;
+      });
     });
 
     _model.tabBarController = TabController(
       vsync: this,
       length: 3,
       initialIndex: 0,
-    );
+    )..addListener(() => setState(() {}));
   }
 
   @override
@@ -95,7 +98,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
               borderWidth: 1.0,
               buttonSize: 45.0,
               icon: Icon(
-                FFIcons.kproperty1post,
+                FFIcons.keditnewone,
                 color: FlutterFlowTheme.of(context).primaryText,
                 size: 24.0,
               ),
@@ -109,9 +112,9 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
               borderWidth: 1.0,
               buttonSize: 45.0,
               icon: Icon(
-                Icons.settings_outlined,
+                FFIcons.ksetting,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 24.0,
+                size: 20.0,
               ),
               onPressed: () async {
                 context.pushNamed('Settings');
@@ -155,7 +158,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(1.0, 1.0),
+                            alignment: AlignmentDirectional(1.00, 1.00),
                             child: Material(
                               color: Colors.transparent,
                               elevation: 0.0,
@@ -173,7 +176,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                   ),
                                 ),
                                 child: Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0.00, 0.00),
                                   child: Icon(
                                     FFIcons.kplus,
                                     color: FlutterFlowTheme.of(context).primary,
@@ -416,7 +419,6 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                           ),
                         ],
                         controller: _model.tabBarController,
-                        onTap: (value) => setState(() {}),
                       ),
                     ),
                     Expanded(
@@ -760,10 +762,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                       ),
                                       AuthUserStreamWidget(
                                         builder: (context) => Text(
-                                          valueOrDefault(
-                                              currentUserDocument
-                                                  ?.userContactPhone,
-                                              ''),
+                                          '${valueOrDefault(currentUserDocument?.userContactDialCode, '')}${valueOrDefault(currentUserDocument?.userContactPhone, '')}',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(

@@ -4,6 +4,7 @@ import '/components/take_photo_profile_user_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
 import '/my_profile/empty_wardrobe_my_prof/empty_wardrobe_my_prof_widget.dart';
 import '/post/component_post_reposted/component_post_reposted_widget.dart';
@@ -49,7 +50,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
       vsync: this,
       length: 3,
       initialIndex: 0,
-    );
+    )..addListener(() => setState(() {}));
   }
 
   @override
@@ -101,7 +102,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
               borderWidth: 1.0,
               buttonSize: 45.0,
               icon: Icon(
-                FFIcons.kproperty1post,
+                FFIcons.keditnewone,
                 color: FlutterFlowTheme.of(context).primaryText,
                 size: 24.0,
               ),
@@ -115,9 +116,9 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
               borderWidth: 1.0,
               buttonSize: 45.0,
               icon: Icon(
-                Icons.settings_outlined,
+                FFIcons.ksetting,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 24.0,
+                size: 20.0,
               ),
               onPressed: () async {
                 context.pushNamed('Settings');
@@ -188,7 +189,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(1.0, 1.0),
+                                alignment: AlignmentDirectional(1.00, 1.00),
                                 child: Material(
                                   color: Colors.transparent,
                                   elevation: 0.0,
@@ -207,7 +208,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                       ),
                                     ),
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment:
+                                          AlignmentDirectional(0.00, 0.00),
                                       child: Icon(
                                         FFIcons.kplus,
                                         color: FlutterFlowTheme.of(context)
@@ -586,7 +588,6 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                             ),
                           ],
                           controller: _model.tabBarController,
-                          onTap: (value) => setState(() {}),
                         ),
                       ),
                       Expanded(
@@ -771,364 +772,371 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                               ),
                             ),
                             KeepAliveWidgetWrapper(
-                              builder: (context) => Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 20.0, 0.0, 0.0),
-                                    child: Text(
-                                      'About (bio)',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Libre Franklin',
-                                            color: FlutterFlowTheme.of(context)
-                                                .dark88,
-                                            fontSize: 17.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                  ),
-                                  if (valueOrDefault(
-                                              currentUserDocument?.userBio,
-                                              '') !=
-                                          null &&
-                                      valueOrDefault(
-                                              currentUserDocument?.userBio,
-                                              '') !=
-                                          '')
+                              builder: (context) => SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 0.0, 0.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          valueOrDefault(
-                                              currentUserDocument?.userBio, ''),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark68,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.normal,
-                                                lineHeight: 1.5,
-                                              ),
-                                        ),
+                                          0.0, 20.0, 0.0, 0.0),
+                                      child: Text(
+                                        'About (bio)',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark88,
+                                              fontSize: 17.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                       ),
                                     ),
-                                  if (valueOrDefault(
-                                              currentUserDocument?.userBio,
-                                              '') ==
-                                          null ||
-                                      valueOrDefault(
-                                              currentUserDocument?.userBio,
-                                              '') ==
-                                          '')
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 0.0, 0.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          'Information is not available',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark68,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                    if (valueOrDefault(
+                                                currentUserDocument?.userBio,
+                                                '') !=
+                                            null &&
+                                        valueOrDefault(
+                                                currentUserDocument?.userBio,
+                                                '') !=
+                                            '')
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 8.0, 0.0, 0.0),
+                                        child: AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            valueOrDefault(
+                                                currentUserDocument?.userBio,
+                                                ''),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                  lineHeight: 1.5,
+                                                ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 20.0, 0.0, 0.0),
-                                    child: Text(
-                                      'Preferences',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Libre Franklin',
-                                            color: FlutterFlowTheme.of(context)
-                                                .dark88,
-                                            fontSize: 17.0,
-                                            fontWeight: FontWeight.w600,
+                                    if (valueOrDefault(
+                                                currentUserDocument?.userBio,
+                                                '') ==
+                                            null ||
+                                        valueOrDefault(
+                                                currentUserDocument?.userBio,
+                                                '') ==
+                                            '')
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 8.0, 0.0, 0.0),
+                                        child: AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            'Information is not available',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                           ),
-                                    ),
-                                  ),
-                                  if ((currentUserDocument?.userPreferences
-                                                  ?.toList() ??
-                                              [])
-                                          .length !=
-                                      0)
+                                        ),
+                                      ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 0.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Builder(
-                                          builder: (context) {
-                                            final preferences =
-                                                (currentUserDocument
-                                                            ?.userPreferences
-                                                            ?.toList() ??
-                                                        [])
-                                                    .toList();
-                                            return Wrap(
-                                              spacing: 10.0,
-                                              runSpacing: 10.0,
-                                              alignment: WrapAlignment.start,
-                                              crossAxisAlignment:
-                                                  WrapCrossAlignment.start,
-                                              direction: Axis.horizontal,
-                                              runAlignment: WrapAlignment.start,
-                                              verticalDirection:
-                                                  VerticalDirection.down,
-                                              clipBehavior: Clip.none,
-                                              children: List.generate(
-                                                  preferences.length,
-                                                  (preferencesIndex) {
-                                                final preferencesItem =
-                                                    preferences[
-                                                        preferencesIndex];
-                                                return Material(
-                                                  color: Colors.transparent,
-                                                  elevation: 0.0,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  child: Container(
-                                                    height: 39.0,
-                                                    decoration: BoxDecoration(
+                                          0.0, 20.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Preferences',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark88,
+                                              fontSize: 17.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    ),
+                                    if ((currentUserDocument?.userPreferences
+                                                    ?.toList() ??
+                                                [])
+                                            .length !=
+                                        0)
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 10.0, 0.0, 0.0),
+                                        child: AuthUserStreamWidget(
+                                          builder: (context) => Builder(
+                                            builder: (context) {
+                                              final preferences =
+                                                  (currentUserDocument
+                                                              ?.userPreferences
+                                                              ?.toList() ??
+                                                          [])
+                                                      .toList();
+                                              return Wrap(
+                                                spacing: 10.0,
+                                                runSpacing: 10.0,
+                                                alignment: WrapAlignment.start,
+                                                crossAxisAlignment:
+                                                    WrapCrossAlignment.start,
+                                                direction: Axis.horizontal,
+                                                runAlignment:
+                                                    WrapAlignment.start,
+                                                verticalDirection:
+                                                    VerticalDirection.down,
+                                                clipBehavior: Clip.none,
+                                                children: List.generate(
+                                                    preferences.length,
+                                                    (preferencesIndex) {
+                                                  final preferencesItem =
+                                                      preferences[
+                                                          preferencesIndex];
+                                                  return Material(
+                                                    color: Colors.transparent,
+                                                    elevation: 0.0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               5.0),
-                                                      border: Border.all(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .line,
-                                                        width: 1.0,
+                                                    ),
+                                                    child: Container(
+                                                      height: 39.0,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0),
+                                                        border: Border.all(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .line,
+                                                          width: 1.0,
+                                                        ),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    12.0,
+                                                                    8.0,
+                                                                    12.0,
+                                                                    8.0),
+                                                        child: Text(
+                                                          preferencesItem,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .dark88,
+                                                                fontSize: 15.0,
+                                                              ),
+                                                        ),
                                                       ),
                                                     ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  12.0,
-                                                                  8.0,
-                                                                  12.0,
-                                                                  8.0),
-                                                      child: Text(
-                                                        preferencesItem,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Libre Franklin',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .dark88,
-                                                                  fontSize:
-                                                                      15.0,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  if ((currentUserDocument?.userPreferences
-                                                  ?.toList() ??
-                                              [])
-                                          .length ==
-                                      0)
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 0.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          'Information is not available',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark68,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 20.0, 0.0, 0.0),
-                                    child: Text(
-                                      'Education',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Libre Franklin',
-                                            color: FlutterFlowTheme.of(context)
-                                                .dark88,
-                                            fontSize: 17.0,
-                                            fontWeight: FontWeight.w600,
+                                                  );
+                                                }),
+                                              );
+                                            },
                                           ),
-                                    ),
-                                  ),
-                                  if (valueOrDefault(
-                                              currentUserDocument
-                                                  ?.userEducation,
-                                              '') !=
-                                          null &&
-                                      valueOrDefault(
-                                              currentUserDocument
-                                                  ?.userEducation,
-                                              '') !=
-                                          '')
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 0.0, 0.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          valueOrDefault(
-                                              currentUserDocument
-                                                  ?.userEducation,
-                                              ''),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark68,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.normal,
-                                                lineHeight: 1.5,
-                                              ),
                                         ),
                                       ),
-                                    ),
-                                  if (valueOrDefault(
-                                              currentUserDocument
-                                                  ?.userEducation,
-                                              '') ==
-                                          null ||
-                                      valueOrDefault(
-                                              currentUserDocument
-                                                  ?.userEducation,
-                                              '') ==
-                                          '')
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 0.0, 0.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          'Information is not available',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark68,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 20.0, 0.0, 8.0),
-                                    child: Text(
-                                      'Job',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Libre Franklin',
-                                            color: FlutterFlowTheme.of(context)
-                                                .dark88,
-                                            fontSize: 17.0,
-                                            fontWeight: FontWeight.w600,
+                                    if ((currentUserDocument?.userPreferences
+                                                    ?.toList() ??
+                                                [])
+                                            .length ==
+                                        0)
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 10.0, 0.0, 0.0),
+                                        child: AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            'Information is not available',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                           ),
-                                    ),
-                                  ),
-                                  if (valueOrDefault(
-                                              currentUserDocument?.userJob,
-                                              '') ==
-                                          null ||
-                                      valueOrDefault(
-                                              currentUserDocument?.userJob,
-                                              '') ==
-                                          '')
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 35.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          'Information is not available',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark68,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
                                         ),
                                       ),
-                                    ),
-                                  if (valueOrDefault(
-                                              currentUserDocument?.userJob,
-                                              '') !=
-                                          null &&
-                                      valueOrDefault(
-                                              currentUserDocument?.userJob,
-                                              '') !=
-                                          '')
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 35.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Text(
-                                          valueOrDefault(
-                                              currentUserDocument?.userJob, ''),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark68,
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.normal,
-                                                lineHeight: 1.5,
-                                              ),
-                                        ),
+                                          0.0, 20.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Education',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark88,
+                                              fontSize: 17.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                       ),
                                     ),
-                                ],
+                                    if (valueOrDefault(
+                                                currentUserDocument
+                                                    ?.userEducation,
+                                                '') !=
+                                            null &&
+                                        valueOrDefault(
+                                                currentUserDocument
+                                                    ?.userEducation,
+                                                '') !=
+                                            '')
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 8.0, 0.0, 0.0),
+                                        child: AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            valueOrDefault(
+                                                currentUserDocument
+                                                    ?.userEducation,
+                                                ''),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                  lineHeight: 1.5,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    if (valueOrDefault(
+                                                currentUserDocument
+                                                    ?.userEducation,
+                                                '') ==
+                                            null ||
+                                        valueOrDefault(
+                                                currentUserDocument
+                                                    ?.userEducation,
+                                                '') ==
+                                            '')
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 8.0, 0.0, 0.0),
+                                        child: AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            'Information is not available',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 20.0, 0.0, 8.0),
+                                      child: Text(
+                                        'Job',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark88,
+                                              fontSize: 17.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    ),
+                                    if (valueOrDefault(
+                                                currentUserDocument?.userJob,
+                                                '') ==
+                                            null ||
+                                        valueOrDefault(
+                                                currentUserDocument?.userJob,
+                                                '') ==
+                                            '')
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 35.0),
+                                        child: AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            'Information is not available',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    if (valueOrDefault(
+                                                currentUserDocument?.userJob,
+                                                '') !=
+                                            null &&
+                                        valueOrDefault(
+                                                currentUserDocument?.userJob,
+                                                '') !=
+                                            '')
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 35.0),
+                                        child: AuthUserStreamWidget(
+                                          builder: (context) => Text(
+                                            valueOrDefault(
+                                                currentUserDocument?.userJob,
+                                                ''),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.normal,
+                                                  lineHeight: 1.5,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
                               ),
                             ),
                             KeepAliveWidgetWrapper(

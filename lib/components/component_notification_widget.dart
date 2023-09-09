@@ -135,7 +135,8 @@ class _ComponentNotificationWidgetState
                                     borderRadius: BorderRadius.circular(6.0),
                                   ),
                                   child: Align(
-                                    alignment: AlignmentDirectional(-1.0, 0.0),
+                                    alignment:
+                                        AlignmentDirectional(-1.00, 0.00),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           10.0, 6.0, 10.0, 6.0),
@@ -665,7 +666,7 @@ class _ComponentNotificationWidgetState
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
+                                              AlignmentDirectional(-1.00, 0.00),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(

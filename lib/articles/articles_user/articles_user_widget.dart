@@ -5,6 +5,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -52,7 +53,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             automaticallyImplyLeading: false,
             leading: Align(
-              alignment: AlignmentDirectional(-1.0, 0.0),
+              alignment: AlignmentDirectional(-1.00, 0.00),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: AuthUserStreamWidget(
@@ -111,7 +112,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
             ),
             actions: [
               Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
+                alignment: AlignmentDirectional(0.00, 0.00),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
                   child: FlutterFlowIconButton(
@@ -257,7 +258,8 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                                     borderRadius: BorderRadius.circular(21.0),
                                   ),
                                   child: Align(
-                                    alignment: AlignmentDirectional(-1.0, 0.0),
+                                    alignment:
+                                        AlignmentDirectional(-1.00, 0.00),
                                     child: Container(
                                       width: 96.0,
                                       height: 4.0,

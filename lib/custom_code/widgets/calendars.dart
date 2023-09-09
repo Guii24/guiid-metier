@@ -35,6 +35,8 @@ class _CalendarsState extends State<Calendars> {
     final config = CalendarDatePicker2Config(
       centerAlignModePicker: true,
       selectedDayHighlightColor: Colors.black,
+      firstDate: DateTime(1920),
+      lastDate: DateTime.now(),
       weekdayLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       weekdayLabelTextStyle: const TextStyle(
         color: Colors.grey,

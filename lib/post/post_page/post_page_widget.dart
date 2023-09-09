@@ -104,7 +104,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
               ),
               actions: [
                 Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.00, 0.00),
                   child: FlutterFlowIconButton(
                     borderRadius: 100.0,
                     buttonSize: 45.0,
@@ -272,7 +272,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          1.0, 1.0),
+                                                          1.00, 1.00),
                                                   child: Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
@@ -303,7 +303,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                         child: Align(
                                                           alignment:
                                                               AlignmentDirectional(
-                                                                  0.0, 0.0),
+                                                                  0.00, 0.00),
                                                           child: Text(
                                                             '${(_model.pageViewCurrentIndex + 1).toString()}/${postPagePostRecord.postImagesList.length.toString()}',
                                                             style: FlutterFlowTheme
@@ -990,7 +990,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                       ),
                       if (!_model.commentShoePost)
                         Align(
-                          alignment: AlignmentDirectional(0.0, 1.0),
+                          alignment: AlignmentDirectional(0.00, 1.00),
                           child: Container(
                             width: double.infinity,
                             height: 91.0,
@@ -1230,7 +1230,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                         ),
                       if (_model.commentShoePost)
                         Align(
-                          alignment: AlignmentDirectional(0.0, 1.0),
+                          alignment: AlignmentDirectional(0.00, 1.00),
                           child: Material(
                             color: Colors.transparent,
                             elevation: 0.0,
@@ -1246,7 +1246,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                 ),
                               ),
                               child: Align(
-                                alignment: AlignmentDirectional(0.0, -1.0),
+                                alignment: AlignmentDirectional(0.00, -1.00),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10.0, 7.5, 16.0, 0.0),

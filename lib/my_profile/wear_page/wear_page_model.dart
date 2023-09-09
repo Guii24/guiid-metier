@@ -3,6 +3,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/bottom_editor_delete_wear/bottom_editor_delete_wear_widget.dart';
 import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import '/post/comment_post/comment_post_widget.dart';

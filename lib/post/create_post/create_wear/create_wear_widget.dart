@@ -98,7 +98,7 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
           ),
           actions: [
             Align(
-              alignment: AlignmentDirectional(0.0, 0.0),
+              alignment: AlignmentDirectional(0.00, 0.00),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
                 child: FFButtonWidget(

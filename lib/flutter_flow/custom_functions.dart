@@ -586,3 +586,14 @@ List<ArticlesRecord> searchArticles(
   }
   return filteredArticles;
 }
+
+bool validatorEmail(String email) {
+  bool emailValid = RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(email);
+
+  if (email.isNotEmpty && emailValid) {
+    return true;
+  }
+  return false;
+}

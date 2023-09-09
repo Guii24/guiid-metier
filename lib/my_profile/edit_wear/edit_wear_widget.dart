@@ -109,7 +109,7 @@ class _EditWearWidgetState extends State<EditWearWidget> {
           ),
           actions: [
             Align(
-              alignment: AlignmentDirectional(0.0, 0.0),
+              alignment: AlignmentDirectional(0.00, 0.00),
               child: Builder(
                 builder: (context) => Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),

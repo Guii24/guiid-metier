@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/post_types_for_search/post_types_for_search_widget.dart';
 import '/search/component_people/component_people_widget.dart';
 import '/sourcing/bottom_job_details/bottom_job_details_widget.dart';

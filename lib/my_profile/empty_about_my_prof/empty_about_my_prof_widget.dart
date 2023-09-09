@@ -50,7 +50,7 @@ class _EmptyAboutMyProfWidgetState extends State<EmptyAboutMyProfWidget> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
+            alignment: AlignmentDirectional(0.00, 0.00),
             child: Icon(
               FFIcons.kproperty1aboutUs,
               color: Colors.black,

@@ -9,7 +9,9 @@ class FFIcons {
   static const String _gMIconsSubsFamily = 'GMIconsSubs';
   static const String _gMIconsbatteryFamily = 'GMIconsbattery';
   static const String _onboardingGMFamily = 'OnboardingGM';
-  static const String _icomoonFamily = 'Icomoon';
+  static const String _gMIconsNewBatteryFamily = 'GMIconsNewBattery';
+  static const String _testsFamily = 'Tests';
+  static const String _settingsFamily = 'Settings';
 
   // GMIcons
   static const IconData kproperty1aboutUs =
@@ -141,7 +143,56 @@ class FFIcons {
   static const IconData kicononboarding =
       IconData(0xe900, fontFamily: _onboardingGMFamily);
 
-  // icomoon
-  static const IconData kwriteIcon1767131 =
-      IconData(0xe900, fontFamily: _icomoonFamily);
+  // GMIconsNewBattery
+  static const IconData ksettingsnew =
+      IconData(0xe906, fontFamily: _gMIconsNewBatteryFamily);
+  static const IconData keditnewone =
+      IconData(0xe907, fontFamily: _gMIconsNewBatteryFamily);
+  static const IconData kiconBatter =
+      IconData(0xe900, fontFamily: _gMIconsNewBatteryFamily);
+  static const IconData kbatteryAcitiv =
+      IconData(0xe901, fontFamily: _gMIconsNewBatteryFamily);
+
+  // Tests
+  static const IconData kbatteryActivityFill =
+      IconData(0xe800, fontFamily: _testsFamily);
+  static const IconData kbatteryUnfollow =
+      IconData(0xe802, fontFamily: _testsFamily);
+  static const IconData kicons3 = IconData(0xe805, fontFamily: _testsFamily);
+  static const IconData kicons4 = IconData(0xe807, fontFamily: _testsFamily);
+  static const IconData kicons5 = IconData(0xe808, fontFamily: _testsFamily);
+  static const IconData kicons6 = IconData(0xe809, fontFamily: _testsFamily);
+  static const IconData kicons7 = IconData(0xe80a, fontFamily: _testsFamily);
+  static const IconData kicons9 = IconData(0xe80b, fontFamily: _testsFamily);
+  static const IconData kicons8 = IconData(0xe80c, fontFamily: _testsFamily);
+  static const IconData kicons11 = IconData(0xe80d, fontFamily: _testsFamily);
+  static const IconData kicons10 = IconData(0xe80e, fontFamily: _testsFamily);
+  static const IconData kicons12 = IconData(0xe80f, fontFamily: _testsFamily);
+  static const IconData kicons14 = IconData(0xe811, fontFamily: _testsFamily);
+  static const IconData kicons15 = IconData(0xe812, fontFamily: _testsFamily);
+  static const IconData kicons16 = IconData(0xe813, fontFamily: _testsFamily);
+  static const IconData kicons17 = IconData(0xe814, fontFamily: _testsFamily);
+  static const IconData kicons18 = IconData(0xe815, fontFamily: _testsFamily);
+  static const IconData kicons19 = IconData(0xe816, fontFamily: _testsFamily);
+  static const IconData kicons20 = IconData(0xe817, fontFamily: _testsFamily);
+  static const IconData kicons21 = IconData(0xe818, fontFamily: _testsFamily);
+  static const IconData kicons22 = IconData(0xe819, fontFamily: _testsFamily);
+  static const IconData kicons23 = IconData(0xe81a, fontFamily: _testsFamily);
+  static const IconData kicons25 = IconData(0xe81b, fontFamily: _testsFamily);
+  static const IconData kicons24 = IconData(0xe81c, fontFamily: _testsFamily);
+  static const IconData kicons26 = IconData(0xe81d, fontFamily: _testsFamily);
+  static const IconData kicons27 = IconData(0xe81e, fontFamily: _testsFamily);
+  static const IconData kicons28 = IconData(0xe81f, fontFamily: _testsFamily);
+  static const IconData kicons29 = IconData(0xe820, fontFamily: _testsFamily);
+  static const IconData kicons32 = IconData(0xe821, fontFamily: _testsFamily);
+  static const IconData kicons30 = IconData(0xe822, fontFamily: _testsFamily);
+  static const IconData kicons31 = IconData(0xe823, fontFamily: _testsFamily);
+  static const IconData kicons35 = IconData(0xe825, fontFamily: _testsFamily);
+  static const IconData kicons33 = IconData(0xe826, fontFamily: _testsFamily);
+  static const IconData kicons36 = IconData(0xe829, fontFamily: _testsFamily);
+  static const IconData kstore = IconData(0xe82d, fontFamily: _testsFamily);
+
+  // Settings
+  static const IconData ksetting =
+      IconData(0xe92e, fontFamily: _settingsFamily);
 }

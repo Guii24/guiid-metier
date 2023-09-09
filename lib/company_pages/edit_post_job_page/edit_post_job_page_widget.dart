@@ -472,7 +472,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                           child: Stack(
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(0.0, 1.0),
+                                alignment: AlignmentDirectional(0.00, 1.00),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
@@ -847,7 +847,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-1.0, 1.0),
+                alignment: AlignmentDirectional(-1.00, 1.00),
                 child: Container(
                   width: double.infinity,
                   height: 68.0,
@@ -862,7 +862,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                     ],
                   ),
                   child: Align(
-                    alignment: AlignmentDirectional(0.0, -1.0),
+                    alignment: AlignmentDirectional(0.00, -1.00),
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(
                           16.0, 10.0, 16.0, 10.0),

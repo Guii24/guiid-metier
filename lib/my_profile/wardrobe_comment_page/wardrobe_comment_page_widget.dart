@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -128,7 +129,7 @@ class _WardrobeCommentPageWidgetState extends State<WardrobeCommentPageWidget> {
                                       ),
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(1.0, 1.0),
+                                            AlignmentDirectional(1.00, 1.00),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -152,7 +153,7 @@ class _WardrobeCommentPageWidgetState extends State<WardrobeCommentPageWidget> {
                                               ),
                                               child: Align(
                                                 alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
+                                                    0.00, 0.00),
                                                 child: Text(
                                                   '1/4',
                                                   style: FlutterFlowTheme.of(
@@ -213,7 +214,7 @@ class _WardrobeCommentPageWidgetState extends State<WardrobeCommentPageWidget> {
                                   ),
                                 ),
                                 child: Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0.00, 0.00),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -352,7 +353,7 @@ class _WardrobeCommentPageWidgetState extends State<WardrobeCommentPageWidget> {
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(0.0, 1.0),
+              alignment: AlignmentDirectional(0.00, 1.00),
               child: Material(
                 color: Colors.transparent,
                 elevation: 0.0,
@@ -367,7 +368,7 @@ class _WardrobeCommentPageWidgetState extends State<WardrobeCommentPageWidget> {
                     ),
                   ),
                   child: Align(
-                    alignment: AlignmentDirectional(0.0, -1.0),
+                    alignment: AlignmentDirectional(0.00, -1.00),
                     child: Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(10.0, 7.5, 16.0, 0.0),

@@ -62,7 +62,7 @@ class _BottonSelectCategoryWidgetState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Align(
-              alignment: AlignmentDirectional(0.0, 0.0),
+              alignment: AlignmentDirectional(0.00, 0.00),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 13.0, 0.0, 0.0),
                 child: Material(

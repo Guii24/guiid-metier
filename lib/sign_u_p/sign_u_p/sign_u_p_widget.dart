@@ -53,7 +53,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
       vsync: this,
       length: 2,
       initialIndex: 0,
-    );
+    )..addListener(() => setState(() {}));
     _model.userNameController ??= TextEditingController();
     _model.userPhoneController ??= TextEditingController();
     _model.companyNameController ??= TextEditingController();
@@ -146,7 +146,6 @@ class _SignUPWidgetState extends State<SignUPWidget>
                             ),
                           ],
                           controller: _model.tabBarController,
-                          onTap: (value) => setState(() {}),
                         ),
                       ),
                       Expanded(
@@ -495,8 +494,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       .asValidator(context),
                                                   inputFormatters: [
                                                     FilteringTextInputFormatter
-                                                        .allow(
-                                                            RegExp('^.{1,100}'))
+                                                        .allow(RegExp(
+                                                            '^.{1,100}[A-Za-z]'))
                                                   ],
                                                 ),
                                               ),
@@ -511,8 +510,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                         .text !=
                                                     ''))
                                           Align(
-                                            alignment:
-                                                AlignmentDirectional(-1.0, 0.0),
+                                            alignment: AlignmentDirectional(
+                                                -1.00, 0.00),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 8.0),
@@ -845,6 +844,9 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               ),
                                               Expanded(
                                                 child: RichText(
+                                                  textScaleFactor:
+                                                      MediaQuery.of(context)
+                                                          .textScaleFactor,
                                                   text: TextSpan(
                                                     children: [
                                                       TextSpan(
@@ -929,7 +931,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                   ),
                                   Flexible(
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 1.0),
+                                      alignment:
+                                          AlignmentDirectional(0.00, 1.00),
                                       child: FFButtonWidget(
                                         onPressed: () async {
                                           if (_model.formKey2.currentState ==
@@ -1152,7 +1155,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                   ),
                                   Flexible(
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 1.0),
+                                      alignment:
+                                          AlignmentDirectional(0.00, 1.00),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 26.0, 0.0, 16.0),
@@ -1190,6 +1194,9 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                             ).then((value) => setState(() {}));
                                           },
                                           child: RichText(
+                                            textScaleFactor:
+                                                MediaQuery.of(context)
+                                                    .textScaleFactor,
                                             text: TextSpan(
                                               children: [
                                                 TextSpan(
@@ -1857,6 +1864,9 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                           ),
                                           Expanded(
                                             child: RichText(
+                                              textScaleFactor:
+                                                  MediaQuery.of(context)
+                                                      .textScaleFactor,
                                               text: TextSpan(
                                                 children: [
                                                   TextSpan(
@@ -2168,6 +2178,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                         ).then((value) => setState(() {}));
                                       },
                                       child: RichText(
+                                        textScaleFactor: MediaQuery.of(context)
+                                            .textScaleFactor,
                                         text: TextSpan(
                                           children: [
                                             TextSpan(

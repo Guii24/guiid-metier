@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/settings/custom_dialog_phone_change/custom_dialog_phone_change_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
@@ -218,7 +219,7 @@ class _VerificationEditPhoneWidgetState
                         ),
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
+                        alignment: AlignmentDirectional(0.00, 0.00),
                         child: FlutterFlowTimer(
                           initialTime: _model.timerMilliseconds,
                           getDisplayTime: (value) =>
@@ -281,7 +282,7 @@ class _VerificationEditPhoneWidgetState
                           borderRadius: BorderRadius.circular(100.0),
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: AlignmentDirectional(0.00, 0.00),
                           child: Text(
                             'Send again',
                             style: FlutterFlowTheme.of(context)

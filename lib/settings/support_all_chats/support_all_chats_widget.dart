@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -124,7 +125,7 @@ class _SupportAllChatsWidgetState extends State<SupportAllChatsWidget>
               ),
               actions: [
                 Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.00, 0.00),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
@@ -136,7 +137,7 @@ class _SupportAllChatsWidgetState extends State<SupportAllChatsWidget>
                         shape: BoxShape.circle,
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
+                        alignment: AlignmentDirectional(0.00, 0.00),
                         child: Icon(
                           FFIcons.kproperty1support2,
                           color: FlutterFlowTheme.of(context).primary,

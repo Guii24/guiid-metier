@@ -4,6 +4,7 @@ import '/components/take_photo_profile_user_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
 import '/my_profile/empty_wardrobe_my_prof/empty_wardrobe_my_prof_widget.dart';
 import '/post/component_post_reposted/component_post_reposted_widget.dart';

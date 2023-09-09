@@ -42,7 +42,7 @@ class _PopupCancelWidgetState extends State<PopupCancelWidget> {
     context.watch<FFAppState>();
 
     return Align(
-      alignment: AlignmentDirectional(0.0, 0.0),
+      alignment: AlignmentDirectional(0.00, 0.00),
       child: Material(
         color: Colors.transparent,
         elevation: 0.0,

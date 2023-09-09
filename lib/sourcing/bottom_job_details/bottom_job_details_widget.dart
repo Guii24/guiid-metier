@@ -59,7 +59,7 @@ class _BottomJobDetailsWidgetState extends State<BottomJobDetailsWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Align(
-              alignment: AlignmentDirectional(0.0, 0.0),
+              alignment: AlignmentDirectional(0.00, 0.00),
               child: Container(
                 width: 32.0,
                 height: 2.0,

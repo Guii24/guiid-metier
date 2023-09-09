@@ -62,7 +62,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, 1.0),
+                    alignment: AlignmentDirectional(0.00, 1.00),
                     child: Material(
                       color: Colors.transparent,
                       elevation: 0.0,
@@ -370,7 +370,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, 0.97),
+                    alignment: AlignmentDirectional(0.00, 0.97),
                     child: Builder(
                       builder: (context) => InkWell(
                         splashColor: Colors.transparent,
@@ -453,7 +453,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, 1.0),
+                    alignment: AlignmentDirectional(0.00, 1.00),
                     child: Material(
                       color: Colors.transparent,
                       elevation: 0.0,
@@ -773,7 +773,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, 0.91),
+                    alignment: AlignmentDirectional(0.00, 0.91),
                     child: Builder(
                       builder: (context) => InkWell(
                         splashColor: Colors.transparent,

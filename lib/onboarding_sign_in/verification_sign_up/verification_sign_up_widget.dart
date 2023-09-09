@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -203,7 +204,7 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                         ),
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
+                        alignment: AlignmentDirectional(0.00, 0.00),
                         child: FlutterFlowTimer(
                           initialTime: _model.timerMilliseconds,
                           getDisplayTime: (value) =>
@@ -266,7 +267,7 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                           borderRadius: BorderRadius.circular(100.0),
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: AlignmentDirectional(0.00, 0.00),
                           child: Text(
                             'Send again',
                             style: FlutterFlowTheme.of(context)

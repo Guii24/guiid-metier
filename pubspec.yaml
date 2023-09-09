@@ -181,9 +181,15 @@ flutter:
     - family: OnboardingGM
       fonts:
         - asset: assets/fonts/onboardingGM.ttf
-    - family: Icomoon
+    - family: GMIconsNewBattery
       fonts:
-        - asset: assets/fonts/icomoon.ttf
+        - asset: assets/fonts/GMIconsNewBattery.ttf
+    - family: Tests
+      fonts:
+        - asset: assets/fonts/Tests.ttf
+    - family: Settings
+      fonts:
+        - asset: assets/fonts/Settings.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

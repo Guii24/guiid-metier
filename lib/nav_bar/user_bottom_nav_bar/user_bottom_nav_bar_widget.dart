@@ -41,7 +41,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
     context.watch<FFAppState>();
 
     return Align(
-      alignment: AlignmentDirectional(0.0, 0.0),
+      alignment: AlignmentDirectional(0.00, 0.00),
       child: InkWell(
         splashColor: Colors.transparent,
         focusColor: Colors.transparent,
@@ -63,7 +63,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                   child: Stack(
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(0.0, 1.0),
+                        alignment: AlignmentDirectional(0.00, 1.00),
                         child: Material(
                           color: Colors.transparent,
                           elevation: 0.0,
@@ -403,7 +403,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0.0, 0.94),
+                        alignment: AlignmentDirectional(0.00, 0.94),
                         child: Container(
                           width: 66.0,
                           height: 66.0,
@@ -441,7 +441,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       if (valueOrDefault(currentUserDocument?.userType, '') ==
                           'User')
                         Align(
-                          alignment: AlignmentDirectional(0.0, 0.73),
+                          alignment: AlignmentDirectional(0.00, 0.73),
                           child: AuthUserStreamWidget(
                             builder: (context) => Material(
                               color: Colors.transparent,
@@ -569,7 +569,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       if (valueOrDefault(currentUserDocument?.userType, '') !=
                           'User')
                         Align(
-                          alignment: AlignmentDirectional(0.0, 0.73),
+                          alignment: AlignmentDirectional(0.00, 0.73),
                           child: AuthUserStreamWidget(
                             builder: (context) => Material(
                               color: Colors.transparent,
@@ -704,7 +704,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                   child: Stack(
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(0.0, 1.0),
+                        alignment: AlignmentDirectional(0.00, 1.00),
                         child: Material(
                           color: Colors.transparent,
                           elevation: 0.0,
@@ -1043,7 +1043,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0.0, 0.86),
+                        alignment: AlignmentDirectional(0.00, 0.86),
                         child: Container(
                           width: 66.0,
                           height: 66.0,
@@ -1080,7 +1080,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       if (valueOrDefault(currentUserDocument?.userType, '') ==
                           'User')
                         Align(
-                          alignment: AlignmentDirectional(0.0, 0.63),
+                          alignment: AlignmentDirectional(0.00, 0.63),
                           child: AuthUserStreamWidget(
                             builder: (context) => Material(
                               color: Colors.transparent,
@@ -1208,7 +1208,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       if (valueOrDefault(currentUserDocument?.userType, '') !=
                           'User')
                         Align(
-                          alignment: AlignmentDirectional(0.0, 0.63),
+                          alignment: AlignmentDirectional(0.00, 0.63),
                           child: AuthUserStreamWidget(
                             builder: (context) => Material(
                               color: Colors.transparent,

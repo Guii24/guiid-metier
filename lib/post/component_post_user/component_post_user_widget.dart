@@ -152,7 +152,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                           ),
                           if (containerPostRecord.postImagesList.length > 1)
                             Align(
-                              alignment: AlignmentDirectional(1.0, 1.0),
+                              alignment: AlignmentDirectional(1.00, 1.00),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 16.0, 16.0),
@@ -171,7 +171,8 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment:
+                                          AlignmentDirectional(0.00, 0.00),
                                       child: Text(
                                         '${(_model.pageViewCurrentIndex + 1).toString()}/${containerPostRecord.postImagesList.length.toString()}',
                                         style: FlutterFlowTheme.of(context)

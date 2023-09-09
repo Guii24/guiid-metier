@@ -182,7 +182,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                         ),
                                         child: Align(
                                           alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.00, 0.00),
                                           child: Icon(
                                             FFIcons.kproperty1subscription,
                                             color: Colors.black,
@@ -242,6 +242,9 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                           CrossAxisAlignment.end,
                                       children: [
                                         RichText(
+                                          textScaleFactor:
+                                              MediaQuery.of(context)
+                                                  .textScaleFactor,
                                           text: TextSpan(
                                             children: [
                                               TextSpan(
@@ -496,7 +499,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                         ),
                                         child: Align(
                                           alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.00, 0.00),
                                           child: Icon(
                                             FFIcons.kproperty1subscription,
                                             color: Colors.black,
@@ -551,6 +554,8 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                       ),
                                     ),
                                     RichText(
+                                      textScaleFactor: MediaQuery.of(context)
+                                          .textScaleFactor,
                                       text: TextSpan(
                                         children: [
                                           TextSpan(
@@ -743,7 +748,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                         ),
                                         child: Align(
                                           alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.00, 0.00),
                                           child: Icon(
                                             FFIcons.kproperty1subscription,
                                             color: Colors.black,
@@ -798,6 +803,8 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                       ),
                                     ),
                                     RichText(
+                                      textScaleFactor: MediaQuery.of(context)
+                                          .textScaleFactor,
                                       text: TextSpan(
                                         children: [
                                           TextSpan(
@@ -880,7 +887,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                   ],
                 ),
                 Align(
-                  alignment: AlignmentDirectional(0.0, 0.47),
+                  alignment: AlignmentDirectional(0.00, 0.47),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
@@ -912,7 +919,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
             ),
           ),
           Align(
-            alignment: AlignmentDirectional(-1.0, -0.88),
+            alignment: AlignmentDirectional(-1.00, -0.88),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(19.0, 0.0, 0.0, 0.0),
               child: FlutterFlowIconButton(

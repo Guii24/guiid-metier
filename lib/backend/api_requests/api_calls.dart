@@ -21,6 +21,7 @@ class GoogleAutoCompleteCall {
       params: {
         'key': "AIzaSyDjObLV5pxxXi8BtFWyJGKOgRdUmMeW4jY",
         'input': input,
+        'types': "locality",
       },
       returnBody: true,
       encodeBodyUtf8: false,

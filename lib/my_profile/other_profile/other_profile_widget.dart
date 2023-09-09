@@ -48,7 +48,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
       vsync: this,
       length: 3,
       initialIndex: 0,
-    );
+    )..addListener(() => setState(() {}));
   }
 
   @override
@@ -107,7 +107,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
               ),
               actions: [
                 Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.00, 0.00),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
@@ -751,7 +751,6 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                     ),
                                   ],
                                   controller: _model.tabBarController,
-                                  onTap: (value) => setState(() {}),
                                 ),
                               ),
                               Expanded(
@@ -761,7 +760,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                   children: [
                                     Align(
                                       alignment:
-                                          AlignmentDirectional(0.0, -1.0),
+                                          AlignmentDirectional(0.00, -1.00),
                                       child: Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
@@ -1327,7 +1326,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                     ),
                                     Align(
                                       alignment:
-                                          AlignmentDirectional(0.0, -1.0),
+                                          AlignmentDirectional(0.00, -1.00),
                                       child: Container(
                                         width: double.infinity,
                                         height:

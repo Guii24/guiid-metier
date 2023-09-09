@@ -4,6 +4,7 @@ import '/components/support_companent_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/settings/empty_support_messages/empty_support_messages_widget.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -120,7 +121,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
               ),
               actions: [
                 Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.00, 0.00),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
@@ -132,7 +133,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                         shape: BoxShape.circle,
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
+                        alignment: AlignmentDirectional(0.00, 0.00),
                         child: Icon(
                           FFIcons.kproperty1support2,
                           color: FlutterFlowTheme.of(context).primary,
@@ -239,7 +240,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, 1.0),
+                    alignment: AlignmentDirectional(0.00, 1.00),
                     child: Material(
                       color: Colors.transparent,
                       elevation: 0.0,

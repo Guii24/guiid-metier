@@ -142,7 +142,7 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(-1.0, 0.0),
+              alignment: AlignmentDirectional(-1.00, 0.00),
               child: Text(
                 widget.textType!,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(

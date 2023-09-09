@@ -76,7 +76,7 @@ class _LogInWidgetState extends State<LogInWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'WELCOME BACK!1',
+                  'WELCOME BACK!',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).primaryText,

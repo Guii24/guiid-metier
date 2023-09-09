@@ -45,7 +45,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
       vsync: this,
       length: 3,
       initialIndex: 0,
-    );
+    )..addListener(() => setState(() {}));
   }
 
   @override
@@ -507,7 +507,6 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                   ),
                                 ],
                                 controller: _model.tabBarController,
-                                onTap: (value) => setState(() {}),
                               ),
                             ),
                             Expanded(

@@ -4,6 +4,7 @@ import '/company_pages/empty_jobs/empty_jobs_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/sourcing/bottom_job_details/bottom_job_details_widget.dart';
 import '/sourcing/component_sourcing/component_sourcing_widget.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primary,
             automaticallyImplyLeading: false,
             leading: Align(
-              alignment: AlignmentDirectional(-1.0, 0.0),
+              alignment: AlignmentDirectional(-1.00, 0.00),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: AuthUserStreamWidget(
@@ -100,7 +101,7 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
             ),
             actions: [
               Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
+                alignment: AlignmentDirectional(0.00, 0.00),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
                   child: FlutterFlowIconButton(

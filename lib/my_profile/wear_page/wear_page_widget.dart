@@ -3,6 +3,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/bottom_editor_delete_wear/bottom_editor_delete_wear_widget.dart';
 import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import '/post/comment_post/comment_post_widget.dart';
@@ -81,7 +82,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
           ),
           actions: [
             Align(
-              alignment: AlignmentDirectional(0.0, 0.0),
+              alignment: AlignmentDirectional(0.00, 0.00),
               child: FlutterFlowIconButton(
                 borderRadius: 100.0,
                 buttonSize: 45.0,
@@ -291,7 +292,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
               ),
               if (!_model.commentShoePost)
                 Align(
-                  alignment: AlignmentDirectional(0.0, 1.0),
+                  alignment: AlignmentDirectional(0.00, 1.00),
                   child: Container(
                     width: double.infinity,
                     height: 91.0,
@@ -464,7 +465,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                 ),
               if (_model.commentShoePost)
                 Align(
-                  alignment: AlignmentDirectional(0.0, 1.0),
+                  alignment: AlignmentDirectional(0.00, 1.00),
                   child: Material(
                     color: Colors.transparent,
                     elevation: 0.0,
@@ -479,7 +480,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                         ),
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.0, -1.0),
+                        alignment: AlignmentDirectional(0.00, -1.00),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               10.0, 7.5, 16.0, 0.0),
