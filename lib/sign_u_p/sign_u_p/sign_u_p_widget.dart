@@ -495,7 +495,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                   inputFormatters: [
                                                     FilteringTextInputFormatter
                                                         .allow(RegExp(
-                                                            '^.{1,100}[A-Za-z]'))
+                                                            '^[a-zA-Z]{1,100}'))
                                                   ],
                                                 ),
                                               ),
@@ -1564,8 +1564,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       .asValidator(context),
                                                   inputFormatters: [
                                                     FilteringTextInputFormatter
-                                                        .allow(
-                                                            RegExp('^.{1,100}'))
+                                                        .allow(RegExp(
+                                                            '^[a-zA-Z]{1,100}'))
                                                   ],
                                                 ),
                                               ),
