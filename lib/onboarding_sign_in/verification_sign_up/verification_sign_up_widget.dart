@@ -170,7 +170,12 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                             userContactDialCode: widget.phoneDialCode,
                           ));
 
-                      context.goNamedAuth('signupBioUser', context.mounted);
+                      if (widget.userType == 'User') {
+                        context.goNamedAuth('signupBioUser', context.mounted);
+                      } else {
+                        context.goNamedAuth(
+                            'signupBioCompany', context.mounted);
+                      }
                     },
                     onChange: () async {},
                   ),

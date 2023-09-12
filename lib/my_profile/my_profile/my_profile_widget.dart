@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/take_photo_profile_user_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -151,23 +150,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: FlutterFlowTheme.of(context)
-                                .customColorBottomSh,
-                            barrierColor: FlutterFlowTheme.of(context).dark38,
-                            context: context,
-                            builder: (context) {
-                              return GestureDetector(
-                                onTap: () => FocusScope.of(context)
-                                    .requestFocus(_model.unfocusNode),
-                                child: Padding(
-                                  padding: MediaQuery.viewInsetsOf(context),
-                                  child: TakePhotoProfileUserWidget(),
-                                ),
-                              );
-                            },
-                          ).then((value) => setState(() {}));
+                          context.pushNamed('EditProfile');
                         },
                         child: Container(
                           width: 80.0,

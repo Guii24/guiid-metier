@@ -79,26 +79,28 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
             hoverColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () async {
-              if (containerUsersRecord.userType == 'User') {
-                context.pushNamed(
-                  'OtherProfile',
-                  queryParameters: {
-                    'userRef': serializeParam(
-                      widget.userRef,
-                      ParamType.DocumentReference,
-                    ),
-                  }.withoutNulls,
-                );
-              } else {
-                context.pushNamed(
-                  'OtherProfileCompany',
-                  queryParameters: {
-                    'userRef': serializeParam(
-                      widget.userRef,
-                      ParamType.DocumentReference,
-                    ),
-                  }.withoutNulls,
-                );
+              if (currentUserReference != widget.userRef) {
+                if (containerUsersRecord.userType == 'User') {
+                  context.pushNamed(
+                    'OtherProfile',
+                    queryParameters: {
+                      'userRef': serializeParam(
+                        widget.userRef,
+                        ParamType.DocumentReference,
+                      ),
+                    }.withoutNulls,
+                  );
+                } else {
+                  context.pushNamed(
+                    'OtherProfileCompany',
+                    queryParameters: {
+                      'userRef': serializeParam(
+                        widget.userRef,
+                        ParamType.DocumentReference,
+                      ),
+                    }.withoutNulls,
+                  );
+                }
               }
             },
             child: Row(

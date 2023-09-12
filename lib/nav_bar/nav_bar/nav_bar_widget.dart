@@ -71,7 +71,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                       ),
                       child: Container(
                         width: double.infinity,
-                        height: 60.0,
+                        height: MediaQuery.sizeOf(context).height * 0.071,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [
@@ -370,7 +370,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.00, 0.97),
+                    alignment: AlignmentDirectional(0.00, 0.96),
                     child: Builder(
                       builder: (context) => InkWell(
                         splashColor: Colors.transparent,
@@ -462,7 +462,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                       ),
                       child: Container(
                         width: double.infinity,
-                        height: 84.0,
+                        height: MediaQuery.sizeOf(context).height * 0.1,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [

@@ -405,7 +405,7 @@ class _ComponentPostRepostedWidgetState
                                                 listimgItem,
                                                 width: double.infinity,
                                                 height: double.infinity,
-                                                fit: BoxFit.cover,
+                                                fit: BoxFit.fill,
                                               ),
                                             );
                                           },

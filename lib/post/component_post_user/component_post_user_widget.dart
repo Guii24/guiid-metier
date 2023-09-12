@@ -123,26 +123,23 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                   itemCount: images.length,
                                   itemBuilder: (context, imagesIndex) {
                                     final imagesItem = images[imagesIndex];
-                                    return Container(
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      child: Stack(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(0.0),
-                                              bottomRight: Radius.circular(0.0),
-                                              topLeft: Radius.circular(5.0),
-                                              topRight: Radius.circular(5.0),
-                                            ),
-                                            child: Image.network(
-                                              imagesItem,
-                                              width: double.infinity,
-                                              height: double.infinity,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ],
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(0.0),
+                                        bottomRight: Radius.circular(0.0),
+                                        topLeft: Radius.circular(5.0),
+                                        topRight: Radius.circular(5.0),
+                                      ),
+                                      child: Image.network(
+                                        imagesItem,
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                1.0,
+                                        height:
+                                            MediaQuery.sizeOf(context).height *
+                                                0.317,
+                                        fit: BoxFit.contain,
+                                        alignment: Alignment(0.00, 0.00),
                                       ),
                                     );
                                   },

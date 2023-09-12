@@ -1,11 +1,7 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,20 +29,6 @@ class _SpashScreenWidgetState extends State<SpashScreenWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await actions.lockOrientation();
-      if (isiOS) {
-        final isEntitled = await revenue_cat.isEntitled('Premium');
-        if (isEntitled == null) {
-          return;
-        } else if (!isEntitled) {
-          await revenue_cat.loadOfferings();
-        }
-
-        if (!isEntitled) {
-          await currentUserReference!.update(createUsersRecordData(
-            userSubscription: false,
-          ));
-        }
-      }
       await Future.delayed(const Duration(milliseconds: 1000));
 
       context.goNamed(

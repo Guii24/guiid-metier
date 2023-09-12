@@ -134,7 +134,7 @@ class _ComponentPostCompanyWidgetState
                                         imagesItem,
                                         width: double.infinity,
                                         height: double.infinity,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.fill,
                                       ),
                                     );
                                   },

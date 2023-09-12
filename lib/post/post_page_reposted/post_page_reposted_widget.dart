@@ -640,7 +640,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                 double.infinity,
                                                             height:
                                                                 double.infinity,
-                                                            fit: BoxFit.cover,
+                                                            fit: BoxFit.fill,
                                                           );
                                                         },
                                                       ),

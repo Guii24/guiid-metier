@@ -62,7 +62,7 @@ class _TakePhotoProfileUserWidgetState
                 FFButtonWidget(
                   onPressed: () async {
                     final selectedMedia = await selectMedia(
-                      imageQuality: 100,
+                      imageQuality: 50,
                       multiImage: false,
                     );
                     if (selectedMedia != null &&

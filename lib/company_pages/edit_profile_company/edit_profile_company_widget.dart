@@ -290,7 +290,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   .asValidator(context),
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
-                                    RegExp('^.{1,100}'))
+                                    RegExp('^[a-zA-Z]*(?: [a-zA-Z]*)?'))
                               ],
                             ),
                           ),
@@ -943,6 +943,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   Duration(milliseconds: 10),
                                   () => setState(() {}),
                                 ),
+                                textInputAction: TextInputAction.done,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   isDense: true,
@@ -1045,14 +1046,10 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                           child: FFButtonWidget(
                             onPressed: (_model.textController1.text == null ||
                                         _model.textController1.text == '') ||
-                                    (_model.textController4.text == null ||
-                                        _model.textController4.text == '') ||
                                     (_model.textController3.text == null ||
                                         _model.textController3.text == '') ||
-                                    (FFAppState().selectedlocation == null ||
-                                        FFAppState().selectedlocation == '') ||
-                                    !functions.validatorEmail(
-                                        _model.textController4.text)
+                                    (FFAppState().profilePhotoCompany == null ||
+                                        FFAppState().profilePhotoCompany == '')
                                 ? null
                                 : () async {
                                     await currentUserReference!.update({

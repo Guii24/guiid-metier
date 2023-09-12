@@ -259,7 +259,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                               double.infinity,
                                                           height:
                                                               double.infinity,
-                                                          fit: BoxFit.cover,
+                                                          fit: BoxFit.fill,
                                                         );
                                                       },
                                                     ),

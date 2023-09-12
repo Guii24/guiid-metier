@@ -9,6 +9,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/sign_u_p/bottom_preference/bottom_preference_widget.dart';
 import '/sign_u_p/sign_up_location/sign_up_location_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -147,14 +148,17 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100.0),
-                              child: Image.network(
-                                valueOrDefault<String>(
+                              child: CachedNetworkImage(
+                                fadeInDuration: Duration(milliseconds: 500),
+                                fadeOutDuration: Duration(milliseconds: 500),
+                                imageUrl: valueOrDefault<String>(
                                   FFAppState().profilePhoto,
                                   'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
                                 ),
                                 width: 90.0,
                                 height: 90.0,
                                 fit: BoxFit.cover,
+                                alignment: Alignment(0.00, 0.00),
                               ),
                             ),
                           ),
@@ -281,7 +285,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   .asValidator(context),
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
-                                    RegExp('^.{1,100}'))
+                                    RegExp('^[a-zA-Z]*(?: [a-zA-Z]*)?'))
                               ],
                             ),
                           ),

@@ -212,7 +212,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                             height: MediaQuery.sizeOf(context)
                                                     .height *
                                                 0.345,
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.fill,
                                           ),
                                         );
                                       },

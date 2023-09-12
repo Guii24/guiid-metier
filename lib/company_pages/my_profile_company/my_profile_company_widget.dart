@@ -135,58 +135,69 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 80.0,
-                      height: 80.0,
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: 80.0,
-                            height: 80.0,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: CachedNetworkImage(
-                              fadeInDuration: Duration(milliseconds: 500),
-                              fadeOutDuration: Duration(milliseconds: 500),
-                              imageUrl: valueOrDefault<String>(
-                                FFAppState().profilePhotoCompany,
-                                'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed('EditProfileCompany');
+                      },
+                      child: Container(
+                        width: 80.0,
+                        height: 80.0,
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 80.0,
+                              height: 80.0,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
                               ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(1.00, 1.00),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 0.0,
-                              shape: const CircleBorder(),
-                              child: Container(
-                                width: 24.0,
-                                height: 24.0,
-                                decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    width: 1.0,
-                                  ),
+                              child: CachedNetworkImage(
+                                fadeInDuration: Duration(milliseconds: 500),
+                                fadeOutDuration: Duration(milliseconds: 500),
+                                imageUrl: valueOrDefault<String>(
+                                  FFAppState().profilePhotoCompany,
+                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
                                 ),
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.00, 0.00),
-                                  child: Icon(
-                                    FFIcons.kplus,
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    size: 11.0,
-                                  ),
-                                ),
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                        ],
+                            Align(
+                              alignment: AlignmentDirectional(1.00, 1.00),
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 0.0,
+                                shape: const CircleBorder(),
+                                child: Container(
+                                  width: 24.0,
+                                  height: 24.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Align(
+                                    alignment: AlignmentDirectional(0.00, 0.00),
+                                    child: Icon(
+                                      FFIcons.kplus,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 11.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(

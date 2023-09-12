@@ -73,7 +73,7 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
                     widget.wearItem!.wearImage,
                     width: double.infinity,
                     height: MediaQuery.sizeOf(context).height * 0.345,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ],
