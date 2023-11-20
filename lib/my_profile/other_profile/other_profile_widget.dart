@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -16,6 +17,7 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'other_profile_model.dart';
@@ -60,6 +62,15 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return StreamBuilder<UsersRecord>(
@@ -84,7 +95,9 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
         }
         final otherProfileUsersRecord = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+          onTap: () => _model.unfocusNode.canRequestFocus
+              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+              : FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -129,8 +142,10 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => FocusScope.of(context)
-                                  .requestFocus(_model.unfocusNode),
+                              onTap: () => _model.unfocusNode.canRequestFocus
+                                  ? FocusScope.of(context)
+                                      .requestFocus(_model.unfocusNode)
+                                  : FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomReportandBlockUserWidget(
@@ -140,7 +155,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                               ),
                             );
                           },
-                        ).then((value) => setState(() {}));
+                        ).then((value) => safeSetState(() {}));
                       },
                     ),
                   ),
@@ -179,7 +194,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                               child: Image.network(
                                 valueOrDefault<String>(
                                   otherProfileUsersRecord.photoUrl,
-                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                 ),
                                 fit: BoxFit.cover,
                               ),
@@ -348,10 +363,12 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                           future: queryPostRecordCount(
                                             queryBuilder: (postRecord) =>
                                                 postRecord
-                                                    .where('post_creator',
-                                                        isEqualTo:
-                                                            otherProfileUsersRecord
-                                                                .reference)
+                                                    .where(
+                                                      'post_creator',
+                                                      isEqualTo:
+                                                          otherProfileUsersRecord
+                                                              .reference,
+                                                    )
                                                     .orderBy('post_time_posted',
                                                         descending: true),
                                           ),
@@ -555,18 +572,56 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                   child: FFButtonWidget(
                                     onPressed: () async {
                                       await currentUserReference!.update({
-                                        'user_following': FieldValue.arrayUnion(
-                                            [widget.userRef]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_following':
+                                                FieldValue.arrayUnion(
+                                                    [widget.userRef]),
+                                          },
+                                        ),
                                       });
 
                                       await otherProfileUsersRecord.reference
                                           .update({
-                                        'user_followers': FieldValue.arrayUnion(
-                                            [currentUserReference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_followers':
+                                                FieldValue.arrayUnion(
+                                                    [currentUserReference]),
+                                          },
+                                        ),
                                       });
                                       await actions.updatePage(
                                         context,
                                       );
+
+                                      await NotificationRecord.collection
+                                          .doc()
+                                          .set(createNotificationRecordData(
+                                            notificationFrom:
+                                                currentUserReference,
+                                            notificationType:
+                                                'started following you',
+                                            notificationCreationDate:
+                                                getCurrentTimestamp,
+                                            notificationTo:
+                                                otherProfileUsersRecord
+                                                    .reference,
+                                          ));
+                                      if (otherProfileUsersRecord
+                                          .userNotification) {
+                                        triggerPushNotification(
+                                          notificationTitle:
+                                              currentUserDisplayName,
+                                          notificationText:
+                                              'started following you',
+                                          userRefs: [
+                                            otherProfileUsersRecord.reference
+                                          ],
+                                          initialPageName: 'MainPage',
+                                          parameterData: {},
+                                        );
+                                      }
                                     },
                                     text: 'FOLLOW',
                                     options: FFButtonOptions(
@@ -608,16 +663,24 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                   child: FFButtonWidget(
                                     onPressed: () async {
                                       await currentUserReference!.update({
-                                        'user_following':
-                                            FieldValue.arrayRemove(
-                                                [widget.userRef]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_following':
+                                                FieldValue.arrayRemove(
+                                                    [widget.userRef]),
+                                          },
+                                        ),
                                       });
 
                                       await otherProfileUsersRecord.reference
                                           .update({
-                                        'user_followers':
-                                            FieldValue.arrayRemove(
-                                                [currentUserReference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_followers':
+                                                FieldValue.arrayRemove(
+                                                    [currentUserReference]),
+                                          },
+                                        ),
                                       });
                                       await actions.updatePage(
                                         context,
@@ -672,8 +735,13 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                       return Material(
                                         color: Colors.transparent,
                                         child: GestureDetector(
-                                          onTap: () => FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode),
+                                          onTap: () => _model
+                                                  .unfocusNode.canRequestFocus
+                                              ? FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _model.unfocusNode)
+                                              : FocusScope.of(context)
+                                                  .unfocus(),
                                           child: PopupUnblockUserWidget(
                                             name: otherProfileUsersRecord
                                                 .displayName,
@@ -776,12 +844,16 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                 stream: queryPostRecord(
                                                   queryBuilder: (postRecord) =>
                                                       postRecord
-                                                          .where('post_creator',
-                                                              isEqualTo:
-                                                                  otherProfileUsersRecord
-                                                                      .reference)
-                                                          .where('post_type',
-                                                              isEqualTo: 'post')
+                                                          .where(
+                                                            'post_creator',
+                                                            isEqualTo:
+                                                                otherProfileUsersRecord
+                                                                    .reference,
+                                                          )
+                                                          .where(
+                                                            'post_type',
+                                                            isEqualTo: 'post',
+                                                          )
                                                           .orderBy(
                                                               'post_time_posted',
                                                               descending: true),
@@ -1350,13 +1422,15 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                     queryBuilder: (postRecord) =>
                                                         postRecord
                                                             .where(
-                                                                'post_creator',
-                                                                isEqualTo:
-                                                                    otherProfileUsersRecord
-                                                                        .reference)
-                                                            .where('post_type',
-                                                                isEqualTo:
-                                                                    'wear')
+                                                              'post_creator',
+                                                              isEqualTo:
+                                                                  otherProfileUsersRecord
+                                                                      .reference,
+                                                            )
+                                                            .where(
+                                                              'post_type',
+                                                              isEqualTo: 'wear',
+                                                            )
                                                             .orderBy(
                                                                 'post_time_posted',
                                                                 descending:
@@ -1433,16 +1507,12 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                               queryParameters: {
                                                                 'postDoc':
                                                                     serializeParam(
-                                                                  gridViewPostRecord,
+                                                                  gridViewPostRecord
+                                                                      .reference,
                                                                   ParamType
-                                                                      .Document,
+                                                                      .DocumentReference,
                                                                 ),
                                                               }.withoutNulls,
-                                                              extra: <String,
-                                                                  dynamic>{
-                                                                'postDoc':
-                                                                    gridViewPostRecord,
-                                                              },
                                                             );
                                                           },
                                                           child: ClipRRect(

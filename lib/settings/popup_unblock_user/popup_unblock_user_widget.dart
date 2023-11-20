@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_unblock_user_model.dart';
@@ -136,8 +137,12 @@ class _PopupUnblockUserWidgetState extends State<PopupUnblockUserWidget> {
                             child: FFButtonWidget(
                               onPressed: () async {
                                 await currentUserReference!.update({
-                                  'user_blocked_user':
-                                      FieldValue.arrayRemove([widget.user]),
+                                  ...mapToFirestore(
+                                    {
+                                      'user_blocked_user':
+                                          FieldValue.arrayRemove([widget.user]),
+                                    },
+                                  ),
                                 });
                                 Navigator.pop(context);
                               },

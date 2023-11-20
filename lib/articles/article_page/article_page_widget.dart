@@ -1,15 +1,19 @@
 import '/articles/comment_article/comment_article_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/subscription_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'article_page_model.dart';
@@ -48,6 +52,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
     });
 
     _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -59,6 +64,15 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return StreamBuilder<ArticlesRecord>(
@@ -83,7 +97,9 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
         }
         final articlePageArticlesRecord = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+          onTap: () => _model.unfocusNode.canRequestFocus
+              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+              : FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFF4F3EC),
@@ -130,19 +146,24 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                               Container(
                                 width: double.infinity,
                                 height:
-                                    MediaQuery.sizeOf(context).height * 0.345,
+                                    MediaQuery.sizeOf(context).height * 0.45,
                                 child: Stack(
                                   children: [
                                     Builder(
                                       builder: (context) {
-                                        final images = articlePageArticlesRecord
-                                            .articleImageList
+                                        final images = functions
+                                            .newCustomFunction(
+                                                articlePageArticlesRecord
+                                                    .articleImageList
+                                                    .toList(),
+                                                articlePageArticlesRecord.videos
+                                                    .toList())
                                             .toList();
                                         return Container(
                                           width: double.infinity,
                                           height: MediaQuery.sizeOf(context)
                                                   .height *
-                                              0.345,
+                                              0.45,
                                           child: PageView.builder(
                                             controller: _model
                                                     .pageViewController ??=
@@ -158,62 +179,143 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                 (context, imagesIndex) {
                                               final imagesItem =
                                                   images[imagesIndex];
-                                              return Image.network(
-                                                imagesItem,
+                                              return Container(
                                                 width: double.infinity,
                                                 height: double.infinity,
-                                                fit: BoxFit.cover,
+                                                child: Stack(
+                                                  children: [
+                                                    if (getJsonField(
+                                                          imagesItem,
+                                                          r'''$.type''',
+                                                        ) ==
+                                                        getJsonField(
+                                                          FFAppState()
+                                                              .imageJson,
+                                                          r'''$.type''',
+                                                        ))
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                0.00, 0.00),
+                                                        child: Image.network(
+                                                          getJsonField(
+                                                            imagesItem,
+                                                            r'''$.url''',
+                                                          ),
+                                                          width:
+                                                              double.infinity,
+                                                          height:
+                                                              double.infinity,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    if (getJsonField(
+                                                          imagesItem,
+                                                          r'''$.type''',
+                                                        ) ==
+                                                        getJsonField(
+                                                          FFAppState()
+                                                              .videoJson,
+                                                          r'''$.type''',
+                                                        ))
+                                                      Container(
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .accent1,
+                                                        ),
+                                                        child: Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  0.00, 0.00),
+                                                          child:
+                                                              FlutterFlowVideoPlayer(
+                                                            path: getJsonField(
+                                                              imagesItem,
+                                                              r'''$.url''',
+                                                            ),
+                                                            videoType: VideoType
+                                                                .network,
+                                                            width:
+                                                                double.infinity,
+                                                            height:
+                                                                double.infinity,
+                                                            autoPlay: true,
+                                                            looping: false,
+                                                            showControls: true,
+                                                            allowFullScreen:
+                                                                true,
+                                                            allowPlaybackSpeedMenu:
+                                                                false,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                  ],
+                                                ),
                                               );
                                             },
                                           ),
                                         );
                                       },
                                     ),
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(1.00, 1.00),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 16.0, 16.0),
-                                        child: Material(
-                                          color: Colors.transparent,
-                                          elevation: 0.0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                          ),
-                                          child: Container(
-                                            width: 35.0,
-                                            height: 28.0,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .dark20,
+                                    if (functions
+                                            .newCustomFunction(
+                                                articlePageArticlesRecord
+                                                    .articleImageList
+                                                    .toList(),
+                                                articlePageArticlesRecord.videos
+                                                    .toList())
+                                            .length >
+                                        1)
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(1.00, 1.00),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 16.0, 16.0),
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            elevation: 0.0,
+                                            shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(20.0),
                                             ),
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.00, 0.00),
-                                              child: Text(
-                                                '${(_model.pageViewCurrentIndex + 1).toString()}/${articlePageArticlesRecord.articleImageList.length.toString()}',
-                                                style:
+                                            child: Container(
+                                              width: 35.0,
+                                              height: 28.0,
+                                              decoration: BoxDecoration(
+                                                color:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Libre Franklin',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryBackground,
-                                                          fontSize: 13.0,
-                                                        ),
+                                                        .dark20,
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                              ),
+                                              child: Align(
+                                                alignment: AlignmentDirectional(
+                                                    0.00, 0.00),
+                                                child: Text(
+                                                  '${(_model.pageViewCurrentIndex + 1).toString()}/${functions.newCustomFunction(articlePageArticlesRecord.articleImageList.toList(), articlePageArticlesRecord.videos.toList()).length.toString()}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .primaryBackground,
+                                                        fontSize: 13.0,
+                                                      ),
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -249,121 +351,6 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                         fontSize: 15.0,
                                         lineHeight: 1.4,
                                       ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 18.0, 16.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    if (!articlePageArticlesRecord
-                                        .articleActivities
-                                        .contains(currentUserReference))
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          await articlePageArticlesRecord
-                                              .reference
-                                              .update({
-                                            'article_activities':
-                                                FieldValue.arrayUnion(
-                                                    [currentUserReference]),
-                                          });
-                                          await actions.updatePage(
-                                            context,
-                                          );
-                                        },
-                                        child: Icon(
-                                          FFIcons.kbatteryactivity,
-                                          color: FlutterFlowTheme.of(context)
-                                              .dark88,
-                                          size: 24.0,
-                                        ),
-                                      ),
-                                    if (articlePageArticlesRecord
-                                        .articleActivities
-                                        .contains(currentUserReference))
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          await articlePageArticlesRecord
-                                              .reference
-                                              .update({
-                                            'article_activities':
-                                                FieldValue.arrayRemove(
-                                                    [currentUserReference]),
-                                          });
-                                          await actions.updatePage(
-                                            context,
-                                          );
-                                        },
-                                        child: Icon(
-                                          FFIcons.kbatteryactivityFill,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          size: 24.0,
-                                        ),
-                                      ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          4.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        '${formatNumber(
-                                          articlePageArticlesRecord
-                                              .articleActivities.length,
-                                          formatType: FormatType.compact,
-                                        )} activities',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Libre Franklin',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .dark68,
-                                              fontSize: 14.0,
-                                            ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          15.0, 0.0, 0.0, 0.0),
-                                      child: Icon(
-                                        FFIcons.kproperty1comments,
-                                        color:
-                                            FlutterFlowTheme.of(context).dark88,
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          4.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        '${formatNumber(
-                                          articlePageArticlesRecord
-                                              .articleCommentsList.length,
-                                          formatType: FormatType.compact,
-                                        )} comments',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Libre Franklin',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .dark68,
-                                              fontSize: 14.0,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
                                 ),
                               ),
                             ],
@@ -551,20 +538,25 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                               await articlePageArticlesRecord
                                                   .reference
                                                   .update({
-                                                'article_activities':
-                                                    FieldValue.arrayRemove(
-                                                        [currentUserReference]),
+                                                ...mapToFirestore(
+                                                  {
+                                                    'article_activities':
+                                                        FieldValue.arrayRemove([
+                                                      currentUserReference
+                                                    ]),
+                                                  },
+                                                ),
                                               });
                                               await actions.updatePage(
                                                 context,
                                               );
                                             },
                                             child: Icon(
-                                              FFIcons.kbatteryactivityFill,
+                                              FFIcons.kbatteryActivityFill,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .alternate,
-                                              size: 24.0,
+                                              size: 25.0,
                                             ),
                                           ),
                                         if (!articlePageArticlesRecord
@@ -576,16 +568,93 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              await articlePageArticlesRecord
-                                                  .reference
-                                                  .update({
-                                                'article_activities':
-                                                    FieldValue.arrayUnion(
-                                                        [currentUserReference]),
-                                              });
-                                              await actions.updatePage(
-                                                context,
-                                              );
+                                              if (valueOrDefault<bool>(
+                                                  currentUserDocument
+                                                      ?.userBlockedUserByAdmin,
+                                                  false)) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Your account has been suspended. Contact support for further info.',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                fontSize: 14.0,
+                                                              ),
+                                                    ),
+                                                    duration: Duration(
+                                                        milliseconds: 3000),
+                                                    backgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .secondary,
+                                                  ),
+                                                );
+                                              } else {
+                                                if (valueOrDefault<bool>(
+                                                    currentUserDocument
+                                                        ?.userSubscription,
+                                                    false)) {
+                                                  await articlePageArticlesRecord
+                                                      .reference
+                                                      .update({
+                                                    ...mapToFirestore(
+                                                      {
+                                                        'article_activities':
+                                                            FieldValue
+                                                                .arrayUnion([
+                                                          currentUserReference
+                                                        ]),
+                                                      },
+                                                    ),
+                                                  });
+                                                  await actions.updatePage(
+                                                    context,
+                                                  );
+                                                } else {
+                                                  showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    barrierColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .customColorBottomSh,
+                                                    enableDrag: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return GestureDetector(
+                                                        onTap: () => _model
+                                                                .unfocusNode
+                                                                .canRequestFocus
+                                                            ? FocusScope.of(
+                                                                    context)
+                                                                .requestFocus(_model
+                                                                    .unfocusNode)
+                                                            : FocusScope.of(
+                                                                    context)
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child:
+                                                              SubscriptionWidget(),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ).then((value) =>
+                                                      safeSetState(() {}));
+                                                }
+                                              }
                                             },
                                             child: Icon(
                                               FFIcons.kbatteryactivity,
@@ -624,9 +693,74 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        setState(() {
-                                          _model.commentShow = true;
-                                        });
+                                        if (valueOrDefault<bool>(
+                                            currentUserDocument
+                                                ?.userBlockedUserByAdmin,
+                                            false)) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Your account has been suspended. Contact support for further info.',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 3000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                        } else {
+                                          if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.userSubscription,
+                                              false)) {
+                                            setState(() {
+                                              _model.commentShow = true;
+                                            });
+                                          } else {
+                                            showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .customColorBottomSh,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return GestureDetector(
+                                                  onTap: () => _model
+                                                          .unfocusNode
+                                                          .canRequestFocus
+                                                      ? FocusScope.of(context)
+                                                          .requestFocus(_model
+                                                              .unfocusNode)
+                                                      : FocusScope.of(context)
+                                                          .unfocus(),
+                                                  child: Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: SubscriptionWidget(),
+                                                  ),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
+                                        }
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
@@ -724,6 +858,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                       width: double.infinity,
                                       child: TextFormField(
                                         controller: _model.textController,
+                                        focusNode: _model.textFieldFocusNode,
                                         onChanged: (_) => EasyDebounce.debounce(
                                           '_model.textController',
                                           Duration(milliseconds: 10),
@@ -853,10 +988,14 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                           await articlePageArticlesRecord
                                               .reference
                                               .update({
-                                            'article_comments_list':
-                                                FieldValue.arrayUnion([
-                                              _model.comment?.reference
-                                            ]),
+                                            ...mapToFirestore(
+                                              {
+                                                'article_comments_list':
+                                                    FieldValue.arrayUnion([
+                                                  _model.comment?.reference
+                                                ]),
+                                              },
+                                            ),
                                           });
                                           setState(() {
                                             _model.textController?.clear();

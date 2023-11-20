@@ -1,17 +1,18 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/company_pages/component_post_company/component_post_company_widget.dart';
-import '/company_pages/empty_jobs/empty_jobs_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/jobs/empty_jobs/empty_jobs_widget.dart';
 import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
 import '/post/component_post_reposted/component_post_reposted_widget.dart';
 import '/sourcing/component_sourcing/component_sourcing_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'my_profile_company_model.dart';
@@ -58,10 +59,21 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -148,21 +160,23 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                         height: 80.0,
                         child: Stack(
                           children: [
-                            Container(
-                              width: 80.0,
-                              height: 80.0,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: CachedNetworkImage(
-                                fadeInDuration: Duration(milliseconds: 500),
-                                fadeOutDuration: Duration(milliseconds: 500),
-                                imageUrl: valueOrDefault<String>(
-                                  FFAppState().profilePhotoCompany,
-                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                            AuthUserStreamWidget(
+                              builder: (context) => Container(
+                                width: 80.0,
+                                height: 80.0,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
                                 ),
-                                fit: BoxFit.cover,
+                                child: CachedNetworkImage(
+                                  fadeInDuration: Duration(milliseconds: 500),
+                                  fadeOutDuration: Duration(milliseconds: 500),
+                                  imageUrl: valueOrDefault<String>(
+                                    currentUserPhoto,
+                                    'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                             Align(
@@ -289,8 +303,10 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                 FutureBuilder<int>(
                                   future: queryPostRecordCount(
                                     queryBuilder: (postRecord) => postRecord
-                                        .where('post_creator',
-                                            isEqualTo: currentUserReference)
+                                        .where(
+                                          'post_creator',
+                                          isEqualTo: currentUserReference,
+                                        )
                                         .orderBy('post_time_posted',
                                             descending: true),
                                   ),
@@ -440,9 +456,14 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                           StreamBuilder<List<PostRecord>>(
                             stream: queryPostRecord(
                               queryBuilder: (postRecord) => postRecord
-                                  .where('post_creator',
-                                      isEqualTo: currentUserReference)
-                                  .where('post_type', isEqualTo: 'post')
+                                  .where(
+                                    'post_creator',
+                                    isEqualTo: currentUserReference,
+                                  )
+                                  .where(
+                                    'post_type',
+                                    isEqualTo: 'post',
+                                  )
                                   .orderBy('post_time_posted',
                                       descending: true),
                             ),
@@ -490,51 +511,77 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       if (!listViewPostRecord.postIsReposted)
-                                        InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            context.pushNamed(
-                                              'PostPage',
-                                              queryParameters: {
-                                                'postRef': serializeParam(
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                            border: Border.all(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .line,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              context.pushNamed(
+                                                'PostPage',
+                                                queryParameters: {
+                                                  'postRef': serializeParam(
+                                                    listViewPostRecord
+                                                        .reference,
+                                                    ParamType.DocumentReference,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            },
+                                            child: ComponentPostCompanyWidget(
+                                              key: Key(
+                                                  'Keyxa8_${listViewIndex}_of_${listViewPostRecordList.length}'),
+                                              postCompany:
                                                   listViewPostRecord.reference,
-                                                  ParamType.DocumentReference,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          },
-                                          child: ComponentPostCompanyWidget(
-                                            key: Key(
-                                                'Keyxa8_${listViewIndex}_of_${listViewPostRecordList.length}'),
-                                            postCompany:
-                                                listViewPostRecord.reference,
+                                            ),
                                           ),
                                         ),
                                       if (listViewPostRecord.postIsReposted)
-                                        InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            context.pushNamed(
-                                              'PostPageReposted',
-                                              queryParameters: {
-                                                'postRef': serializeParam(
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                            border: Border.all(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .line,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              context.pushNamed(
+                                                'PostPageReposted',
+                                                queryParameters: {
+                                                  'postRef': serializeParam(
+                                                    listViewPostRecord
+                                                        .reference,
+                                                    ParamType.DocumentReference,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            },
+                                            child: ComponentPostRepostedWidget(
+                                              key: Key(
+                                                  'Keyhv5_${listViewIndex}_of_${listViewPostRecordList.length}'),
+                                              postReposted:
                                                   listViewPostRecord.reference,
-                                                  ParamType.DocumentReference,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          },
-                                          child: ComponentPostRepostedWidget(
-                                            key: Key(
-                                                'Keyhv5_${listViewIndex}_of_${listViewPostRecordList.length}'),
-                                            postReposted:
-                                                listViewPostRecord.reference,
+                                            ),
                                           ),
                                         ),
                                     ],
@@ -890,8 +937,9 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                               overrideCache: true,
                               requestFn: () => queryJobRecord(
                                 queryBuilder: (jobRecord) => jobRecord.where(
-                                    'company_creator',
-                                    isEqualTo: currentUserReference),
+                                  'company_creator',
+                                  isEqualTo: currentUserReference,
+                                ),
                               ),
                             ),
                             builder: (context, snapshot) {

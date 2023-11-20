@@ -1,11 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_following_model.dart';
@@ -118,7 +120,7 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                     fadeOutDuration: Duration(milliseconds: 500),
                     imageUrl: valueOrDefault<String>(
                       containerUsersRecord.photoUrl,
-                      'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                      'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -160,18 +162,27 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                   ),
                 ),
                 if ((currentUserDocument?.userFollowing?.toList() ?? [])
-                    .contains(widget.userRef))
+                        .contains(widget.userRef) &&
+                    (widget.userRef != currentUserReference))
                   AuthUserStreamWidget(
                     builder: (context) => FFButtonWidget(
                       onPressed: () async {
                         await currentUserReference!.update({
-                          'user_following':
-                              FieldValue.arrayRemove([widget.userRef]),
+                          ...mapToFirestore(
+                            {
+                              'user_following':
+                                  FieldValue.arrayRemove([widget.userRef]),
+                            },
+                          ),
                         });
 
                         await widget.userRef!.update({
-                          'user_followers':
-                              FieldValue.arrayRemove([currentUserReference]),
+                          ...mapToFirestore(
+                            {
+                              'user_followers': FieldValue.arrayRemove(
+                                  [currentUserReference]),
+                            },
+                          ),
                         });
                       },
                       text: 'FOLLOWING',
@@ -196,19 +207,46 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                     ),
                   ),
                 if (!(currentUserDocument?.userFollowing?.toList() ?? [])
-                    .contains(widget.userRef))
+                        .contains(widget.userRef) &&
+                    (widget.userRef != currentUserReference))
                   AuthUserStreamWidget(
                     builder: (context) => FFButtonWidget(
                       onPressed: () async {
                         await currentUserReference!.update({
-                          'user_following':
-                              FieldValue.arrayUnion([widget.userRef]),
+                          ...mapToFirestore(
+                            {
+                              'user_following':
+                                  FieldValue.arrayUnion([widget.userRef]),
+                            },
+                          ),
                         });
 
                         await widget.userRef!.update({
-                          'user_followers':
-                              FieldValue.arrayUnion([currentUserReference]),
+                          ...mapToFirestore(
+                            {
+                              'user_followers':
+                                  FieldValue.arrayUnion([currentUserReference]),
+                            },
+                          ),
                         });
+
+                        await NotificationRecord.collection
+                            .doc()
+                            .set(createNotificationRecordData(
+                              notificationFrom: currentUserReference,
+                              notificationType: 'following',
+                              notificationCreationDate: getCurrentTimestamp,
+                              notificationTo: containerUsersRecord.reference,
+                            ));
+                        if (containerUsersRecord.userNotification) {
+                          triggerPushNotification(
+                            notificationTitle: currentUserDisplayName,
+                            notificationText: 'started following you',
+                            userRefs: [containerUsersRecord.reference],
+                            initialPageName: 'MainPage',
+                            parameterData: {},
+                          );
+                        }
                       },
                       text: 'FOLLOW',
                       options: FFButtonOptions(

@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ class _PhoneNumberPageWidgetState extends State<PhoneNumberPageWidget> {
     _model = createModel(context, () => PhoneNumberPageModel());
 
     _model.textController ??= TextEditingController(text: currentPhoneNumber);
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -39,10 +41,21 @@ class _PhoneNumberPageWidgetState extends State<PhoneNumberPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -144,6 +157,7 @@ class _PhoneNumberPageWidgetState extends State<PhoneNumberPageWidget> {
                               child: AuthUserStreamWidget(
                                 builder: (context) => TextFormField(
                                   controller: _model.textController,
+                                  focusNode: _model.textFieldFocusNode,
                                   readOnly: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -215,6 +229,9 @@ class _PhoneNumberPageWidgetState extends State<PhoneNumberPageWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
                   child: FFButtonWidget(
                     onPressed: () async {
+                      if (Navigator.of(context).canPop()) {
+                        context.pop();
+                      }
                       context.pushNamed('PhoneNumberEdit');
                     },
                     text: 'CHANGE PHONE NUMBER',

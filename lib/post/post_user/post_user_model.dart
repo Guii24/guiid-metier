@@ -4,22 +4,17 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
 import '/post/post_types/post_types_widget.dart';
+import 'post_user_widget.dart' show PostUserWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class PostUserModel extends FlutterFlowModel {
+class PostUserModel extends FlutterFlowModel<PostUserWidget> {
   ///  Local state fields for this page.
 
   String? choosenCategory = '';
-
-  ///  State fields for stateful widgets in this page.
-
-  bool isDataUploading = false;
-  FFUploadedFile uploadedLocalFile =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
 
   /// Initialization and disposal methods.
 

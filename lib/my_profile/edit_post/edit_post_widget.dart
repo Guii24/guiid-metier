@@ -52,6 +52,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
 
     _model.textController ??=
         TextEditingController(text: widget.postRef?.postText);
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -63,10 +64,21 @@ class _EditPostWidgetState extends State<EditPostWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -97,8 +109,10 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                     return Material(
                       color: Colors.transparent,
                       child: GestureDetector(
-                        onTap: () => FocusScope.of(context)
-                            .requestFocus(_model.unfocusNode),
+                        onTap: () => _model.unfocusNode.canRequestFocus
+                            ? FocusScope.of(context)
+                                .requestFocus(_model.unfocusNode)
+                            : FocusScope.of(context).unfocus(),
                         child: PopupCancelWidget(),
                       ),
                     );
@@ -126,8 +140,12 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                       ...createPostRecordData(
                         postText: _model.textController.text,
                       ),
-                      'post_images_list': FFAppState().uploadPhotoPost,
-                      'post_category': FFAppState().choosenPreference,
+                      ...mapToFirestore(
+                        {
+                          'post_images_list': FFAppState().uploadPhotoPost,
+                          'post_category': FFAppState().choosenPreference,
+                        },
+                      ),
                     });
                     setState(() {
                       FFAppState().choosenPreference = [];
@@ -212,7 +230,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                             height: MediaQuery.sizeOf(context)
                                                     .height *
                                                 0.345,
-                                            fit: BoxFit.fill,
+                                            fit: BoxFit.contain,
                                           ),
                                         );
                                       },
@@ -316,6 +334,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController,
+                            focusNode: _model.textFieldFocusNode,
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController',
                               Duration(milliseconds: 10),
@@ -431,15 +450,18 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                               context: context,
                               builder: (context) {
                                 return GestureDetector(
-                                  onTap: () => FocusScope.of(context)
-                                      .requestFocus(_model.unfocusNode),
+                                  onTap: () =>
+                                      _model.unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
                                   child: Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
                                     child: TakePhotoPPostUserWidget(),
                                   ),
                                 );
                               },
-                            ).then((value) => setState(() {}));
+                            ).then((value) => safeSetState(() {}));
                           }
                         },
                         child: Material(
@@ -513,8 +535,11 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                   context: context,
                                   builder: (context) {
                                     return GestureDetector(
-                                      onTap: () => FocusScope.of(context)
-                                          .requestFocus(_model.unfocusNode),
+                                      onTap: () => _model
+                                              .unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
@@ -522,7 +547,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               },
                               child: Material(
                                 color: Colors.transparent,

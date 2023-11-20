@@ -1,7 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/company_pages/custom_dialog_edit_profile/custom_dialog_edit_profile_widget.dart';
-import '/components/take_photo_profile_user_widget.dart';
+import '/components/take_photo_profile_company_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -61,12 +61,19 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
 
     _model.textController1 ??=
         TextEditingController(text: currentUserDisplayName);
+    _model.textFieldFocusNode1 ??= FocusNode();
+
     _model.textController2 ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.userBio, ''));
+    _model.textFieldFocusNode2 ??= FocusNode();
+
     _model.textController3 ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.userContactPhone, ''));
+    _model.textFieldFocusNode3 ??= FocusNode();
+
     _model.textController4 ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.userEmail, ''));
+    _model.textFieldFocusNode4 ??= FocusNode();
   }
 
   @override
@@ -78,10 +85,21 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -100,6 +118,9 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
             ),
             onPressed: () async {
               context.pop();
+              setState(() {
+                FFAppState().profilePhotoCompany = '';
+              });
             },
           ),
           title: Text(
@@ -117,16 +138,15 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Stack(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
-              Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+              Expanded(
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 102.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Align(
@@ -148,23 +168,29 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   context: context,
                                   builder: (context) {
                                     return GestureDetector(
-                                      onTap: () => FocusScope.of(context)
-                                          .requestFocus(_model.unfocusNode),
+                                      onTap: () => _model
+                                              .unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
-                                        child: TakePhotoProfileUserWidget(),
+                                        child: TakePhotoProfileCompanyWidget(),
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100.0),
                                 child: CachedNetworkImage(
                                   fadeInDuration: Duration(milliseconds: 500),
                                   fadeOutDuration: Duration(milliseconds: 500),
-                                  imageUrl: FFAppState().profilePhotoCompany,
+                                  imageUrl: valueOrDefault<String>(
+                                    FFAppState().profilePhotoCompany,
+                                    'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                  ),
                                   width: 90.0,
                                   height: 90.0,
                                   fit: BoxFit.cover,
@@ -192,16 +218,19 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   context: context,
                                   builder: (context) {
                                     return GestureDetector(
-                                      onTap: () => FocusScope.of(context)
-                                          .requestFocus(_model.unfocusNode),
+                                      onTap: () => _model
+                                              .unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
-                                        child: TakePhotoProfileUserWidget(),
+                                        child: TakePhotoProfileCompanyWidget(),
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               },
                               child: Text(
                                 'Edit profile photo',
@@ -218,86 +247,111 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                             ),
                           ),
                         ),
-                        AuthUserStreamWidget(
-                          builder: (context) => Container(
-                            width: double.infinity,
-                            child: TextFormField(
-                              controller: _model.textController1,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                labelText: 'Company name *',
-                                labelStyle: FlutterFlowTheme.of(context)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 8.0),
+                          child: AuthUserStreamWidget(
+                            builder: (context) => Container(
+                              width: double.infinity,
+                              child: TextFormField(
+                                controller: _model.textController1,
+                                focusNode: _model.textFieldFocusNode1,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  '_model.textController1',
+                                  Duration(milliseconds: 10),
+                                  () => setState(() {}),
+                                ),
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  labelText: 'Company name *',
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Libre Franklin',
+                                        color:
+                                            FlutterFlowTheme.of(context).dark38,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  hintStyle: FlutterFlowTheme.of(context)
+                                      .bodySmall
+                                      .override(
+                                        fontFamily: 'Libre Franklin',
+                                        color:
+                                            FlutterFlowTheme.of(context).dark38,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color:
+                                          FlutterFlowTheme.of(context).dark12,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                ),
+                                style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
                                       fontFamily: 'Libre Franklin',
                                       color:
-                                          FlutterFlowTheme.of(context).dark38,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.normal,
+                                          FlutterFlowTheme.of(context).dark88,
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                hintStyle: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .override(
-                                      fontFamily: 'Libre Franklin',
-                                      color:
-                                          FlutterFlowTheme.of(context).dark38,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).dark12,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
+                                minLines: 1,
+                                validator: _model.textController1Validator
+                                    .asValidator(context),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('^[a-zA-Z-\\\'\\.\\ \\·]{0,100}'))
+                                ],
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark88,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                              minLines: 1,
-                              validator: _model.textController1Validator
-                                  .asValidator(context),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(
-                                    RegExp('^[a-zA-Z]*(?: [a-zA-Z]*)?'))
-                              ],
                             ),
                           ),
                         ),
+                        if (_model.textController1.text == null ||
+                            _model.textController1.text == '')
+                          Text(
+                            'Please enter a valid company name',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Libre Franklin',
+                                  color: FlutterFlowTheme.of(context).error,
+                                  fontSize: 13.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                          ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 16.0, 0.0, 16.0),
+                              0.0, 8.0, 0.0, 16.0),
                           child: Container(
                             width: double.infinity,
                             height: 56.0,
@@ -319,9 +373,13 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode),
+                                            onTap: () => _model
+                                                    .unfocusNode.canRequestFocus
+                                                ? FocusScope.of(context)
+                                                    .requestFocus(
+                                                        _model.unfocusNode)
+                                                : FocusScope.of(context)
+                                                    .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -330,12 +388,14 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                                     MediaQuery.sizeOf(context)
                                                             .height *
                                                         0.85,
-                                                child: SignUpLocationWidget(),
+                                                child: SignUpLocationWidget(
+                                                  type: 'Living in',
+                                                ),
                                               ),
                                             ),
                                           );
                                         },
-                                      ).then((value) => setState(() {}));
+                                      ).then((value) => safeSetState(() {}));
                                     },
                                     child: Material(
                                       color: Colors.transparent,
@@ -481,6 +541,12 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                               width: double.infinity,
                               child: TextFormField(
                                 controller: _model.textController2,
+                                focusNode: _model.textFieldFocusNode2,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  '_model.textController2',
+                                  Duration(milliseconds: 10),
+                                  () => setState(() {}),
+                                ),
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   isDense: true,
@@ -595,8 +661,11 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   context: context,
                                   builder: (context) {
                                     return GestureDetector(
-                                      onTap: () => FocusScope.of(context)
-                                          .requestFocus(_model.unfocusNode),
+                                      onTap: () => _model
+                                              .unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
@@ -604,7 +673,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               },
                               child: Material(
                                 color: Colors.transparent,
@@ -760,10 +829,13 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                           context: context,
                                           builder: (context) {
                                             return GestureDetector(
-                                              onTap: () =>
-                                                  FocusScope.of(context)
+                                              onTap: () => _model.unfocusNode
+                                                      .canRequestFocus
+                                                  ? FocusScope.of(context)
                                                       .requestFocus(
-                                                          _model.unfocusNode),
+                                                          _model.unfocusNode)
+                                                  : FocusScope.of(context)
+                                                      .unfocus(),
                                               child: Padding(
                                                 padding:
                                                     MediaQuery.viewInsetsOf(
@@ -776,7 +848,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                               ),
                                             );
                                           },
-                                        ).then((value) => setState(() {}));
+                                        ).then((value) => safeSetState(() {}));
                                       },
                                       child: Text(
                                         '${getJsonField(
@@ -812,10 +884,13 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                             context: context,
                                             builder: (context) {
                                               return GestureDetector(
-                                                onTap: () =>
-                                                    FocusScope.of(context)
+                                                onTap: () => _model.unfocusNode
+                                                        .canRequestFocus
+                                                    ? FocusScope.of(context)
                                                         .requestFocus(
-                                                            _model.unfocusNode),
+                                                            _model.unfocusNode)
+                                                    : FocusScope.of(context)
+                                                        .unfocus(),
                                                 child: Padding(
                                                   padding:
                                                       MediaQuery.viewInsetsOf(
@@ -824,7 +899,8 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                                 ),
                                               );
                                             },
-                                          ).then((value) => setState(() {}));
+                                          ).then(
+                                              (value) => safeSetState(() {}));
                                         },
                                         child: Icon(
                                           Icons.keyboard_arrow_down_rounded,
@@ -848,6 +924,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                       child: AuthUserStreamWidget(
                                         builder: (context) => TextFormField(
                                           controller: _model.textController3,
+                                          focusNode: _model.textFieldFocusNode3,
                                           onChanged: (_) =>
                                               EasyDebounce.debounce(
                                             '_model.textController3',
@@ -938,6 +1015,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                               width: double.infinity,
                               child: TextFormField(
                                 controller: _model.textController4,
+                                focusNode: _model.textFieldFocusNode4,
                                 onChanged: (_) => EasyDebounce.debounce(
                                   '_model.textController4',
                                   Duration(milliseconds: 10),
@@ -1026,7 +1104,6 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                   elevation: 0.0,
                   child: Container(
                     width: double.infinity,
-                    height: 102.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primary,
                       boxShadow: [
@@ -1042,75 +1119,107 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                       child: Builder(
                         builder: (context) => Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 10.0, 16.0, 0.0),
+                              16.0, 10.0, 16.0, 30.0),
                           child: FFButtonWidget(
                             onPressed: (_model.textController1.text == null ||
                                         _model.textController1.text == '') ||
-                                    (_model.textController3.text == null ||
-                                        _model.textController3.text == '') ||
                                     (FFAppState().profilePhotoCompany == null ||
                                         FFAppState().profilePhotoCompany == '')
                                 ? null
                                 : () async {
-                                    await currentUserReference!.update({
-                                      ...createUsersRecordData(
-                                        displayName:
-                                            _model.textController1.text,
-                                        photoUrl:
-                                            FFAppState().profilePhotoCompany,
-                                        userBio: _model.textController2.text,
-                                        userLocation:
-                                            FFAppState().selectedlocation,
-                                        userEmail: _model.textController4.text,
-                                        email: _model.textController3.text,
-                                        userContactPhone:
-                                            _model.textController3.text,
-                                        userContactName: getJsonField(
-                                          FFAppState().countryInfoCompany,
-                                          r'''$.name''',
-                                        ).toString(),
-                                        userContactCode: getJsonField(
-                                          FFAppState().countryInfoCompany,
-                                          r'''$.code''',
-                                        ).toString(),
-                                        userContactFlag: getJsonField(
-                                          FFAppState().countryInfoCompany,
-                                          r'''$.flag''',
-                                        ).toString(),
-                                        userContactDialCode: getJsonField(
-                                          FFAppState().countryInfoCompany,
-                                          r'''$.dial_code''',
-                                        ).toString(),
-                                      ),
-                                      'user_preferences':
-                                          FFAppState().choosenPreference,
-                                    });
-                                    context.pop();
-                                    showAlignedDialog(
-                                      barrierColor: Color(0x02000000),
-                                      barrierDismissible: false,
-                                      context: context,
-                                      isGlobal: true,
-                                      avoidOverflow: false,
-                                      targetAnchor: AlignmentDirectional(
-                                              0.0, 0.0)
-                                          .resolve(Directionality.of(context)),
-                                      followerAnchor: AlignmentDirectional(
-                                              0.0, -1.0)
-                                          .resolve(Directionality.of(context)),
-                                      builder: (dialogContext) {
-                                        return Material(
-                                          color: Colors.transparent,
-                                          child: GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode),
-                                            child:
-                                                CustomDialogEditProfileWidget(),
+                                    if (functions.containsProfanity(
+                                        _model.textController1.text)) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'No Profanity add allowed',
+                                            style: FlutterFlowTheme.of(context)
+                                                .labelLarge
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                           ),
-                                        );
-                                      },
-                                    ).then((value) => setState(() {}));
+                                          duration:
+                                              Duration(milliseconds: 3000),
+                                          backgroundColor: Color(0xCD000000),
+                                        ),
+                                      );
+                                    } else {
+                                      await currentUserReference!.update({
+                                        ...createUsersRecordData(
+                                          displayName:
+                                              _model.textController1.text,
+                                          photoUrl:
+                                              FFAppState().profilePhotoCompany,
+                                          userBio: _model.textController2.text,
+                                          userLocation:
+                                              FFAppState().selectedlocation,
+                                          userEmail:
+                                              _model.textController4.text,
+                                          userContactPhone:
+                                              _model.textController3.text,
+                                          userContactName: getJsonField(
+                                            FFAppState().countryInfoCompany,
+                                            r'''$.name''',
+                                          ).toString(),
+                                          userContactCode: getJsonField(
+                                            FFAppState().countryInfoCompany,
+                                            r'''$.code''',
+                                          ).toString(),
+                                          userContactFlag: getJsonField(
+                                            FFAppState().countryInfoCompany,
+                                            r'''$.flag''',
+                                          ).toString(),
+                                          userContactDialCode: getJsonField(
+                                            FFAppState().countryInfoCompany,
+                                            r'''$.dial_code''',
+                                          ).toString(),
+                                        ),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_preferences':
+                                                FFAppState().choosenPreference,
+                                          },
+                                        ),
+                                      });
+                                      context.pop();
+                                      showAlignedDialog(
+                                        barrierColor: Color(0x02000000),
+                                        barrierDismissible: false,
+                                        context: context,
+                                        isGlobal: true,
+                                        avoidOverflow: false,
+                                        targetAnchor:
+                                            AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        followerAnchor:
+                                            AlignmentDirectional(0.0, -1.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        builder: (dialogContext) {
+                                          return Material(
+                                            color: Colors.transparent,
+                                            child: GestureDetector(
+                                              onTap: () => _model.unfocusNode
+                                                      .canRequestFocus
+                                                  ? FocusScope.of(context)
+                                                      .requestFocus(
+                                                          _model.unfocusNode)
+                                                  : FocusScope.of(context)
+                                                      .unfocus(),
+                                              child:
+                                                  CustomDialogEditProfileWidget(),
+                                            ),
+                                          );
+                                        },
+                                      ).then((value) => setState(() {}));
+                                    }
                                   },
                             text: 'SAVE',
                             options: FFButtonOptions(

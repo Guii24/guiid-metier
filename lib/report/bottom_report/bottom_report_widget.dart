@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/report/report_misleading1/report_misleading1_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_report_model.dart';
@@ -15,12 +16,14 @@ class BottomReportWidget extends StatefulWidget {
     this.commentPost,
     required this.type,
     this.userRef,
+    this.job,
   }) : super(key: key);
 
   final DocumentReference? post;
   final DocumentReference? commentPost;
   final String? type;
   final DocumentReference? userRef;
+  final DocumentReference? job;
 
   @override
   _BottomReportWidgetState createState() => _BottomReportWidgetState();
@@ -261,10 +264,11 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                                       }
                                     }(),
                                     userRef: widget.userRef,
+                                    job: widget.job,
                                   ),
                                 );
                               },
-                            ).then((value) => setState(() {}));
+                            ).then((value) => safeSetState(() {}));
                           },
                           child: SingleChildScrollView(
                             child: Column(
@@ -280,21 +284,23 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 17.0, 0.0, 17.0),
-                                      child: Text(
-                                        listreportItem,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Libre Franklin',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .dark88,
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.normal,
-                                            ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 17.0, 0.0, 17.0),
+                                        child: Text(
+                                          listreportItem,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Libre Franklin',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .dark88,
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
                                       ),
                                     ),
                                     Icon(

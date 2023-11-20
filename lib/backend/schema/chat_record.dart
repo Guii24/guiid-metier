@@ -36,6 +36,16 @@ class ChatRecord extends FirestoreRecord {
   String get chatWithSupportStatus => _chatWithSupportStatus ?? '';
   bool hasChatWithSupportStatus() => _chatWithSupportStatus != null;
 
+  // "chat_last_time_message" field.
+  DateTime? _chatLastTimeMessage;
+  DateTime? get chatLastTimeMessage => _chatLastTimeMessage;
+  bool hasChatLastTimeMessage() => _chatLastTimeMessage != null;
+
+  // "chat_last_message" field.
+  String? _chatLastMessage;
+  String get chatLastMessage => _chatLastMessage ?? '';
+  bool hasChatLastMessage() => _chatLastMessage != null;
+
   void _initializeFields() {
     _chatWithSupportId = snapshotData['chat_with_support_id'] as String?;
     _chatWithSupportCreator =
@@ -43,6 +53,8 @@ class ChatRecord extends FirestoreRecord {
     _chatWithSupportType = snapshotData['chat_with_support_type'] as String?;
     _chatWithSupportStatus =
         snapshotData['chat_with_support_status'] as String?;
+    _chatLastTimeMessage = snapshotData['chat_last_time_message'] as DateTime?;
+    _chatLastMessage = snapshotData['chat_last_message'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -83,6 +95,8 @@ Map<String, dynamic> createChatRecordData({
   DocumentReference? chatWithSupportCreator,
   String? chatWithSupportType,
   String? chatWithSupportStatus,
+  DateTime? chatLastTimeMessage,
+  String? chatLastMessage,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -90,6 +104,8 @@ Map<String, dynamic> createChatRecordData({
       'chat_with_support_creator': chatWithSupportCreator,
       'chat_with_support_type': chatWithSupportType,
       'chat_with_support_status': chatWithSupportStatus,
+      'chat_last_time_message': chatLastTimeMessage,
+      'chat_last_message': chatLastMessage,
     }.withoutNulls,
   );
 
@@ -104,7 +120,9 @@ class ChatRecordDocumentEquality implements Equality<ChatRecord> {
     return e1?.chatWithSupportId == e2?.chatWithSupportId &&
         e1?.chatWithSupportCreator == e2?.chatWithSupportCreator &&
         e1?.chatWithSupportType == e2?.chatWithSupportType &&
-        e1?.chatWithSupportStatus == e2?.chatWithSupportStatus;
+        e1?.chatWithSupportStatus == e2?.chatWithSupportStatus &&
+        e1?.chatLastTimeMessage == e2?.chatLastTimeMessage &&
+        e1?.chatLastMessage == e2?.chatLastMessage;
   }
 
   @override
@@ -112,7 +130,9 @@ class ChatRecordDocumentEquality implements Equality<ChatRecord> {
         e?.chatWithSupportId,
         e?.chatWithSupportCreator,
         e?.chatWithSupportType,
-        e?.chatWithSupportStatus
+        e?.chatWithSupportStatus,
+        e?.chatLastTimeMessage,
+        e?.chatLastMessage
       ]);
 
   @override

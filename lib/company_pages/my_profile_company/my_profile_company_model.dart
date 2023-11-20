@@ -1,23 +1,25 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/company_pages/component_post_company/component_post_company_widget.dart';
-import '/company_pages/empty_jobs/empty_jobs_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/jobs/empty_jobs/empty_jobs_widget.dart';
 import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
 import '/post/component_post_reposted/component_post_reposted_widget.dart';
 import '/sourcing/component_sourcing/component_sourcing_widget.dart';
 import '/flutter_flow/request_manager.dart';
 
+import 'my_profile_company_widget.dart' show MyProfileCompanyWidget;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class MyProfileCompanyModel extends FlutterFlowModel {
+class MyProfileCompanyModel extends FlutterFlowModel<MyProfileCompanyWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

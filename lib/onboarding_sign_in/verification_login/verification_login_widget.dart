@@ -9,6 +9,7 @@ import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'verification_login_model.dart';
@@ -41,7 +42,7 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.timerController.onExecute.add(StopWatchExecute.start);
+      _model.timerController.onStartTimer();
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -56,10 +57,21 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -174,7 +186,7 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                             minute: false,
                             milliSecond: false,
                           ),
-                          timer: _model.timerController,
+                          controller: _model.timerController,
                           updateStateInterval: Duration(milliseconds: 1000),
                           onChanged: (value, displayTime, shouldUpdate) {
                             _model.timerMilliseconds = value;
@@ -206,11 +218,9 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       if (_model.timerMilliseconds == 0) {
-                        _model.timerController.onExecute
-                            .add(StopWatchExecute.reset);
+                        _model.timerController.onResetTimer();
 
-                        _model.timerController.onExecute
-                            .add(StopWatchExecute.start);
+                        _model.timerController.onStartTimer();
                       }
                     },
                     child: Material(

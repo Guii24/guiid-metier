@@ -81,6 +81,16 @@ class JobApplicantsRecord extends FirestoreRecord {
   DocumentReference? get jobApplicantJobRef => _jobApplicantJobRef;
   bool hasJobApplicantJobRef() => _jobApplicantJobRef != null;
 
+  // "job_applicant_phone_code" field.
+  String? _jobApplicantPhoneCode;
+  String get jobApplicantPhoneCode => _jobApplicantPhoneCode ?? '';
+  bool hasJobApplicantPhoneCode() => _jobApplicantPhoneCode != null;
+
+  // "job_applicant_phone_dial_code" field.
+  String? _jobApplicantPhoneDialCode;
+  String get jobApplicantPhoneDialCode => _jobApplicantPhoneDialCode ?? '';
+  bool hasJobApplicantPhoneDialCode() => _jobApplicantPhoneDialCode != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -102,6 +112,10 @@ class JobApplicantsRecord extends FirestoreRecord {
     _jobApplicantLinkedin = snapshotData['job_applicant_linkedin'] as String?;
     _jobApplicantJobRef =
         snapshotData['job_applicant_job_ref'] as DocumentReference?;
+    _jobApplicantPhoneCode =
+        snapshotData['job_applicant_phone_code'] as String?;
+    _jobApplicantPhoneDialCode =
+        snapshotData['job_applicant_phone_dial_code'] as String?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -157,6 +171,8 @@ Map<String, dynamic> createJobApplicantsRecordData({
   String? jobApplicantTiktok,
   String? jobApplicantLinkedin,
   DocumentReference? jobApplicantJobRef,
+  String? jobApplicantPhoneCode,
+  String? jobApplicantPhoneDialCode,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -173,6 +189,8 @@ Map<String, dynamic> createJobApplicantsRecordData({
       'job_applicant_tiktok': jobApplicantTiktok,
       'job_applicant_linkedin': jobApplicantLinkedin,
       'job_applicant_job_ref': jobApplicantJobRef,
+      'job_applicant_phone_code': jobApplicantPhoneCode,
+      'job_applicant_phone_dial_code': jobApplicantPhoneDialCode,
     }.withoutNulls,
   );
 
@@ -197,7 +215,9 @@ class JobApplicantsRecordDocumentEquality
         e1?.jobApplicantInsatgram == e2?.jobApplicantInsatgram &&
         e1?.jobApplicantTiktok == e2?.jobApplicantTiktok &&
         e1?.jobApplicantLinkedin == e2?.jobApplicantLinkedin &&
-        e1?.jobApplicantJobRef == e2?.jobApplicantJobRef;
+        e1?.jobApplicantJobRef == e2?.jobApplicantJobRef &&
+        e1?.jobApplicantPhoneCode == e2?.jobApplicantPhoneCode &&
+        e1?.jobApplicantPhoneDialCode == e2?.jobApplicantPhoneDialCode;
   }
 
   @override
@@ -214,7 +234,9 @@ class JobApplicantsRecordDocumentEquality
         e?.jobApplicantInsatgram,
         e?.jobApplicantTiktok,
         e?.jobApplicantLinkedin,
-        e?.jobApplicantJobRef
+        e?.jobApplicantJobRef,
+        e?.jobApplicantPhoneCode,
+        e?.jobApplicantPhoneDialCode
       ]);
 
   @override

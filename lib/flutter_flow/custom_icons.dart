@@ -12,6 +12,7 @@ class FFIcons {
   static const String _gMIconsNewBatteryFamily = 'GMIconsNewBattery';
   static const String _testsFamily = 'Tests';
   static const String _settingsFamily = 'Settings';
+  static const String _gMIconsinstagramFamily = 'GMIconsinstagram';
 
   // GMIcons
   static const IconData kproperty1aboutUs =
@@ -195,4 +196,8 @@ class FFIcons {
   // Settings
   static const IconData ksetting =
       IconData(0xe92e, fontFamily: _settingsFamily);
+
+  // GMIconsinstagram
+  static const IconData kinstagram =
+      IconData(0xe900, fontFamily: _gMIconsinstagramFamily);
 }

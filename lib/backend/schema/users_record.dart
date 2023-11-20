@@ -197,6 +197,21 @@ class UsersRecord extends FirestoreRecord {
   String get userContactDialCode => _userContactDialCode ?? '';
   bool hasUserContactDialCode() => _userContactDialCode != null;
 
+  // "user_notification" field.
+  bool? _userNotification;
+  bool get userNotification => _userNotification ?? false;
+  bool hasUserNotification() => _userNotification != null;
+
+  // "user_job_applicant" field.
+  DocumentReference? _userJobApplicant;
+  DocumentReference? get userJobApplicant => _userJobApplicant;
+  bool hasUserJobApplicant() => _userJobApplicant != null;
+
+  // "user_blocked_user_by_admin" field.
+  bool? _userBlockedUserByAdmin;
+  bool get userBlockedUserByAdmin => _userBlockedUserByAdmin ?? false;
+  bool hasUserBlockedUserByAdmin() => _userBlockedUserByAdmin != null;
+
   void _initializeFields() {
     _displayName = snapshotData['display_name'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
@@ -239,6 +254,11 @@ class UsersRecord extends FirestoreRecord {
     _userContactCode = snapshotData['user_contact_code'] as String?;
     _userContactFlag = snapshotData['user_contact_flag'] as String?;
     _userContactDialCode = snapshotData['user_contact_dial_code'] as String?;
+    _userNotification = snapshotData['user_notification'] as bool?;
+    _userJobApplicant =
+        snapshotData['user_job_applicant'] as DocumentReference?;
+    _userBlockedUserByAdmin =
+        snapshotData['user_blocked_user_by_admin'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -304,6 +324,9 @@ Map<String, dynamic> createUsersRecordData({
   String? userContactCode,
   String? userContactFlag,
   String? userContactDialCode,
+  bool? userNotification,
+  DocumentReference? userJobApplicant,
+  bool? userBlockedUserByAdmin,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -336,6 +359,9 @@ Map<String, dynamic> createUsersRecordData({
       'user_contact_code': userContactCode,
       'user_contact_flag': userContactFlag,
       'user_contact_dial_code': userContactDialCode,
+      'user_notification': userNotification,
+      'user_job_applicant': userJobApplicant,
+      'user_blocked_user_by_admin': userBlockedUserByAdmin,
     }.withoutNulls,
   );
 
@@ -383,7 +409,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.userContactName == e2?.userContactName &&
         e1?.userContactCode == e2?.userContactCode &&
         e1?.userContactFlag == e2?.userContactFlag &&
-        e1?.userContactDialCode == e2?.userContactDialCode;
+        e1?.userContactDialCode == e2?.userContactDialCode &&
+        e1?.userNotification == e2?.userNotification &&
+        e1?.userJobApplicant == e2?.userJobApplicant &&
+        e1?.userBlockedUserByAdmin == e2?.userBlockedUserByAdmin;
   }
 
   @override
@@ -423,7 +452,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.userContactName,
         e?.userContactCode,
         e?.userContactFlag,
-        e?.userContactDialCode
+        e?.userContactDialCode,
+        e?.userNotification,
+        e?.userJobApplicant,
+        e?.userBlockedUserByAdmin
       ]);
 
   @override

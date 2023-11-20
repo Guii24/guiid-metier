@@ -21,14 +21,12 @@ export '/post/create_post/create_wear/create_wear_widget.dart'
     show CreateWearWidget;
 export '/sourcing/sourcing_page/sourcing_page_widget.dart'
     show SourcingPageWidget;
-export '/sourcing/job_form/job_form_widget.dart' show JobFormWidget;
+export '/jobs/job_form/job_form_widget.dart' show JobFormWidget;
 export '/search/search_page/search_page_widget.dart' show SearchPageWidget;
 export '/search/search_result_page_o_l_d/search_result_page_o_l_d_widget.dart'
     show SearchResultPageOLDWidget;
 export '/notifications/notifications_widget.dart' show NotificationsWidget;
 export '/my_profile/my_profile/my_profile_widget.dart' show MyProfileWidget;
-export '/my_profile/wardrobe_comment_page/wardrobe_comment_page_widget.dart'
-    show WardrobeCommentPageWidget;
 export '/my_profile/edit_wear/edit_wear_widget.dart' show EditWearWidget;
 export '/my_profile/followers/followers_widget.dart' show FollowersWidget;
 export '/my_profile/following/following_widget.dart' show FollowingWidget;
@@ -52,11 +50,10 @@ export '/my_profile/other_profile/other_profile_widget.dart'
     show OtherProfileWidget;
 export '/company_pages/other_profile_company/other_profile_company_widget.dart'
     show OtherProfileCompanyWidget;
-export '/company_pages/post_job_page/post_job_page_widget.dart'
-    show PostJobPageWidget;
-export '/company_pages/sourcing_my_job_details/sourcing_my_job_details_widget.dart'
+export '/jobs/post_job_page/post_job_page_widget.dart' show PostJobPageWidget;
+export '/jobs/sourcing_my_job_details/sourcing_my_job_details_widget.dart'
     show SourcingMyJobDetailsWidget;
-export '/company_pages/edit_post_job_page/edit_post_job_page_widget.dart'
+export '/jobs/edit_post_job_page/edit_post_job_page_widget.dart'
     show EditPostJobPageWidget;
 export '/company_pages/my_profile_company/my_profile_company_widget.dart'
     show MyProfileCompanyWidget;
@@ -75,11 +72,18 @@ export '/my_profile/following_other_users/following_other_users_widget.dart'
     show FollowingOtherUsersWidget;
 export '/settings/verification_edit_phone/verification_edit_phone_widget.dart'
     show VerificationEditPhoneWidget;
-export '/settings/support_from_admin/support_from_admin_widget.dart'
-    show SupportFromAdminWidget;
-export '/settings/support_all_chats/support_all_chats_widget.dart'
-    show SupportAllChatsWidget;
 export '/my_profile/wear_page/wear_page_widget.dart' show WearPageWidget;
-export '/tesst/tesst_widget.dart' show TesstWidget;
+export '/screenshots/tesst/tesst_widget.dart' show TesstWidget;
 export '/search/search_result_page/search_result_page_widget.dart'
     show SearchResultPageWidget;
+export '/search/search_page_copy/search_page_copy_widget.dart'
+    show SearchPageCopyWidget;
+export '/screenshots/post_user_copy/post_user_copy_widget.dart'
+    show PostUserCopyWidget;
+export '/screenshots/sourcing_page_copy/sourcing_page_copy_widget.dart'
+    show SourcingPageCopyWidget;
+export '/screenshots/my_profile_copy/my_profile_copy_widget.dart'
+    show MyProfileCopyWidget;
+export '/screenshots/job_test/job_test_widget.dart' show JobTestWidget;
+export '/screenshots/articles_user_copy/articles_user_copy_widget.dart'
+    show ArticlesUserCopyWidget;

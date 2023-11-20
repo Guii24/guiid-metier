@@ -46,6 +46,11 @@ class ReportRecord extends FirestoreRecord {
   DocumentReference? get reportToUser => _reportToUser;
   bool hasReportToUser() => _reportToUser != null;
 
+  // "report_to_job" field.
+  DocumentReference? _reportToJob;
+  DocumentReference? get reportToJob => _reportToJob;
+  bool hasReportToJob() => _reportToJob != null;
+
   void _initializeFields() {
     _reportFrom = snapshotData['report_from'] as DocumentReference?;
     _reportTime = snapshotData['report_time'] as DateTime?;
@@ -54,6 +59,7 @@ class ReportRecord extends FirestoreRecord {
     _reportToCommPost =
         snapshotData['report_to_comm_post'] as DocumentReference?;
     _reportToUser = snapshotData['report_to_user'] as DocumentReference?;
+    _reportToJob = snapshotData['report_to_job'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -96,6 +102,7 @@ Map<String, dynamic> createReportRecordData({
   DocumentReference? reportToPost,
   DocumentReference? reportToCommPost,
   DocumentReference? reportToUser,
+  DocumentReference? reportToJob,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -105,6 +112,7 @@ Map<String, dynamic> createReportRecordData({
       'report_to_post': reportToPost,
       'report_to_comm_post': reportToCommPost,
       'report_to_user': reportToUser,
+      'report_to_job': reportToJob,
     }.withoutNulls,
   );
 
@@ -121,7 +129,8 @@ class ReportRecordDocumentEquality implements Equality<ReportRecord> {
         e1?.reportReason == e2?.reportReason &&
         e1?.reportToPost == e2?.reportToPost &&
         e1?.reportToCommPost == e2?.reportToCommPost &&
-        e1?.reportToUser == e2?.reportToUser;
+        e1?.reportToUser == e2?.reportToUser &&
+        e1?.reportToJob == e2?.reportToJob;
   }
 
   @override
@@ -131,7 +140,8 @@ class ReportRecordDocumentEquality implements Equality<ReportRecord> {
         e?.reportReason,
         e?.reportToPost,
         e?.reportToCommPost,
-        e?.reportToUser
+        e?.reportToUser,
+        e?.reportToJob
       ]);
 
   @override

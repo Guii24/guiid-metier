@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_delete_comment_post_model.dart';
@@ -96,8 +97,12 @@ class _PopupDeleteCommentPostWidgetState
                         child: FFButtonWidget(
                           onPressed: () async {
                             await widget.postref!.update({
-                              'post_comments_list': FieldValue.arrayRemove(
-                                  [widget.commentPostref]),
+                              ...mapToFirestore(
+                                {
+                                  'post_comments_list': FieldValue.arrayRemove(
+                                      [widget.commentPostref]),
+                                },
+                              ),
                             });
                             await widget.commentPostref!.delete();
                             Navigator.pop(context);

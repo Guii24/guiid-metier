@@ -1,9 +1,14 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'spash_screen_model.dart';
@@ -30,6 +35,21 @@ class _SpashScreenWidgetState extends State<SpashScreenWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await actions.lockOrientation();
       await Future.delayed(const Duration(milliseconds: 1000));
+      if (isiOS || isAndroid) {
+        if (!valueOrDefault<bool>(
+            currentUserDocument?.userBlockedUserByAdmin, false)) {
+          final isEntitled = await revenue_cat.isEntitled('Premium') ?? false;
+          if (!isEntitled) {
+            await revenue_cat.loadOfferings();
+          }
+
+          if (!isEntitled) {
+            await currentUserReference!.update(createUsersRecordData(
+              userSubscription: false,
+            ));
+          }
+        }
+      }
 
       context.goNamed(
         'MainPage',
@@ -53,10 +73,21 @@ class _SpashScreenWidgetState extends State<SpashScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(

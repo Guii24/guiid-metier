@@ -37,10 +37,9 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
     super.initState();
     _model = createModel(context, () => ComponentWearPostModel());
 
-    _model.textController1 ??=
+    _model.textController ??=
         TextEditingController(text: widget.wearItem?.wearText);
-    _model.textController2 ??=
-        TextEditingController(text: widget.wearItem?.wearLink);
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -64,16 +63,18 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
         children: [
           Container(
             width: double.infinity,
-            height: MediaQuery.sizeOf(context).height * 0.345,
+            height: MediaQuery.sizeOf(context).height * 0.55,
             child: Stack(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(0.0),
-                  child: Image.network(
-                    widget.wearItem!.wearImage,
-                    width: double.infinity,
-                    height: MediaQuery.sizeOf(context).height * 0.345,
-                    fit: BoxFit.fill,
+                Align(
+                  alignment: AlignmentDirectional(0.00, 0.00),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(0.0),
+                    child: Image.network(
+                      widget.wearItem!.wearImage,
+                      width: double.infinity,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ],
@@ -84,7 +85,8 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
             child: Container(
               width: double.infinity,
               child: TextFormField(
-                controller: _model.textController1,
+                controller: _model.textController,
+                focusNode: _model.textFieldFocusNode,
                 readOnly: true,
                 obscureText: false,
                 decoration: InputDecoration(
@@ -141,7 +143,7 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
                       fontSize: 15.0,
                     ),
                 maxLines: null,
-                validator: _model.textController1Validator.asValidator(context),
+                validator: _model.textControllerValidator.asValidator(context),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('^.{1,250}'))
                 ],
@@ -150,63 +152,47 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
           ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
-            child: Container(
-              width: double.infinity,
-              child: TextFormField(
-                controller: _model.textController2,
-                readOnly: true,
-                obscureText: false,
-                decoration: InputDecoration(
-                  isDense: true,
-                  hintText: 'Product link ',
-                  hintStyle: FlutterFlowTheme.of(context).bodySmall.override(
-                        fontFamily: 'Libre Franklin',
-                        color: FlutterFlowTheme.of(context).dark38,
-                        fontSize: 15.0,
-                      ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).dark12,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).dark12,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  suffixIcon: Icon(
-                    FFIcons.kproperty1link,
+            child: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                await launchURL(widget.wearItem!.wearLink);
+              },
+              child: Container(
+                width: double.infinity,
+                height: 36.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                  border: Border.all(
                     color: FlutterFlowTheme.of(context).dark88,
-                    size: 24.0,
+                    width: 1.0,
                   ),
                 ),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Libre Franklin',
-                      color: FlutterFlowTheme.of(context).dark88,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                      child: Text(
+                        'VIEW PRODUCT',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Libre Franklin',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              fontSize: 14.0,
+                            ),
+                      ),
                     ),
-                minLines: 1,
-                keyboardType: TextInputType.url,
-                validator: _model.textController2Validator.asValidator(context),
+                    Icon(
+                      FFIcons.kproperty1link,
+                      color: FlutterFlowTheme.of(context).dark88,
+                      size: 20.0,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

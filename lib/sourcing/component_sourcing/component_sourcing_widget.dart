@@ -1,11 +1,12 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/company_pages/bottom_editor_delete_job/bottom_editor_delete_job_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
+import '/jobs/bottom_editor_delete_job/bottom_editor_delete_job_widget.dart';
+import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_sourcing_model.dart';
@@ -78,25 +79,28 @@ class _ComponentSourcingWidgetState extends State<ComponentSourcingWidget> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      valueOrDefault<String>(
-                        widget.jobDoc?.jobTittle,
-                        'tittle error',
+                    Expanded(
+                      child: Text(
+                        valueOrDefault<String>(
+                          widget.jobDoc?.jobTittle,
+                          'tittle error',
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Libre Franklin',
+                              color: FlutterFlowTheme.of(context).dark88,
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Libre Franklin',
-                            color: FlutterFlowTheme.of(context).dark88,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.w600,
-                          ),
                     ),
-                    if (widget.jobDoc?.companyCreator == currentUserReference)
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        if (widget.jobDoc?.companyCreator ==
+                            currentUserReference) {
                           await showModalBottomSheet(
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
@@ -110,14 +114,31 @@ class _ComponentSourcingWidgetState extends State<ComponentSourcingWidget> {
                                 ),
                               );
                             },
-                          ).then((value) => setState(() {}));
-                        },
-                        child: Icon(
-                          FFIcons.kproperty1more,
-                          color: Colors.black,
-                          size: 24.0,
-                        ),
+                          ).then((value) => safeSetState(() {}));
+                        } else {
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Color(0x01000000),
+                            barrierColor: FlutterFlowTheme.of(context).dark38,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: BottomReportPostWidget(
+                                  typeReport: 'Job',
+                                  job: widget.jobDoc?.reference,
+                                ),
+                              );
+                            },
+                          ).then((value) => safeSetState(() {}));
+                        }
+                      },
+                      child: Icon(
+                        FFIcons.kproperty1more,
+                        color: Colors.black,
+                        size: 24.0,
                       ),
+                    ),
                   ],
                 ),
               ),
@@ -133,76 +154,207 @@ class _ComponentSourcingWidgetState extends State<ComponentSourcingWidget> {
                     ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 16.0),
-                child: Builder(
-                  builder: (context) {
-                    final salaryJobTypes = functions
-                        .returnJobType(widget.jobDoc!.jobSalaryRate,
-                            widget.jobDoc!.jobType.toList())
-                        .toList();
-                    return Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      alignment: WrapAlignment.start,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      direction: Axis.horizontal,
-                      runAlignment: WrapAlignment.start,
-                      verticalDirection: VerticalDirection.down,
-                      clipBehavior: Clip.none,
-                      children: List.generate(salaryJobTypes.length,
-                          (salaryJobTypesIndex) {
-                        final salaryJobTypesItem =
-                            salaryJobTypes[salaryJobTypesIndex];
-                        return Material(
-                          color: Colors.transparent,
-                          elevation: 0.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          child: Container(
-                            height: 30.0,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFDFEAE3),
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 5.0, 8.0, 5.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    FFIcons.kproperty1salary,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 20.0,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        6.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      valueOrDefault<String>(
-                                        widget.jobDoc?.jobSalaryRate,
-                                        '0',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Libre Franklin',
-                                            color: FlutterFlowTheme.of(context)
-                                                .dark88,
-                                            fontSize: 13.0,
-                                          ),
-                                    ),
-                                  ),
-                                ],
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 14.0, 0.0, 0.0),
+                child: Wrap(
+                  spacing: 8.0,
+                  runSpacing: 8.0,
+                  alignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  direction: Axis.horizontal,
+                  runAlignment: WrapAlignment.start,
+                  verticalDirection: VerticalDirection.down,
+                  clipBehavior: Clip.none,
+                  children: [
+                    Material(
+                      color: Colors.transparent,
+                      elevation: 0.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      child: Container(
+                        height: 30.0,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFDFEAE3),
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              8.0, 5.0, 8.0, 5.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                FFIcons.kproperty1salary,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 20.0,
                               ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    6.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  valueOrDefault<String>(
+                                    widget.jobDoc?.jobSalaryRate,
+                                    '0',
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Libre Franklin',
+                                        color:
+                                            FlutterFlowTheme.of(context).dark88,
+                                        fontSize: 13.0,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (widget.jobDoc?.jobWorkLocation != null &&
+                        widget.jobDoc?.jobWorkLocation != '')
+                      Material(
+                        color: Colors.transparent,
+                        elevation: 0.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Container(
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: FlutterFlowTheme.of(context).line,
+                              width: 1.0,
                             ),
                           ),
-                        );
-                      }),
-                    );
-                  },
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                9.0, 6.0, 9.0, 6.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  FFIcons.kicons25,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 20.0,
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      6.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    valueOrDefault<String>(
+                                      widget.jobDoc?.jobWorkLocation,
+                                      'null',
+                                    ),
+                                    textAlign: TextAlign.center,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          fontSize: 14.0,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (widget.jobDoc?.jobEmploymentType != null &&
+                        widget.jobDoc?.jobEmploymentType != '')
+                      Material(
+                        color: Colors.transparent,
+                        elevation: 0.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Container(
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: FlutterFlowTheme.of(context).line,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                9.0, 6.0, 9.0, 6.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  FFIcons.kicons28,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 20.0,
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      6.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    valueOrDefault<String>(
+                                      widget.jobDoc?.jobEmploymentType,
+                                      'null',
+                                    ),
+                                    textAlign: TextAlign.center,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          fontSize: 14.0,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (!((widget.jobDoc?.jobWorkLocation != null &&
+                            widget.jobDoc?.jobWorkLocation != '') &&
+                        (widget.jobDoc?.jobEmploymentType != null &&
+                            widget.jobDoc?.jobEmploymentType != '')))
+                      Material(
+                        color: Colors.transparent,
+                        elevation: 0.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Container(
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: FlutterFlowTheme.of(context).line,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                9.0, 6.0, 9.0, 6.0),
+                            child: Text(
+                              'N/A',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Libre Franklin',
+                                    color: FlutterFlowTheme.of(context).dark88,
+                                    fontSize: 14.0,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               Padding(
@@ -241,7 +393,7 @@ class _ComponentSourcingWidgetState extends State<ComponentSourcingWidget> {
                             fadeOutDuration: Duration(milliseconds: 500),
                             imageUrl: valueOrDefault<String>(
                               rowUsersRecord.photoUrl,
-                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                             ),
                             fit: BoxFit.cover,
                           ),

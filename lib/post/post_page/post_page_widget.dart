@@ -1,5 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
+import '/components/subscription_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -11,9 +13,11 @@ import '/post/comment_post/comment_post_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'post_page_model.dart';
@@ -49,6 +53,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
     });
 
     _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -60,10 +65,31 @@ class _PostPageWidgetState extends State<PostPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return StreamBuilder<PostRecord>(
-      stream: PostRecord.getDocument(widget.postRef!),
+      stream: PostRecord.getDocument(widget.postRef!)
+        ..listen((postPagePostRecord) async {
+          if (_model.postPagePreviousSnapshot != null &&
+              !PostRecordDocumentEquality().equals(
+                  postPagePostRecord, _model.postPagePreviousSnapshot)) {
+            _model.getCountCommentCopy = await queryCommentPostRecordCount(
+              parent: widget.postRef,
+            );
+
+            setState(() {});
+          }
+          _model.postPagePreviousSnapshot = postPagePostRecord;
+        }),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -84,7 +110,9 @@ class _PostPageWidgetState extends State<PostPageWidget> {
         }
         final postPagePostRecord = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+          onTap: () => _model.unfocusNode.canRequestFocus
+              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+              : FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFF4F3EC),
@@ -123,8 +151,10 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => FocusScope.of(context)
-                                  .requestFocus(_model.unfocusNode),
+                              onTap: () => _model.unfocusNode.canRequestFocus
+                                  ? FocusScope.of(context)
+                                      .requestFocus(_model.unfocusNode)
+                                  : FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomEditopDeletePostWidget(
@@ -133,7 +163,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                               ),
                             );
                           },
-                        ).then((value) => setState(() {}));
+                        ).then((value) => safeSetState(() {}));
                       } else {
                         await showModalBottomSheet(
                           isScrollControlled: true,
@@ -142,8 +172,10 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => FocusScope.of(context)
-                                  .requestFocus(_model.unfocusNode),
+                              onTap: () => _model.unfocusNode.canRequestFocus
+                                  ? FocusScope.of(context)
+                                      .requestFocus(_model.unfocusNode)
+                                  : FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomReportPostWidget(
@@ -153,7 +185,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                               ),
                             );
                           },
-                        ).then((value) => setState(() {}));
+                        ).then((value) => safeSetState(() {}));
                       }
                     },
                   ),
@@ -204,129 +236,122 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      if (postPagePostRecord
-                                              .postImagesList.length >=
-                                          1)
-                                        Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width *
-                                                  1.0,
-                                          height: MediaQuery.sizeOf(context)
-                                                  .height *
-                                              0.345,
-                                          child: Stack(
-                                            children: [
-                                              Builder(
-                                                builder: (context) {
-                                                  final images =
-                                                      postPagePostRecord
-                                                          .postImagesList
-                                                          .toList();
-                                                  return Container(
-                                                    width: double.infinity,
-                                                    height: MediaQuery.sizeOf(
-                                                                context)
-                                                            .height *
-                                                        0.345,
-                                                    child: PageView.builder(
-                                                      controller: _model
-                                                              .pageViewController ??=
-                                                          PageController(
-                                                              initialPage: min(
-                                                                  0,
-                                                                  images.length -
-                                                                      1)),
-                                                      onPageChanged: (_) =>
-                                                          setState(() {}),
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      itemCount: images.length,
-                                                      itemBuilder: (context,
-                                                          imagesIndex) {
-                                                        final imagesItem =
-                                                            images[imagesIndex];
-                                                        return CachedNetworkImage(
-                                                          fadeInDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      500),
-                                                          fadeOutDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      500),
-                                                          imageUrl: imagesItem,
-                                                          width:
-                                                              double.infinity,
-                                                          height:
-                                                              double.infinity,
-                                                          fit: BoxFit.fill,
-                                                        );
-                                                      },
+                                      Container(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                1.0,
+                                        height:
+                                            MediaQuery.sizeOf(context).height *
+                                                0.69,
+                                        child: Stack(
+                                          children: [
+                                            Builder(
+                                              builder: (context) {
+                                                final images =
+                                                    postPagePostRecord
+                                                        .postImagesList
+                                                        .toList();
+                                                return Container(
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  child: PageView.builder(
+                                                    controller: _model
+                                                            .pageViewController ??=
+                                                        PageController(
+                                                            initialPage: min(
+                                                                0,
+                                                                images.length -
+                                                                    1)),
+                                                    onPageChanged: (_) =>
+                                                        setState(() {}),
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    itemCount: images.length,
+                                                    itemBuilder:
+                                                        (context, imagesIndex) {
+                                                      final imagesItem =
+                                                          images[imagesIndex];
+                                                      return CachedNetworkImage(
+                                                        fadeInDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    500),
+                                                        fadeOutDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    500),
+                                                        imageUrl:
+                                                            valueOrDefault<
+                                                                String>(
+                                                          imagesItem,
+                                                          'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/users%2FQeM058wKO7gqEAgyByaBxHbGNKC3%2Fuploads%2Fcropped-1695291591591353_0.jpg?alt=media&token=0bc7ce18-f5e2-406d-b6cd-9e3529854676',
+                                                        ),
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        fit: BoxFit.cover,
+                                                      );
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            if (postPagePostRecord
+                                                    .postImagesList.length >
+                                                1)
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    1.00, 1.00),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 16.0, 16.0),
+                                                  child: Material(
+                                                    color: Colors.transparent,
+                                                    elevation: 0.0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20.0),
                                                     ),
-                                                  );
-                                                },
-                                              ),
-                                              if (postPagePostRecord
-                                                      .postImagesList.length >
-                                                  1)
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          1.00, 1.00),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                16.0, 16.0),
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      elevation: 0.0,
-                                                      shape:
-                                                          RoundedRectangleBorder(
+                                                    child: Container(
+                                                      width: 35.0,
+                                                      height: 28.0,
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .dark20,
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(20.0),
                                                       ),
-                                                      child: Container(
-                                                        width: 35.0,
-                                                        height: 28.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: FlutterFlowTheme
+                                                      child: Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                0.00, 0.00),
+                                                        child: Text(
+                                                          '${(_model.pageViewCurrentIndex + 1).toString()}/${postPagePostRecord.postImagesList.length.toString()}',
+                                                          style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .dark20,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20.0),
-                                                        ),
-                                                        child: Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  0.00, 0.00),
-                                                          child: Text(
-                                                            '${(_model.pageViewCurrentIndex + 1).toString()}/${postPagePostRecord.postImagesList.length.toString()}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Libre Franklin',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryBackground,
-                                                                  fontSize:
-                                                                      13.0,
-                                                                ),
-                                                          ),
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBackground,
+                                                                fontSize: 13.0,
+                                                              ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                            ],
-                                          ),
+                                              ),
+                                          ],
                                         ),
+                                      ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             16.0, 20.0, 16.0, 20.0),
@@ -382,7 +407,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                 child: Image.network(
                                                   valueOrDefault<String>(
                                                     stackUsersRecord.photoUrl,
-                                                    'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                                    'https://firebasestчorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                                   ),
                                                   fit: BoxFit.cover,
                                                 ),
@@ -473,27 +498,67 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                           onPressed: () async {
                                                             await currentUserReference!
                                                                 .update({
-                                                              'user_following':
-                                                                  FieldValue
-                                                                      .arrayUnion([
-                                                                stackUsersRecord
-                                                                    .reference
-                                                              ]),
+                                                              ...mapToFirestore(
+                                                                {
+                                                                  'user_following':
+                                                                      FieldValue
+                                                                          .arrayUnion([
+                                                                    stackUsersRecord
+                                                                        .reference
+                                                                  ]),
+                                                                },
+                                                              ),
                                                             });
 
                                                             await stackUsersRecord
                                                                 .reference
                                                                 .update({
-                                                              'user_followers':
-                                                                  FieldValue
-                                                                      .arrayUnion([
-                                                                currentUserReference
-                                                              ]),
+                                                              ...mapToFirestore(
+                                                                {
+                                                                  'user_followers':
+                                                                      FieldValue
+                                                                          .arrayUnion([
+                                                                    currentUserReference
+                                                                  ]),
+                                                                },
+                                                              ),
                                                             });
                                                             await actions
                                                                 .updatePage(
                                                               context,
                                                             );
+
+                                                            await NotificationRecord
+                                                                .collection
+                                                                .doc()
+                                                                .set(
+                                                                    createNotificationRecordData(
+                                                                  notificationFrom:
+                                                                      currentUserReference,
+                                                                  notificationTo:
+                                                                      stackUsersRecord
+                                                                          .reference,
+                                                                  notificationType:
+                                                                      'following',
+                                                                  notificationCreationDate:
+                                                                      getCurrentTimestamp,
+                                                                ));
+                                                            if (stackUsersRecord
+                                                                .userNotification) {
+                                                              triggerPushNotification(
+                                                                notificationTitle:
+                                                                    currentUserDisplayName,
+                                                                notificationText:
+                                                                    'started following you',
+                                                                userRefs: [
+                                                                  stackUsersRecord
+                                                                      .reference
+                                                                ],
+                                                                initialPageName:
+                                                                    'MainPage',
+                                                                parameterData: {},
+                                                              );
+                                                            }
                                                           },
                                                           text: 'FOLLOW',
                                                           options:
@@ -558,22 +623,30 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                           onPressed: () async {
                                                             await currentUserReference!
                                                                 .update({
-                                                              'user_following':
-                                                                  FieldValue
-                                                                      .arrayRemove([
-                                                                stackUsersRecord
-                                                                    .reference
-                                                              ]),
+                                                              ...mapToFirestore(
+                                                                {
+                                                                  'user_following':
+                                                                      FieldValue
+                                                                          .arrayRemove([
+                                                                    stackUsersRecord
+                                                                        .reference
+                                                                  ]),
+                                                                },
+                                                              ),
                                                             });
 
                                                             await stackUsersRecord
                                                                 .reference
                                                                 .update({
-                                                              'user_followers':
-                                                                  FieldValue
-                                                                      .arrayRemove([
-                                                                currentUserReference
-                                                              ]),
+                                                              ...mapToFirestore(
+                                                                {
+                                                                  'user_followers':
+                                                                      FieldValue
+                                                                          .arrayRemove([
+                                                                    currentUserReference
+                                                                  ]),
+                                                                },
+                                                              ),
                                                             });
                                                             await actions
                                                                 .updatePage(
@@ -695,183 +768,6 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                               ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 18.0, 16.0, 0.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            if (!postPagePostRecord
-                                                .postActivities
-                                                .contains(currentUserReference))
-                                              InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  await postPagePostRecord
-                                                      .reference
-                                                      .update({
-                                                    'post_activities':
-                                                        FieldValue.arrayUnion([
-                                                      currentUserReference
-                                                    ]),
-                                                  });
-                                                },
-                                                child: Icon(
-                                                  FFIcons.kbatteryactivity,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark88,
-                                                  size: 24.0,
-                                                ),
-                                              ),
-                                            if (postPagePostRecord
-                                                .postActivities
-                                                .contains(currentUserReference))
-                                              InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  await postPagePostRecord
-                                                      .reference
-                                                      .update({
-                                                    'post_activities':
-                                                        FieldValue.arrayRemove([
-                                                      currentUserReference
-                                                    ]),
-                                                  });
-                                                },
-                                                child: Icon(
-                                                  FFIcons.kbatteryactivityFill,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .alternate,
-                                                  size: 24.0,
-                                                ),
-                                              ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(4.0, 0.0, 0.0, 0.0),
-                                              child: Text(
-                                                '${formatNumber(
-                                                  postPagePostRecord
-                                                      .postActivities.length,
-                                                  formatType:
-                                                      FormatType.compact,
-                                                )} activities',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Libre Franklin',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .dark68,
-                                                          fontSize: 14.0,
-                                                        ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      15.0, 0.0, 0.0, 0.0),
-                                              child: Icon(
-                                                FFIcons.kproperty1comments,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark88,
-                                                size: 24.0,
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        4.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  '${formatNumber(
-                                                    postPagePostRecord
-                                                        .postCommentsList
-                                                        .length,
-                                                    formatType:
-                                                        FormatType.compact,
-                                                  )} comments',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Libre Franklin',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .dark68,
-                                                        fontSize: 14.0,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                            FlutterFlowIconButton(
-                                              borderColor: Colors.transparent,
-                                              borderRadius: 30.0,
-                                              borderWidth: 1.0,
-                                              buttonSize: 40.0,
-                                              icon: Icon(
-                                                FFIcons.kproperty1share,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark88,
-                                                size: 24.0,
-                                              ),
-                                              onPressed: () async {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Color(0x01000000),
-                                                  barrierColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .dark38,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return GestureDetector(
-                                                      onTap: () => FocusScope
-                                                              .of(context)
-                                                          .requestFocus(_model
-                                                              .unfocusNode),
-                                                      child: Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child:
-                                                            BottomSharePostWidget(
-                                                          repostpost:
-                                                              postPagePostRecord
-                                                                  .reference,
-                                                          user: stackUsersRecord
-                                                              .reference,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then(
-                                                    (value) => setState(() {}));
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
                                     ],
                                   ),
                                 ),
@@ -900,13 +796,10 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 22.0),
                                           child: Text(
-                                            '${valueOrDefault<String>(
-                                              formatNumber(
-                                                postPagePostRecord
-                                                    .postCommentsList.length,
-                                                formatType: FormatType.compact,
-                                              ),
-                                              '0',
+                                            '${formatNumber(
+                                              postPagePostRecord
+                                                  .postCommentsList.length,
+                                              formatType: FormatType.compact,
                                             )} comments',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -952,7 +845,12 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                 listViewCommentPostRecordList =
                                                 snapshot.data!;
                                             return ListView.separated(
-                                              padding: EdgeInsets.zero,
+                                              padding: EdgeInsets.fromLTRB(
+                                                0,
+                                                0,
+                                                0,
+                                                20.0,
+                                              ),
                                               primary: false,
                                               shrinkWrap: true,
                                               scrollDirection: Axis.vertical,
@@ -993,7 +891,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                           alignment: AlignmentDirectional(0.00, 1.00),
                           child: Container(
                             width: double.infinity,
-                            height: 91.0,
+                            height: 85.0,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
@@ -1009,7 +907,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                             ),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 0.0, 20.0, 34.0),
+                                  20.0, 0.0, 20.0, 28.0),
                               child: Material(
                                 color: Colors.transparent,
                                 elevation: 0.0,
@@ -1057,18 +955,23 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                   await postPagePostRecord
                                                       .reference
                                                       .update({
-                                                    'post_activities':
-                                                        FieldValue.arrayRemove([
-                                                      currentUserReference
-                                                    ]),
+                                                    ...mapToFirestore(
+                                                      {
+                                                        'post_activities':
+                                                            FieldValue
+                                                                .arrayRemove([
+                                                          currentUserReference
+                                                        ]),
+                                                      },
+                                                    ),
                                                   });
                                                 },
                                                 child: Icon(
-                                                  FFIcons.kbatteryactivityFill,
+                                                  FFIcons.kbatteryActivityFill,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .alternate,
-                                                  size: 24.0,
+                                                  size: 25.0,
                                                 ),
                                               ),
                                             if (!postPagePostRecord
@@ -1081,14 +984,125 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  await postPagePostRecord
-                                                      .reference
-                                                      .update({
-                                                    'post_activities':
-                                                        FieldValue.arrayUnion([
-                                                      currentUserReference
-                                                    ]),
-                                                  });
+                                                  if (stackUsersRecord
+                                                      .hasUserBlockedUserByAdmin()) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Your account has been suspended. Contact support for further info.',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                fontSize: 14.0,
+                                                              ),
+                                                        ),
+                                                        duration: Duration(
+                                                            milliseconds: 3000),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    if (valueOrDefault<bool>(
+                                                        currentUserDocument
+                                                            ?.userSubscription,
+                                                        false)) {
+                                                      await postPagePostRecord
+                                                          .reference
+                                                          .update({
+                                                        ...mapToFirestore(
+                                                          {
+                                                            'post_activities':
+                                                                FieldValue
+                                                                    .arrayUnion([
+                                                              currentUserReference
+                                                            ]),
+                                                          },
+                                                        ),
+                                                      });
+
+                                                      await NotificationRecord
+                                                          .collection
+                                                          .doc()
+                                                          .set(
+                                                              createNotificationRecordData(
+                                                            notificationFrom:
+                                                                currentUserReference,
+                                                            notificationTo:
+                                                                stackUsersRecord
+                                                                    .reference,
+                                                            notificationType:
+                                                                'liked',
+                                                            notificationPost:
+                                                                postPagePostRecord
+                                                                    .reference,
+                                                            notificationCreationDate:
+                                                                getCurrentTimestamp,
+                                                          ));
+                                                      if (stackUsersRecord
+                                                          .userNotification) {
+                                                        triggerPushNotification(
+                                                          notificationTitle:
+                                                              currentUserDisplayName,
+                                                          notificationText:
+                                                              'activated your post',
+                                                          userRefs: [
+                                                            stackUsersRecord
+                                                                .reference
+                                                          ],
+                                                          initialPageName:
+                                                              'MainPage',
+                                                          parameterData: {},
+                                                        );
+                                                      }
+                                                    } else {
+                                                      showModalBottomSheet(
+                                                        isScrollControlled:
+                                                            true,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        barrierColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .customColorBottomSh,
+                                                        enableDrag: false,
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return GestureDetector(
+                                                            onTap: () => _model
+                                                                    .unfocusNode
+                                                                    .canRequestFocus
+                                                                ? FocusScope.of(
+                                                                        context)
+                                                                    .requestFocus(
+                                                                        _model
+                                                                            .unfocusNode)
+                                                                : FocusScope.of(
+                                                                        context)
+                                                                    .unfocus(),
+                                                            child: Padding(
+                                                              padding: MediaQuery
+                                                                  .viewInsetsOf(
+                                                                      context),
+                                                              child:
+                                                                  SubscriptionWidget(),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ).then((value) =>
+                                                          safeSetState(() {}));
+                                                    }
+                                                  }
                                                 },
                                                 child: Icon(
                                                   FFIcons.kbatteryactivity,
@@ -1130,9 +1144,83 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                setState(() {
-                                                  _model.commentShoePost = true;
-                                                });
+                                                if (valueOrDefault<bool>(
+                                                    currentUserDocument
+                                                        ?.userBlockedUserByAdmin,
+                                                    false)) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'Your account has been suspended. Contact support for further info.',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Libre Franklin',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  fontSize:
+                                                                      14.0,
+                                                                ),
+                                                      ),
+                                                      duration: Duration(
+                                                          milliseconds: 3000),
+                                                      backgroundColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondary,
+                                                    ),
+                                                  );
+                                                } else {
+                                                  if (valueOrDefault<bool>(
+                                                      currentUserDocument
+                                                          ?.userSubscription,
+                                                      false)) {
+                                                    setState(() {
+                                                      _model.commentShoePost =
+                                                          true;
+                                                    });
+                                                  } else {
+                                                    showModalBottomSheet(
+                                                      isScrollControlled: true,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      barrierColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .customColorBottomSh,
+                                                      enableDrag: false,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return GestureDetector(
+                                                          onTap: () => _model
+                                                                  .unfocusNode
+                                                                  .canRequestFocus
+                                                              ? FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      _model
+                                                                          .unfocusNode)
+                                                              : FocusScope.of(
+                                                                      context)
+                                                                  .unfocus(),
+                                                          child: Padding(
+                                                            padding: MediaQuery
+                                                                .viewInsetsOf(
+                                                                    context),
+                                                            child:
+                                                                SubscriptionWidget(),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ).then((value) =>
+                                                        safeSetState(() {}));
+                                                  }
+                                                }
                                               },
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
@@ -1188,36 +1276,114 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                             size: 24.0,
                                           ),
                                           onPressed: () async {
-                                            await showModalBottomSheet(
-                                              isScrollControlled: true,
-                                              backgroundColor:
-                                                  Color(0x01000000),
-                                              barrierColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .dark38,
-                                              context: context,
-                                              builder: (context) {
-                                                return GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          context)
-                                                      .requestFocus(
-                                                          _model.unfocusNode),
-                                                  child: Padding(
-                                                    padding:
-                                                        MediaQuery.viewInsetsOf(
-                                                            context),
-                                                    child:
-                                                        BottomSharePostWidget(
-                                                      repostpost:
-                                                          postPagePostRecord
-                                                              .reference,
-                                                      user: stackUsersRecord
-                                                          .reference,
-                                                    ),
+                                            if (valueOrDefault<bool>(
+                                                currentUserDocument
+                                                    ?.userBlockedUserByAdmin,
+                                                false)) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Your account has been suspended. Contact support for further info.',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
                                                   ),
-                                                );
-                                              },
-                                            ).then((value) => setState(() {}));
+                                                  duration: Duration(
+                                                      milliseconds: 3000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
+                                            } else {
+                                              if (valueOrDefault<bool>(
+                                                  currentUserDocument
+                                                      ?.userSubscription,
+                                                  false)) {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Color(0x01000000),
+                                                  barrierColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .dark38,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () => _model
+                                                              .unfocusNode
+                                                              .canRequestFocus
+                                                          ? FocusScope.of(
+                                                                  context)
+                                                              .requestFocus(_model
+                                                                  .unfocusNode)
+                                                          : FocusScope.of(
+                                                                  context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            BottomSharePostWidget(
+                                                          repostpost:
+                                                              postPagePostRecord
+                                                                  .reference,
+                                                          user: stackUsersRecord
+                                                              .reference,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              } else {
+                                                showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  barrierColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .customColorBottomSh,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () => _model
+                                                              .unfocusNode
+                                                              .canRequestFocus
+                                                          ? FocusScope.of(
+                                                                  context)
+                                                              .requestFocus(_model
+                                                                  .unfocusNode)
+                                                          : FocusScope.of(
+                                                                  context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            SubscriptionWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              }
+                                            }
                                           },
                                         ),
                                       ],
@@ -1236,7 +1402,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                             elevation: 0.0,
                             child: Container(
                               width: double.infinity,
-                              height: 65.0,
+                              height: 79.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
@@ -1249,7 +1415,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                 alignment: AlignmentDirectional(0.00, -1.00),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 7.5, 16.0, 0.0),
+                                      10.0, 7.5, 16.0, 24.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
@@ -1266,7 +1432,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                           child: Image.network(
                                             valueOrDefault<String>(
                                               currentUserPhoto,
-                                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                             ),
                                             fit: BoxFit.cover,
                                           ),
@@ -1281,6 +1447,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                             width: double.infinity,
                                             child: TextFormField(
                                               controller: _model.textController,
+                                              focusNode:
+                                                  _model.textFieldFocusNode,
                                               onChanged: (_) =>
                                                   EasyDebounce.debounce(
                                                 '_model.textController',
@@ -1427,13 +1595,55 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                         ),
                                                         commentPostRecordReference);
 
+                                                await NotificationRecord
+                                                    .collection
+                                                    .doc()
+                                                    .set(
+                                                        createNotificationRecordData(
+                                                      notificationFrom:
+                                                          currentUserReference,
+                                                      notificationTo:
+                                                          stackUsersRecord
+                                                              .reference,
+                                                      notificationType:
+                                                          'commented',
+                                                      notificationPost:
+                                                          postPagePostRecord
+                                                              .reference,
+                                                      notificationCreationDate:
+                                                          getCurrentTimestamp,
+                                                      notificationText: _model
+                                                          .textController.text,
+                                                    ));
+                                                if (stackUsersRecord
+                                                    .userNotification) {
+                                                  triggerPushNotification(
+                                                    notificationTitle:
+                                                        stackUsersRecord
+                                                            .displayName,
+                                                    notificationText:
+                                                        'commented your post',
+                                                    userRefs: [
+                                                      stackUsersRecord.reference
+                                                    ],
+                                                    initialPageName: 'MainPage',
+                                                    parameterData: {},
+                                                  );
+                                                }
+
                                                 await postPagePostRecord
                                                     .reference
                                                     .update({
-                                                  'post_comments_list':
-                                                      FieldValue.arrayUnion([
-                                                    _model.comment?.reference
-                                                  ]),
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'post_comments_list':
+                                                          FieldValue
+                                                              .arrayUnion([
+                                                        _model
+                                                            .comment?.reference
+                                                      ]),
+                                                    },
+                                                  ),
                                                 });
                                                 setState(() {
                                                   _model.textController

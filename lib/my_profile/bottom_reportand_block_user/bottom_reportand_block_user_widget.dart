@@ -2,12 +2,13 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/post/bottom_report_post/bottom_report_post_widget.dart';
+import '/report/bottom_report/bottom_report_widget.dart';
 import '/settings/popup_block_user/popup_block_user_widget.dart';
 import '/settings/popup_unblock_user/popup_unblock_user_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_reportand_block_user_model.dart';
@@ -89,21 +90,21 @@ class _BottomReportandBlockUserWidgetState
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
+                          Navigator.pop(context);
                           await showModalBottomSheet(
                             isScrollControlled: true,
-                            backgroundColor: Color(0x01000000),
-                            barrierColor: FlutterFlowTheme.of(context).dark38,
+                            backgroundColor: Colors.transparent,
                             context: context,
                             builder: (context) {
                               return Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
-                                child: BottomReportPostWidget(
-                                  typeReport: 'User',
-                                  user: widget.user,
+                                child: BottomReportWidget(
+                                  userRef: widget.user,
+                                  type: 'User',
                                 ),
                               );
                             },
-                          ).then((value) => setState(() {}));
+                          ).then((value) => safeSetState(() {}));
                         },
                         text: 'REPORT',
                         options: FFButtonOptions(

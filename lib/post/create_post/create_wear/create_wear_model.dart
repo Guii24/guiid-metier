@@ -1,21 +1,25 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/create_post/component_wear/component_wear_widget.dart';
+import '/post/create_post/custom_dialog_create_wear/custom_dialog_create_wear_widget.dart';
 import '/post/create_post/empty_create_wear/empty_create_wear_widget.dart';
 import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_wear/take_photo_wear_widget.dart';
+import 'create_wear_widget.dart' show CreateWearWidget;
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class CreateWearModel extends FlutterFlowModel {
+class CreateWearModel extends FlutterFlowModel<CreateWearWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

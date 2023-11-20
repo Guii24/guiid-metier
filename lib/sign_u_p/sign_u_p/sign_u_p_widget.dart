@@ -45,6 +45,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
             '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
         FFAppState().countryInfoCompany = jsonDecode(
             '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+        FFAppState().profilePhoto = '';
+        FFAppState().profilePhotoCompany = '';
       });
       await actions.lockOrientation();
     });
@@ -55,9 +57,16 @@ class _SignUPWidgetState extends State<SignUPWidget>
       initialIndex: 0,
     )..addListener(() => setState(() {}));
     _model.userNameController ??= TextEditingController();
+    _model.userNameFocusNode ??= FocusNode();
+
     _model.userPhoneController ??= TextEditingController();
+    _model.userPhoneFocusNode ??= FocusNode();
+
     _model.companyNameController ??= TextEditingController();
+    _model.companyNameFocusNode ??= FocusNode();
+
     _model.phoneCompanyController ??= TextEditingController();
+    _model.phoneCompanyFocusNode ??= FocusNode();
   }
 
   @override
@@ -69,10 +78,21 @@ class _SignUPWidgetState extends State<SignUPWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -199,10 +219,17 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return GestureDetector(
-                                                          onTap: () => FocusScope
-                                                                  .of(context)
-                                                              .requestFocus(_model
-                                                                  .unfocusNode),
+                                                          onTap: () => _model
+                                                                  .unfocusNode
+                                                                  .canRequestFocus
+                                                              ? FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      _model
+                                                                          .unfocusNode)
+                                                              : FocusScope.of(
+                                                                      context)
+                                                                  .unfocus(),
                                                           child: Padding(
                                                             padding: MediaQuery
                                                                 .viewInsetsOf(
@@ -213,7 +240,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                         );
                                                       },
                                                     ).then((value) =>
-                                                        setState(() {}));
+                                                        safeSetState(() {}));
                                                   },
                                                   child: ClipRRect(
                                                     borderRadius:
@@ -228,7 +255,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                           String>(
                                                         FFAppState()
                                                             .profilePhoto,
-                                                        'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                                        'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                                       ),
                                                       width: 90.0,
                                                       height: 90.0,
@@ -264,10 +291,17 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return GestureDetector(
-                                                          onTap: () => FocusScope
-                                                                  .of(context)
-                                                              .requestFocus(_model
-                                                                  .unfocusNode),
+                                                          onTap: () => _model
+                                                                  .unfocusNode
+                                                                  .canRequestFocus
+                                                              ? FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      _model
+                                                                          .unfocusNode)
+                                                              : FocusScope.of(
+                                                                      context)
+                                                                  .unfocus(),
                                                           child: Padding(
                                                             padding: MediaQuery
                                                                 .viewInsetsOf(
@@ -278,7 +312,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                         );
                                                       },
                                                     ).then((value) =>
-                                                        setState(() {}));
+                                                        safeSetState(() {}));
                                                   },
                                                   child: Text(
                                                     'Upload profile photo *',
@@ -324,10 +358,17 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return GestureDetector(
-                                                          onTap: () => FocusScope
-                                                                  .of(context)
-                                                              .requestFocus(_model
-                                                                  .unfocusNode),
+                                                          onTap: () => _model
+                                                                  .unfocusNode
+                                                                  .canRequestFocus
+                                                              ? FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      _model
+                                                                          .unfocusNode)
+                                                              : FocusScope.of(
+                                                                      context)
+                                                                  .unfocus(),
                                                           child: Padding(
                                                             padding: MediaQuery
                                                                 .viewInsetsOf(
@@ -338,7 +379,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                         );
                                                       },
                                                     ).then((value) =>
-                                                        setState(() {}));
+                                                        safeSetState(() {}));
                                                   },
                                                   child: Text(
                                                     'Edit profile photo',
@@ -380,6 +421,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                 child: TextFormField(
                                                   controller:
                                                       _model.userNameController,
+                                                  focusNode:
+                                                      _model.userNameFocusNode,
                                                   onChanged: (_) =>
                                                       EasyDebounce.debounce(
                                                     '_model.userNameController',
@@ -487,50 +530,19 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       ),
                                                   maxLines: 3,
                                                   minLines: 1,
-                                                  keyboardType:
-                                                      TextInputType.name,
                                                   validator: _model
                                                       .userNameControllerValidator
                                                       .asValidator(context),
                                                   inputFormatters: [
                                                     FilteringTextInputFormatter
                                                         .allow(RegExp(
-                                                            '^(?=.{0,100}\$)[a-zA-Z]+(?: [a-zA-Z]+)?\$'))
+                                                            '^[a-zA-Z-\\\'\\.\\ \\·]{0,100}'))
                                                   ],
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                        if (!functions.validatorName(_model
-                                                .userNameController.text) &&
-                                            (_model.userNameController.text !=
-                                                    null &&
-                                                _model.userNameController
-                                                        .text !=
-                                                    ''))
-                                          Align(
-                                            alignment: AlignmentDirectional(
-                                                -1.00, 0.00),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 8.0),
-                                              child: Text(
-                                                'The field should contain Last name',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Libre Franklin',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          fontSize: 14.0,
-                                                        ),
-                                              ),
-                                            ),
-                                          ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -587,12 +599,17 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                           context: context,
                                                           builder: (context) {
                                                             return GestureDetector(
-                                                              onTap: () => FocusScope
-                                                                      .of(
+                                                              onTap: () => _model
+                                                                      .unfocusNode
+                                                                      .canRequestFocus
+                                                                  ? FocusScope.of(
                                                                           context)
-                                                                  .requestFocus(
-                                                                      _model
-                                                                          .unfocusNode),
+                                                                      .requestFocus(
+                                                                          _model
+                                                                              .unfocusNode)
+                                                                  : FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
                                                               child: Padding(
                                                                 padding: MediaQuery
                                                                     .viewInsetsOf(
@@ -609,7 +626,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                             );
                                                           },
                                                         ).then((value) =>
-                                                            setState(() {}));
+                                                            safeSetState(
+                                                                () {}));
                                                       },
                                                       child: Row(
                                                         mainAxisSize:
@@ -676,6 +694,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       child: TextFormField(
                                                         controller: _model
                                                             .userPhoneController,
+                                                        focusNode: _model
+                                                            .userPhoneFocusNode,
                                                         onChanged: (_) =>
                                                             EasyDebounce
                                                                 .debounce(
@@ -941,21 +961,97 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                   .validate()) {
                                             return;
                                           }
-                                          if ((_model.userPhoneController
-                                                          .text ==
-                                                      null ||
-                                                  _model.userPhoneController
-                                                          .text ==
-                                                      '') ||
-                                              (FFAppState().profilePhoto ==
-                                                      null ||
-                                                  FFAppState().profilePhoto ==
-                                                      '')) {
+                                          if (FFAppState().profilePhoto ==
+                                                  null ||
+                                              FFAppState().profilePhoto == '') {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(
                                                 content: Text(
-                                                  'All fields is required',
+                                                  'Please upload a profile photo.',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 3000),
+                                                backgroundColor:
+                                                    Color(0xCD000000),
+                                              ),
+                                            );
+                                          } else if (!functions.counter(
+                                              _model.userPhoneController.text,
+                                              14)) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Please enter a valid phone number.',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 3000),
+                                                backgroundColor:
+                                                    Color(0xCD000000),
+                                              ),
+                                            );
+                                          } else if (!_model
+                                              .checkboxuserValue!) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Please mark checkbox',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 3000),
+                                                backgroundColor:
+                                                    Color(0xCD000000),
+                                              ),
+                                            );
+                                          } else if (functions
+                                              .containsProfanity(_model
+                                                  .userNameController.text)) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'No profanity words allowed',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelLarge
@@ -977,148 +1073,66 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               ),
                                             );
                                           } else {
-                                            if (functions.validatorName(_model
-                                                .userNameController.text)) {
-                                              if (!functions.counter(
+                                            context.pushNamed(
+                                              'VerificationSignUp',
+                                              queryParameters: {
+                                                'userName': serializeParam(
+                                                  _model
+                                                      .userNameController.text,
+                                                  ParamType.String,
+                                                ),
+                                                'userPhone': serializeParam(
+                                                  functions
+                                                      .deleteSpaceAndDivider(
+                                                          '${getJsonField(
+                                                    FFAppState().countryInfo,
+                                                    r'''$.dial_code''',
+                                                  ).toString()}${_model.userPhoneController.text}'),
+                                                  ParamType.String,
+                                                ),
+                                                'profilePhoto': serializeParam(
+                                                  FFAppState().profilePhoto,
+                                                  ParamType.String,
+                                                ),
+                                                'userType': serializeParam(
+                                                  'User',
+                                                  ParamType.String,
+                                                ),
+                                                'phoneoriginal': serializeParam(
                                                   _model
                                                       .userPhoneController.text,
-                                                  14)) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      'All fields is required',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelLarge
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Libre Franklin',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                              ),
-                                                    ),
-                                                    duration: Duration(
-                                                        milliseconds: 3000),
-                                                    backgroundColor:
-                                                        Color(0xCD000000),
-                                                  ),
-                                                );
-                                              } else {
-                                                if (!_model
-                                                    .checkboxuserValue!) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        'All fields is required',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelLarge
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Libre Franklin',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
-                                                      ),
-                                                      duration: Duration(
-                                                          milliseconds: 3000),
-                                                      backgroundColor:
-                                                          Color(0xCD000000),
-                                                    ),
-                                                  );
-                                                } else {
-                                                  context.pushNamed(
-                                                    'VerificationSignUp',
-                                                    queryParameters: {
-                                                      'userName':
-                                                          serializeParam(
-                                                        _model
-                                                            .userNameController
-                                                            .text,
-                                                        ParamType.String,
-                                                      ),
-                                                      'userPhone':
-                                                          serializeParam(
-                                                        functions
-                                                            .deleteSpaceAndDivider(
-                                                                '${getJsonField(
-                                                          FFAppState()
-                                                              .countryInfo,
-                                                          r'''$.dial_code''',
-                                                        ).toString()}${_model.userPhoneController.text}'),
-                                                        ParamType.String,
-                                                      ),
-                                                      'profilePhoto':
-                                                          serializeParam(
-                                                        FFAppState()
-                                                            .profilePhoto,
-                                                        ParamType.String,
-                                                      ),
-                                                      'userType':
-                                                          serializeParam(
-                                                        'User',
-                                                        ParamType.String,
-                                                      ),
-                                                      'phoneoriginal':
-                                                          serializeParam(
-                                                        _model
-                                                            .userPhoneController
-                                                            .text,
-                                                        ParamType.String,
-                                                      ),
-                                                      'phoneName':
-                                                          serializeParam(
-                                                        getJsonField(
-                                                          FFAppState()
-                                                              .countryInfo,
-                                                          r'''$.name''',
-                                                        ).toString(),
-                                                        ParamType.String,
-                                                      ),
-                                                      'phoneCode':
-                                                          serializeParam(
-                                                        getJsonField(
-                                                          FFAppState()
-                                                              .countryInfo,
-                                                          r'''$.code''',
-                                                        ).toString(),
-                                                        ParamType.String,
-                                                      ),
-                                                      'phoneFlag':
-                                                          serializeParam(
-                                                        getJsonField(
-                                                          FFAppState()
-                                                              .countryInfo,
-                                                          r'''$.flag''',
-                                                        ).toString(),
-                                                        ParamType.String,
-                                                      ),
-                                                      'phoneDialCode':
-                                                          serializeParam(
-                                                        getJsonField(
-                                                          FFAppState()
-                                                              .countryInfo,
-                                                          r'''$.dial_code''',
-                                                        ).toString(),
-                                                        ParamType.String,
-                                                      ),
-                                                    }.withoutNulls,
-                                                  );
-                                                }
-                                              }
-                                            }
+                                                  ParamType.String,
+                                                ),
+                                                'phoneName': serializeParam(
+                                                  getJsonField(
+                                                    FFAppState().countryInfo,
+                                                    r'''$.name''',
+                                                  ).toString(),
+                                                  ParamType.String,
+                                                ),
+                                                'phoneCode': serializeParam(
+                                                  getJsonField(
+                                                    FFAppState().countryInfo,
+                                                    r'''$.code''',
+                                                  ).toString(),
+                                                  ParamType.String,
+                                                ),
+                                                'phoneFlag': serializeParam(
+                                                  getJsonField(
+                                                    FFAppState().countryInfo,
+                                                    r'''$.flag''',
+                                                  ).toString(),
+                                                  ParamType.String,
+                                                ),
+                                                'phoneDialCode': serializeParam(
+                                                  getJsonField(
+                                                    FFAppState().countryInfo,
+                                                    r'''$.dial_code''',
+                                                  ).toString(),
+                                                  ParamType.String,
+                                                ),
+                                              }.withoutNulls,
+                                            );
                                           }
                                         },
                                         text: 'CONTINUE',
@@ -1177,10 +1191,14 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          context)
-                                                      .requestFocus(
-                                                          _model.unfocusNode),
+                                                  onTap: () => _model
+                                                          .unfocusNode
+                                                          .canRequestFocus
+                                                      ? FocusScope.of(context)
+                                                          .requestFocus(_model
+                                                              .unfocusNode)
+                                                      : FocusScope.of(context)
+                                                          .unfocus(),
                                                   child: Padding(
                                                     padding:
                                                         MediaQuery.viewInsetsOf(
@@ -1191,7 +1209,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                   ),
                                                 );
                                               },
-                                            ).then((value) => setState(() {}));
+                                            ).then(
+                                                (value) => safeSetState(() {}));
                                           },
                                           child: RichText(
                                             textScaleFactor:
@@ -1264,10 +1283,14 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          context)
-                                                      .requestFocus(
-                                                          _model.unfocusNode),
+                                                  onTap: () => _model
+                                                          .unfocusNode
+                                                          .canRequestFocus
+                                                      ? FocusScope.of(context)
+                                                          .requestFocus(_model
+                                                              .unfocusNode)
+                                                      : FocusScope.of(context)
+                                                          .unfocus(),
                                                   child: Padding(
                                                     padding:
                                                         MediaQuery.viewInsetsOf(
@@ -1277,7 +1300,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                   ),
                                                 );
                                               },
-                                            ).then((value) => setState(() {}));
+                                            ).then(
+                                                (value) => safeSetState(() {}));
                                           },
                                           child: ClipRRect(
                                             borderRadius:
@@ -1290,7 +1314,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               imageUrl: valueOrDefault<String>(
                                                 FFAppState()
                                                     .profilePhotoCompany,
-                                                'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                                'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                               ),
                                               width: 90.0,
                                               height: 90.0,
@@ -1320,10 +1344,14 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          context)
-                                                      .requestFocus(
-                                                          _model.unfocusNode),
+                                                  onTap: () => _model
+                                                          .unfocusNode
+                                                          .canRequestFocus
+                                                      ? FocusScope.of(context)
+                                                          .requestFocus(_model
+                                                              .unfocusNode)
+                                                      : FocusScope.of(context)
+                                                          .unfocus(),
                                                   child: Padding(
                                                     padding:
                                                         MediaQuery.viewInsetsOf(
@@ -1333,7 +1361,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                   ),
                                                 );
                                               },
-                                            ).then((value) => setState(() {}));
+                                            ).then(
+                                                (value) => safeSetState(() {}));
                                           },
                                           child: Text(
                                             'Upload profile photo *',
@@ -1370,10 +1399,14 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          context)
-                                                      .requestFocus(
-                                                          _model.unfocusNode),
+                                                  onTap: () => _model
+                                                          .unfocusNode
+                                                          .canRequestFocus
+                                                      ? FocusScope.of(context)
+                                                          .requestFocus(_model
+                                                              .unfocusNode)
+                                                      : FocusScope.of(context)
+                                                          .unfocus(),
                                                   child: Padding(
                                                     padding:
                                                         MediaQuery.viewInsetsOf(
@@ -1383,7 +1416,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                   ),
                                                 );
                                               },
-                                            ).then((value) => setState(() {}));
+                                            ).then(
+                                                (value) => safeSetState(() {}));
                                           },
                                           child: Text(
                                             'Edit profile photo',
@@ -1418,6 +1452,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                 child: TextFormField(
                                                   controller: _model
                                                       .companyNameController,
+                                                  focusNode: _model
+                                                      .companyNameFocusNode,
                                                   onChanged: (_) =>
                                                       EasyDebounce.debounce(
                                                     '_model.companyNameController',
@@ -1485,26 +1521,10 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                     errorBorder:
                                                         OutlineInputBorder(
                                                       borderSide: BorderSide(
-                                                        color: valueOrDefault<
-                                                            Color>(
-                                                          valueOrDefault<bool>(
-                                                            functions.validatorName(
-                                                                _model
-                                                                    .companyNameController
-                                                                    .text),
-                                                            true,
-                                                          )
-                                                              ? FlutterFlowTheme
-                                                                      .of(
-                                                                          context)
-                                                                  .alternate
-                                                              : FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .warning,
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .warning,
-                                                        ),
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1514,26 +1534,10 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                     focusedErrorBorder:
                                                         OutlineInputBorder(
                                                       borderSide: BorderSide(
-                                                        color: valueOrDefault<
-                                                            Color>(
-                                                          valueOrDefault<bool>(
-                                                            functions.validatorName(
-                                                                _model
-                                                                    .companyNameController
-                                                                    .text),
-                                                            true,
-                                                          )
-                                                              ? FlutterFlowTheme
-                                                                      .of(
-                                                                          context)
-                                                                  .alternate
-                                                              : FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .warning,
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .warning,
-                                                        ),
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
                                                         width: 1.0,
                                                       ),
                                                       borderRadius:
@@ -1557,15 +1561,13 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       ),
                                                   maxLines: 3,
                                                   minLines: 1,
-                                                  keyboardType:
-                                                      TextInputType.name,
                                                   validator: _model
                                                       .companyNameControllerValidator
                                                       .asValidator(context),
                                                   inputFormatters: [
                                                     FilteringTextInputFormatter
                                                         .allow(RegExp(
-                                                            '^(?=.{0,100}\$)[a-zA-Z]*(?: [a-zA-Z]*)?'))
+                                                            '^[a-zA-Z-\\\'\\.\\ \\·]{0,100}'))
                                                   ],
                                                 ),
                                               ),
@@ -1627,10 +1629,17 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                         context: context,
                                                         builder: (context) {
                                                           return GestureDetector(
-                                                            onTap: () => FocusScope
-                                                                    .of(context)
-                                                                .requestFocus(_model
-                                                                    .unfocusNode),
+                                                            onTap: () => _model
+                                                                    .unfocusNode
+                                                                    .canRequestFocus
+                                                                ? FocusScope.of(
+                                                                        context)
+                                                                    .requestFocus(
+                                                                        _model
+                                                                            .unfocusNode)
+                                                                : FocusScope.of(
+                                                                        context)
+                                                                    .unfocus(),
                                                             child: Padding(
                                                               padding: MediaQuery
                                                                   .viewInsetsOf(
@@ -1647,22 +1656,26 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                           );
                                                         },
                                                       ).then((value) =>
-                                                          setState(() {}));
+                                                          safeSetState(() {}));
                                                     },
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
                                                       children: [
                                                         Text(
-                                                          '${getJsonField(
-                                                            FFAppState()
-                                                                .countryInfoCompany,
-                                                            r'''$.code''',
-                                                          ).toString()} ${getJsonField(
-                                                            FFAppState()
-                                                                .countryInfoCompany,
-                                                            r'''$.dial_code''',
-                                                          ).toString()}',
+                                                          valueOrDefault<
+                                                              String>(
+                                                            '${getJsonField(
+                                                              FFAppState()
+                                                                  .countryInfoCompany,
+                                                              r'''$.code''',
+                                                            ).toString()} ${getJsonField(
+                                                              FFAppState()
+                                                                  .countryInfoCompany,
+                                                              r'''$.dial_code''',
+                                                            ).toString()}',
+                                                            'US +1',
+                                                          ),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -1709,6 +1722,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                     child: TextFormField(
                                                       controller: _model
                                                           .phoneCompanyController,
+                                                      focusNode: _model
+                                                          .phoneCompanyFocusNode,
                                                       onChanged: (_) =>
                                                           EasyDebounce.debounce(
                                                         '_model.phoneCompanyController',
@@ -1957,21 +1972,94 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               .validate()) {
                                         return;
                                       }
-                                      if ((_model.phoneCompanyController.text ==
-                                                  null ||
-                                              _model.phoneCompanyController
-                                                      .text ==
-                                                  '') ||
-                                          (FFAppState().profilePhotoCompany ==
-                                                  null ||
-                                              FFAppState()
-                                                      .profilePhotoCompany ==
-                                                  '')) {
+                                      if (FFAppState().profilePhotoCompany ==
+                                              null ||
+                                          FFAppState().profilePhotoCompany ==
+                                              '') {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                              'All fields is required',
+                                              'Please upload a profile photo.',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 3000),
+                                            backgroundColor: Color(0xCD000000),
+                                          ),
+                                        );
+                                      } else if (!functions.counter(
+                                          _model.phoneCompanyController.text,
+                                          14)) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Please enter a valid phone number.',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 3000),
+                                            backgroundColor: Color(0xCD000000),
+                                          ),
+                                        );
+                                      } else if (!_model
+                                          .checkboxcompanyValue!) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Please mark checkbox',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 3000),
+                                            backgroundColor: Color(0xCD000000),
+                                          ),
+                                        );
+                                      } else if (functions.containsProfanity(
+                                          _model.companyNameController.text)) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'No profanity words allowed',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .labelLarge
@@ -1992,129 +2080,64 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                           ),
                                         );
                                       } else {
-                                        if (!functions.counter(
-                                            _model.phoneCompanyController.text,
-                                            14)) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'All fields is required',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Libre Franklin',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                              ),
-                                              duration:
-                                                  Duration(milliseconds: 3000),
-                                              backgroundColor:
-                                                  Color(0xCD000000),
+                                        context.pushNamed(
+                                          'VerificationSignUp',
+                                          queryParameters: {
+                                            'userPhone': serializeParam(
+                                              functions.deleteSpaceAndDivider(
+                                                  '${getJsonField(
+                                                FFAppState().countryInfoCompany,
+                                                r'''$.dial_code''',
+                                              ).toString()}${_model.phoneCompanyController.text}'),
+                                              ParamType.String,
                                             ),
-                                          );
-                                        } else {
-                                          if (!_model.checkboxcompanyValue!) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'All fields is required',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Libre Franklin',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 3000),
-                                                backgroundColor:
-                                                    Color(0xCD000000),
-                                              ),
-                                            );
-                                          } else {
-                                            context.pushNamed(
-                                              'VerificationSignUp',
-                                              queryParameters: {
-                                                'userPhone': serializeParam(
-                                                  functions
-                                                      .deleteSpaceAndDivider(
-                                                          '${getJsonField(
-                                                    FFAppState()
-                                                        .countryInfoCompany,
-                                                    r'''$.dial_code''',
-                                                  ).toString()}${_model.phoneCompanyController.text}'),
-                                                  ParamType.String,
-                                                ),
-                                                'profilePhoto': serializeParam(
-                                                  FFAppState()
-                                                      .profilePhotoCompany,
-                                                  ParamType.String,
-                                                ),
-                                                'userType': serializeParam(
-                                                  'Company',
-                                                  ParamType.String,
-                                                ),
-                                                'userName': serializeParam(
-                                                  _model.companyNameController
-                                                      .text,
-                                                  ParamType.String,
-                                                ),
-                                                'phoneoriginal': serializeParam(
-                                                  _model.phoneCompanyController
-                                                      .text,
-                                                  ParamType.String,
-                                                ),
-                                                'phoneName': serializeParam(
-                                                  getJsonField(
-                                                    FFAppState()
-                                                        .countryInfoCompany,
-                                                    r'''$.name''',
-                                                  ).toString(),
-                                                  ParamType.String,
-                                                ),
-                                                'phoneCode': serializeParam(
-                                                  getJsonField(
-                                                    FFAppState()
-                                                        .countryInfoCompany,
-                                                    r'''$.code''',
-                                                  ).toString(),
-                                                  ParamType.String,
-                                                ),
-                                                'phoneFlag': serializeParam(
-                                                  getJsonField(
-                                                    FFAppState()
-                                                        .countryInfoCompany,
-                                                    r'''$.flag''',
-                                                  ).toString(),
-                                                  ParamType.String,
-                                                ),
-                                                'phoneDialCode': serializeParam(
-                                                  getJsonField(
-                                                    FFAppState()
-                                                        .countryInfoCompany,
-                                                    r'''$.dial_code''',
-                                                  ).toString(),
-                                                  ParamType.String,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          }
-                                        }
+                                            'profilePhoto': serializeParam(
+                                              FFAppState().profilePhotoCompany,
+                                              ParamType.String,
+                                            ),
+                                            'userType': serializeParam(
+                                              'Company',
+                                              ParamType.String,
+                                            ),
+                                            'userName': serializeParam(
+                                              _model.companyNameController.text,
+                                              ParamType.String,
+                                            ),
+                                            'phoneoriginal': serializeParam(
+                                              _model
+                                                  .phoneCompanyController.text,
+                                              ParamType.String,
+                                            ),
+                                            'phoneName': serializeParam(
+                                              getJsonField(
+                                                FFAppState().countryInfoCompany,
+                                                r'''$.name''',
+                                              ).toString(),
+                                              ParamType.String,
+                                            ),
+                                            'phoneCode': serializeParam(
+                                              getJsonField(
+                                                FFAppState().countryInfoCompany,
+                                                r'''$.code''',
+                                              ).toString(),
+                                              ParamType.String,
+                                            ),
+                                            'phoneFlag': serializeParam(
+                                              getJsonField(
+                                                FFAppState().countryInfoCompany,
+                                                r'''$.flag''',
+                                              ).toString(),
+                                              ParamType.String,
+                                            ),
+                                            'phoneDialCode': serializeParam(
+                                              getJsonField(
+                                                FFAppState().countryInfoCompany,
+                                                r'''$.dial_code''',
+                                              ).toString(),
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
                                       }
                                     },
                                     text: 'CONTINUE',
@@ -2161,10 +2184,13 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                           context: context,
                                           builder: (context) {
                                             return GestureDetector(
-                                              onTap: () =>
-                                                  FocusScope.of(context)
+                                              onTap: () => _model.unfocusNode
+                                                      .canRequestFocus
+                                                  ? FocusScope.of(context)
                                                       .requestFocus(
-                                                          _model.unfocusNode),
+                                                          _model.unfocusNode)
+                                                  : FocusScope.of(context)
+                                                      .unfocus(),
                                               child: Padding(
                                                 padding:
                                                     MediaQuery.viewInsetsOf(
@@ -2175,7 +2201,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               ),
                                             );
                                           },
-                                        ).then((value) => setState(() {}));
+                                        ).then((value) => safeSetState(() {}));
                                       },
                                       child: RichText(
                                         textScaleFactor: MediaQuery.of(context)

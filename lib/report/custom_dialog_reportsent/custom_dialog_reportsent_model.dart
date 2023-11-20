@@ -1,11 +1,14 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'custom_dialog_reportsent_widget.dart' show CustomDialogReportsentWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class CustomDialogReportsentModel extends FlutterFlowModel {
+class CustomDialogReportsentModel
+    extends FlutterFlowModel<CustomDialogReportsentWidget> {
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}

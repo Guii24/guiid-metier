@@ -4,11 +4,14 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'take_photo_profile_user_widget.dart' show TakePhotoProfileUserWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class TakePhotoProfileUserModel extends FlutterFlowModel {
+class TakePhotoProfileUserModel
+    extends FlutterFlowModel<TakePhotoProfileUserWidget> {
   ///  State fields for stateful widgets in this component.
 
   bool isDataUploading1 = false;

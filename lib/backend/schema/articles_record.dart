@@ -58,6 +58,21 @@ class ArticlesRecord extends FirestoreRecord {
       _articleCommentsList ?? const [];
   bool hasArticleCommentsList() => _articleCommentsList != null;
 
+  // "artcle_video" field.
+  List<String>? _artcleVideo;
+  List<String> get artcleVideo => _artcleVideo ?? const [];
+  bool hasArtcleVideo() => _artcleVideo != null;
+
+  // "videos" field.
+  List<String>? _videos;
+  List<String> get videos => _videos ?? const [];
+  bool hasVideos() => _videos != null;
+
+  // "article_videos_main" field.
+  List<String>? _articleVideosMain;
+  List<String> get articleVideosMain => _articleVideosMain ?? const [];
+  bool hasArticleVideosMain() => _articleVideosMain != null;
+
   void _initializeFields() {
     _articleTitle = snapshotData['article_title'] as String?;
     _articleImageList = getDataList(snapshotData['article_image_list']);
@@ -67,6 +82,9 @@ class ArticlesRecord extends FirestoreRecord {
     _articleTimePosted = snapshotData['article_time_posted'] as DateTime?;
     _articleIsTopArticle = snapshotData['article_is_top_article'] as bool?;
     _articleCommentsList = getDataList(snapshotData['article_comments_list']);
+    _artcleVideo = getDataList(snapshotData['artcle_video']);
+    _videos = getDataList(snapshotData['videos']);
+    _articleVideosMain = getDataList(snapshotData['article_videos_main']);
   }
 
   static CollectionReference get collection =>
@@ -136,7 +154,10 @@ class ArticlesRecordDocumentEquality implements Equality<ArticlesRecord> {
         listEquality.equals(e1?.articleActivities, e2?.articleActivities) &&
         e1?.articleTimePosted == e2?.articleTimePosted &&
         e1?.articleIsTopArticle == e2?.articleIsTopArticle &&
-        listEquality.equals(e1?.articleCommentsList, e2?.articleCommentsList);
+        listEquality.equals(e1?.articleCommentsList, e2?.articleCommentsList) &&
+        listEquality.equals(e1?.artcleVideo, e2?.artcleVideo) &&
+        listEquality.equals(e1?.videos, e2?.videos) &&
+        listEquality.equals(e1?.articleVideosMain, e2?.articleVideosMain);
   }
 
   @override
@@ -148,7 +169,10 @@ class ArticlesRecordDocumentEquality implements Equality<ArticlesRecord> {
         e?.articleActivities,
         e?.articleTimePosted,
         e?.articleIsTopArticle,
-        e?.articleCommentsList
+        e?.articleCommentsList,
+        e?.artcleVideo,
+        e?.videos,
+        e?.articleVideosMain
       ]);
 
   @override

@@ -7,6 +7,7 @@ import '/onboarding_sign_in/country_code/country_code_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,7 @@ class _LogInWidgetState extends State<LogInWidget> {
     _model = createModel(context, () => LogInModel());
 
     _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -123,7 +125,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 22.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 10.0),
                   child: Material(
                     color: Colors.transparent,
                     elevation: 0.0,
@@ -167,7 +169,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -223,6 +225,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                             Expanded(
                               child: TextFormField(
                                 controller: _model.textController,
+                                focusNode: _model.textFieldFocusNode,
                                 onChanged: (_) => EasyDebounce.debounce(
                                   '_model.textController',
                                   Duration(milliseconds: 10),
@@ -296,83 +299,102 @@ class _LogInWidgetState extends State<LogInWidget> {
                     ),
                   ),
                 ),
-                StreamBuilder<List<UsersRecord>>(
-                  stream: queryUsersRecord(
-                    queryBuilder: (usersRecord) => usersRecord.where('email',
+                if (_model.showValid)
+                  Align(
+                    alignment: AlignmentDirectional(-1.00, 0.00),
+                    child: Text(
+                      'Incorrect phone number or user doesn’t exist.',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Libre Franklin',
+                            color: FlutterFlowTheme.of(context).alternate,
+                            fontSize: 13.0,
+                          ),
+                    ),
+                  ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                  child: StreamBuilder<List<UsersRecord>>(
+                    stream: queryUsersRecord(
+                      queryBuilder: (usersRecord) => usersRecord.where(
+                        'email',
                         isEqualTo:
                             '${functions.deleteSpaceAndDivider('${getJsonField(
                           FFAppState().countryInfo,
                           r'''$.dial_code''',
-                        ).toString()}${_model.textController.text}')}@gmail.com'),
-                    singleRecord: true,
-                  ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 30.0,
-                          height: 30.0,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              FlutterFlowTheme.of(context).primary,
+                        ).toString()}${_model.textController.text}')}@gmail.com',
+                      ),
+                      singleRecord: true,
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 30.0,
+                            height: 30.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
                             ),
                           ),
+                        );
+                      }
+                      List<UsersRecord> buttonUsersRecordList = snapshot.data!;
+                      final buttonUsersRecord = buttonUsersRecordList.isNotEmpty
+                          ? buttonUsersRecordList.first
+                          : null;
+                      return FFButtonWidget(
+                        onPressed: () async {
+                          if (buttonUsersRecord != null) {
+                            context.pushNamed(
+                              'VerificationLogin',
+                              queryParameters: {
+                                'userPhone': serializeParam(
+                                  functions
+                                      .deleteSpaceAndDivider('${getJsonField(
+                                    FFAppState().countryInfo,
+                                    r'''$.dial_code''',
+                                  ).toString()}${_model.textController.text}'),
+                                  ParamType.String,
+                                ),
+                                'countrycode': serializeParam(
+                                  FFAppState().countryInfo,
+                                  ParamType.JSON,
+                                ),
+                              }.withoutNulls,
+                            );
+                          } else {
+                            setState(() {
+                              _model.showValid = true;
+                            });
+                          }
+                        },
+                        text: 'SIGN IN',
+                        options: FFButtonOptions(
+                          width: double.infinity,
+                          height: 48.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Libre Franklin',
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                    letterSpacing: 0.5,
+                                  ),
+                          elevation: 0.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          ),
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                       );
-                    }
-                    List<UsersRecord> buttonUsersRecordList = snapshot.data!;
-                    final buttonUsersRecord = buttonUsersRecordList.isNotEmpty
-                        ? buttonUsersRecordList.first
-                        : null;
-                    return FFButtonWidget(
-                      onPressed: !(buttonUsersRecord != null)
-                          ? null
-                          : () async {
-                              context.pushNamed(
-                                'VerificationLogin',
-                                queryParameters: {
-                                  'userPhone': serializeParam(
-                                    functions
-                                        .deleteSpaceAndDivider('${getJsonField(
-                                      FFAppState().countryInfo,
-                                      r'''$.dial_code''',
-                                    ).toString()}${_model.textController.text}'),
-                                    ParamType.String,
-                                  ),
-                                  'countrycode': serializeParam(
-                                    FFAppState().countryInfo,
-                                    ParamType.JSON,
-                                  ),
-                                }.withoutNulls,
-                              );
-                            },
-                      text: 'SIGN IN',
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 48.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  letterSpacing: 0.5,
-                                ),
-                        elevation: 0.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        ),
-                        borderRadius: BorderRadius.circular(5.0),
-                        disabledColor: Color(0xFFC9C9C9),
-                        disabledTextColor: FlutterFlowTheme.of(context).primary,
-                      ),
-                    );
-                  },
+                    },
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 30.0),

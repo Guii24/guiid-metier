@@ -15,6 +15,20 @@
       ]
     },
     {
+      "collectionGroup": "notification",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "notification_to",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "notification_creation_date",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "post",
       "queryScope": "COLLECTION",
       "fields": [
@@ -61,6 +75,32 @@
         {
           "fieldPath": "post_time_posted",
           "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "message",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "message_time_string",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "message_time",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "fcm_tokens",
+      "fieldPath": "fcm_token",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
         }
       ]
     }

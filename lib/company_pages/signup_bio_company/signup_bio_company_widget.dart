@@ -41,6 +41,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
     });
 
     _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -52,10 +53,21 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -131,11 +143,11 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                 fadeOutDuration: Duration(milliseconds: 500),
                                 imageUrl: valueOrDefault<String>(
                                   currentUserPhoto,
-                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                 ),
                                 width: 90.0,
                                 height: 90.0,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -185,9 +197,13 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode),
+                                            onTap: () => _model
+                                                    .unfocusNode.canRequestFocus
+                                                ? FocusScope.of(context)
+                                                    .requestFocus(
+                                                        _model.unfocusNode)
+                                                : FocusScope.of(context)
+                                                    .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -196,12 +212,14 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                                     MediaQuery.sizeOf(context)
                                                             .height *
                                                         0.85,
-                                                child: SignUpLocationWidget(),
+                                                child: SignUpLocationWidget(
+                                                  type: 'Location',
+                                                ),
                                               ),
                                             ),
                                           );
                                         },
-                                      ).then((value) => setState(() {}));
+                                      ).then((value) => safeSetState(() {}));
                                     },
                                     child: Material(
                                       color: Colors.transparent,
@@ -289,7 +307,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 0.0, 0.0),
                                     child: Container(
-                                      width: 79.0,
+                                      width: 90.0,
                                       height: 25.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
@@ -297,7 +315,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.00, 0.00),
+                                            AlignmentDirectional(-1.00, 0.00),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -344,6 +362,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                             width: double.infinity,
                             child: TextFormField(
                               controller: _model.textController,
+                              focusNode: _model.textFieldFocusNode,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController',
                                 Duration(milliseconds: 10),
@@ -461,8 +480,13 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                       context: context,
                                       builder: (context) {
                                         return GestureDetector(
-                                          onTap: () => FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode),
+                                          onTap: () => _model
+                                                  .unfocusNode.canRequestFocus
+                                              ? FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _model.unfocusNode)
+                                              : FocusScope.of(context)
+                                                  .unfocus(),
                                           child: Padding(
                                             padding: MediaQuery.viewInsetsOf(
                                                 context),
@@ -470,7 +494,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                           ),
                                         );
                                       },
-                                    ).then((value) => setState(() {}));
+                                    ).then((value) => safeSetState(() {}));
                                   },
                                   child: Material(
                                     color: Colors.transparent,
@@ -495,6 +519,8 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                             12.0, 0.0, 0.0, 0.0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             if (FFAppState()
                                                     .choosenPreference
@@ -566,6 +592,22 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                                   },
                                                 ),
                                               ),
+                                            if (FFAppState()
+                                                    .choosenPreference
+                                                    .length ==
+                                                0)
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 8.0, 0.0),
+                                                child: Icon(
+                                                  FFIcons.kchevronBottomSm,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark88,
+                                                  size: 24.0,
+                                                ),
+                                              ),
                                           ],
                                         ),
                                       ),
@@ -625,8 +667,12 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                       userLocation:
                                           FFAppState().selectedlocation,
                                     ),
-                                    'user_preferences':
-                                        FFAppState().choosenPreference,
+                                    ...mapToFirestore(
+                                      {
+                                        'user_preferences':
+                                            FFAppState().choosenPreference,
+                                      },
+                                    ),
                                   });
                                   setState(() {
                                     FFAppState().selectedlocation = '';

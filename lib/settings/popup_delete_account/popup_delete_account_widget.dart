@@ -1,7 +1,9 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_delete_account_model.dart';
@@ -120,7 +122,10 @@ class _PopupDeleteAccountWidgetState extends State<PopupDeleteAccountWidget> {
                             EdgeInsetsDirectional.fromSTEB(7.0, 0.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            await authManager.deleteUser(context);
                             Navigator.pop(context);
+
+                            context.goNamedAuth('SpashScreen', context.mounted);
                           },
                           text: 'YES',
                           options: FFButtonOptions(

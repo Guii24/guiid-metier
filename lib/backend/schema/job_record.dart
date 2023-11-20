@@ -41,11 +41,6 @@ class JobRecord extends FirestoreRecord {
   String get jobLocation => _jobLocation ?? '';
   bool hasJobLocation() => _jobLocation != null;
 
-  // "job_type" field.
-  List<String>? _jobType;
-  List<String> get jobType => _jobType ?? const [];
-  bool hasJobType() => _jobType != null;
-
   // "job_contact_phone_number" field.
   String? _jobContactPhoneNumber;
   String get jobContactPhoneNumber => _jobContactPhoneNumber ?? '';
@@ -67,19 +62,60 @@ class JobRecord extends FirestoreRecord {
       _jobApplicantsUserList ?? const [];
   bool hasJobApplicantsUserList() => _jobApplicantsUserList != null;
 
+  // "job_work_location" field.
+  String? _jobWorkLocation;
+  String get jobWorkLocation => _jobWorkLocation ?? '';
+  bool hasJobWorkLocation() => _jobWorkLocation != null;
+
+  // "job_employment_type" field.
+  String? _jobEmploymentType;
+  String get jobEmploymentType => _jobEmploymentType ?? '';
+  bool hasJobEmploymentType() => _jobEmploymentType != null;
+
+  // "job_contact_dial_code" field.
+  String? _jobContactDialCode;
+  String get jobContactDialCode => _jobContactDialCode ?? '';
+  bool hasJobContactDialCode() => _jobContactDialCode != null;
+
+  // "job_contact_code" field.
+  String? _jobContactCode;
+  String get jobContactCode => _jobContactCode ?? '';
+  bool hasJobContactCode() => _jobContactCode != null;
+
+  // "job_reported" field.
+  bool? _jobReported;
+  bool get jobReported => _jobReported ?? false;
+  bool hasJobReported() => _jobReported != null;
+
+  // "job_reporteed_ref" field.
+  DocumentReference? _jobReporteedRef;
+  DocumentReference? get jobReporteedRef => _jobReporteedRef;
+  bool hasJobReporteedRef() => _jobReporteedRef != null;
+
+  // "job_type_not_applicable" field.
+  String? _jobTypeNotApplicable;
+  String get jobTypeNotApplicable => _jobTypeNotApplicable ?? '';
+  bool hasJobTypeNotApplicable() => _jobTypeNotApplicable != null;
+
   void _initializeFields() {
     _companyCreator = snapshotData['company_creator'] as DocumentReference?;
     _jobTittle = snapshotData['job_tittle'] as String?;
     _jobDescription = snapshotData['job_description'] as String?;
     _jobSalaryRate = snapshotData['job_salary_rate'] as String?;
     _jobLocation = snapshotData['job_location'] as String?;
-    _jobType = getDataList(snapshotData['job_type']);
     _jobContactPhoneNumber =
         snapshotData['job_contact_phone_number'] as String?;
     _jobContactEmail = snapshotData['job_contact_email'] as String?;
     _jobCreationDate = snapshotData['job_creation_date'] as DateTime?;
     _jobApplicantsUserList =
         getDataList(snapshotData['job_applicants_user_list']);
+    _jobWorkLocation = snapshotData['job_work_location'] as String?;
+    _jobEmploymentType = snapshotData['job_employment_type'] as String?;
+    _jobContactDialCode = snapshotData['job_contact_dial_code'] as String?;
+    _jobContactCode = snapshotData['job_contact_code'] as String?;
+    _jobReported = snapshotData['job_reported'] as bool?;
+    _jobReporteedRef = snapshotData['job_reporteed_ref'] as DocumentReference?;
+    _jobTypeNotApplicable = snapshotData['job_type_not_applicable'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -124,6 +160,13 @@ Map<String, dynamic> createJobRecordData({
   String? jobContactPhoneNumber,
   String? jobContactEmail,
   DateTime? jobCreationDate,
+  String? jobWorkLocation,
+  String? jobEmploymentType,
+  String? jobContactDialCode,
+  String? jobContactCode,
+  bool? jobReported,
+  DocumentReference? jobReporteedRef,
+  String? jobTypeNotApplicable,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -135,6 +178,13 @@ Map<String, dynamic> createJobRecordData({
       'job_contact_phone_number': jobContactPhoneNumber,
       'job_contact_email': jobContactEmail,
       'job_creation_date': jobCreationDate,
+      'job_work_location': jobWorkLocation,
+      'job_employment_type': jobEmploymentType,
+      'job_contact_dial_code': jobContactDialCode,
+      'job_contact_code': jobContactCode,
+      'job_reported': jobReported,
+      'job_reporteed_ref': jobReporteedRef,
+      'job_type_not_applicable': jobTypeNotApplicable,
     }.withoutNulls,
   );
 
@@ -152,12 +202,18 @@ class JobRecordDocumentEquality implements Equality<JobRecord> {
         e1?.jobDescription == e2?.jobDescription &&
         e1?.jobSalaryRate == e2?.jobSalaryRate &&
         e1?.jobLocation == e2?.jobLocation &&
-        listEquality.equals(e1?.jobType, e2?.jobType) &&
         e1?.jobContactPhoneNumber == e2?.jobContactPhoneNumber &&
         e1?.jobContactEmail == e2?.jobContactEmail &&
         e1?.jobCreationDate == e2?.jobCreationDate &&
         listEquality.equals(
-            e1?.jobApplicantsUserList, e2?.jobApplicantsUserList);
+            e1?.jobApplicantsUserList, e2?.jobApplicantsUserList) &&
+        e1?.jobWorkLocation == e2?.jobWorkLocation &&
+        e1?.jobEmploymentType == e2?.jobEmploymentType &&
+        e1?.jobContactDialCode == e2?.jobContactDialCode &&
+        e1?.jobContactCode == e2?.jobContactCode &&
+        e1?.jobReported == e2?.jobReported &&
+        e1?.jobReporteedRef == e2?.jobReporteedRef &&
+        e1?.jobTypeNotApplicable == e2?.jobTypeNotApplicable;
   }
 
   @override
@@ -167,11 +223,17 @@ class JobRecordDocumentEquality implements Equality<JobRecord> {
         e?.jobDescription,
         e?.jobSalaryRate,
         e?.jobLocation,
-        e?.jobType,
         e?.jobContactPhoneNumber,
         e?.jobContactEmail,
         e?.jobCreationDate,
-        e?.jobApplicantsUserList
+        e?.jobApplicantsUserList,
+        e?.jobWorkLocation,
+        e?.jobEmploymentType,
+        e?.jobContactDialCode,
+        e?.jobContactCode,
+        e?.jobReported,
+        e?.jobReporteedRef,
+        e?.jobTypeNotApplicable
       ]);
 
   @override

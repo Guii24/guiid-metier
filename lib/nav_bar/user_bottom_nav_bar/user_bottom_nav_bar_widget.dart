@@ -1,7 +1,9 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/components/subscription_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'user_bottom_nav_bar_model.dart';
@@ -402,7 +404,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0.00, 0.93),
+                        alignment: AlignmentDirectional(0.00, 0.92),
                         child: Container(
                           width: 66.0,
                           height: 66.0,
@@ -472,9 +474,69 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        if (valueOrDefault<bool>(
+                                            currentUserDocument
+                                                ?.userBlockedUserByAdmin,
+                                            false)) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Your account has been suspended. Contact support for further info.',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 3000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                        } else {
+                                          if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.userSubscription,
+                                              false)) {
+                                            Navigator.pop(context);
+                                            setState(() {
+                                              FFAppState().choosenPreference =
+                                                  [];
+                                              FFAppState().choosenPurpose = '';
+                                            });
 
-                                        context.pushNamed('CreatePost');
+                                            context.pushNamed('CreatePost');
+                                          } else {
+                                            showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .customColorBottomSh,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: SubscriptionWidget(),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
+                                        }
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -521,9 +583,64 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        if (valueOrDefault<bool>(
+                                            currentUserDocument
+                                                ?.userBlockedUserByAdmin,
+                                            false)) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Your account has been suspended. Contact support for further info.',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 3000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                        } else {
+                                          if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.userSubscription,
+                                              false)) {
+                                            Navigator.pop(context);
 
-                                        context.pushNamed('CreateWear');
+                                            context.pushNamed('CreateWear');
+                                          } else {
+                                            showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .customColorBottomSh,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: SubscriptionWidget(),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
+                                        }
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -535,7 +652,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     16.0, 13.0, 0.0, 13.0),
                                             child: Text(
-                                              'Wear',
+                                              'New wear',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -600,9 +717,69 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        if (valueOrDefault<bool>(
+                                            currentUserDocument
+                                                ?.userBlockedUserByAdmin,
+                                            false)) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Your account has been suspended. Contact support for further info.',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 3000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                        } else {
+                                          if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.userSubscription,
+                                              false)) {
+                                            Navigator.pop(context);
+                                            setState(() {
+                                              FFAppState().choosenPreference =
+                                                  [];
+                                              FFAppState().choosenPurpose = '';
+                                            });
 
-                                        context.pushNamed('CreatePost');
+                                            context.pushNamed('CreatePost');
+                                          } else {
+                                            showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .customColorBottomSh,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: SubscriptionWidget(),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
+                                        }
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -649,9 +826,67 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        Navigator.pop(context);
-
-                                        context.pushNamed('PostJobPage');
+                                        if (valueOrDefault<bool>(
+                                            currentUserDocument
+                                                ?.userBlockedUserByAdmin,
+                                            false)) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Your account has been suspended. Contact support for further info.',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 3000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                        } else {
+                                          if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.userSubscription,
+                                              false)) {
+                                            Navigator.pop(context);
+                                            if (Navigator.of(context)
+                                                .canPop()) {
+                                              context.pop();
+                                            }
+                                            context.pushNamed('PostJobPage');
+                                          } else {
+                                            showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .customColorBottomSh,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: SubscriptionWidget(),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
+                                        }
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -663,7 +898,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     16.0, 13.0, 0.0, 13.0),
                                             child: Text(
-                                              'Post a job',
+                                              'Post a job/resource',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -712,7 +947,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                           ),
                           child: Container(
                             width: double.infinity,
-                            height: MediaQuery.sizeOf(context).height * 0.1,
+                            height: MediaQuery.sizeOf(context).height * 0.105,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               boxShadow: [
@@ -1044,7 +1279,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0.00, 0.91),
+                        alignment: AlignmentDirectional(0.00, 0.90),
                         child: Container(
                           width: 66.0,
                           height: 66.0,
@@ -1081,7 +1316,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       if (valueOrDefault(currentUserDocument?.userType, '') ==
                           'User')
                         Align(
-                          alignment: AlignmentDirectional(0.00, 0.70),
+                          alignment: AlignmentDirectional(0.00, 0.67),
                           child: AuthUserStreamWidget(
                             builder: (context) => Material(
                               color: Colors.transparent,
@@ -1113,9 +1348,69 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        if (valueOrDefault<bool>(
+                                            currentUserDocument
+                                                ?.userBlockedUserByAdmin,
+                                            false)) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Your account has been suspended. Contact support for further info.',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 3000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                        } else {
+                                          if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.userSubscription,
+                                              false)) {
+                                            Navigator.pop(context);
+                                            setState(() {
+                                              FFAppState().choosenPreference =
+                                                  [];
+                                              FFAppState().choosenPurpose = '';
+                                            });
 
-                                        context.pushNamed('CreatePost');
+                                            context.pushNamed('CreatePost');
+                                          } else {
+                                            showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .customColorBottomSh,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: SubscriptionWidget(),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
+                                        }
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -1162,9 +1457,64 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        if (valueOrDefault<bool>(
+                                            currentUserDocument
+                                                ?.userBlockedUserByAdmin,
+                                            false)) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Your account has been suspended. Contact support for further info.',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 3000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                        } else {
+                                          if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.userSubscription,
+                                              false)) {
+                                            Navigator.pop(context);
 
-                                        context.pushNamed('CreateWear');
+                                            context.pushNamed('CreateWear');
+                                          } else {
+                                            showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .customColorBottomSh,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: SubscriptionWidget(),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
+                                        }
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -1176,7 +1526,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     16.0, 13.0, 0.0, 13.0),
                                             child: Text(
-                                              'Wear',
+                                              'New wear',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -1209,7 +1559,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       if (valueOrDefault(currentUserDocument?.userType, '') !=
                           'User')
                         Align(
-                          alignment: AlignmentDirectional(0.00, 0.70),
+                          alignment: AlignmentDirectional(0.00, 0.67),
                           child: AuthUserStreamWidget(
                             builder: (context) => Material(
                               color: Colors.transparent,
@@ -1241,9 +1591,69 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        if (valueOrDefault<bool>(
+                                            currentUserDocument
+                                                ?.userBlockedUserByAdmin,
+                                            false)) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Your account has been suspended. Contact support for further info.',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 3000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                        } else {
+                                          if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.userSubscription,
+                                              false)) {
+                                            Navigator.pop(context);
+                                            setState(() {
+                                              FFAppState().choosenPreference =
+                                                  [];
+                                              FFAppState().choosenPurpose = '';
+                                            });
 
-                                        context.pushNamed('CreatePost');
+                                            context.pushNamed('CreatePost');
+                                          } else {
+                                            showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .customColorBottomSh,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: SubscriptionWidget(),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
+                                        }
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -1290,9 +1700,64 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        Navigator.pop(context);
+                                        if (valueOrDefault<bool>(
+                                            currentUserDocument
+                                                ?.userBlockedUserByAdmin,
+                                            false)) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Your account has been suspended. Contact support for further info.',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 3000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                        } else {
+                                          if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.userSubscription,
+                                              false)) {
+                                            Navigator.pop(context);
 
-                                        context.pushNamed('PostJobPage');
+                                            context.pushNamed('PostJobPage');
+                                          } else {
+                                            showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              barrierColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .customColorBottomSh,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: SubscriptionWidget(),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          }
+                                        }
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -1304,7 +1769,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     16.0, 13.0, 0.0, 13.0),
                                             child: Text(
-                                              'Post a job',
+                                              'Post a job/resource',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium

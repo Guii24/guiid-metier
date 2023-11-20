@@ -76,6 +76,21 @@ class PostRecord extends FirestoreRecord {
   String get postType => _postType ?? '';
   bool hasPostType() => _postType != null;
 
+  // "post_reported" field.
+  bool? _postReported;
+  bool get postReported => _postReported ?? false;
+  bool hasPostReported() => _postReported != null;
+
+  // "post_reported_ref" field.
+  DocumentReference? _postReportedRef;
+  DocumentReference? get postReportedRef => _postReportedRef;
+  bool hasPostReportedRef() => _postReportedRef != null;
+
+  // "post_blocked" field.
+  bool? _postBlocked;
+  bool get postBlocked => _postBlocked ?? false;
+  bool hasPostBlocked() => _postBlocked != null;
+
   void _initializeFields() {
     _postImagesList = getDataList(snapshotData['post_images_list']);
     _postText = snapshotData['post_text'] as String?;
@@ -94,6 +109,9 @@ class PostRecord extends FirestoreRecord {
       WearItemsStruct.fromMap,
     );
     _postType = snapshotData['post_type'] as String?;
+    _postReported = snapshotData['post_reported'] as bool?;
+    _postReportedRef = snapshotData['post_reported_ref'] as DocumentReference?;
+    _postBlocked = snapshotData['post_blocked'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -137,6 +155,9 @@ Map<String, dynamic> createPostRecordData({
   DocumentReference? postRepostedCreator,
   DocumentReference? postRepostedPost,
   String? postType,
+  bool? postReported,
+  DocumentReference? postReportedRef,
+  bool? postBlocked,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -147,6 +168,9 @@ Map<String, dynamic> createPostRecordData({
       'post_reposted_creator': postRepostedCreator,
       'post_reposted_post': postRepostedPost,
       'post_type': postType,
+      'post_reported': postReported,
+      'post_reported_ref': postReportedRef,
+      'post_blocked': postBlocked,
     }.withoutNulls,
   );
 
@@ -170,7 +194,10 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         e1?.postRepostedCreator == e2?.postRepostedCreator &&
         e1?.postRepostedPost == e2?.postRepostedPost &&
         listEquality.equals(e1?.postWearItems, e2?.postWearItems) &&
-        e1?.postType == e2?.postType;
+        e1?.postType == e2?.postType &&
+        e1?.postReported == e2?.postReported &&
+        e1?.postReportedRef == e2?.postReportedRef &&
+        e1?.postBlocked == e2?.postBlocked;
   }
 
   @override
@@ -186,7 +213,10 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         e?.postRepostedCreator,
         e?.postRepostedPost,
         e?.postWearItems,
-        e?.postType
+        e?.postType,
+        e?.postReported,
+        e?.postReportedRef,
+        e?.postBlocked
       ]);
 
   @override

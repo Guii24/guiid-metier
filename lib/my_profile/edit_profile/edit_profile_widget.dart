@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/sign_u_p/bottom_preference/bottom_preference_widget.dart';
 import '/sign_u_p/sign_up_location/sign_up_location_widget.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -53,12 +54,19 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
 
     _model.textController1 ??=
         TextEditingController(text: currentUserDisplayName);
+    _model.textFieldFocusNode1 ??= FocusNode();
+
     _model.textController2 ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.userBio, ''));
+    _model.textFieldFocusNode2 ??= FocusNode();
+
     _model.textController3 ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.userEducation, ''));
+    _model.textFieldFocusNode3 ??= FocusNode();
+
     _model.textController4 ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.userJob, ''));
+    _model.textFieldFocusNode4 ??= FocusNode();
   }
 
   @override
@@ -70,10 +78,21 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -92,6 +111,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
             ),
             onPressed: () async {
               context.pop();
+              setState(() {
+                FFAppState().profilePhoto = '';
+              });
             },
           ),
           title: Text(
@@ -136,15 +158,18 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 context: context,
                                 builder: (context) {
                                   return GestureDetector(
-                                    onTap: () => FocusScope.of(context)
-                                        .requestFocus(_model.unfocusNode),
+                                    onTap: () => _model
+                                            .unfocusNode.canRequestFocus
+                                        ? FocusScope.of(context)
+                                            .requestFocus(_model.unfocusNode)
+                                        : FocusScope.of(context).unfocus(),
                                     child: Padding(
                                       padding: MediaQuery.viewInsetsOf(context),
                                       child: TakePhotoProfileUserWidget(),
                                     ),
                                   );
                                 },
-                              ).then((value) => setState(() {}));
+                              ).then((value) => safeSetState(() {}));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100.0),
@@ -153,7 +178,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 fadeOutDuration: Duration(milliseconds: 500),
                                 imageUrl: valueOrDefault<String>(
                                   FFAppState().profilePhoto,
-                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                 ),
                                 width: 90.0,
                                 height: 90.0,
@@ -182,8 +207,11 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   context: context,
                                   builder: (context) {
                                     return GestureDetector(
-                                      onTap: () => FocusScope.of(context)
-                                          .requestFocus(_model.unfocusNode),
+                                      onTap: () => _model
+                                              .unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
@@ -191,7 +219,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               },
                               child: Text(
                                 'Edit profile photo',
@@ -213,6 +241,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             width: double.infinity,
                             child: TextFormField(
                               controller: _model.textController1,
+                              focusNode: _model.textFieldFocusNode1,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController1',
                                 Duration(milliseconds: 10),
@@ -285,11 +314,28 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   .asValidator(context),
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
-                                    RegExp('^[a-zA-Z]*(?: [a-zA-Z]*)?'))
+                                    RegExp('^[a-zA-Z-\\\'\\.\\ \\·]{0,100}'))
                               ],
                             ),
                           ),
                         ),
+                        if (_model.textController1.text == null ||
+                            _model.textController1.text == '')
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 6.0, 0.0, 0.0),
+                            child: Text(
+                              'Please enter a valid full name',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Libre Franklin',
+                                    color: FlutterFlowTheme.of(context).error,
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 16.0, 0.0, 0.0),
@@ -323,10 +369,13 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                             return Material(
                                               color: Colors.transparent,
                                               child: GestureDetector(
-                                                onTap: () =>
-                                                    FocusScope.of(context)
+                                                onTap: () => _model.unfocusNode
+                                                        .canRequestFocus
+                                                    ? FocusScope.of(context)
                                                         .requestFocus(
-                                                            _model.unfocusNode),
+                                                            _model.unfocusNode)
+                                                    : FocusScope.of(context)
+                                                        .unfocus(),
                                                 child: CalendarWidget(),
                                               ),
                                             );
@@ -409,7 +458,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 0.0, 0.0),
                                     child: Container(
-                                      width: 87.0,
+                                      width: 92.0,
                                       height: 25.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
@@ -424,7 +473,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                   3.0, 0.0, 3.0, 0.0),
                                           child: Text(
                                             'Date of birth',
-                                            textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -467,9 +515,13 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode),
+                                            onTap: () => _model
+                                                    .unfocusNode.canRequestFocus
+                                                ? FocusScope.of(context)
+                                                    .requestFocus(
+                                                        _model.unfocusNode)
+                                                : FocusScope.of(context)
+                                                    .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -478,12 +530,14 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                     MediaQuery.sizeOf(context)
                                                             .height *
                                                         0.85,
-                                                child: SignUpLocationWidget(),
+                                                child: SignUpLocationWidget(
+                                                  type: 'Living in',
+                                                ),
                                               ),
                                             ),
                                           );
                                         },
-                                      ).then((value) => setState(() {}));
+                                      ).then((value) => safeSetState(() {}));
                                     },
                                     child: Material(
                                       color: Colors.transparent,
@@ -629,6 +683,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               width: double.infinity,
                               child: TextFormField(
                                 controller: _model.textController2,
+                                focusNode: _model.textFieldFocusNode2,
                                 onChanged: (_) => EasyDebounce.debounce(
                                   '_model.textController2',
                                   Duration(milliseconds: 10),
@@ -755,9 +810,13 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode),
+                                            onTap: () => _model
+                                                    .unfocusNode.canRequestFocus
+                                                ? FocusScope.of(context)
+                                                    .requestFocus(
+                                                        _model.unfocusNode)
+                                                : FocusScope.of(context)
+                                                    .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -765,7 +824,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                             ),
                                           );
                                         },
-                                      ).then((value) => setState(() {}));
+                                      ).then((value) => safeSetState(() {}));
                                     },
                                     child: Material(
                                       color: Colors.transparent,
@@ -898,6 +957,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               width: double.infinity,
                               child: TextFormField(
                                 controller: _model.textController3,
+                                focusNode: _model.textFieldFocusNode3,
                                 onChanged: (_) => EasyDebounce.debounce(
                                   '_model.textController3',
                                   Duration(milliseconds: 10),
@@ -1008,6 +1068,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               width: double.infinity,
                               child: TextFormField(
                                 controller: _model.textController4,
+                                focusNode: _model.textFieldFocusNode4,
                                 onChanged: (_) => EasyDebounce.debounce(
                                   '_model.textController4',
                                   Duration(milliseconds: 10),
@@ -1124,35 +1185,53 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 10.0, 16.0, 0.0),
                         child: FFButtonWidget(
-                          onPressed: (_model.textController1.text == null ||
-                                      _model.textController1.text == '') ||
-                                  (_model.textController2.text == null ||
-                                      _model.textController2.text == '') ||
-                                  (FFAppState().bornDate == null) ||
-                                  (FFAppState().selectedlocation == null ||
-                                      FFAppState().selectedlocation == '') ||
-                                  (_model.textController3.text == null ||
-                                      _model.textController3.text == '') ||
-                                  (_model.textController4.text == null ||
-                                      _model.textController4.text == '')
+                          onPressed: _model.textController1.text == null ||
+                                  _model.textController1.text == ''
                               ? null
                               : () async {
-                                  await currentUserReference!.update({
-                                    ...createUsersRecordData(
-                                      displayName: _model.textController1.text,
-                                      photoUrl: FFAppState().profilePhoto,
-                                      userBio: _model.textController2.text,
-                                      userEducation:
-                                          _model.textController3.text,
-                                      userJob: _model.textController4.text,
-                                      userLocation:
-                                          FFAppState().selectedlocation,
-                                      userBirthday: FFAppState().bornDate,
-                                    ),
-                                    'user_preferences':
-                                        FFAppState().choosenPreference,
-                                  });
-                                  context.pop();
+                                  if (functions.containsProfanity(
+                                      _model.textController1.text)) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'No Profanity add allowed',
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelLarge
+                                              .override(
+                                                fontFamily: 'Libre Franklin',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                        duration: Duration(milliseconds: 3000),
+                                        backgroundColor: Color(0xCD000000),
+                                      ),
+                                    );
+                                  } else {
+                                    await currentUserReference!.update({
+                                      ...createUsersRecordData(
+                                        displayName:
+                                            _model.textController1.text,
+                                        photoUrl: FFAppState().profilePhoto,
+                                        userBio: _model.textController2.text,
+                                        userEducation:
+                                            _model.textController3.text,
+                                        userJob: _model.textController4.text,
+                                        userLocation:
+                                            FFAppState().selectedlocation,
+                                        userBirthday: FFAppState().bornDate,
+                                      ),
+                                      ...mapToFirestore(
+                                        {
+                                          'user_preferences':
+                                              FFAppState().choosenPreference,
+                                        },
+                                      ),
+                                    });
+                                    context.pop();
+                                  }
                                 },
                           text: 'SAVE',
                           options: FFButtonOptions(

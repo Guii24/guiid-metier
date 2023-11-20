@@ -1,17 +1,21 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
 import '/company_pages/component_post_company/component_post_company_widget.dart';
-import '/company_pages/empty_jobs/empty_jobs_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/jobs/bottom_job_details/bottom_job_details_widget.dart';
+import '/jobs/empty_jobs/empty_jobs_widget.dart';
 import '/my_profile/bottom_reportand_block_user/bottom_reportand_block_user_widget.dart';
+import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
 import '/post/component_post_reposted/component_post_reposted_widget.dart';
 import '/sourcing/component_sourcing/component_sourcing_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'other_profile_company_model.dart';
@@ -57,6 +61,15 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return StreamBuilder<UsersRecord>(
@@ -81,7 +94,9 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
         }
         final otherProfileCompanyUsersRecord = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+          onTap: () => _model.unfocusNode.canRequestFocus
+              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+              : FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -122,8 +137,10 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                         context: context,
                         builder: (context) {
                           return GestureDetector(
-                            onTap: () => FocusScope.of(context)
-                                .requestFocus(_model.unfocusNode),
+                            onTap: () => _model.unfocusNode.canRequestFocus
+                                ? FocusScope.of(context)
+                                    .requestFocus(_model.unfocusNode)
+                                : FocusScope.of(context).unfocus(),
                             child: Padding(
                               padding: MediaQuery.viewInsetsOf(context),
                               child: BottomReportandBlockUserWidget(
@@ -134,7 +151,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                             ),
                           );
                         },
-                      ).then((value) => setState(() {}));
+                      ).then((value) => safeSetState(() {}));
                     },
                   ),
                 ),
@@ -174,7 +191,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                 fadeOutDuration: Duration(milliseconds: 500),
                                 imageUrl: valueOrDefault<String>(
                                   otherProfileCompanyUsersRecord.photoUrl,
-                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                 ),
                                 fit: BoxFit.cover,
                               ),
@@ -260,8 +277,10 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                         FutureBuilder<int>(
                                           future: queryPostRecordCount(
                                             queryBuilder: (postRecord) =>
-                                                postRecord.where('post_creator',
-                                                    isEqualTo: widget.userRef),
+                                                postRecord.where(
+                                              'post_creator',
+                                              isEqualTo: widget.userRef,
+                                            ),
                                           ),
                                           builder: (context, snapshot) {
                                             // Customize what your widget looks like when it's loading.
@@ -389,14 +408,52 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                   child: FFButtonWidget(
                                     onPressed: () async {
                                       await currentUserReference!.update({
-                                        'user_following': FieldValue.arrayUnion(
-                                            [widget.userRef]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_following':
+                                                FieldValue.arrayUnion(
+                                                    [widget.userRef]),
+                                          },
+                                        ),
                                       });
 
                                       await widget.userRef!.update({
-                                        'user_followers': FieldValue.arrayUnion(
-                                            [currentUserReference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_followers':
+                                                FieldValue.arrayUnion(
+                                                    [currentUserReference]),
+                                          },
+                                        ),
                                       });
+
+                                      await NotificationRecord.collection
+                                          .doc()
+                                          .set(createNotificationRecordData(
+                                            notificationFrom:
+                                                currentUserReference,
+                                            notificationType: 'following',
+                                            notificationCreationDate:
+                                                getCurrentTimestamp,
+                                            notificationTo:
+                                                otherProfileCompanyUsersRecord
+                                                    .reference,
+                                          ));
+                                      if (otherProfileCompanyUsersRecord
+                                          .userNotification) {
+                                        triggerPushNotification(
+                                          notificationTitle:
+                                              currentUserDisplayName,
+                                          notificationText:
+                                              'started following you',
+                                          userRefs: [
+                                            otherProfileCompanyUsersRecord
+                                                .reference
+                                          ],
+                                          initialPageName: 'MainPage',
+                                          parameterData: {},
+                                        );
+                                      }
                                     },
                                     text: 'FOLLOW',
                                     options: FFButtonOptions(
@@ -438,15 +495,23 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                   child: FFButtonWidget(
                                     onPressed: () async {
                                       await currentUserReference!.update({
-                                        'user_following':
-                                            FieldValue.arrayRemove(
-                                                [widget.userRef]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_following':
+                                                FieldValue.arrayRemove(
+                                                    [widget.userRef]),
+                                          },
+                                        ),
                                       });
 
                                       await widget.userRef!.update({
-                                        'user_followers':
-                                            FieldValue.arrayRemove(
-                                                [currentUserReference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_followers':
+                                                FieldValue.arrayRemove(
+                                                    [currentUserReference]),
+                                          },
+                                        ),
                                       });
                                     },
                                     text: 'FOLLOWING',
@@ -517,8 +582,10 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                   StreamBuilder<List<PostRecord>>(
                                     stream: queryPostRecord(
                                       queryBuilder: (postRecord) =>
-                                          postRecord.where('post_creator',
-                                              isEqualTo: widget.userRef),
+                                          postRecord.where(
+                                        'post_creator',
+                                        isEqualTo: widget.userRef,
+                                      ),
                                     ),
                                     builder: (context, snapshot) {
                                       // Customize what your widget looks like when it's loading.
@@ -539,6 +606,11 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                       }
                                       List<PostRecord> listViewPostRecordList =
                                           snapshot.data!;
+                                      if (listViewPostRecordList.isEmpty) {
+                                        return Center(
+                                          child: EmptyPostMyProfWidget(),
+                                        );
+                                      }
                                       return ListView.separated(
                                         padding: EdgeInsets.fromLTRB(
                                           0,
@@ -1029,8 +1101,10 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                     child: StreamBuilder<List<JobRecord>>(
                                       stream: queryJobRecord(
                                         queryBuilder: (jobRecord) =>
-                                            jobRecord.where('company_creator',
-                                                isEqualTo: widget.userRef),
+                                            jobRecord.where(
+                                          'company_creator',
+                                          isEqualTo: widget.userRef,
+                                        ),
                                       ),
                                       builder: (context, snapshot) {
                                         // Customize what your widget looks like when it's loading.
@@ -1077,10 +1151,55 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                             final listViewJobRecord =
                                                 listViewJobRecordList[
                                                     listViewIndex];
-                                            return ComponentSourcingWidget(
-                                              key: Key(
-                                                  'Keysab_${listViewIndex}_of_${listViewJobRecordList.length}'),
-                                              jobDoc: listViewJobRecord,
+                                            return InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Color(0x01000000),
+                                                  barrierColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .dark38,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () => _model
+                                                              .unfocusNode
+                                                              .canRequestFocus
+                                                          ? FocusScope.of(
+                                                                  context)
+                                                              .requestFocus(_model
+                                                                  .unfocusNode)
+                                                          : FocusScope.of(
+                                                                  context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            BottomJobDetailsWidget(
+                                                          jobDoc:
+                                                              listViewJobRecord,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              },
+                                              child: ComponentSourcingWidget(
+                                                key: Key(
+                                                    'Keysab_${listViewIndex}_of_${listViewJobRecordList.length}'),
+                                                jobDoc: listViewJobRecord,
+                                              ),
                                             );
                                           },
                                         );

@@ -19,12 +19,31 @@ class FFAppState extends ChangeNotifier {
     _instance = FFAppState._internal();
   }
 
-  Future initializePersistedState() async {}
+  Future initializePersistedState() async {
+    prefs = await SharedPreferences.getInstance();
+    _safeInit(() {
+      _SearchItems = prefs
+              .getStringList('ff_SearchItems')
+              ?.map((x) {
+                try {
+                  return RecentSearchStruct.fromSerializableMap(jsonDecode(x));
+                } catch (e) {
+                  print("Can't decode persisted data type. Error: $e.");
+                  return null;
+                }
+              })
+              .withoutNulls
+              .toList() ??
+          _SearchItems;
+    });
+  }
 
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
   }
+
+  late SharedPreferences prefs;
 
   String _selectedlocation = '';
   String get selectedlocation => _selectedlocation;
@@ -240,6 +259,35 @@ class FFAppState extends ChangeNotifier {
     _uploadPhotoPost.insert(_index, _value);
   }
 
+  List<WearItemsStruct> _wearItems = [];
+  List<WearItemsStruct> get wearItems => _wearItems;
+  set wearItems(List<WearItemsStruct> _value) {
+    _wearItems = _value;
+  }
+
+  void addToWearItems(WearItemsStruct _value) {
+    _wearItems.add(_value);
+  }
+
+  void removeFromWearItems(WearItemsStruct _value) {
+    _wearItems.remove(_value);
+  }
+
+  void removeAtIndexFromWearItems(int _index) {
+    _wearItems.removeAt(_index);
+  }
+
+  void updateWearItemsAtIndex(
+    int _index,
+    WearItemsStruct Function(WearItemsStruct) updateFn,
+  ) {
+    _wearItems[_index] = updateFn(_wearItems[_index]);
+  }
+
+  void insertAtIndexInWearItems(int _index, WearItemsStruct _value) {
+    _wearItems.insert(_index, _value);
+  }
+
   List<DocumentReference> _activitiesPost = [];
   List<DocumentReference> get activitiesPost => _activitiesPost;
   set activitiesPost(List<DocumentReference> _value) {
@@ -374,14 +422,7 @@ class FFAppState extends ChangeNotifier {
     _listPostWear.insert(_index, _value);
   }
 
-  List<String> _jobTypeList = [
-    'Remote',
-    'Onsite',
-    'Hybrid',
-    'Part-time',
-    'Full-time',
-    'Project based'
-  ];
+  List<String> _jobTypeList = ['Remote', 'Onsite', 'Hybrid'];
   List<String> get jobTypeList => _jobTypeList;
   set jobTypeList(List<String> _value) {
     _jobTypeList = _value;
@@ -410,68 +451,180 @@ class FFAppState extends ChangeNotifier {
     _jobTypeList.insert(_index, _value);
   }
 
-  List<String> _selectedJobType = [];
-  List<String> get selectedJobType => _selectedJobType;
-  set selectedJobType(List<String> _value) {
-    _selectedJobType = _value;
-  }
-
-  void addToSelectedJobType(String _value) {
-    _selectedJobType.add(_value);
-  }
-
-  void removeFromSelectedJobType(String _value) {
-    _selectedJobType.remove(_value);
-  }
-
-  void removeAtIndexFromSelectedJobType(int _index) {
-    _selectedJobType.removeAt(_index);
-  }
-
-  void updateSelectedJobTypeAtIndex(
-    int _index,
-    String Function(String) updateFn,
-  ) {
-    _selectedJobType[_index] = updateFn(_selectedJobType[_index]);
-  }
-
-  void insertAtIndexInSelectedJobType(int _index, String _value) {
-    _selectedJobType.insert(_index, _value);
-  }
-
-  List<WearItemsStruct> _wearItems = [];
-  List<WearItemsStruct> get wearItems => _wearItems;
-  set wearItems(List<WearItemsStruct> _value) {
-    _wearItems = _value;
-  }
-
-  void addToWearItems(WearItemsStruct _value) {
-    _wearItems.add(_value);
-  }
-
-  void removeFromWearItems(WearItemsStruct _value) {
-    _wearItems.remove(_value);
-  }
-
-  void removeAtIndexFromWearItems(int _index) {
-    _wearItems.removeAt(_index);
-  }
-
-  void updateWearItemsAtIndex(
-    int _index,
-    WearItemsStruct Function(WearItemsStruct) updateFn,
-  ) {
-    _wearItems[_index] = updateFn(_wearItems[_index]);
-  }
-
-  void insertAtIndexInWearItems(int _index, WearItemsStruct _value) {
-    _wearItems.insert(_index, _value);
-  }
-
   String _imgBase64 = '';
   String get imgBase64 => _imgBase64;
   set imgBase64(String _value) {
     _imgBase64 = _value;
+  }
+
+  List<String> _ListPurpose = ['Legacy', 'Memoir', 'Guiid'];
+  List<String> get ListPurpose => _ListPurpose;
+  set ListPurpose(List<String> _value) {
+    _ListPurpose = _value;
+  }
+
+  void addToListPurpose(String _value) {
+    _ListPurpose.add(_value);
+  }
+
+  void removeFromListPurpose(String _value) {
+    _ListPurpose.remove(_value);
+  }
+
+  void removeAtIndexFromListPurpose(int _index) {
+    _ListPurpose.removeAt(_index);
+  }
+
+  void updateListPurposeAtIndex(
+    int _index,
+    String Function(String) updateFn,
+  ) {
+    _ListPurpose[_index] = updateFn(_ListPurpose[_index]);
+  }
+
+  void insertAtIndexInListPurpose(int _index, String _value) {
+    _ListPurpose.insert(_index, _value);
+  }
+
+  String _choosenPurpose = '';
+  String get choosenPurpose => _choosenPurpose;
+  set choosenPurpose(String _value) {
+    _choosenPurpose = _value;
+  }
+
+  List<String> _choosenPurposeAndPref = [];
+  List<String> get choosenPurposeAndPref => _choosenPurposeAndPref;
+  set choosenPurposeAndPref(List<String> _value) {
+    _choosenPurposeAndPref = _value;
+  }
+
+  void addToChoosenPurposeAndPref(String _value) {
+    _choosenPurposeAndPref.add(_value);
+  }
+
+  void removeFromChoosenPurposeAndPref(String _value) {
+    _choosenPurposeAndPref.remove(_value);
+  }
+
+  void removeAtIndexFromChoosenPurposeAndPref(int _index) {
+    _choosenPurposeAndPref.removeAt(_index);
+  }
+
+  void updateChoosenPurposeAndPrefAtIndex(
+    int _index,
+    String Function(String) updateFn,
+  ) {
+    _choosenPurposeAndPref[_index] = updateFn(_choosenPurposeAndPref[_index]);
+  }
+
+  void insertAtIndexInChoosenPurposeAndPref(int _index, String _value) {
+    _choosenPurposeAndPref.insert(_index, _value);
+  }
+
+  List<String> _jobTypelist2 = ['Part-time', 'Full-time', 'Project based'];
+  List<String> get jobTypelist2 => _jobTypelist2;
+  set jobTypelist2(List<String> _value) {
+    _jobTypelist2 = _value;
+  }
+
+  void addToJobTypelist2(String _value) {
+    _jobTypelist2.add(_value);
+  }
+
+  void removeFromJobTypelist2(String _value) {
+    _jobTypelist2.remove(_value);
+  }
+
+  void removeAtIndexFromJobTypelist2(int _index) {
+    _jobTypelist2.removeAt(_index);
+  }
+
+  void updateJobTypelist2AtIndex(
+    int _index,
+    String Function(String) updateFn,
+  ) {
+    _jobTypelist2[_index] = updateFn(_jobTypelist2[_index]);
+  }
+
+  void insertAtIndexInJobTypelist2(int _index, String _value) {
+    _jobTypelist2.insert(_index, _value);
+  }
+
+  String _choosenjobType2 = '';
+  String get choosenjobType2 => _choosenjobType2;
+  set choosenjobType2(String _value) {
+    _choosenjobType2 = _value;
+  }
+
+  String _choosenjobtype1 = '';
+  String get choosenjobtype1 => _choosenjobtype1;
+  set choosenjobtype1(String _value) {
+    _choosenjobtype1 = _value;
+  }
+
+  String _selectedJobType = '';
+  String get selectedJobType => _selectedJobType;
+  set selectedJobType(String _value) {
+    _selectedJobType = _value;
+  }
+
+  List<RecentSearchStruct> _SearchItems = [];
+  List<RecentSearchStruct> get SearchItems => _SearchItems;
+  set SearchItems(List<RecentSearchStruct> _value) {
+    _SearchItems = _value;
+    prefs.setStringList(
+        'ff_SearchItems', _value.map((x) => x.serialize()).toList());
+  }
+
+  void addToSearchItems(RecentSearchStruct _value) {
+    _SearchItems.add(_value);
+    prefs.setStringList(
+        'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
+  }
+
+  void removeFromSearchItems(RecentSearchStruct _value) {
+    _SearchItems.remove(_value);
+    prefs.setStringList(
+        'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
+  }
+
+  void removeAtIndexFromSearchItems(int _index) {
+    _SearchItems.removeAt(_index);
+    prefs.setStringList(
+        'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
+  }
+
+  void updateSearchItemsAtIndex(
+    int _index,
+    RecentSearchStruct Function(RecentSearchStruct) updateFn,
+  ) {
+    _SearchItems[_index] = updateFn(_SearchItems[_index]);
+    prefs.setStringList(
+        'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
+  }
+
+  void insertAtIndexInSearchItems(int _index, RecentSearchStruct _value) {
+    _SearchItems.insert(_index, _value);
+    prefs.setStringList(
+        'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
+  }
+
+  dynamic _videoJson = jsonDecode('{\"type\":\"video\"}');
+  dynamic get videoJson => _videoJson;
+  set videoJson(dynamic _value) {
+    _videoJson = _value;
+  }
+
+  dynamic _imageJson = jsonDecode('{\"type\":\"photo\"}');
+  dynamic get imageJson => _imageJson;
+  set imageJson(dynamic _value) {
+    _imageJson = _value;
+  }
+
+  String _jobType3 = '';
+  String get jobType3 => _jobType3;
+  set jobType3(String _value) {
+    _jobType3 = _value;
   }
 }
 

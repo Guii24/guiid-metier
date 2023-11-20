@@ -6,8 +6,8 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'articles_user_model.dart';
@@ -40,10 +40,21 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -53,7 +64,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             automaticallyImplyLeading: false,
             leading: Align(
-              alignment: AlignmentDirectional(-1.00, 0.00),
+              alignment: AlignmentDirectional(0.00, 0.00),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: AuthUserStreamWidget(
@@ -70,20 +81,15 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                         context.pushNamed('MyProfile');
                       }
                     },
-                    child: Container(
-                      width: 34.0,
-                      height: 34.0,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: CachedNetworkImage(
-                        fadeInDuration: Duration(milliseconds: 500),
-                        fadeOutDuration: Duration(milliseconds: 500),
-                        imageUrl: valueOrDefault<String>(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: Image.network(
+                        valueOrDefault<String>(
                           currentUserPhoto,
-                          'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                          'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*1ktxoqe*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NzkxNTc4Ni4yNzAuMS4xNjk3OTE1ODcyLjU4LjAuMA..',
                         ),
+                        width: 34.0,
+                        height: 34.0,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -91,24 +97,15 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                 ),
               ),
             ),
-            title: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.pushNamed('signupBioUser');
-              },
-              child: Text(
-                'Guiid Metier',
-                style: FlutterFlowTheme.of(context).titleMedium.override(
-                      fontFamily: 'NewYork',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w600,
-                      useGoogleFonts: false,
-                    ),
-              ),
+            title: Text(
+              'Guiid Metier',
+              style: FlutterFlowTheme.of(context).titleMedium.override(
+                    fontFamily: 'NewYork',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                    useGoogleFonts: false,
+                  ),
             ),
             actions: [
               Align(
@@ -145,7 +142,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                       elevation: 0.0,
                       child: Container(
                         width: double.infinity,
-                        height: MediaQuery.sizeOf(context).height * 0.395,
+                        height: MediaQuery.sizeOf(context).height * 0.34,
                         decoration: BoxDecoration(
                           color: Color(0xFF232323),
                         ),
@@ -159,36 +156,28 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 0.0, 15.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    context.pushNamed('signupBioCompany');
-                                  },
-                                  child: Text(
-                                    'TOP ARTICLES',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Libre Franklin',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          fontSize: 17.0,
-                                          letterSpacing: 0.5,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
+                                child: Text(
+                                  'TOP ARTICLES',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Libre Franklin',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        fontSize: 17.0,
+                                        letterSpacing: 0.5,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
                               ),
-                              Flexible(
+                              Expanded(
                                 child: StreamBuilder<List<ArticlesRecord>>(
                                   stream: queryArticlesRecord(
                                     queryBuilder: (articlesRecord) =>
                                         articlesRecord.where(
-                                            'article_is_top_article',
-                                            isEqualTo: true),
+                                      'article_is_top_article',
+                                      isEqualTo: true,
+                                    ),
                                     limit: 5,
                                   ),
                                   builder: (context, snapshot) {
@@ -208,73 +197,47 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                                         ),
                                       );
                                     }
-                                    List<ArticlesRecord>
-                                        pageViewArticlesRecordList =
+                                    List<ArticlesRecord> rowArticlesRecordList =
                                         snapshot.data!;
-                                    return Container(
-                                      width: double.infinity,
-                                      child: PageView.builder(
-                                        controller: _model
-                                                .pageViewController ??=
-                                            PageController(
-                                                initialPage: min(
-                                                    0,
-                                                    pageViewArticlesRecordList
-                                                            .length -
-                                                        1)),
-                                        onPageChanged: (_) => setState(() {}),
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount:
-                                            pageViewArticlesRecordList.length,
-                                        itemBuilder: (context, pageViewIndex) {
-                                          final pageViewArticlesRecord =
-                                              pageViewArticlesRecordList[
-                                                  pageViewIndex];
-                                          return Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
+                                    return SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: List.generate(
+                                                rowArticlesRecordList.length,
+                                                (rowIndex) {
+                                          final rowArticlesRecord =
+                                              rowArticlesRecordList[rowIndex];
+                                          return InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              context.pushNamed(
+                                                'ArticlePage',
+                                                queryParameters: {
+                                                  'article': serializeParam(
+                                                    rowArticlesRecord.reference,
+                                                    ParamType.DocumentReference,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            },
                                             child: ComponentTopArticleWidget(
                                               key: Key(
-                                                  'Keyhtc_${pageViewIndex}_of_${pageViewArticlesRecordList.length}'),
-                                              topArticle: pageViewArticlesRecord
-                                                  .reference,
+                                                  'Keyhtc_${rowIndex}_of_${rowArticlesRecordList.length}'),
+                                              topArticle:
+                                                  rowArticlesRecord.reference,
                                             ),
                                           );
-                                        },
+                                        })
+                                            .divide(SizedBox(width: 12.0))
+                                            .addToStart(SizedBox(width: 16.0))
+                                            .addToEnd(SizedBox(width: 16.0)),
                                       ),
                                     );
                                   },
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 30.0, 16.0, 0.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 4.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).white12,
-                                    borderRadius: BorderRadius.circular(21.0),
-                                  ),
-                                  child: Align(
-                                    alignment:
-                                        AlignmentDirectional(-1.00, 0.00),
-                                    child: Container(
-                                      width: 96.0,
-                                      height: 4.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(21.0),
-                                          bottomRight: Radius.circular(0.0),
-                                          topLeft: Radius.circular(21.0),
-                                          topRight: Radius.circular(0.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ),
                               ),
                             ],

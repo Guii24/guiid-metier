@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_blocked_users_model.dart';
@@ -115,7 +116,10 @@ class _ComponentBlockedUsersWidgetState
                   child: CachedNetworkImage(
                     fadeInDuration: Duration(milliseconds: 500),
                     fadeOutDuration: Duration(milliseconds: 500),
-                    imageUrl: containerUsersRecord.photoUrl,
+                    imageUrl: valueOrDefault<String>(
+                      containerUsersRecord.photoUrl,
+                      'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
+                    ),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -158,8 +162,12 @@ class _ComponentBlockedUsersWidgetState
                 FFButtonWidget(
                   onPressed: () async {
                     await currentUserReference!.update({
-                      'user_blocked_user':
-                          FieldValue.arrayRemove([widget.userRef]),
+                      ...mapToFirestore(
+                        {
+                          'user_blocked_user':
+                              FieldValue.arrayRemove([widget.userRef]),
+                        },
+                      ),
                     });
                   },
                   text: 'UNBLOCK',

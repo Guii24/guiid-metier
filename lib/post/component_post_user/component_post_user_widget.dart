@@ -1,5 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
+import '/components/subscription_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -10,6 +12,7 @@ import '/post/bottom_share_post/bottom_share_post_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_post_user_model.dart';
@@ -99,31 +102,33 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (containerPostRecord.postImagesList.length >= 1)
-                    Container(
-                      width: double.infinity,
-                      height: MediaQuery.sizeOf(context).height * 0.317,
-                      child: Stack(
-                        children: [
-                          Builder(
-                            builder: (context) {
-                              final images = containerPostRecord.postImagesList
-                                  .toList()
-                                  .take(5)
-                                  .toList();
-                              return Container(
-                                width: double.infinity,
-                                child: PageView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  controller: _model.pageViewController ??=
-                                      PageController(
-                                          initialPage:
-                                              min(0, images.length - 1)),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: images.length,
-                                  itemBuilder: (context, imagesIndex) {
-                                    final imagesItem = images[imagesIndex];
-                                    return ClipRRect(
+                  Container(
+                    width: double.infinity,
+                    height: MediaQuery.sizeOf(context).height * 0.69,
+                    child: Stack(
+                      children: [
+                        Builder(
+                          builder: (context) {
+                            final images = containerPostRecord.postImagesList
+                                .toList()
+                                .take(5)
+                                .toList();
+                            return Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              child: PageView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                controller: _model.pageViewController ??=
+                                    PageController(
+                                        initialPage: min(0, images.length - 1)),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: images.length,
+                                itemBuilder: (context, imagesIndex) {
+                                  final imagesItem = images[imagesIndex];
+                                  return Align(
+                                    alignment:
+                                        AlignmentDirectional(0.00, -1.00),
+                                    child: ClipRRect(
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(0.0),
                                         bottomRight: Radius.circular(0.0),
@@ -132,64 +137,57 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                       ),
                                       child: Image.network(
                                         imagesItem,
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                1.0,
-                                        height:
-                                            MediaQuery.sizeOf(context).height *
-                                                0.317,
-                                        fit: BoxFit.contain,
-                                        alignment: Alignment(0.00, 0.00),
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        fit: BoxFit.cover,
                                       ),
-                                    );
-                                  },
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                        if (containerPostRecord.postImagesList.length > 1)
+                          Align(
+                            alignment: AlignmentDirectional(1.00, 1.00),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 16.0, 16.0),
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 0.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
                                 ),
-                              );
-                            },
-                          ),
-                          if (containerPostRecord.postImagesList.length > 1)
-                            Align(
-                              alignment: AlignmentDirectional(1.00, 1.00),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 16.0, 16.0),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 0.0,
-                                  shape: RoundedRectangleBorder(
+                                child: Container(
+                                  width: 35.0,
+                                  height: 28.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context).dark20,
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
-                                  child: Container(
-                                    width: 35.0,
-                                    height: 28.0,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          FlutterFlowTheme.of(context).dark20,
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    child: Align(
-                                      alignment:
-                                          AlignmentDirectional(0.00, 0.00),
-                                      child: Text(
-                                        '${(_model.pageViewCurrentIndex + 1).toString()}/${containerPostRecord.postImagesList.length.toString()}',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Libre Franklin',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBackground,
-                                              fontSize: 13.0,
-                                            ),
-                                      ),
+                                  child: Align(
+                                    alignment: AlignmentDirectional(0.00, 0.00),
+                                    child: Text(
+                                      '${(_model.pageViewCurrentIndex + 1).toString()}/${containerPostRecord.postImagesList.length.toString()}',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Libre Franklin',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBackground,
+                                            fontSize: 13.0,
+                                          ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                        ],
-                      ),
+                          ),
+                      ],
                     ),
+                  ),
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 12.0),
@@ -206,7 +204,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                           child: Image.network(
                             valueOrDefault<String>(
                               columnUsersRecord.photoUrl,
-                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -269,17 +267,53 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                   FFButtonWidget(
                                     onPressed: () async {
                                       await currentUserReference!.update({
-                                        'user_following': FieldValue.arrayUnion(
-                                            [columnUsersRecord.reference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_following':
+                                                FieldValue.arrayUnion([
+                                              columnUsersRecord.reference
+                                            ]),
+                                          },
+                                        ),
                                       });
 
                                       await columnUsersRecord.reference.update({
-                                        'user_followers': FieldValue.arrayUnion(
-                                            [currentUserReference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_followers':
+                                                FieldValue.arrayUnion(
+                                                    [currentUserReference]),
+                                          },
+                                        ),
                                       });
                                       await actions.updatePage(
                                         context,
                                       );
+
+                                      await NotificationRecord.collection
+                                          .doc()
+                                          .set(createNotificationRecordData(
+                                            notificationFrom:
+                                                currentUserReference,
+                                            notificationTo:
+                                                columnUsersRecord.reference,
+                                            notificationType: 'following',
+                                            notificationCreationDate:
+                                                getCurrentTimestamp,
+                                          ));
+                                      if (columnUsersRecord.userNotification) {
+                                        triggerPushNotification(
+                                          notificationTitle:
+                                              currentUserDisplayName,
+                                          notificationText:
+                                              'started following you',
+                                          userRefs: [
+                                            columnUsersRecord.reference
+                                          ],
+                                          initialPageName: 'MainPage',
+                                          parameterData: {},
+                                        );
+                                      }
                                     },
                                     text: 'FOLLOW',
                                     options: FFButtonOptions(
@@ -317,15 +351,24 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                   FFButtonWidget(
                                     onPressed: () async {
                                       await currentUserReference!.update({
-                                        'user_following':
-                                            FieldValue.arrayRemove(
-                                                [columnUsersRecord.reference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_following':
+                                                FieldValue.arrayRemove([
+                                              columnUsersRecord.reference
+                                            ]),
+                                          },
+                                        ),
                                       });
 
                                       await columnUsersRecord.reference.update({
-                                        'user_followers':
-                                            FieldValue.arrayRemove(
-                                                [currentUserReference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_followers':
+                                                FieldValue.arrayRemove(
+                                                    [currentUserReference]),
+                                          },
+                                        ),
                                       });
                                       await actions.updatePage(
                                         context,
@@ -380,7 +423,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               } else {
                                 await showModalBottomSheet(
                                   isScrollControlled: true,
@@ -397,7 +440,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               }
                             },
                             child: Icon(
@@ -479,14 +522,19 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
                                   await containerPostRecord.reference.update({
-                                    'post_activities': FieldValue.arrayRemove(
-                                        [currentUserReference]),
+                                    ...mapToFirestore(
+                                      {
+                                        'post_activities':
+                                            FieldValue.arrayRemove(
+                                                [currentUserReference]),
+                                      },
+                                    ),
                                   });
                                 },
                                 child: Icon(
-                                  FFIcons.kbatteryactivityFill,
+                                  FFIcons.kbatteryActivityFill,
                                   color: FlutterFlowTheme.of(context).alternate,
-                                  size: 24.0,
+                                  size: 25.0,
                                 ),
                               ),
                             if (!containerPostRecord.postActivities
@@ -497,10 +545,90 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  await containerPostRecord.reference.update({
-                                    'post_activities': FieldValue.arrayUnion(
-                                        [currentUserReference]),
-                                  });
+                                  if (valueOrDefault<bool>(
+                                      currentUserDocument
+                                          ?.userBlockedUserByAdmin,
+                                      false)) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Your account has been suspended. Contact support for further info.',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Libre Franklin',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                fontSize: 14.0,
+                                              ),
+                                        ),
+                                        duration: Duration(milliseconds: 3000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                      ),
+                                    );
+                                  } else {
+                                    if (valueOrDefault<bool>(
+                                        currentUserDocument?.userSubscription,
+                                        false)) {
+                                      await containerPostRecord.reference
+                                          .update({
+                                        ...mapToFirestore(
+                                          {
+                                            'post_activities':
+                                                FieldValue.arrayUnion(
+                                                    [currentUserReference]),
+                                          },
+                                        ),
+                                      });
+
+                                      await NotificationRecord.collection
+                                          .doc()
+                                          .set(createNotificationRecordData(
+                                            notificationFrom:
+                                                currentUserReference,
+                                            notificationTo:
+                                                columnUsersRecord.reference,
+                                            notificationType: 'liked',
+                                            notificationCreationDate:
+                                                getCurrentTimestamp,
+                                            notificationPost:
+                                                containerPostRecord.reference,
+                                          ));
+                                      if (columnUsersRecord.userNotification) {
+                                        triggerPushNotification(
+                                          notificationTitle:
+                                              currentUserDisplayName,
+                                          notificationText:
+                                              'activated your post',
+                                          userRefs: [
+                                            columnUsersRecord.reference
+                                          ],
+                                          initialPageName: 'MainPage',
+                                          parameterData: {},
+                                        );
+                                      }
+                                    } else {
+                                      showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        barrierColor:
+                                            FlutterFlowTheme.of(context)
+                                                .customColorBottomSh,
+                                        enableDrag: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: SubscriptionWidget(),
+                                          );
+                                        },
+                                      ).then((value) => safeSetState(() {}));
+                                    }
+                                  }
                                 },
                                 child: Icon(
                                   FFIcons.kbatteryactivity,
@@ -566,23 +694,69 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                 size: 24.0,
                               ),
                               onPressed: () async {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Color(0x01000000),
-                                  barrierColor:
-                                      FlutterFlowTheme.of(context).dark38,
-                                  context: context,
-                                  builder: (context) {
-                                    return Padding(
-                                      padding: MediaQuery.viewInsetsOf(context),
-                                      child: BottomSharePostWidget(
-                                        repostpost:
-                                            containerPostRecord.reference,
-                                        user: columnUsersRecord.reference,
+                                if (valueOrDefault<bool>(
+                                    currentUserDocument?.userBlockedUserByAdmin,
+                                    false)) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Your account has been suspended. Contact support for further info.',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              fontSize: 14.0,
+                                            ),
                                       ),
-                                    );
-                                  },
-                                ).then((value) => setState(() {}));
+                                      duration: Duration(milliseconds: 3000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
+                                    ),
+                                  );
+                                } else {
+                                  if (valueOrDefault<bool>(
+                                      currentUserDocument?.userSubscription,
+                                      false)) {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Color(0x01000000),
+                                      barrierColor:
+                                          FlutterFlowTheme.of(context).dark38,
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.viewInsetsOf(context),
+                                          child: BottomSharePostWidget(
+                                            repostpost:
+                                                containerPostRecord.reference,
+                                            user: columnUsersRecord.reference,
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(() {}));
+                                  } else {
+                                    showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      barrierColor: FlutterFlowTheme.of(context)
+                                          .customColorBottomSh,
+                                      enableDrag: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.viewInsetsOf(context),
+                                          child: SubscriptionWidget(),
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(() {}));
+                                  }
+                                }
                               },
                             ),
                           ],

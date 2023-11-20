@@ -3,11 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 
-import '../../auth/base_auth_user_provider.dart';
+import '/auth/base_auth_user_provider.dart';
 
+import '/backend/push_notifications/push_notifications_handler.dart'
+    show PushNotificationsHandler;
 import '/index.dart';
 import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -199,11 +202,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => MyProfileWidget(),
         ),
         FFRoute(
-          name: 'WardrobeCommentPage',
-          path: '/wardrobeCommentPage',
-          builder: (context, params) => WardrobeCommentPageWidget(),
-        ),
-        FFRoute(
           name: 'EditWear',
           path: '/editWear',
           asyncParams: {
@@ -337,9 +335,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'test',
           path: '/test',
-          builder: (context, params) => TestWidget(
-            img: params.getParam('img', ParamType.FFUploadedFile),
-          ),
+          builder: (context, params) => TestWidget(),
         ),
         FFRoute(
           name: 'VerificationLogin',
@@ -404,28 +400,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'SupportFromAdmin',
-          path: '/supportFromAdmin',
-          asyncParams: {
-            'chatDoc': getDoc(['chat'], ChatRecord.fromSnapshot),
-          },
-          builder: (context, params) => SupportFromAdminWidget(
-            chatDoc: params.getParam('chatDoc', ParamType.Document),
-          ),
-        ),
-        FFRoute(
-          name: 'SupportAllChats',
-          path: '/supportAllChats',
-          builder: (context, params) => SupportAllChatsWidget(),
-        ),
-        FFRoute(
           name: 'WearPage',
           path: '/wearPage',
-          asyncParams: {
-            'postDoc': getDoc(['post'], PostRecord.fromSnapshot),
-          },
           builder: (context, params) => WearPageWidget(
-            postDoc: params.getParam('postDoc', ParamType.Document),
+            postDoc: params.getParam(
+                'postDoc', ParamType.DocumentReference, false, ['post']),
           ),
         ),
         FFRoute(
@@ -441,8 +420,39 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => SearchResultPageWidget(
             searchingText: params.getParam('searchingText', ParamType.String),
           ),
+        ),
+        FFRoute(
+          name: 'SearchPageCopy',
+          path: '/searchPageCopy',
+          builder: (context, params) => SearchPageCopyWidget(),
+        ),
+        FFRoute(
+          name: 'PostUserCopy',
+          path: '/postUserCopy',
+          builder: (context, params) => PostUserCopyWidget(),
+        ),
+        FFRoute(
+          name: 'SourcingPageCopy',
+          path: '/sourcingPageCopy',
+          builder: (context, params) => SourcingPageCopyWidget(),
+        ),
+        FFRoute(
+          name: 'MyProfileCopy',
+          path: '/myProfileCopy',
+          builder: (context, params) => MyProfileCopyWidget(),
+        ),
+        FFRoute(
+          name: 'jobTest',
+          path: '/jobTest',
+          builder: (context, params) => JobTestWidget(),
+        ),
+        FFRoute(
+          name: 'ArticlesUserCopy',
+          path: '/articlesUserCopy',
+          builder: (context, params) => ArticlesUserCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
+      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {
@@ -631,7 +641,7 @@ class FFRoute {
                     ),
                   ),
                 )
-              : page;
+              : PushNotificationsHandler(child: page);
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition
@@ -667,4 +677,24 @@ class TransitionInfo {
   final Alignment? alignment;
 
   static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+}
+
+class RootPageContext {
+  const RootPageContext(this.isRootPage, [this.errorRoute]);
+  final bool isRootPage;
+  final String? errorRoute;
+
+  static bool isInactiveRootPage(BuildContext context) {
+    final rootPageContext = context.read<RootPageContext?>();
+    final isRootPage = rootPageContext?.isRootPage ?? false;
+    final location = GoRouter.of(context).location;
+    return isRootPage &&
+        location != '/' &&
+        location != rootPageContext?.errorRoute;
+  }
+
+  static Widget wrap(Widget child, {String? errorRoute}) => Provider.value(
+        value: RootPageContext(true, errorRoute),
+        child: child,
+      );
 }

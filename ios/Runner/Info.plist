@@ -28,7 +28,7 @@
             <string>Editor</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>com.googleusercontent.apps.4600268702-4e8dg0s3mk6h0icr5p542ll4p69frshv</string>
+                <!--FF_REVERSED_CLIENT_ID-->
                 
             </array>
         </dict>
@@ -54,10 +54,16 @@
 	<true/>
 
 	<key>NSCameraUsageDescription</key>
-    <string>In order to take a picture or video, this app requires permission to access the camera.</string>
+    <string>In order to let you take pictures using your phone camera and upload the taken picture as an avatar of your profile or publishing a post.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-    <string>In order to upload data, this app requires permission to access the photo library.</string>
-
+    <string>In order to send and upload pictures from your photo library as an avatar of your profile or publishing a post.</string>
+	<key>PermissionGroupNotification</key>
+    <string>In order to send Notification, this app requires access to notification.</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>remote-notification</string>
+    </array>
 
 
 	<key>UILaunchStoryboardName</key>

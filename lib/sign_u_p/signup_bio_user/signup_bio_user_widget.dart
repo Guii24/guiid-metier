@@ -47,8 +47,13 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
     });
 
     _model.textController1 ??= TextEditingController();
+    _model.textFieldFocusNode1 ??= FocusNode();
+
     _model.textController2 ??= TextEditingController();
+    _model.textFieldFocusNode2 ??= FocusNode();
+
     _model.textController3 ??= TextEditingController();
+    _model.textFieldFocusNode3 ??= FocusNode();
   }
 
   @override
@@ -60,10 +65,21 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -154,8 +170,11 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                   context: context,
                                   builder: (context) {
                                     return GestureDetector(
-                                      onTap: () => FocusScope.of(context)
-                                          .requestFocus(_model.unfocusNode),
+                                      onTap: () => _model
+                                              .unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
@@ -163,14 +182,14 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100.0),
                                 child: Image.network(
                                   valueOrDefault<String>(
                                     FFAppState().profilePhoto,
-                                    'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                    'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                   ),
                                   width: 90.0,
                                   height: 90.0,
@@ -234,10 +253,13 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                             return Material(
                                               color: Colors.transparent,
                                               child: GestureDetector(
-                                                onTap: () =>
-                                                    FocusScope.of(context)
+                                                onTap: () => _model.unfocusNode
+                                                        .canRequestFocus
+                                                    ? FocusScope.of(context)
                                                         .requestFocus(
-                                                            _model.unfocusNode),
+                                                            _model.unfocusNode)
+                                                    : FocusScope.of(context)
+                                                        .unfocus(),
                                                 child: CalendarWidget(),
                                               ),
                                             );
@@ -300,6 +322,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .dark88,
+                                                          fontSize: 16.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -374,9 +397,13 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode),
+                                            onTap: () => _model
+                                                    .unfocusNode.canRequestFocus
+                                                ? FocusScope.of(context)
+                                                    .requestFocus(
+                                                        _model.unfocusNode)
+                                                : FocusScope.of(context)
+                                                    .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -385,12 +412,14 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                     MediaQuery.sizeOf(context)
                                                             .height *
                                                         0.85,
-                                                child: SignUpLocationWidget(),
+                                                child: SignUpLocationWidget(
+                                                  type: 'Living in',
+                                                ),
                                               ),
                                             ),
                                           );
                                         },
-                                      ).then((value) => setState(() {}));
+                                      ).then((value) => safeSetState(() {}));
                                     },
                                     child: Material(
                                       color: Colors.transparent,
@@ -424,7 +453,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                           .selectedlocation ==
                                                       '')
                                                 Text(
-                                                  'Living in ',
+                                                  'Located in',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -479,7 +508,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 0.0, 0.0),
                                     child: Container(
-                                      width: 64.0,
+                                      width: 86.0,
                                       height: 25.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
@@ -487,13 +516,13 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.00, 0.00),
+                                            AlignmentDirectional(-1.00, 0.00),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   3.0, 0.0, 3.0, 0.0),
                                           child: Text(
-                                            'Living in',
+                                            'Located in',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -534,6 +563,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                             width: double.infinity,
                             child: TextFormField(
                               controller: _model.textController1,
+                              focusNode: _model.textFieldFocusNode1,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController1',
                                 Duration(milliseconds: 10),
@@ -656,9 +686,13 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode),
+                                            onTap: () => _model
+                                                    .unfocusNode.canRequestFocus
+                                                ? FocusScope.of(context)
+                                                    .requestFocus(
+                                                        _model.unfocusNode)
+                                                : FocusScope.of(context)
+                                                    .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -666,7 +700,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                             ),
                                           );
                                         },
-                                      ).then((value) => setState(() {}));
+                                      ).then((value) => safeSetState(() {}));
                                     },
                                     child: Material(
                                       color: Colors.transparent,
@@ -692,6 +726,8 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                   12.0, 0.0, 0.0, 0.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               if (FFAppState()
                                                       .choosenPreference
@@ -764,6 +800,22 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                     },
                                                   ),
                                                 ),
+                                              if (FFAppState()
+                                                      .choosenPreference
+                                                      .length ==
+                                                  0)
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 0.0),
+                                                  child: Icon(
+                                                    FFIcons.kchevronBottomSm,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .dark88,
+                                                    size: 24.0,
+                                                  ),
+                                                ),
                                             ],
                                           ),
                                         ),
@@ -797,6 +849,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                             width: double.infinity,
                             child: TextFormField(
                               controller: _model.textController2,
+                              focusNode: _model.textFieldFocusNode2,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController2',
                                 Duration(milliseconds: 10),
@@ -902,6 +955,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                             width: double.infinity,
                             child: TextFormField(
                               controller: _model.textController3,
+                              focusNode: _model.textFieldFocusNode3,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController3',
                                 Duration(milliseconds: 10),
@@ -1048,8 +1102,12 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                           FFAppState().selectedlocation,
                                       photoUrl: FFAppState().profilePhoto,
                                     ),
-                                    'user_preferences':
-                                        FFAppState().choosenPreference,
+                                    ...mapToFirestore(
+                                      {
+                                        'user_preferences':
+                                            FFAppState().choosenPreference,
+                                      },
+                                    ),
                                   });
 
                                   context.goNamed(

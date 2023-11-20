@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_block_user_model.dart';
@@ -136,8 +137,12 @@ class _PopupBlockUserWidgetState extends State<PopupBlockUserWidget> {
                             child: FFButtonWidget(
                               onPressed: () async {
                                 await currentUserReference!.update({
-                                  'user_blocked_user':
-                                      FieldValue.arrayUnion([widget.user]),
+                                  ...mapToFirestore(
+                                    {
+                                      'user_blocked_user':
+                                          FieldValue.arrayUnion([widget.user]),
+                                    },
+                                  ),
                                 });
                                 Navigator.pop(context);
                               },

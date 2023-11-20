@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -8,11 +9,13 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/settings/custom_dialog_phone_change/custom_dialog_phone_change_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'verification_edit_phone_model.dart';
@@ -54,7 +57,7 @@ class _VerificationEditPhoneWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.timerController.onExecute.add(StopWatchExecute.start);
+      _model.timerController.onStartTimer();
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -69,10 +72,21 @@ class _VerificationEditPhoneWidgetState
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -151,6 +165,17 @@ class _VerificationEditPhoneWidgetState
                         );
                         setState(() {});
 
+                        await Future.delayed(
+                            const Duration(milliseconds: 1200));
+                        setState(() {
+                          FFAppState().countryInfo = jsonDecode(
+                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+                          FFAppState().countryInfoCompany = jsonDecode(
+                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+                          FFAppState().page = 'Articles';
+                          FFAppState().pageIndex = 0;
+                        });
+                        context.safePop();
                         showAlignedDialog(
                           barrierColor: Color(0x02000000),
                           barrierDismissible: false,
@@ -165,26 +190,15 @@ class _VerificationEditPhoneWidgetState
                             return Material(
                               color: Colors.transparent,
                               child: GestureDetector(
-                                onTap: () => FocusScope.of(context)
-                                    .requestFocus(_model.unfocusNode),
+                                onTap: () => _model.unfocusNode.canRequestFocus
+                                    ? FocusScope.of(context)
+                                        .requestFocus(_model.unfocusNode)
+                                    : FocusScope.of(context).unfocus(),
                                 child: CustomDialogPhoneChangeWidget(),
                               ),
                             );
                           },
                         ).then((value) => setState(() {}));
-
-                        await Future.delayed(
-                            const Duration(milliseconds: 1200));
-                        setState(() {
-                          FFAppState().countryInfo = jsonDecode(
-                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-                          FFAppState().countryInfoCompany = jsonDecode(
-                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-                          FFAppState().page = 'Articles';
-                          FFAppState().pageIndex = 0;
-                        });
-
-                        context.goNamed('MainPage');
                       },
                       onChange: () async {},
                     ),
@@ -229,7 +243,7 @@ class _VerificationEditPhoneWidgetState
                             minute: false,
                             milliSecond: false,
                           ),
-                          timer: _model.timerController,
+                          controller: _model.timerController,
                           updateStateInterval: Duration(milliseconds: 1000),
                           onChanged: (value, displayTime, shouldUpdate) {
                             _model.timerMilliseconds = value;
@@ -261,11 +275,18 @@ class _VerificationEditPhoneWidgetState
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       if (_model.timerMilliseconds == 0) {
-                        _model.timerController.onExecute
-                            .add(StopWatchExecute.reset);
+                        _model.timerController.onResetTimer();
 
-                        _model.timerController.onExecute
-                            .add(StopWatchExecute.start);
+                        _model.timerController.onStartTimer();
+                        setState(() {
+                          _model.code =
+                              random_data.randomInteger(1000, 9999).toString();
+                        });
+                        await TwilioCall.call(
+                          to: widget.phoneNumberEdited,
+                          body:
+                              'Your GMSM verification code is: ${_model.code}',
+                        );
                       }
                     },
                     child: Material(

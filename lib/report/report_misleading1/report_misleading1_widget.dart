@@ -8,6 +8,7 @@ import '/report/custom_dialog_reportsent/custom_dialog_reportsent_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'report_misleading1_model.dart';
@@ -22,6 +23,7 @@ class ReportMisleading1Widget extends StatefulWidget {
     this.reportType,
     this.textType,
     this.userRef,
+    this.job,
   }) : super(key: key);
 
   final DocumentReference? post;
@@ -30,6 +32,7 @@ class ReportMisleading1Widget extends StatefulWidget {
   final String? reportType;
   final String? textType;
   final DocumentReference? userRef;
+  final DocumentReference? job;
 
   @override
   _ReportMisleading1WidgetState createState() =>
@@ -112,7 +115,7 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
                             ),
                           );
                         },
-                      ).then((value) => setState(() {}));
+                      ).then((value) => safeSetState(() {}));
                     },
                     child: Icon(
                       FFIcons.kchevronLeft,
@@ -157,6 +160,40 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
             Builder(
               builder: (context) => FFButtonWidget(
                 onPressed: () async {
+                  var reportRecordReference = ReportRecord.collection.doc();
+                  await reportRecordReference.set(createReportRecordData(
+                    reportFrom: currentUserReference,
+                    reportTime: getCurrentTimestamp,
+                    reportReason: widget.reportType,
+                    reportToCommPost: widget.commentpost,
+                    reportToPost: widget.post,
+                    reportToUser: widget.userRef,
+                    reportToJob: widget.job,
+                  ));
+                  _model.report = ReportRecord.getDocumentFromData(
+                      createReportRecordData(
+                        reportFrom: currentUserReference,
+                        reportTime: getCurrentTimestamp,
+                        reportReason: widget.reportType,
+                        reportToCommPost: widget.commentpost,
+                        reportToPost: widget.post,
+                        reportToUser: widget.userRef,
+                        reportToJob: widget.job,
+                      ),
+                      reportRecordReference);
+                  if (widget.post != null) {
+                    await widget.post!.update(createPostRecordData(
+                      postReported: true,
+                      postReportedRef: _model.report?.reference,
+                    ));
+                  } else if (widget.commentpost != null) {
+                    await widget.commentpost!
+                        .update(createCommentPostRecordData(
+                      commentPostReported: true,
+                      commentPostReportedRef: _model.report?.reference,
+                    ));
+                  }
+
                   Navigator.pop(context);
                   showAlignedDialog(
                     barrierColor: Color(0x02000000),
@@ -176,16 +213,7 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
                     },
                   ).then((value) => setState(() {}));
 
-                  await ReportRecord.collection
-                      .doc()
-                      .set(createReportRecordData(
-                        reportFrom: currentUserReference,
-                        reportTime: getCurrentTimestamp,
-                        reportReason: widget.reportType,
-                        reportToCommPost: widget.commentpost,
-                        reportToPost: widget.post,
-                        reportToUser: widget.userRef,
-                      ));
+                  setState(() {});
                 },
                 text: 'SEND REPORT',
                 options: FFButtonOptions(

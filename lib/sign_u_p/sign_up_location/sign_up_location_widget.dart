@@ -4,13 +4,19 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'sign_up_location_model.dart';
 export 'sign_up_location_model.dart';
 
 class SignUpLocationWidget extends StatefulWidget {
-  const SignUpLocationWidget({Key? key}) : super(key: key);
+  const SignUpLocationWidget({
+    Key? key,
+    required this.type,
+  }) : super(key: key);
+
+  final String? type;
 
   @override
   _SignUpLocationWidgetState createState() => _SignUpLocationWidgetState();
@@ -31,6 +37,7 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
     _model = createModel(context, () => SignUpLocationModel());
 
     _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -91,7 +98,7 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
                 child: Text(
-                  'Living in',
+                  widget.type!,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark88,
@@ -102,6 +109,7 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
               ),
               TextFormField(
                 controller: _model.textController,
+                focusNode: _model.textFieldFocusNode,
                 onChanged: (_) => EasyDebounce.debounce(
                   '_model.textController',
                   Duration(milliseconds: 10),

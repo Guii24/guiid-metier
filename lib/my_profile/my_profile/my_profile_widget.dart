@@ -12,6 +12,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'my_profile_model.dart';
@@ -61,10 +62,21 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -157,18 +169,24 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                           height: 80.0,
                           child: Stack(
                             children: [
-                              Container(
-                                width: 80.0,
-                                height: 80.0,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: CachedNetworkImage(
-                                  fadeInDuration: Duration(milliseconds: 500),
-                                  fadeOutDuration: Duration(milliseconds: 500),
-                                  imageUrl: FFAppState().profilePhoto,
-                                  fit: BoxFit.cover,
+                              AuthUserStreamWidget(
+                                builder: (context) => Container(
+                                  width: 80.0,
+                                  height: 80.0,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: CachedNetworkImage(
+                                    fadeInDuration: Duration(milliseconds: 500),
+                                    fadeOutDuration:
+                                        Duration(milliseconds: 500),
+                                    imageUrl: valueOrDefault<String>(
+                                      currentUserPhoto,
+                                      'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                               Align(
@@ -217,10 +235,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                             children: [
                               AuthUserStreamWidget(
                                 builder: (context) => Text(
-                                  valueOrDefault<String>(
-                                    currentUserDisplayName,
-                                    'error',
-                                  ),
+                                  currentUserDisplayName,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -364,8 +379,10 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                     child: FutureBuilder<int>(
                                       future: queryPostRecordCount(
                                         queryBuilder: (postRecord) => postRecord
-                                            .where('post_creator',
-                                                isEqualTo: currentUserReference)
+                                            .where(
+                                              'post_creator',
+                                              isEqualTo: currentUserReference,
+                                            )
                                             .orderBy('post_time_posted',
                                                 descending: true),
                                       ),
@@ -583,9 +600,14 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                   StreamBuilder<List<PostRecord>>(
                                 stream: queryPostRecord(
                                   queryBuilder: (postRecord) => postRecord
-                                      .where('post_creator',
-                                          isEqualTo: currentUserReference)
-                                      .where('post_type', isEqualTo: 'post')
+                                      .where(
+                                        'post_creator',
+                                        isEqualTo: currentUserReference,
+                                      )
+                                      .where(
+                                        'post_type',
+                                        isEqualTo: 'post',
+                                      )
                                       .orderBy('post_time_posted',
                                           descending: true),
                                 ),
@@ -1129,9 +1151,14 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                 child: StreamBuilder<List<PostRecord>>(
                                   stream: queryPostRecord(
                                     queryBuilder: (postRecord) => postRecord
-                                        .where('post_creator',
-                                            isEqualTo: currentUserReference)
-                                        .where('post_type', isEqualTo: 'wear')
+                                        .where(
+                                          'post_creator',
+                                          isEqualTo: currentUserReference,
+                                        )
+                                        .where(
+                                          'post_type',
+                                          isEqualTo: 'wear',
+                                        )
                                         .orderBy('post_time_posted'),
                                   ),
                                   builder: (context, snapshot) {
@@ -1187,13 +1214,10 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                               'WearPage',
                                               queryParameters: {
                                                 'postDoc': serializeParam(
-                                                  gridViewPostRecord,
-                                                  ParamType.Document,
+                                                  gridViewPostRecord.reference,
+                                                  ParamType.DocumentReference,
                                                 ),
                                               }.withoutNulls,
-                                              extra: <String, dynamic>{
-                                                'postDoc': gridViewPostRecord,
-                                              },
                                             );
                                           },
                                           child: ClipRRect(

@@ -7,12 +7,18 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'verification_login_widget.dart' show VerificationLoginWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class VerificationLoginModel extends FlutterFlowModel {
+class VerificationLoginModel extends FlutterFlowModel<VerificationLoginWidget> {
+  ///  Local state fields for this page.
+
+  String? code = '';
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
@@ -24,8 +30,8 @@ class VerificationLoginModel extends FlutterFlowModel {
     minute: false,
     milliSecond: false,
   );
-  StopWatchTimer timerController =
-      StopWatchTimer(mode: StopWatchMode.countDown);
+  FlutterFlowTimerController timerController =
+      FlutterFlowTimerController(StopWatchTimer(mode: StopWatchMode.countDown));
 
   /// Initialization and disposal methods.
 

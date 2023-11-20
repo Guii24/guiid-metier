@@ -1,10 +1,12 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'empty_post_my_prof_widget.dart' show EmptyPostMyProfWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class EmptyPostMyProfModel extends FlutterFlowModel {
+class EmptyPostMyProfModel extends FlutterFlowModel<EmptyPostMyProfWidget> {
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}

@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_share_post_model.dart';
@@ -39,6 +40,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
     _model = createModel(context, () => BottomSharePostModel());
 
     _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -104,7 +106,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                       child: Image.network(
                         valueOrDefault<String>(
                           currentUserPhoto,
-                          'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                          'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -118,6 +120,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                         width: double.infinity,
                         child: TextFormField(
                           controller: _model.textController,
+                          focusNode: _model.textFieldFocusNode,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -248,7 +251,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                               child: Image.network(
                                 valueOrDefault<String>(
                                   containerUsersRecord.photoUrl,
-                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                 ),
                                 fit: BoxFit.cover,
                               ),

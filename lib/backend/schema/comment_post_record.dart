@@ -36,6 +36,16 @@ class CommentPostRecord extends FirestoreRecord {
   DocumentReference? get commentPostPost => _commentPostPost;
   bool hasCommentPostPost() => _commentPostPost != null;
 
+  // "comment_post_reported" field.
+  bool? _commentPostReported;
+  bool get commentPostReported => _commentPostReported ?? false;
+  bool hasCommentPostReported() => _commentPostReported != null;
+
+  // "comment_post_reported_ref" field.
+  DocumentReference? _commentPostReportedRef;
+  DocumentReference? get commentPostReportedRef => _commentPostReportedRef;
+  bool hasCommentPostReportedRef() => _commentPostReportedRef != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -43,6 +53,9 @@ class CommentPostRecord extends FirestoreRecord {
     _commentPostText = snapshotData['comment_post_text'] as String?;
     _commentPostTime = snapshotData['comment_post_time'] as DateTime?;
     _commentPostPost = snapshotData['comment_post_post'] as DocumentReference?;
+    _commentPostReported = snapshotData['comment_post_reported'] as bool?;
+    _commentPostReportedRef =
+        snapshotData['comment_post_reported_ref'] as DocumentReference?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -89,6 +102,8 @@ Map<String, dynamic> createCommentPostRecordData({
   String? commentPostText,
   DateTime? commentPostTime,
   DocumentReference? commentPostPost,
+  bool? commentPostReported,
+  DocumentReference? commentPostReportedRef,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -96,6 +111,8 @@ Map<String, dynamic> createCommentPostRecordData({
       'comment_post_text': commentPostText,
       'comment_post_time': commentPostTime,
       'comment_post_post': commentPostPost,
+      'comment_post_reported': commentPostReported,
+      'comment_post_reported_ref': commentPostReportedRef,
     }.withoutNulls,
   );
 
@@ -110,7 +127,9 @@ class CommentPostRecordDocumentEquality implements Equality<CommentPostRecord> {
     return e1?.commentPostUser == e2?.commentPostUser &&
         e1?.commentPostText == e2?.commentPostText &&
         e1?.commentPostTime == e2?.commentPostTime &&
-        e1?.commentPostPost == e2?.commentPostPost;
+        e1?.commentPostPost == e2?.commentPostPost &&
+        e1?.commentPostReported == e2?.commentPostReported &&
+        e1?.commentPostReportedRef == e2?.commentPostReportedRef;
   }
 
   @override
@@ -118,7 +137,9 @@ class CommentPostRecordDocumentEquality implements Equality<CommentPostRecord> {
         e?.commentPostUser,
         e?.commentPostText,
         e?.commentPostTime,
-        e?.commentPostPost
+        e?.commentPostPost,
+        e?.commentPostReported,
+        e?.commentPostReportedRef
       ]);
 
   @override

@@ -7,13 +7,15 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
+import 'subscription_widget.dart' show SubscriptionWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class SubscriptionModel extends FlutterFlowModel {
+class SubscriptionModel extends FlutterFlowModel<SubscriptionWidget> {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for PageView widget.

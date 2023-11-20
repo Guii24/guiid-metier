@@ -9,13 +9,15 @@ import '/my_profile/empty_wardrobe_my_prof/empty_wardrobe_my_prof_widget.dart';
 import '/post/component_post_reposted/component_post_reposted_widget.dart';
 import '/post/component_post_user/component_post_user_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'my_profile_widget.dart' show MyProfileWidget;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class MyProfileModel extends FlutterFlowModel {
+class MyProfileModel extends FlutterFlowModel<MyProfileWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

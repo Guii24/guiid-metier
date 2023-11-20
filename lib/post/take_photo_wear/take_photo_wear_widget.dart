@@ -1,10 +1,11 @@
-import '/backend/schema/structs/index.dart';
+import '/components/crop_wear_photo_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'take_photo_wear_model.dart';
@@ -60,7 +61,6 @@ class _TakePhotoWearWidgetState extends State<TakePhotoWearWidget> {
                 FFButtonWidget(
                   onPressed: () async {
                     final selectedMedia = await selectMedia(
-                      imageQuality: 100,
                       multiImage: false,
                     );
                     if (selectedMedia != null &&
@@ -125,16 +125,21 @@ class _TakePhotoWearWidgetState extends State<TakePhotoWearWidget> {
                       if (_model.uploadedLocalFile1 != null &&
                           (_model.uploadedLocalFile1.bytes?.isNotEmpty ??
                               false)) {
-                        _model.uploadDateWear =
-                            await actions.uploadDatatoFireBase(
-                          _model.uploadedLocalFile1,
-                        );
-                        FFAppState().update(() {
-                          FFAppState().addToWearItems(WearItemsStruct(
-                            wearImage: _model.uploadDateWear,
-                          ));
-                        });
                         Navigator.pop(context);
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: CropWearPhotoWidget(
+                                img: _model.uploadedLocalFile1,
+                              ),
+                            );
+                          },
+                        ).then((value) => safeSetState(() {}));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -258,16 +263,21 @@ class _TakePhotoWearWidgetState extends State<TakePhotoWearWidget> {
                       if (_model.uploadedLocalFile2 != null &&
                           (_model.uploadedLocalFile2.bytes?.isNotEmpty ??
                               false)) {
-                        _model.uploadWearGallery =
-                            await actions.uploadDatatoFireBase(
-                          _model.uploadedLocalFile2,
-                        );
-                        FFAppState().update(() {
-                          FFAppState().addToWearItems(WearItemsStruct(
-                            wearImage: _model.uploadWearGallery,
-                          ));
-                        });
                         Navigator.pop(context);
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: CropWearPhotoWidget(
+                                img: _model.uploadedLocalFile2,
+                              ),
+                            );
+                          },
+                        ).then((value) => safeSetState(() {}));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

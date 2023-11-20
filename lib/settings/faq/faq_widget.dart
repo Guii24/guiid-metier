@@ -1,9 +1,11 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'faq_model.dart';
@@ -36,10 +38,21 @@ class _FaqWidgetState extends State<FaqWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -99,367 +112,95 @@ class _FaqWidgetState extends State<FaqWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 20.0),
-                    child: Container(
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: ExpandableNotifier(
-                        initialExpanded: false,
-                        child: ExpandablePanel(
-                          header: Text(
-                            'How does the virtual wardrobe work?',
-                            style: FlutterFlowTheme.of(context)
-                                .displaySmall
-                                .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          collapsed: Container(),
-                          expanded: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur \nadipiscing elit. Pellentesque facilisis malesuada porttitor. Vestibulum vitae purus luctus, imperdiet massa eget, pharetra nulla. Sed sed eleifend sapien, sed mattis ex. Maecenas non eros blandit neque pul vinar scelerisque sollicitudin in ipsum. ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark68,
-                                    fontSize: 15.0,
-                                  ),
-                            ),
-                          ),
-                          theme: ExpandableThemeData(
-                            tapHeaderToExpand: true,
-                            tapBodyToExpand: false,
-                            tapBodyToCollapse: false,
-                            headerAlignment:
-                                ExpandablePanelHeaderAlignment.center,
-                            hasIcon: true,
-                          ),
-                        ),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    child: StreamBuilder<List<FaqRecord>>(
+                      stream: queryFaqRecord(
+                        queryBuilder: (faqRecord) =>
+                            faqRecord.orderBy('number'),
                       ),
-                    ),
-                  ),
-                  Divider(
-                    height: 1.0,
-                    thickness: 1.0,
-                    color: FlutterFlowTheme.of(context).line,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 20.0),
-                    child: Container(
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: ExpandableNotifier(
-                        initialExpanded: false,
-                        child: ExpandablePanel(
-                          header: Text(
-                            'How to change a subscription?',
-                            style: FlutterFlowTheme.of(context)
-                                .displaySmall
-                                .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 30.0,
+                              height: 30.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  FlutterFlowTheme.of(context).primary,
                                 ),
-                          ),
-                          collapsed: Container(),
-                          expanded: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur \nadipiscing elit. Pellentesque facilisis malesuada porttitor. Vestibulum vitae purus luctus, imperdiet massa eget, pharetra nulla. Sed sed eleifend sapien, sed mattis ex. Maecenas non eros blandit neque pul vinar scelerisque sollicitudin in ipsum. ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark68,
-                                    fontSize: 15.0,
-                                  ),
+                              ),
                             ),
-                          ),
-                          theme: ExpandableThemeData(
-                            tapHeaderToExpand: true,
-                            tapBodyToExpand: false,
-                            tapBodyToCollapse: false,
-                            headerAlignment:
-                                ExpandablePanelHeaderAlignment.center,
-                            hasIcon: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 1.0,
-                    thickness: 1.0,
-                    color: FlutterFlowTheme.of(context).line,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 20.0),
-                    child: Container(
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: ExpandableNotifier(
-                        initialExpanded: false,
-                        child: ExpandablePanel(
-                          header: Text(
-                            'How to change a phone number?',
-                            style: FlutterFlowTheme.of(context)
-                                .displaySmall
-                                .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
+                          );
+                        }
+                        List<FaqRecord> columnFaqRecordList = snapshot.data!;
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: List.generate(columnFaqRecordList.length,
+                                  (columnIndex) {
+                            final columnFaqRecord =
+                                columnFaqRecordList[columnIndex];
+                            return Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  color: Colors.white,
+                                  child: ExpandableNotifier(
+                                    child: ExpandablePanel(
+                                      header: Text(
+                                        columnFaqRecord.question,
+                                        style: FlutterFlowTheme.of(context)
+                                            .displaySmall
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color: Colors.black,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      collapsed: Container(),
+                                      expanded: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 10.0, 0.0, 0.0),
+                                        child: Text(
+                                          columnFaqRecord.answer,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Libre Franklin',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .dark68,
+                                                fontSize: 15.0,
+                                              ),
+                                        ),
+                                      ),
+                                      theme: ExpandableThemeData(
+                                        tapHeaderToExpand: true,
+                                        tapBodyToExpand: false,
+                                        tapBodyToCollapse: false,
+                                        headerAlignment:
+                                            ExpandablePanelHeaderAlignment
+                                                .center,
+                                        hasIcon: true,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                          ),
-                          collapsed: Container(),
-                          expanded: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur \nadipiscing elit. Pellentesque facilisis malesuada porttitor. Vestibulum vitae purus luctus, imperdiet massa eget, pharetra nulla. Sed sed eleifend sapien, sed mattis ex. Maecenas non eros blandit neque pul vinar scelerisque sollicitudin in ipsum. ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark68,
-                                    fontSize: 15.0,
-                                  ),
-                            ),
-                          ),
-                          theme: ExpandableThemeData(
-                            tapHeaderToExpand: true,
-                            tapBodyToExpand: false,
-                            tapBodyToCollapse: false,
-                            headerAlignment:
-                                ExpandablePanelHeaderAlignment.center,
-                            hasIcon: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 1.0,
-                    thickness: 1.0,
-                    color: FlutterFlowTheme.of(context).line,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 20.0),
-                    child: Container(
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: ExpandableNotifier(
-                        initialExpanded: false,
-                        child: ExpandablePanel(
-                          header: Text(
-                            'Block & Report',
-                            style: FlutterFlowTheme.of(context)
-                                .displaySmall
-                                .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
+                                Divider(
+                                  height: 1.0,
+                                  thickness: 1.0,
+                                  color: FlutterFlowTheme.of(context).line,
                                 ),
-                          ),
-                          collapsed: Container(),
-                          expanded: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur \nadipiscing elit. Pellentesque facilisis malesuada porttitor. Vestibulum vitae purus luctus, imperdiet massa eget, pharetra nulla. Sed sed eleifend sapien, sed mattis ex. Maecenas non eros blandit neque pul vinar scelerisque sollicitudin in ipsum. ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark68,
-                                    fontSize: 15.0,
-                                  ),
-                            ),
-                          ),
-                          theme: ExpandableThemeData(
-                            tapHeaderToExpand: true,
-                            tapBodyToExpand: false,
-                            tapBodyToCollapse: false,
-                            headerAlignment:
-                                ExpandablePanelHeaderAlignment.center,
-                            hasIcon: true,
-                          ),
-                        ),
-                      ),
+                              ].divide(SizedBox(height: 16.0)),
+                            );
+                          })
+                              .divide(SizedBox(height: 16.0))
+                              .addToEnd(SizedBox(height: 16.0)),
+                        );
+                      },
                     ),
-                  ),
-                  Divider(
-                    height: 1.0,
-                    thickness: 1.0,
-                    color: FlutterFlowTheme.of(context).line,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 20.0),
-                    child: Container(
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: ExpandableNotifier(
-                        initialExpanded: false,
-                        child: ExpandablePanel(
-                          header: Text(
-                            'How to change a subscription?',
-                            style: FlutterFlowTheme.of(context)
-                                .displaySmall
-                                .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          collapsed: Container(),
-                          expanded: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur \nadipiscing elit. Pellentesque facilisis malesuada porttitor. Vestibulum vitae purus luctus, imperdiet massa eget, pharetra nulla. Sed sed eleifend sapien, sed mattis ex. Maecenas non eros blandit neque pul vinar scelerisque sollicitudin in ipsum. ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark68,
-                                    fontSize: 15.0,
-                                  ),
-                            ),
-                          ),
-                          theme: ExpandableThemeData(
-                            tapHeaderToExpand: true,
-                            tapBodyToExpand: false,
-                            tapBodyToCollapse: false,
-                            headerAlignment:
-                                ExpandablePanelHeaderAlignment.center,
-                            hasIcon: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 1.0,
-                    thickness: 1.0,
-                    color: FlutterFlowTheme.of(context).line,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 20.0),
-                    child: Container(
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: ExpandableNotifier(
-                        initialExpanded: false,
-                        child: ExpandablePanel(
-                          header: Text(
-                            'How does the virtual wardrobe work?',
-                            style: FlutterFlowTheme.of(context)
-                                .displaySmall
-                                .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          collapsed: Container(),
-                          expanded: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur \nadipiscing elit. Pellentesque facilisis malesuada porttitor. Vestibulum vitae purus luctus, imperdiet massa eget, pharetra nulla. Sed sed eleifend sapien, sed mattis ex. Maecenas non eros blandit neque pul vinar scelerisque sollicitudin in ipsum. ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark68,
-                                    fontSize: 15.0,
-                                  ),
-                            ),
-                          ),
-                          theme: ExpandableThemeData(
-                            tapHeaderToExpand: true,
-                            tapBodyToExpand: false,
-                            tapBodyToCollapse: false,
-                            headerAlignment:
-                                ExpandablePanelHeaderAlignment.center,
-                            hasIcon: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 1.0,
-                    thickness: 1.0,
-                    color: FlutterFlowTheme.of(context).line,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 20.0),
-                    child: Container(
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: ExpandableNotifier(
-                        initialExpanded: false,
-                        child: ExpandablePanel(
-                          header: Text(
-                            'How to change a phone number?',
-                            style: FlutterFlowTheme.of(context)
-                                .displaySmall
-                                .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          collapsed: Container(),
-                          expanded: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur \nadipiscing elit. Pellentesque facilisis malesuada porttitor. Vestibulum vitae purus luctus, imperdiet massa eget, pharetra nulla. Sed sed eleifend sapien, sed mattis ex. Maecenas non eros blandit neque pul vinar scelerisque sollicitudin in ipsum. ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark68,
-                                    fontSize: 15.0,
-                                  ),
-                            ),
-                          ),
-                          theme: ExpandableThemeData(
-                            tapHeaderToExpand: true,
-                            tapBodyToExpand: false,
-                            tapBodyToCollapse: false,
-                            headerAlignment:
-                                ExpandablePanelHeaderAlignment.center,
-                            hasIcon: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 1.0,
-                    thickness: 1.0,
-                    color: FlutterFlowTheme.of(context).line,
                   ),
                 ],
               ),

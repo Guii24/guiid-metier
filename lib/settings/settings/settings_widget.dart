@@ -1,4 +1,6 @@
-import '/components/subscription_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/components/subscription_in_profile_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -6,7 +8,9 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/settings/popup_delete_account/popup_delete_account_widget.dart';
 import '/settings/popup_logout/popup_logout_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'settings_model.dart';
@@ -39,10 +43,21 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -161,15 +176,17 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                             context: context,
                             builder: (context) {
                               return GestureDetector(
-                                onTap: () => FocusScope.of(context)
-                                    .requestFocus(_model.unfocusNode),
+                                onTap: () => _model.unfocusNode.canRequestFocus
+                                    ? FocusScope.of(context)
+                                        .requestFocus(_model.unfocusNode)
+                                    : FocusScope.of(context).unfocus(),
                                 child: Padding(
                                   padding: MediaQuery.viewInsetsOf(context),
-                                  child: SubscriptionWidget(),
+                                  child: SubscriptionInProfileWidget(),
                                 ),
                               );
                             },
-                          ).then((value) => setState(() {}));
+                          ).then((value) => safeSetState(() {}));
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
@@ -547,55 +564,78 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                         ),
                       ),
                     ),
+                    Divider(
+                      height: 1.0,
+                      thickness: 1.0,
+                      color: FlutterFlowTheme.of(context).line,
+                    ),
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                      child: InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          context.pushNamed('SupportAllChats');
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 12.0, 0.0),
-                              child: Icon(
-                                FFIcons.kproperty1termsOfUse,
-                                color: FlutterFlowTheme.of(context).dark88,
-                                size: 24.0,
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 15.0, 0.0, 15.0),
-                                child: Text(
-                                  'support from admin',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color:
-                                            FlutterFlowTheme.of(context).dark88,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.keyboard_arrow_right_rounded,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 12.0, 0.0),
+                            child: Icon(
+                              FFIcons.kproperty1notification,
                               color: FlutterFlowTheme.of(context).dark88,
                               size: 24.0,
                             ),
-                          ],
-                        ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 15.0, 0.0, 15.0),
+                              child: Text(
+                                'Notifications',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Libre Franklin',
+                                      color:
+                                          FlutterFlowTheme.of(context).dark88,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                          ),
+                          AuthUserStreamWidget(
+                            builder: (context) => Switch.adaptive(
+                              value: _model.switchValue ??=
+                                  valueOrDefault<bool>(
+                                      currentUserDocument?.userNotification,
+                                      false),
+                              onChanged: (newValue) async {
+                                setState(() => _model.switchValue = newValue!);
+                                if (newValue!) {
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    userNotification: true,
+                                  ));
+                                } else {
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    userNotification: false,
+                                  ));
+                                }
+                              },
+                              activeColor: isiOS
+                                  ? FlutterFlowTheme.of(context).dark52
+                                  : FlutterFlowTheme.of(context).primary,
+                              activeTrackColor: isiOS
+                                  ? FlutterFlowTheme.of(context).primary
+                                  : FlutterFlowTheme.of(context).dark52,
+                              inactiveTrackColor:
+                                  FlutterFlowTheme.of(context).dark12,
+                              inactiveThumbColor:
+                                  FlutterFlowTheme.of(context).secondaryText,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Divider(
@@ -636,8 +676,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                 return Material(
                                   color: Colors.transparent,
                                   child: GestureDetector(
-                                    onTap: () => FocusScope.of(context)
-                                        .requestFocus(_model.unfocusNode),
+                                    onTap: () => _model
+                                            .unfocusNode.canRequestFocus
+                                        ? FocusScope.of(context)
+                                            .requestFocus(_model.unfocusNode)
+                                        : FocusScope.of(context).unfocus(),
                                     child: PopupLogoutWidget(),
                                   ),
                                 );
@@ -712,8 +755,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                 return Material(
                                   color: Colors.transparent,
                                   child: GestureDetector(
-                                    onTap: () => FocusScope.of(context)
-                                        .requestFocus(_model.unfocusNode),
+                                    onTap: () => _model
+                                            .unfocusNode.canRequestFocus
+                                        ? FocusScope.of(context)
+                                            .requestFocus(_model.unfocusNode)
+                                        : FocusScope.of(context).unfocus(),
                                     child: PopupDeleteAccountWidget(),
                                   ),
                                 );
@@ -760,11 +806,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           ),
                         ),
                       ),
-                    ),
-                    Divider(
-                      height: 1.0,
-                      thickness: 1.0,
-                      color: FlutterFlowTheme.of(context).line,
                     ),
                   ],
                 ),

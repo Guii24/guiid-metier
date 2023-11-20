@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_top_article_model.dart';
@@ -66,8 +67,8 @@ class _ComponentTopArticleWidgetState extends State<ComponentTopArticleWidget> {
         }
         final stackArticlesRecord = snapshot.data!;
         return Container(
-          width: MediaQuery.sizeOf(context).width * 0.67,
-          height: MediaQuery.sizeOf(context).height * 0.234,
+          width: MediaQuery.sizeOf(context).width * 0.53,
+          height: MediaQuery.sizeOf(context).height * 0.23,
           child: Stack(
             children: [
               ClipRRect(
@@ -92,20 +93,6 @@ class _ComponentTopArticleWidgetState extends State<ComponentTopArticleWidget> {
                     color: Color(0x33000000),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
-                child: Text(
-                  stackArticlesRecord.articleTitle,
-                  textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Libre Franklin',
-                        color: FlutterFlowTheme.of(context).primary,
-                        fontSize: 17.0,
-                        letterSpacing: 0.5,
-                        fontWeight: FontWeight.w500,
-                      ),
                 ),
               ),
             ],

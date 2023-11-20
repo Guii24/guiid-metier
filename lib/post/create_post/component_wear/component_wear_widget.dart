@@ -40,8 +40,11 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
 
     _model.textController1 ??=
         TextEditingController(text: widget.wearItem?.wearText);
+    _model.textFieldFocusNode1 ??= FocusNode();
+
     _model.textController2 ??=
         TextEditingController(text: widget.wearItem?.wearLink);
+    _model.textFieldFocusNode2 ??= FocusNode();
   }
 
   @override
@@ -65,16 +68,18 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
         children: [
           Container(
             width: double.infinity,
-            height: MediaQuery.sizeOf(context).height * 0.345,
+            height: MediaQuery.sizeOf(context).height * 0.55,
             child: Stack(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(0.0),
-                  child: Image.network(
-                    widget.wearItem!.wearImage,
-                    width: double.infinity,
-                    height: MediaQuery.sizeOf(context).height * 0.345,
-                    fit: BoxFit.fill,
+                Align(
+                  alignment: AlignmentDirectional(0.00, 0.00),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(0.0),
+                    child: Image.network(
+                      widget.wearItem!.wearImage,
+                      width: double.infinity,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 Align(
@@ -113,6 +118,7 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
               width: double.infinity,
               child: TextFormField(
                 controller: _model.textController1,
+                focusNode: _model.textFieldFocusNode1,
                 onChanged: (_) => EasyDebounce.debounce(
                   '_model.textController1',
                   Duration(milliseconds: 2000),
@@ -193,6 +199,7 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
               width: double.infinity,
               child: TextFormField(
                 controller: _model.textController2,
+                focusNode: _model.textFieldFocusNode2,
                 onChanged: (_) => EasyDebounce.debounce(
                   '_model.textController2',
                   Duration(milliseconds: 2000),

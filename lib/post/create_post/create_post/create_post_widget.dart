@@ -1,12 +1,15 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/create_post/botton_select_category/botton_select_category_widget.dart';
+import '/post/create_post/custom_dialog_create_post/custom_dialog_create_post_widget.dart';
 import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_p_post_user/take_photo_p_post_user_widget.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -40,13 +43,16 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
       setState(() {
         FFAppState().choosenPreference = [];
         FFAppState().uploadPhotoPost = [];
+        FFAppState().choosenPurpose = '';
       });
+      setState(() {});
       setState(() {
         _model.textController?.clear();
       });
     });
 
     _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -58,10 +64,21 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -91,8 +108,10 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                     return Material(
                       color: Colors.transparent,
                       child: GestureDetector(
-                        onTap: () => FocusScope.of(context)
-                            .requestFocus(_model.unfocusNode),
+                        onTap: () => _model.unfocusNode.canRequestFocus
+                            ? FocusScope.of(context)
+                                .requestFocus(_model.unfocusNode)
+                            : FocusScope.of(context).unfocus(),
                         child: PopupCancelWidget(),
                       ),
                     );
@@ -112,88 +131,188 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
           actions: [
             Align(
               alignment: AlignmentDirectional(0.00, 0.00),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: (_model.textController.text == null ||
-                              _model.textController.text == '') ||
-                          (FFAppState().choosenPreference.length == 0)
-                      ? null
-                      : () async {
-                          if ((_model.textController.text != null &&
-                                  _model.textController.text != '') &&
-                              (FFAppState().choosenPreference.length != null)) {
-                            await PostRecord.collection.doc().set({
-                              ...createPostRecordData(
-                                postText: _model.textController.text,
-                                postTimePosted: getCurrentTimestamp,
-                                postCreator: currentUserReference,
-                                postIsReposted: false,
-                                postType: 'post',
-                              ),
-                              'post_images_list': FFAppState().uploadPhotoPost,
-                              'post_category': FFAppState().choosenPreference,
-                            });
-
-                            context.goNamed(
-                              'MainPage',
-                              extra: <String, dynamic>{
-                                kTransitionInfoKey: TransitionInfo(
-                                  hasTransition: true,
-                                  transitionType: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 0),
-                                ),
-                              },
-                            );
-
-                            setState(() {
-                              FFAppState().uploadPhotoPost = [];
-                              FFAppState().choosenPreference = [];
-                            });
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Description and Category must be filled in',
-                                  style: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                                duration: Duration(milliseconds: 3000),
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).dark52,
-                              ),
-                            );
-                          }
-                        },
-                  text: 'POST',
-                  options: FFButtonOptions(
-                    width: 59.0,
-                    height: 27.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Libre Franklin',
-                          color: Colors.white,
-                          fontSize: 12.0,
-                          letterSpacing: 0.5,
-                        ),
-                    elevation: 0.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+              child: Builder(
+                builder: (context) => Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
+                  child: StreamBuilder<List<UsersRecord>>(
+                    stream: queryUsersRecord(
+                      queryBuilder: (usersRecord) => usersRecord.where(
+                        'user_following',
+                        arrayContains: currentUserReference,
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(5.0),
-                    disabledColor: Color(0xFFC9C9C9),
-                    disabledTextColor: FlutterFlowTheme.of(context).primary,
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 30.0,
+                            height: 30.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      List<UsersRecord> buttonUsersRecordList = snapshot.data!;
+                      return FFButtonWidget(
+                        onPressed: (_model.textController.text == null ||
+                                    _model.textController.text == '') ||
+                                (FFAppState().choosenPreference.length == 0)
+                            ? null
+                            : () async {
+                                if ((_model.textController.text != null &&
+                                        _model.textController.text != '') &&
+                                    (FFAppState()
+                                            .choosenPurposeAndPref
+                                            .length !=
+                                        null)) {
+                                  await PostRecord.collection.doc().set({
+                                    ...createPostRecordData(
+                                      postText: _model.textController.text,
+                                      postTimePosted: getCurrentTimestamp,
+                                      postCreator: currentUserReference,
+                                      postIsReposted: false,
+                                      postType: 'post',
+                                      postBlocked: false,
+                                    ),
+                                    ...mapToFirestore(
+                                      {
+                                        'post_images_list':
+                                            FFAppState().uploadPhotoPost,
+                                        'post_category': functions.createList(
+                                            FFAppState().choosenPurpose,
+                                            FFAppState()
+                                                .choosenPreference
+                                                .toList()),
+                                      },
+                                    ),
+                                  });
+
+                                  context.goNamed(
+                                    'MainPage',
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType: PageTransitionType.fade,
+                                        duration: Duration(milliseconds: 0),
+                                      ),
+                                    },
+                                  );
+
+                                  setState(() {
+                                    FFAppState().uploadPhotoPost = [];
+                                    FFAppState().choosenPreference = [];
+                                    FFAppState().choosenPurpose = '';
+                                    FFAppState().choosenPurposeAndPref = [];
+                                  });
+                                  showAlignedDialog(
+                                    barrierColor: Color(0x02000000),
+                                    barrierDismissible: false,
+                                    context: context,
+                                    isGlobal: true,
+                                    avoidOverflow: false,
+                                    targetAnchor: AlignmentDirectional(0.0, 0.0)
+                                        .resolve(Directionality.of(context)),
+                                    followerAnchor: AlignmentDirectional(
+                                            0.0, -1.0)
+                                        .resolve(Directionality.of(context)),
+                                    builder: (dialogContext) {
+                                      return Material(
+                                        color: Colors.transparent,
+                                        child: GestureDetector(
+                                          onTap: () => _model
+                                                  .unfocusNode.canRequestFocus
+                                              ? FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _model.unfocusNode)
+                                              : FocusScope.of(context)
+                                                  .unfocus(),
+                                          child: CustomDialogCreatePostWidget(),
+                                        ),
+                                      );
+                                    },
+                                  ).then((value) => setState(() {}));
+
+                                  await NotificationRecord.collection
+                                      .doc()
+                                      .set(createNotificationRecordData(
+                                        notificationFrom: currentUserReference,
+                                        notificationTo: buttonUsersRecordList
+                                            .where((e) =>
+                                                e.userNotification == true)
+                                            .toList()[
+                                                buttonUsersRecordList.length]
+                                            .reference,
+                                        notificationType: 'published post',
+                                        notificationCreationDate:
+                                            getCurrentTimestamp,
+                                      ));
+                                  triggerPushNotification(
+                                    notificationTitle: currentUserDisplayName,
+                                    notificationText: 'published the post',
+                                    userRefs: buttonUsersRecordList
+                                        .where(
+                                            (e) => e.userNotification == true)
+                                        .toList()
+                                        .map((e) => e.reference)
+                                        .toList(),
+                                    initialPageName: 'MainPage',
+                                    parameterData: {},
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Description and Category must be filled in',
+                                        style: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                      duration: Duration(milliseconds: 3000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context).dark52,
+                                    ),
+                                  );
+                                }
+                              },
+                        text: 'POST',
+                        options: FFButtonOptions(
+                          width: 59.0,
+                          height: 27.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Libre Franklin',
+                                    color: Colors.white,
+                                    fontSize: 12.0,
+                                    letterSpacing: 0.5,
+                                  ),
+                          elevation: 0.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(5.0),
+                          disabledColor: Color(0xFFC9C9C9),
+                          disabledTextColor:
+                              FlutterFlowTheme.of(context).primary,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -216,7 +335,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                       if (FFAppState().uploadPhotoPost.length >= 1)
                         Container(
                           width: MediaQuery.sizeOf(context).width * 1.0,
-                          height: MediaQuery.sizeOf(context).height * 0.345,
+                          height: MediaQuery.sizeOf(context).height * 0.55,
                           child: Stack(
                             children: [
                               Builder(
@@ -226,7 +345,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                   return Container(
                                     width: double.infinity,
                                     height: MediaQuery.sizeOf(context).height *
-                                        0.345,
+                                        0.55,
                                     child: PageView.builder(
                                       controller: _model.pageViewController ??=
                                           PageController(
@@ -247,10 +366,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                           child: Image.network(
                                             imagesItem,
                                             width: double.infinity,
-                                            height: MediaQuery.sizeOf(context)
-                                                    .height *
-                                                0.345,
-                                            fit: BoxFit.fill,
+                                            fit: BoxFit.contain,
                                           ),
                                         );
                                       },
@@ -355,6 +471,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController,
+                            focusNode: _model.textFieldFocusNode,
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController',
                               Duration(milliseconds: 10),
@@ -434,272 +551,266 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.00, 1.00),
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  if (FFAppState().uploadPhotoPost.length ==
-                                      5) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Max 5 images',
-                                          style: TextStyle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
-                                        ),
-                                        duration: Duration(milliseconds: 3000),
-                                        backgroundColor: Color(0xCB000000),
-                                      ),
-                                    );
-                                  } else {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Color(0x01000000),
-                                      barrierColor:
-                                          FlutterFlowTheme.of(context).dark38,
-                                      context: context,
-                                      builder: (context) {
-                                        return GestureDetector(
-                                          onTap: () => FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode),
-                                          child: Padding(
-                                            padding: MediaQuery.viewInsetsOf(
-                                                context),
-                                            child: TakePhotoPPostUserWidget(),
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => setState(() {}));
-                                  }
-                                },
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 0.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Container(
-                                    height: 35.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(5.0),
-                                      border: Border.all(
-                                        color:
-                                            FlutterFlowTheme.of(context).dark12,
-                                        width: 1.0,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10.0, 0.0, 10.0, 0.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 4.0, 0.0),
-                                            child: Icon(
-                                              FFIcons.kicons1,
-                                              color: Colors.black,
-                                              size: 22.0,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Photo',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark88,
-                                                  fontSize: 15.0,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                alignment: AlignmentDirectional(-1.00, 0.00),
+                child: Padding(
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          if (FFAppState().uploadPhotoPost.length == 5) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Max 5 images',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context).primary,
                                   ),
                                 ),
+                                duration: Duration(milliseconds: 3000),
+                                backgroundColor: Color(0xCB000000),
                               ),
-                              Flexible(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 0.0, 0.0, 0.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      await showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        backgroundColor: Color(0x01000000),
-                                        barrierColor:
-                                            FlutterFlowTheme.of(context).dark38,
-                                        context: context,
-                                        builder: (context) {
-                                          return GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode),
-                                            child: Padding(
-                                              padding: MediaQuery.viewInsetsOf(
-                                                  context),
-                                              child:
-                                                  BottonSelectCategoryWidget(),
-                                            ),
-                                          );
-                                        },
-                                      ).then((value) => setState(() {}));
-                                    },
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      elevation: 0.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      child: Container(
-                                        height: 35.0,
-                                        constraints: BoxConstraints(
-                                          maxWidth:
-                                              MediaQuery.sizeOf(context).width *
-                                                  0.55,
-                                        ),
-                                        decoration: BoxDecoration(
+                            );
+                          } else {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Color(0x01000000),
+                              barrierColor: FlutterFlowTheme.of(context).dark38,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () =>
+                                      _model.unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: TakePhotoPPostUserWidget(),
+                                  ),
+                                );
+                              },
+                            ).then((value) => safeSetState(() {}));
+                          }
+                        },
+                        child: Material(
+                          color: Colors.transparent,
+                          elevation: 0.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                          child: Container(
+                            height: 35.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              borderRadius: BorderRadius.circular(5.0),
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).dark12,
+                                width: 1.0,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 10.0, 0.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 4.0, 0.0),
+                                    child: Icon(
+                                      FFIcons.kicons1,
+                                      color: Colors.black,
+                                      size: 22.0,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Photo',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
                                           color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .dark12,
-                                            width: 1.0,
-                                          ),
+                                              .dark88,
+                                          fontSize: 15.0,
                                         ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 0.0, 6.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              if (FFAppState()
-                                                      .choosenPreference
-                                                      .length ==
-                                                  0)
-                                                Text(
-                                                  'Category',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Libre Franklin',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .dark88,
-                                                        fontSize: 15.0,
-                                                      ),
-                                                ),
-                                              if (FFAppState()
-                                                      .choosenPreference
-                                                      .length !=
-                                                  0)
-                                                Expanded(
-                                                  child: Builder(
-                                                    builder: (context) {
-                                                      final item = FFAppState()
-                                                          .choosenPreference
-                                                          .toList();
-                                                      return SingleChildScrollView(
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children:
-                                                              List.generate(
-                                                                  item.length,
-                                                                  (itemIndex) {
-                                                            final itemItem =
-                                                                item[itemIndex];
-                                                            return Text(
-                                                              itemIndex ==
-                                                                      (FFAppState()
-                                                                              .choosenPreference
-                                                                              .length -
-                                                                          1)
-                                                                  ? itemItem
-                                                                  : '${itemItem}, ',
-                                                              maxLines: 1,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Libre Franklin',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .dark88,
-                                                                    fontSize:
-                                                                        15.0,
-                                                                  ),
-                                                            );
-                                                          }),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              Icon(
-                                                FFIcons.kchevronBottomSm,
-                                                color: Colors.black,
-                                                size: 22.0,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Flexible(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 0.0, 0.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Color(0x01000000),
+                                barrierColor:
+                                    FlutterFlowTheme.of(context).dark38,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () => _model
+                                            .unfocusNode.canRequestFocus
+                                        ? FocusScope.of(context)
+                                            .requestFocus(_model.unfocusNode)
+                                        : FocusScope.of(context).unfocus(),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: BottonSelectCategoryWidget(),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => safeSetState(() {}));
+                            },
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 0.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: Container(
+                                height: 35.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context).dark12,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      12.0, 0.0, 6.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      if (functions
+                                              .createList(
+                                                  FFAppState().choosenPurpose,
+                                                  FFAppState()
+                                                      .choosenPreference
+                                                      .toList())
+                                              ?.length ==
+                                          null)
+                                        Text(
+                                          'Category',
+                                          maxLines: 1,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Libre Franklin',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .dark88,
+                                                fontSize: 15.0,
+                                              ),
+                                        ),
+                                      if (functions
+                                              .createList(
+                                                  FFAppState().choosenPurpose,
+                                                  FFAppState()
+                                                      .choosenPreference
+                                                      .toList())
+                                              ?.length !=
+                                          null)
+                                        Flexible(
+                                          child: Builder(
+                                            builder: (context) {
+                                              final item = functions
+                                                      .createList(
+                                                          FFAppState()
+                                                              .choosenPurpose,
+                                                          FFAppState()
+                                                              .choosenPreference
+                                                              .toList())
+                                                      ?.toList() ??
+                                                  [];
+                                              return SingleChildScrollView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: List.generate(
+                                                      item.length, (itemIndex) {
+                                                    final itemItem =
+                                                        item[itemIndex];
+                                                    return Text(
+                                                      itemIndex ==
+                                                              (functions
+                                                                      .createList(
+                                                                          FFAppState()
+                                                                              .choosenPurpose,
+                                                                          FFAppState()
+                                                                              .choosenPreference
+                                                                              .toList())!
+                                                                      .length -
+                                                                  1)
+                                                          ? itemItem
+                                                          : '${itemItem}, ',
+                                                      maxLines: 1,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .dark88,
+                                                                fontSize: 15.0,
+                                                              ),
+                                                    );
+                                                  }),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            4.0, 0.0, 0.0, 0.0),
+                                        child: Icon(
+                                          FFIcons.kchevronBottomSm,
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          size: 22.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

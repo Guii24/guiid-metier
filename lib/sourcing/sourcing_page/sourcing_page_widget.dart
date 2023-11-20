@@ -1,13 +1,14 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/company_pages/empty_jobs/empty_jobs_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/sourcing/bottom_job_details/bottom_job_details_widget.dart';
+import '/jobs/bottom_job_details/bottom_job_details_widget.dart';
+import '/jobs/empty_jobs/empty_jobs_widget.dart';
 import '/sourcing/component_sourcing/component_sourcing_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'sourcing_page_model.dart';
@@ -40,10 +41,21 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -80,7 +92,7 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
                       child: Image.network(
                         valueOrDefault<String>(
                           currentUserPhoto,
-                          'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                          'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -180,8 +192,8 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
                         child: StreamBuilder<List<JobRecord>>(
                           stream: queryJobRecord(
-                            queryBuilder: (jobRecord) =>
-                                jobRecord.orderBy('job_creation_date'),
+                            queryBuilder: (jobRecord) => jobRecord
+                                .orderBy('job_creation_date', descending: true),
                           ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
@@ -229,6 +241,9 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
                                   onTap: () async {
                                     if (listViewJobRecord.companyCreator ==
                                         currentUserReference) {
+                                      if (Navigator.of(context).canPop()) {
+                                        context.pop();
+                                      }
                                       context.pushNamed(
                                         'SourcingMyJobDetails',
                                         queryParameters: {
@@ -242,18 +257,22 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
                                         },
                                       );
                                     } else {
-                                      await showModalBottomSheet(
+                                      showModalBottomSheet(
                                         isScrollControlled: true,
                                         backgroundColor: Color(0x01000000),
                                         barrierColor:
                                             FlutterFlowTheme.of(context).dark38,
-                                        useSafeArea: true,
+                                        enableDrag: false,
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode),
+                                            onTap: () => _model
+                                                    .unfocusNode.canRequestFocus
+                                                ? FocusScope.of(context)
+                                                    .requestFocus(
+                                                        _model.unfocusNode)
+                                                : FocusScope.of(context)
+                                                    .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -263,7 +282,7 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
                                             ),
                                           );
                                         },
-                                      ).then((value) => setState(() {}));
+                                      ).then((value) => safeSetState(() {}));
                                     }
                                   },
                                   child: ComponentSourcingWidget(

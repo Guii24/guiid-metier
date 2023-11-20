@@ -1,12 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
+import '/components/subscription_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/bottom_editop_delete_post/bottom_editop_delete_post_widget.dart';
 import '/post/bottom_report_post/bottom_report_post_widget.dart';
-import '/post/bottom_share_post/bottom_share_post_widget.dart';
 import '/post/comment_post/comment_post_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,6 +15,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'post_page_reposted_model.dart';
@@ -52,6 +54,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
     });
 
     _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -63,6 +66,15 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return StreamBuilder<PostRecord>(
@@ -87,7 +99,9 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
         }
         final postPageRepostedPostRecord = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+          onTap: () => _model.unfocusNode.canRequestFocus
+              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+              : FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFF4F3EC),
@@ -128,8 +142,10 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => FocusScope.of(context)
-                                  .requestFocus(_model.unfocusNode),
+                              onTap: () => _model.unfocusNode.canRequestFocus
+                                  ? FocusScope.of(context)
+                                      .requestFocus(_model.unfocusNode)
+                                  : FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomEditopDeletePostWidget(
@@ -138,7 +154,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                               ),
                             );
                           },
-                        ).then((value) => setState(() {}));
+                        ).then((value) => safeSetState(() {}));
                       } else {
                         await showModalBottomSheet(
                           isScrollControlled: true,
@@ -146,8 +162,10 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => FocusScope.of(context)
-                                  .requestFocus(_model.unfocusNode),
+                              onTap: () => _model.unfocusNode.canRequestFocus
+                                  ? FocusScope.of(context)
+                                      .requestFocus(_model.unfocusNode)
+                                  : FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomReportPostWidget(
@@ -157,7 +175,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                               ),
                             );
                           },
-                        ).then((value) => setState(() {}));
+                        ).then((value) => safeSetState(() {}));
                       }
                     },
                   ),
@@ -305,7 +323,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                               String>(
                                                             stackUsersRecord
                                                                 .photoUrl,
-                                                            'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                                            'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                                           ),
                                                           fit: BoxFit.cover,
                                                         ),
@@ -408,22 +426,27 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                       () async {
                                                                     await currentUserReference!
                                                                         .update({
-                                                                      'user_following':
-                                                                          FieldValue
-                                                                              .arrayRemove([
-                                                                        stackUsersRecord
-                                                                            .reference
-                                                                      ]),
+                                                                      ...mapToFirestore(
+                                                                        {
+                                                                          'user_following':
+                                                                              FieldValue.arrayRemove([
+                                                                            stackUsersRecord.reference
+                                                                          ]),
+                                                                        },
+                                                                      ),
                                                                     });
 
                                                                     await stackUsersRecord
                                                                         .reference
                                                                         .update({
-                                                                      'user_followers':
-                                                                          FieldValue
-                                                                              .arrayRemove([
-                                                                        currentUserReference
-                                                                      ]),
+                                                                      ...mapToFirestore(
+                                                                        {
+                                                                          'user_followers':
+                                                                              FieldValue.arrayRemove([
+                                                                            currentUserReference
+                                                                          ]),
+                                                                        },
+                                                                      ),
                                                                     });
                                                                     await actions
                                                                         .updatePage(
@@ -483,27 +506,63 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                       () async {
                                                                     await currentUserReference!
                                                                         .update({
-                                                                      'user_following':
-                                                                          FieldValue
-                                                                              .arrayUnion([
-                                                                        stackUsersRecord
-                                                                            .reference
-                                                                      ]),
+                                                                      ...mapToFirestore(
+                                                                        {
+                                                                          'user_following':
+                                                                              FieldValue.arrayUnion([
+                                                                            stackUsersRecord.reference
+                                                                          ]),
+                                                                        },
+                                                                      ),
                                                                     });
 
                                                                     await stackUsersRecord
                                                                         .reference
                                                                         .update({
-                                                                      'user_followers':
-                                                                          FieldValue
-                                                                              .arrayUnion([
-                                                                        currentUserReference
-                                                                      ]),
+                                                                      ...mapToFirestore(
+                                                                        {
+                                                                          'user_followers':
+                                                                              FieldValue.arrayUnion([
+                                                                            currentUserReference
+                                                                          ]),
+                                                                        },
+                                                                      ),
                                                                     });
                                                                     await actions
                                                                         .updatePage(
                                                                       context,
                                                                     );
+
+                                                                    await NotificationRecord
+                                                                        .collection
+                                                                        .doc()
+                                                                        .set(
+                                                                            createNotificationRecordData(
+                                                                          notificationFrom:
+                                                                              currentUserReference,
+                                                                          notificationTo:
+                                                                              stackUsersRecord.reference,
+                                                                          notificationType:
+                                                                              'following',
+                                                                          notificationCreationDate:
+                                                                              getCurrentTimestamp,
+                                                                        ));
+                                                                    if (stackUsersRecord
+                                                                        .userNotification) {
+                                                                      triggerPushNotification(
+                                                                        notificationTitle:
+                                                                            currentUserDisplayName,
+                                                                        notificationText:
+                                                                            'started following you',
+                                                                        userRefs: [
+                                                                          stackUsersRecord
+                                                                              .reference
+                                                                        ],
+                                                                        initialPageName:
+                                                                            'MainPage',
+                                                                        parameterData: {},
+                                                                      );
+                                                                    }
                                                                   },
                                                                   text:
                                                                       'FOLLOW',
@@ -591,7 +650,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                 1.0,
                                             height: MediaQuery.sizeOf(context)
                                                     .height *
-                                                0.345,
+                                                0.69,
                                             child: Stack(
                                               children: [
                                                 Builder(
@@ -602,10 +661,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                             .toList();
                                                     return Container(
                                                       width: double.infinity,
-                                                      height: MediaQuery.sizeOf(
-                                                                  context)
-                                                              .height *
-                                                          0.345,
+                                                      height: double.infinity,
                                                       child: PageView.builder(
                                                         controller: _model
                                                                 .pageViewController ??=
@@ -640,7 +696,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                 double.infinity,
                                                             height:
                                                                 double.infinity,
-                                                            fit: BoxFit.fill,
+                                                            fit: BoxFit.cover,
                                                           );
                                                         },
                                                       ),
@@ -794,7 +850,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                               String>(
                                                             rowUsersRecord
                                                                 .photoUrl,
-                                                            'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                                            'https://firebasestчorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                                           ),
                                                           fit: BoxFit.cover,
                                                         ),
@@ -938,197 +994,6 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                   fontSize: 15.0,
                                                   lineHeight: 1.5,
                                                 ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 18.0, 16.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              if (!postPageRepostedPostRecord
-                                                  .postActivities
-                                                  .contains(
-                                                      currentUserReference))
-                                                InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    await postPageRepostedPostRecord
-                                                        .reference
-                                                        .update({
-                                                      'post_activities':
-                                                          FieldValue
-                                                              .arrayUnion([
-                                                        currentUserReference
-                                                      ]),
-                                                    });
-                                                  },
-                                                  child: Icon(
-                                                    FFIcons.kbatteryactivity,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .dark88,
-                                                    size: 24.0,
-                                                  ),
-                                                ),
-                                              if (postPageRepostedPostRecord
-                                                  .postActivities
-                                                  .contains(
-                                                      currentUserReference))
-                                                InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    await postPageRepostedPostRecord
-                                                        .reference
-                                                        .update({
-                                                      'post_activities':
-                                                          FieldValue
-                                                              .arrayRemove([
-                                                        currentUserReference
-                                                      ]),
-                                                    });
-                                                  },
-                                                  child: Icon(
-                                                    FFIcons
-                                                        .kbatteryactivityFill,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    size: 24.0,
-                                                  ),
-                                                ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        4.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  '${formatNumber(
-                                                    postPageRepostedPostRecord
-                                                        .postActivities.length,
-                                                    formatType:
-                                                        FormatType.compact,
-                                                  )} activities',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Libre Franklin',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .dark68,
-                                                        fontSize: 14.0,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        15.0, 0.0, 0.0, 0.0),
-                                                child: Icon(
-                                                  FFIcons.kproperty1comments,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark88,
-                                                  size: 24.0,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          4.0, 0.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    '${formatNumber(
-                                                      postPageRepostedPostRecord
-                                                          .postCommentsList
-                                                          .length,
-                                                      formatType:
-                                                          FormatType.compact,
-                                                    )} comments',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Libre Franklin',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .dark68,
-                                                          fontSize: 14.0,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ),
-                                              FlutterFlowIconButton(
-                                                borderColor: Colors.transparent,
-                                                borderRadius: 30.0,
-                                                borderWidth: 1.0,
-                                                buttonSize: 40.0,
-                                                icon: Icon(
-                                                  FFIcons.kproperty1share,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark88,
-                                                  size: 24.0,
-                                                ),
-                                                onPressed: () async {
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Color(0x01000000),
-                                                    barrierColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .dark38,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return GestureDetector(
-                                                        onTap: () => FocusScope
-                                                                .of(context)
-                                                            .requestFocus(_model
-                                                                .unfocusNode),
-                                                        child: Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child:
-                                                              BottomSharePostWidget(
-                                                            repostpost:
-                                                                postPageRepostedPostRecord
-                                                                    .reference,
-                                                            user:
-                                                                stackUsersRecord
-                                                                    .reference,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ).then((value) =>
-                                                      setState(() {}));
-                                                },
-                                              ),
-                                            ],
                                           ),
                                         ),
                                       ],
@@ -1313,18 +1178,23 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                 await postPageRepostedPostRecord
                                                     .reference
                                                     .update({
-                                                  'post_activities':
-                                                      FieldValue.arrayRemove([
-                                                    currentUserReference
-                                                  ]),
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'post_activities':
+                                                          FieldValue
+                                                              .arrayRemove([
+                                                        currentUserReference
+                                                      ]),
+                                                    },
+                                                  ),
                                                 });
                                               },
                                               child: Icon(
-                                                FFIcons.kbatteryactivityFill,
+                                                FFIcons.kbatteryActivityFill,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
-                                                size: 24.0,
+                                                size: 25.0,
                                               ),
                                             ),
                                           if (!postPageRepostedPostRecord
@@ -1337,14 +1207,127 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                await postPageRepostedPostRecord
-                                                    .reference
-                                                    .update({
-                                                  'post_activities':
-                                                      FieldValue.arrayUnion([
-                                                    currentUserReference
-                                                  ]),
-                                                });
+                                                if (valueOrDefault<bool>(
+                                                    currentUserDocument
+                                                        ?.userBlockedUserByAdmin,
+                                                    false)) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'Your account has been suspended. Contact support for further info.',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Libre Franklin',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  fontSize:
+                                                                      14.0,
+                                                                ),
+                                                      ),
+                                                      duration: Duration(
+                                                          milliseconds: 3000),
+                                                      backgroundColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondary,
+                                                    ),
+                                                  );
+                                                } else {
+                                                  if (valueOrDefault<bool>(
+                                                      currentUserDocument
+                                                          ?.userSubscription,
+                                                      false)) {
+                                                    await postPageRepostedPostRecord
+                                                        .reference
+                                                        .update({
+                                                      ...mapToFirestore(
+                                                        {
+                                                          'post_activities':
+                                                              FieldValue
+                                                                  .arrayUnion([
+                                                            currentUserReference
+                                                          ]),
+                                                        },
+                                                      ),
+                                                    });
+
+                                                    await NotificationRecord
+                                                        .collection
+                                                        .doc()
+                                                        .set(
+                                                            createNotificationRecordData(
+                                                          notificationFrom:
+                                                              currentUserReference,
+                                                          notificationTo:
+                                                              stackUsersRecord
+                                                                  .reference,
+                                                          notificationType:
+                                                              'activated your post',
+                                                          notificationCreationDate:
+                                                              getCurrentTimestamp,
+                                                          notificationPost:
+                                                              postPageRepostedPostRecord
+                                                                  .reference,
+                                                        ));
+                                                    if (stackUsersRecord
+                                                        .userNotification) {
+                                                      triggerPushNotification(
+                                                        notificationTitle:
+                                                            currentUserDisplayName,
+                                                        notificationText:
+                                                            'activated your post',
+                                                        userRefs: [
+                                                          stackUsersRecord
+                                                              .reference
+                                                        ],
+                                                        initialPageName:
+                                                            'MainPage',
+                                                        parameterData: {},
+                                                      );
+                                                    }
+                                                  } else {
+                                                    showModalBottomSheet(
+                                                      isScrollControlled: true,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      barrierColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .customColorBottomSh,
+                                                      enableDrag: false,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return GestureDetector(
+                                                          onTap: () => _model
+                                                                  .unfocusNode
+                                                                  .canRequestFocus
+                                                              ? FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      _model
+                                                                          .unfocusNode)
+                                                              : FocusScope.of(
+                                                                      context)
+                                                                  .unfocus(),
+                                                          child: Padding(
+                                                            padding: MediaQuery
+                                                                .viewInsetsOf(
+                                                                    context),
+                                                            child:
+                                                                SubscriptionWidget(),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ).then((value) =>
+                                                        safeSetState(() {}));
+                                                  }
+                                                }
                                               },
                                               child: Icon(
                                                 FFIcons.kbatteryactivity,
@@ -1387,9 +1370,81 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              setState(() {
-                                                _model.commentShoePost = true;
-                                              });
+                                              if (valueOrDefault<bool>(
+                                                  currentUserDocument
+                                                      ?.userBlockedUserByAdmin,
+                                                  false)) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Your account has been suspended. Contact support for further info.',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                fontSize: 14.0,
+                                                              ),
+                                                    ),
+                                                    duration: Duration(
+                                                        milliseconds: 3000),
+                                                    backgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .secondary,
+                                                  ),
+                                                );
+                                              } else {
+                                                if (valueOrDefault<bool>(
+                                                    currentUserDocument
+                                                        ?.userSubscription,
+                                                    false)) {
+                                                  setState(() {
+                                                    _model.commentShoePost =
+                                                        true;
+                                                  });
+                                                } else {
+                                                  showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    barrierColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .customColorBottomSh,
+                                                    enableDrag: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return GestureDetector(
+                                                        onTap: () => _model
+                                                                .unfocusNode
+                                                                .canRequestFocus
+                                                            ? FocusScope.of(
+                                                                    context)
+                                                                .requestFocus(_model
+                                                                    .unfocusNode)
+                                                            : FocusScope.of(
+                                                                    context)
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child:
+                                                              SubscriptionWidget(),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ).then((value) =>
+                                                      safeSetState(() {}));
+                                                }
+                                              }
                                             },
                                             child: Row(
                                               mainAxisSize: MainAxisSize.min,
@@ -1430,48 +1485,6 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      FlutterFlowIconButton(
-                                        borderColor: Colors.transparent,
-                                        borderRadius: 30.0,
-                                        borderWidth: 1.0,
-                                        buttonSize: 40.0,
-                                        icon: Icon(
-                                          FFIcons.kproperty1share,
-                                          color: FlutterFlowTheme.of(context)
-                                              .dark88,
-                                          size: 24.0,
-                                        ),
-                                        onPressed: () async {
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Color(0x01000000),
-                                            barrierColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .dark38,
-                                            context: context,
-                                            builder: (context) {
-                                              return GestureDetector(
-                                                onTap: () =>
-                                                    FocusScope.of(context)
-                                                        .requestFocus(
-                                                            _model.unfocusNode),
-                                                child: Padding(
-                                                  padding:
-                                                      MediaQuery.viewInsetsOf(
-                                                          context),
-                                                  child: BottomSharePostWidget(
-                                                    repostpost:
-                                                        postPageRepostedPostRecord
-                                                            .reference,
-                                                    user: stackUsersRecord
-                                                        .reference,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ).then((value) => setState(() {}));
-                                        },
                                       ),
                                     ],
                                   ),
@@ -1532,6 +1545,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                           width: double.infinity,
                                           child: TextFormField(
                                             controller: _model.textController,
+                                            focusNode:
+                                                _model.textFieldFocusNode,
                                             onChanged: (_) =>
                                                 EasyDebounce.debounce(
                                               '_model.textController',
@@ -1671,13 +1686,52 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                       ),
                                                       commentPostRecordReference);
 
+                                              await NotificationRecord
+                                                  .collection
+                                                  .doc()
+                                                  .set(
+                                                      createNotificationRecordData(
+                                                    notificationFrom:
+                                                        currentUserReference,
+                                                    notificationTo:
+                                                        stackUsersRecord
+                                                            .reference,
+                                                    notificationType:
+                                                        'commented',
+                                                    notificationCreationDate:
+                                                        getCurrentTimestamp,
+                                                    notificationPost:
+                                                        postPageRepostedPostRecord
+                                                            .reference,
+                                                    notificationText: _model
+                                                        .textController.text,
+                                                  ));
+                                              if (stackUsersRecord
+                                                  .userNotification) {
+                                                triggerPushNotification(
+                                                  notificationTitle:
+                                                      currentUserDisplayName,
+                                                  notificationText:
+                                                      'commented your post',
+                                                  userRefs: [
+                                                    stackUsersRecord.reference
+                                                  ],
+                                                  initialPageName: 'MainPage',
+                                                  parameterData: {},
+                                                );
+                                              }
+
                                               await postPageRepostedPostRecord
                                                   .reference
                                                   .update({
-                                                'post_comments_list':
-                                                    FieldValue.arrayUnion([
-                                                  _model.comment?.reference
-                                                ]),
+                                                ...mapToFirestore(
+                                                  {
+                                                    'post_comments_list':
+                                                        FieldValue.arrayUnion([
+                                                      _model.comment?.reference
+                                                    ]),
+                                                  },
+                                                ),
                                               });
                                               setState(() {
                                                 _model.textController?.clear();

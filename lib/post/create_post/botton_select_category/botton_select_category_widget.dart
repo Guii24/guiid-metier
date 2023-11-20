@@ -2,6 +2,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'botton_select_category_model.dart';
@@ -44,7 +45,7 @@ class _BottonSelectCategoryWidgetState
 
     return Container(
       width: double.infinity,
-      height: MediaQuery.sizeOf(context).height * 0.683,
+      height: MediaQuery.sizeOf(context).height * 0.753,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.only(
@@ -55,11 +56,9 @@ class _BottonSelectCategoryWidgetState
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 44.0),
+        padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 34.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Align(
               alignment: AlignmentDirectional(0.00, 0.00),
@@ -82,114 +81,223 @@ class _BottonSelectCategoryWidgetState
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
-              child: Text(
-                'Select Category',
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Libre Franklin',
-                      color: FlutterFlowTheme.of(context).dark88,
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-            ),
-            Text(
-              'Max of 3',
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Libre Franklin',
-                    color: FlutterFlowTheme.of(context).dark38,
-                    fontSize: 15.0,
-                  ),
-            ),
             Expanded(
-              child: Builder(
-                builder: (context) {
-                  final category = FFAppState().preference.toList();
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: category.length,
-                    itemBuilder: (context, categoryIndex) {
-                      final categoryItem = category[categoryIndex];
-                      return InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          if (FFAppState()
-                              .choosenPreference
-                              .contains(categoryItem)) {
-                            setState(() {
-                              FFAppState()
-                                  .removeFromChoosenPreference(categoryItem);
-                            });
-                          } else {
-                            if (FFAppState().choosenPreference.length < 3) {
-                              setState(() {
-                                FFAppState()
-                                    .addToChoosenPreference(categoryItem);
-                              });
-                            }
-                          }
-                        },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 20.0, 0.0, 20.0),
-                                    child: Text(
-                                      categoryItem,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Libre Franklin',
-                                            color: FlutterFlowTheme.of(context)
-                                                .dark88,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
+                      child: Text(
+                        'Select purpose',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Libre Franklin',
+                              color: FlutterFlowTheme.of(context).dark88,
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ),
+                    Builder(
+                      builder: (context) {
+                        final purpose = FFAppState().ListPurpose.toList();
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          primary: false,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: purpose.length,
+                          itemBuilder: (context, purposeIndex) {
+                            final purposeItem = purpose[purposeIndex];
+                            return InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                if (FFAppState().choosenPurpose !=
+                                    purposeItem) {
+                                  setState(() {
+                                    FFAppState().choosenPurpose = purposeItem;
+                                  });
+                                } else {
+                                  setState(() {
+                                    FFAppState().choosenPurpose = '';
+                                  });
+                                }
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 20.0),
+                                          child: Text(
+                                            purposeItem,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark88,
+                                                ),
                                           ),
-                                    ),
+                                        ),
+                                      ),
+                                      if (FFAppState().choosenPurpose !=
+                                          purposeItem)
+                                        Icon(
+                                          Icons.check_box_outline_blank,
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark12,
+                                          size: 22.0,
+                                        ),
+                                      if (FFAppState().choosenPurpose ==
+                                          purposeItem)
+                                        Icon(
+                                          Icons.check_box_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          size: 22.0,
+                                        ),
+                                    ],
                                   ),
-                                ),
-                                if (!FFAppState()
-                                    .choosenPreference
-                                    .contains(categoryItem))
-                                  Icon(
-                                    Icons.check_box_outline_blank,
-                                    color: FlutterFlowTheme.of(context).dark12,
-                                    size: 22.0,
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color: FlutterFlowTheme.of(context).line,
                                   ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
+                      child: Text(
+                        'Select category',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Libre Franklin',
+                              color: FlutterFlowTheme.of(context).dark88,
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ),
+                    Text(
+                      'Max of 2',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Libre Franklin',
+                            color: FlutterFlowTheme.of(context).dark38,
+                            fontSize: 15.0,
+                          ),
+                    ),
+                    Builder(
+                      builder: (context) {
+                        final category = FFAppState().preference.toList();
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          primary: false,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: category.length,
+                          itemBuilder: (context, categoryIndex) {
+                            final categoryItem = category[categoryIndex];
+                            return InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
                                 if (FFAppState()
                                     .choosenPreference
-                                    .contains(categoryItem))
-                                  Icon(
-                                    Icons.check_box_rounded,
-                                    color: FlutterFlowTheme.of(context).dark88,
-                                    size: 22.0,
+                                    .contains(categoryItem)) {
+                                  setState(() {
+                                    FFAppState().removeFromChoosenPreference(
+                                        categoryItem);
+                                  });
+                                } else {
+                                  if (FFAppState().choosenPreference.length <
+                                      2) {
+                                    setState(() {
+                                      FFAppState()
+                                          .addToChoosenPreference(categoryItem);
+                                    });
+                                  }
+                                }
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 20.0),
+                                          child: Text(
+                                            categoryItem,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark88,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                      if (!FFAppState()
+                                          .choosenPreference
+                                          .contains(categoryItem))
+                                        Icon(
+                                          Icons.check_box_outline_blank,
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark12,
+                                          size: 22.0,
+                                        ),
+                                      if (FFAppState()
+                                          .choosenPreference
+                                          .contains(categoryItem))
+                                        Icon(
+                                          Icons.check_box_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          size: 22.0,
+                                        ),
+                                    ],
                                   ),
-                              ],
-                            ),
-                            Divider(
-                              height: 1.0,
-                              thickness: 1.0,
-                              color: FlutterFlowTheme.of(context).line,
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
+                                  Divider(
+                                    height: 1.0,
+                                    thickness: 1.0,
+                                    color: FlutterFlowTheme.of(context).line,
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
                   Navigator.pop(context);

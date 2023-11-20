@@ -1,11 +1,15 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'popup_delete_account_widget.dart' show PopupDeleteAccountWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class PopupDeleteAccountModel extends FlutterFlowModel {
+class PopupDeleteAccountModel
+    extends FlutterFlowModel<PopupDeleteAccountWidget> {
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}

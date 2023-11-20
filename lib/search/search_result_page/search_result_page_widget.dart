@@ -1,17 +1,20 @@
 import '/articles/articles_component/articles_component_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/company_pages/component_companies/component_companies_widget.dart';
+import '/components/empty_search_widget.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/jobs/bottom_job_details/bottom_job_details_widget.dart';
 import '/post/post_types_for_search/post_types_for_search_widget.dart';
 import '/search/component_people/component_people_widget.dart';
-import '/sourcing/bottom_job_details/bottom_job_details_widget.dart';
 import '/sourcing/component_sourcing/component_sourcing_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'search_result_page_model.dart';
@@ -56,10 +59,21 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -111,7 +125,8 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                 ),
               );
             }
-            List<UsersRecord> containerUsersRecordList = snapshot.data!;
+            List<UsersRecord> containerUsersRecordList =
+                snapshot.data!.where((u) => u.uid != currentUserUid).toList();
             return Container(
               width: double.infinity,
               height: double.infinity,
@@ -187,242 +202,64 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         KeepAliveWidgetWrapper(
-                          builder: (context) => Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 15.0, 16.0, 0.0),
-                            child: Builder(
-                              builder: (context) {
-                                final users = functions
-                                    .searchUser(
-                                        widget.searchingText!,
-                                        containerUsersRecordList
-                                            .where((e) => e.userType == 'User')
-                                            .toList())
-                                    .toList();
-                                return ListView.separated(
-                                  padding: EdgeInsets.fromLTRB(
-                                    0,
-                                    0,
-                                    0,
-                                    20.0,
-                                  ),
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: users.length,
-                                  separatorBuilder: (_, __) =>
-                                      SizedBox(height: 16.0),
-                                  itemBuilder: (context, usersIndex) {
-                                    final usersItem = users[usersIndex];
-                                    return InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context.pushNamed(
-                                          'OtherProfile',
-                                          queryParameters: {
-                                            'userRef': serializeParam(
-                                              usersItem.reference,
-                                              ParamType.DocumentReference,
+                          builder: (context) => SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (functions
+                                        .searchUser(
+                                            widget.searchingText!,
+                                            containerUsersRecordList
+                                                .where(
+                                                    (e) => e.userType == 'User')
+                                                .toList())
+                                        .length !=
+                                    0)
+                                  Align(
+                                    alignment:
+                                        AlignmentDirectional(-1.00, 0.00),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 15.0, 0.0, 10.0),
+                                      child: Text(
+                                        'Result of the search',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark88,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w500,
                                             ),
-                                          }.withoutNulls,
-                                        );
-                                      },
-                                      child: ComponentPeopleWidget(
-                                        key: Key(
-                                            'Key8th_${usersIndex}_of_${users.length}'),
-                                        userDoc: usersItem,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        KeepAliveWidgetWrapper(
-                          builder: (context) => Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 15.0, 16.0, 0.0),
-                            child: Builder(
-                              builder: (context) {
-                                final company = functions
-                                    .searchUser(
-                                        widget.searchingText!,
-                                        containerUsersRecordList
-                                            .where(
-                                                (e) => e.userType == 'Company')
-                                            .toList())
-                                    .toList();
-                                return ListView.separated(
-                                  padding: EdgeInsets.fromLTRB(
-                                    0,
-                                    0,
-                                    0,
-                                    20.0,
-                                  ),
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: company.length,
-                                  separatorBuilder: (_, __) =>
-                                      SizedBox(height: 16.0),
-                                  itemBuilder: (context, companyIndex) {
-                                    final companyItem = company[companyIndex];
-                                    return InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context.pushNamed(
-                                          'OtherProfileCompany',
-                                          queryParameters: {
-                                            'userRef': serializeParam(
-                                              companyItem.reference,
-                                              ParamType.DocumentReference,
-                                            ),
-                                          }.withoutNulls,
-                                        );
-                                      },
-                                      child: ComponentCompaniesWidget(
-                                        key: Key(
-                                            'Keyo5i_${companyIndex}_of_${company.length}'),
-                                        companyDoc: companyItem,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        KeepAliveWidgetWrapper(
-                          builder: (context) => Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            child: StreamBuilder<List<ArticlesRecord>>(
-                              stream: queryArticlesRecord(),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 30.0,
-                                      height: 30.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
-                                        ),
                                       ),
                                     ),
-                                  );
-                                }
-                                List<ArticlesRecord>
-                                    containerArticlesRecordList =
-                                    snapshot.data!;
-                                return Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 15.0, 0.0, 0.0),
-                                    child: Builder(
-                                      builder: (context) {
-                                        final articles = functions
-                                            .searchArticles(
-                                                widget.searchingText!,
-                                                containerArticlesRecordList
-                                                    .toList())
-                                            .toList();
-                                        return ListView.separated(
-                                          padding: EdgeInsets.fromLTRB(
-                                            0,
-                                            0,
-                                            0,
-                                            20.0,
+                                  ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  child: Builder(
+                                    builder: (context) {
+                                      final users = functions
+                                          .searchUser(
+                                              widget.searchingText!,
+                                              containerUsersRecordList
+                                                  .where((e) =>
+                                                      e.userType == 'User')
+                                                  .toList())
+                                          .toList();
+                                      if (users.isEmpty) {
+                                        return Center(
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: MediaQuery.sizeOf(context)
+                                                    .height *
+                                                0.6,
+                                            child: EmptySearchWidget(),
                                           ),
-                                          primary: false,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          itemCount: articles.length,
-                                          separatorBuilder: (_, __) =>
-                                              SizedBox(height: 15.0),
-                                          itemBuilder:
-                                              (context, articlesIndex) {
-                                            final articlesItem =
-                                                articles[articlesIndex];
-                                            return InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                context.pushNamed(
-                                                  'ArticlePage',
-                                                  queryParameters: {
-                                                    'article': serializeParam(
-                                                      articlesItem.reference,
-                                                      ParamType
-                                                          .DocumentReference,
-                                                    ),
-                                                  }.withoutNulls,
-                                                );
-                                              },
-                                              child: ArticlesComponentWidget(
-                                                key: Key(
-                                                    'Key7uc_${articlesIndex}_of_${articles.length}'),
-                                                articleDoc:
-                                                    articlesItem.reference,
-                                              ),
-                                            );
-                                          },
                                         );
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        KeepAliveWidgetWrapper(
-                          builder: (context) => Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 15.0, 16.0, 0.0),
-                            child: StreamBuilder<List<PostRecord>>(
-                              stream: queryPostRecord(),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 30.0,
-                                      height: 30.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                                List<PostRecord> containerPostRecordList =
-                                    snapshot.data!;
-                                return Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(),
-                                  child: Builder(
-                                    builder: (context) {
-                                      final posts = functions
-                                          .searchPosts(widget.searchingText!,
-                                              containerPostRecordList.toList())
-                                          .toList();
+                                      }
                                       return ListView.separated(
                                         padding: EdgeInsets.fromLTRB(
                                           0,
@@ -433,119 +270,619 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                         primary: false,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
-                                        itemCount: posts.length,
-                                        separatorBuilder: (_, __) =>
-                                            SizedBox(height: 10.0),
-                                        itemBuilder: (context, postsIndex) {
-                                          final postsItem = posts[postsIndex];
-                                          return PostTypesForSearchWidget(
-                                            key: Key(
-                                                'Keyyf5_${postsIndex}_of_${posts.length}'),
-                                            postDoc: postsItem,
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        KeepAliveWidgetWrapper(
-                          builder: (context) => Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 15.0, 16.0, 0.0),
-                            child: StreamBuilder<List<JobRecord>>(
-                              stream: queryJobRecord(),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 30.0,
-                                      height: 30.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                                List<JobRecord> containerJobRecordList =
-                                    snapshot.data!;
-                                return Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(),
-                                  child: Builder(
-                                    builder: (context) {
-                                      final jobs = functions
-                                          .searchJob(widget.searchingText!,
-                                              containerJobRecordList.toList())
-                                          .toList();
-                                      return ListView.separated(
-                                        padding: EdgeInsets.fromLTRB(
-                                          0,
-                                          0,
-                                          0,
-                                          20.0,
-                                        ),
-                                        primary: false,
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: jobs.length,
+                                        itemCount: users.length,
                                         separatorBuilder: (_, __) =>
                                             SizedBox(height: 15.0),
-                                        itemBuilder: (context, jobsIndex) {
-                                          final jobsItem = jobs[jobsIndex];
+                                        itemBuilder: (context, usersIndex) {
+                                          final usersItem = users[usersIndex];
                                           return InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Color(0x01000000),
-                                                barrierColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .dark38,
-                                                context: context,
-                                                builder: (context) {
-                                                  return GestureDetector(
-                                                    onTap: () => FocusScope.of(
-                                                            context)
-                                                        .requestFocus(
-                                                            _model.unfocusNode),
-                                                    child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
-                                                      child:
-                                                          BottomJobDetailsWidget(
-                                                        jobDoc: jobsItem,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              ).then(
-                                                  (value) => setState(() {}));
+                                              context.pushNamed(
+                                                'OtherProfile',
+                                                queryParameters: {
+                                                  'userRef': serializeParam(
+                                                    usersItem.reference,
+                                                    ParamType.DocumentReference,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
                                             },
-                                            child: ComponentSourcingWidget(
+                                            child: ComponentPeopleWidget(
                                               key: Key(
-                                                  'Key130_${jobsIndex}_of_${jobs.length}'),
-                                              jobDoc: jobsItem,
+                                                  'Key8th_${usersIndex}_of_${users.length}'),
+                                              userDoc: usersItem,
                                             ),
                                           );
                                         },
                                       );
                                     },
                                   ),
-                                );
-                              },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        KeepAliveWidgetWrapper(
+                          builder: (context) => SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                if (functions
+                                        .searchUser(
+                                            widget.searchingText!,
+                                            containerUsersRecordList
+                                                .where((e) =>
+                                                    e.userType == 'Company')
+                                                .toList())
+                                        .length !=
+                                    0)
+                                  Align(
+                                    alignment:
+                                        AlignmentDirectional(-1.00, 0.00),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 15.0, 0.0, 10.0),
+                                      child: Text(
+                                        'Result of the search',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark88,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  child: Builder(
+                                    builder: (context) {
+                                      final company = functions
+                                          .searchUser(
+                                              widget.searchingText!,
+                                              containerUsersRecordList
+                                                  .where((e) =>
+                                                      e.userType == 'Company')
+                                                  .toList())
+                                          .toList();
+                                      if (company.isEmpty) {
+                                        return Container(
+                                          width: double.infinity,
+                                          height: MediaQuery.sizeOf(context)
+                                                  .height *
+                                              0.6,
+                                          child: EmptySearchWidget(),
+                                        );
+                                      }
+                                      return ListView.separated(
+                                        padding: EdgeInsets.fromLTRB(
+                                          0,
+                                          0,
+                                          0,
+                                          20.0,
+                                        ),
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: company.length,
+                                        separatorBuilder: (_, __) =>
+                                            SizedBox(height: 15.0),
+                                        itemBuilder: (context, companyIndex) {
+                                          final companyItem =
+                                              company[companyIndex];
+                                          return InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              context.pushNamed(
+                                                'OtherProfileCompany',
+                                                queryParameters: {
+                                                  'userRef': serializeParam(
+                                                    companyItem.reference,
+                                                    ParamType.DocumentReference,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            },
+                                            child: ComponentCompaniesWidget(
+                                              key: Key(
+                                                  'Keyo5i_${companyIndex}_of_${company.length}'),
+                                              companyDoc: companyItem,
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        KeepAliveWidgetWrapper(
+                          builder: (context) => SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  child: StreamBuilder<List<ArticlesRecord>>(
+                                    stream: queryArticlesRecord(),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 30.0,
+                                            height: 30.0,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<ArticlesRecord>
+                                          containerArticlesRecordList =
+                                          snapshot.data!;
+                                      return Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            if (functions
+                                                    .searchArticles(
+                                                        widget.searchingText!,
+                                                        containerArticlesRecordList
+                                                            .toList())
+                                                    .length !=
+                                                0)
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    -1.00, 0.00),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 15.0, 0.0, 10.0),
+                                                  child: Text(
+                                                    'Result of the search',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .dark88,
+                                                          fontSize: 15.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            Builder(
+                                              builder: (context) {
+                                                final articles = functions
+                                                    .searchArticles(
+                                                        widget.searchingText!,
+                                                        containerArticlesRecordList
+                                                            .toList())
+                                                    .toList();
+                                                if (articles.isEmpty) {
+                                                  return Container(
+                                                    width: double.infinity,
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
+                                                            .height *
+                                                        0.6,
+                                                    child: EmptySearchWidget(),
+                                                  );
+                                                }
+                                                return ListView.separated(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    20.0,
+                                                  ),
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  itemCount: articles.length,
+                                                  separatorBuilder: (_, __) =>
+                                                      SizedBox(height: 15.0),
+                                                  itemBuilder:
+                                                      (context, articlesIndex) {
+                                                    final articlesItem =
+                                                        articles[articlesIndex];
+                                                    return InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        context.pushNamed(
+                                                          'ArticlePage',
+                                                          queryParameters: {
+                                                            'article':
+                                                                serializeParam(
+                                                              articlesItem
+                                                                  .reference,
+                                                              ParamType
+                                                                  .DocumentReference,
+                                                            ),
+                                                          }.withoutNulls,
+                                                        );
+                                                      },
+                                                      child:
+                                                          ArticlesComponentWidget(
+                                                        key: Key(
+                                                            'Key7uc_${articlesIndex}_of_${articles.length}'),
+                                                        articleDoc: articlesItem
+                                                            .reference,
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        KeepAliveWidgetWrapper(
+                          builder: (context) => SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  child: StreamBuilder<List<PostRecord>>(
+                                    stream: queryPostRecord(),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 30.0,
+                                            height: 30.0,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<PostRecord> containerPostRecordList =
+                                          snapshot.data!;
+                                      return Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            if (functions
+                                                    .searchPosts(
+                                                        widget.searchingText!,
+                                                        containerPostRecordList
+                                                            .toList())
+                                                    .length !=
+                                                0)
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    -1.00, 0.00),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(16.0, 15.0, 0.0,
+                                                          10.0),
+                                                  child: Text(
+                                                    'Result of the search',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .dark88,
+                                                          fontSize: 15.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            Builder(
+                                              builder: (context) {
+                                                final posts = functions
+                                                    .searchPosts(
+                                                        widget.searchingText!,
+                                                        containerPostRecordList
+                                                            .toList())
+                                                    .toList();
+                                                if (posts.isEmpty) {
+                                                  return Container(
+                                                    width: double.infinity,
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
+                                                            .height *
+                                                        0.6,
+                                                    child: EmptySearchWidget(),
+                                                  );
+                                                }
+                                                return ListView.separated(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    20.0,
+                                                  ),
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  itemCount: posts.length,
+                                                  separatorBuilder: (_, __) =>
+                                                      SizedBox(height: 10.0),
+                                                  itemBuilder:
+                                                      (context, postsIndex) {
+                                                    final postsItem =
+                                                        posts[postsIndex];
+                                                    return PostTypesForSearchWidget(
+                                                      key: Key(
+                                                          'Keyyf5_${postsIndex}_of_${posts.length}'),
+                                                      postDoc: postsItem,
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        KeepAliveWidgetWrapper(
+                          builder: (context) => SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  child: StreamBuilder<List<JobRecord>>(
+                                    stream: queryJobRecord(),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 30.0,
+                                            height: 30.0,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<JobRecord> containerJobRecordList =
+                                          snapshot.data!;
+                                      return Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            if (functions
+                                                    .searchJob(
+                                                        widget.searchingText!,
+                                                        containerJobRecordList
+                                                            .toList())
+                                                    .length !=
+                                                0)
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    -1.00, 0.00),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(16.0, 15.0, 0.0,
+                                                          10.0),
+                                                  child: Text(
+                                                    'Result of the search',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .dark88,
+                                                          fontSize: 15.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            Builder(
+                                              builder: (context) {
+                                                final jobs = functions
+                                                    .searchJob(
+                                                        widget.searchingText!,
+                                                        containerJobRecordList
+                                                            .toList())
+                                                    .toList();
+                                                if (jobs.isEmpty) {
+                                                  return Container(
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
+                                                            .height *
+                                                        0.6,
+                                                    child: EmptySearchWidget(),
+                                                  );
+                                                }
+                                                return ListView.separated(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    20.0,
+                                                  ),
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  itemCount: jobs.length,
+                                                  separatorBuilder: (_, __) =>
+                                                      SizedBox(height: 15.0),
+                                                  itemBuilder:
+                                                      (context, jobsIndex) {
+                                                    final jobsItem =
+                                                        jobs[jobsIndex];
+                                                    return InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        if (jobsItem
+                                                                .companyCreator ==
+                                                            currentUserReference) {
+                                                          if (Navigator.of(
+                                                                  context)
+                                                              .canPop()) {
+                                                            context.pop();
+                                                          }
+                                                          context.pushNamed(
+                                                            'SourcingMyJobDetails',
+                                                            queryParameters: {
+                                                              'jobDoc':
+                                                                  serializeParam(
+                                                                jobsItem,
+                                                                ParamType
+                                                                    .Document,
+                                                              ),
+                                                            }.withoutNulls,
+                                                            extra: <String,
+                                                                dynamic>{
+                                                              'jobDoc':
+                                                                  jobsItem,
+                                                            },
+                                                          );
+                                                        } else {
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Color(
+                                                                    0x01000000),
+                                                            barrierColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .dark38,
+                                                            enableDrag: false,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return GestureDetector(
+                                                                onTap: () => _model
+                                                                        .unfocusNode
+                                                                        .canRequestFocus
+                                                                    ? FocusScope.of(
+                                                                            context)
+                                                                        .requestFocus(_model
+                                                                            .unfocusNode)
+                                                                    : FocusScope.of(
+                                                                            context)
+                                                                        .unfocus(),
+                                                                child: Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
+                                                                  child:
+                                                                      Container(
+                                                                    height: MediaQuery.sizeOf(context)
+                                                                            .height *
+                                                                        0.85,
+                                                                    child:
+                                                                        BottomJobDetailsWidget(
+                                                                      jobDoc:
+                                                                          jobsItem,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ).then((value) =>
+                                                              safeSetState(
+                                                                  () {}));
+                                                        }
+                                                      },
+                                                      child:
+                                                          ComponentSourcingWidget(
+                                                        key: Key(
+                                                            'Key130_${jobsIndex}_of_${jobs.length}'),
+                                                        jobDoc: jobsItem,
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

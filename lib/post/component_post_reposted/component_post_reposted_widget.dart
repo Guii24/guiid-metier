@@ -1,5 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
+import '/components/subscription_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -8,6 +10,7 @@ import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_post_reposted_model.dart';
@@ -114,7 +117,7 @@ class _ComponentPostRepostedWidgetState
                           child: Image.network(
                             valueOrDefault<String>(
                               columnUsersRecord.photoUrl,
-                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -177,17 +180,53 @@ class _ComponentPostRepostedWidgetState
                                   FFButtonWidget(
                                     onPressed: () async {
                                       await currentUserReference!.update({
-                                        'user_following': FieldValue.arrayUnion(
-                                            [columnUsersRecord.reference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_following':
+                                                FieldValue.arrayUnion([
+                                              columnUsersRecord.reference
+                                            ]),
+                                          },
+                                        ),
                                       });
 
                                       await columnUsersRecord.reference.update({
-                                        'user_followers': FieldValue.arrayUnion(
-                                            [currentUserReference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_followers':
+                                                FieldValue.arrayUnion(
+                                                    [currentUserReference]),
+                                          },
+                                        ),
                                       });
                                       await actions.updatePage(
                                         context,
                                       );
+
+                                      await NotificationRecord.collection
+                                          .doc()
+                                          .set(createNotificationRecordData(
+                                            notificationFrom:
+                                                currentUserReference,
+                                            notificationTo:
+                                                columnUsersRecord.reference,
+                                            notificationType: 'following',
+                                            notificationCreationDate:
+                                                getCurrentTimestamp,
+                                          ));
+                                      if (columnUsersRecord.userNotification) {
+                                        triggerPushNotification(
+                                          notificationTitle:
+                                              currentUserDisplayName,
+                                          notificationText:
+                                              'started following you',
+                                          userRefs: [
+                                            columnUsersRecord.reference
+                                          ],
+                                          initialPageName: 'MainPage',
+                                          parameterData: {},
+                                        );
+                                      }
                                     },
                                     text: 'FOLLOW',
                                     options: FFButtonOptions(
@@ -225,15 +264,24 @@ class _ComponentPostRepostedWidgetState
                                   FFButtonWidget(
                                     onPressed: () async {
                                       await currentUserReference!.update({
-                                        'user_following':
-                                            FieldValue.arrayRemove(
-                                                [columnUsersRecord.reference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_following':
+                                                FieldValue.arrayRemove([
+                                              columnUsersRecord.reference
+                                            ]),
+                                          },
+                                        ),
                                       });
 
                                       await columnUsersRecord.reference.update({
-                                        'user_followers':
-                                            FieldValue.arrayRemove(
-                                                [currentUserReference]),
+                                        ...mapToFirestore(
+                                          {
+                                            'user_followers':
+                                                FieldValue.arrayRemove(
+                                                    [currentUserReference]),
+                                          },
+                                        ),
                                       });
                                       await actions.updatePage(
                                         context,
@@ -288,7 +336,7 @@ class _ComponentPostRepostedWidgetState
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               } else {
                                 await showModalBottomSheet(
                                   isScrollControlled: true,
@@ -305,7 +353,7 @@ class _ComponentPostRepostedWidgetState
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) => safeSetState(() {}));
                               }
                             },
                             child: Icon(
@@ -363,106 +411,100 @@ class _ComponentPostRepostedWidgetState
                                     ),
                               ),
                             ),
-                          if (columnPostRecord.postImagesList.length >= 1)
-                            Container(
-                              width: double.infinity,
-                              height: MediaQuery.sizeOf(context).height * 0.317,
-                              child: Stack(
-                                children: [
-                                  Builder(
-                                    builder: (context) {
-                                      final listimg = columnPostRecord
-                                          .postImagesList
-                                          .toList()
-                                          .take(5)
-                                          .toList();
-                                      return Container(
-                                        width: double.infinity,
-                                        height: 268.0,
-                                        child: PageView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          controller: _model
-                                                  .pageViewController ??=
-                                              PageController(
-                                                  initialPage: min(
-                                                      0, listimg.length - 1)),
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: listimg.length,
-                                          itemBuilder: (context, listimgIndex) {
-                                            final listimgItem =
-                                                listimg[listimgIndex];
-                                            return ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(0.0),
-                                                bottomRight:
-                                                    Radius.circular(0.0),
-                                                topLeft: Radius.circular(5.0),
-                                                topRight: Radius.circular(5.0),
-                                              ),
-                                              child: Image.network(
-                                                listimgItem,
-                                                width: double.infinity,
-                                                height: double.infinity,
-                                                fit: BoxFit.fill,
-                                              ),
-                                            );
-                                          },
+                          Container(
+                            width: double.infinity,
+                            height: MediaQuery.sizeOf(context).height * 0.69,
+                            child: Stack(
+                              children: [
+                                Builder(
+                                  builder: (context) {
+                                    final listimg = columnPostRecord
+                                        .postImagesList
+                                        .toList()
+                                        .take(5)
+                                        .toList();
+                                    return Container(
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      child: PageView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        controller: _model
+                                                .pageViewController ??=
+                                            PageController(
+                                                initialPage:
+                                                    min(0, listimg.length - 1)),
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: listimg.length,
+                                        itemBuilder: (context, listimgIndex) {
+                                          final listimgItem =
+                                              listimg[listimgIndex];
+                                          return ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(0.0),
+                                              bottomRight: Radius.circular(0.0),
+                                              topLeft: Radius.circular(5.0),
+                                              topRight: Radius.circular(5.0),
+                                            ),
+                                            child: Image.network(
+                                              listimgItem,
+                                              width: double.infinity,
+                                              height: double.infinity,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                                if (columnPostRecord.postImagesList.length > 1)
+                                  Align(
+                                    alignment: AlignmentDirectional(1.00, 1.00),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 16.0, 16.0),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        elevation: 0.0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
                                         ),
-                                      );
-                                    },
-                                  ),
-                                  if (columnPostRecord.postImagesList.length >
-                                      1)
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(1.00, 1.00),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 16.0, 16.0),
-                                        child: Material(
-                                          color: Colors.transparent,
-                                          elevation: 0.0,
-                                          shape: RoundedRectangleBorder(
+                                        child: Container(
+                                          width: 35.0,
+                                          height: 28.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .dark20,
                                             borderRadius:
                                                 BorderRadius.circular(20.0),
                                           ),
-                                          child: Container(
-                                            width: 35.0,
-                                            height: 28.0,
-                                            decoration: BoxDecoration(
-                                              color:
+                                          child: Align(
+                                            alignment: AlignmentDirectional(
+                                                0.00, 0.00),
+                                            child: Text(
+                                              '${(_model.pageViewCurrentIndex + 1).toString()}/${columnPostRecord.postImagesList.length.toString()}',
+                                              style:
                                                   FlutterFlowTheme.of(context)
-                                                      .dark20,
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                            ),
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.00, 0.00),
-                                              child: Text(
-                                                '${(_model.pageViewCurrentIndex + 1).toString()}/${columnPostRecord.postImagesList.length.toString()}',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Libre Franklin',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryBackground,
-                                                          fontSize: 13.0,
-                                                        ),
-                                              ),
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .primaryBackground,
+                                                        fontSize: 13.0,
+                                                      ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                ],
-                              ),
+                                  ),
+                              ],
                             ),
+                          ),
                           Divider(
                             height: 1.0,
                             thickness: 1.0,
@@ -524,7 +566,7 @@ class _ComponentPostRepostedWidgetState
                                               child: Image.network(
                                                 valueOrDefault<String>(
                                                   rowUsersRecord.photoUrl,
-                                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                                  'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
                                                 ),
                                                 fit: BoxFit.cover,
                                               ),
@@ -662,16 +704,20 @@ class _ComponentPostRepostedWidgetState
                                         onTap: () async {
                                           await containerPostRecord.reference
                                               .update({
-                                            'post_activities':
-                                                FieldValue.arrayRemove(
-                                                    [currentUserReference]),
+                                            ...mapToFirestore(
+                                              {
+                                                'post_activities':
+                                                    FieldValue.arrayRemove(
+                                                        [currentUserReference]),
+                                              },
+                                            ),
                                           });
                                         },
                                         child: Icon(
-                                          FFIcons.kbatteryactivityFill,
+                                          FFIcons.kbatteryActivityFill,
                                           color: FlutterFlowTheme.of(context)
                                               .alternate,
-                                          size: 24.0,
+                                          size: 25.0,
                                         ),
                                       ),
                                     if (!containerPostRecord.postActivities
@@ -682,12 +728,106 @@ class _ComponentPostRepostedWidgetState
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
-                                          await containerPostRecord.reference
-                                              .update({
-                                            'post_activities':
-                                                FieldValue.arrayUnion(
-                                                    [currentUserReference]),
-                                          });
+                                          if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.userBlockedUserByAdmin,
+                                              false)) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Your account has been suspended. Contact support for further info.',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontSize: 14.0,
+                                                      ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 3000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                              ),
+                                            );
+                                          } else {
+                                            if (valueOrDefault<bool>(
+                                                currentUserDocument
+                                                    ?.userSubscription,
+                                                false)) {
+                                              await containerPostRecord
+                                                  .reference
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'post_activities':
+                                                        FieldValue.arrayUnion([
+                                                      currentUserReference
+                                                    ]),
+                                                  },
+                                                ),
+                                              });
+
+                                              await NotificationRecord
+                                                  .collection
+                                                  .doc()
+                                                  .set(
+                                                      createNotificationRecordData(
+                                                    notificationFrom:
+                                                        currentUserReference,
+                                                    notificationTo:
+                                                        columnUsersRecord
+                                                            .reference,
+                                                    notificationType: 'liked',
+                                                    notificationPost:
+                                                        containerPostRecord
+                                                            .reference,
+                                                    notificationCreationDate:
+                                                        getCurrentTimestamp,
+                                                  ));
+                                              if (columnUsersRecord
+                                                  .userNotification) {
+                                                triggerPushNotification(
+                                                  notificationTitle:
+                                                      currentUserDisplayName,
+                                                  notificationText:
+                                                      'activated your post',
+                                                  userRefs: [
+                                                    columnUsersRecord.reference
+                                                  ],
+                                                  initialPageName: 'MainPage',
+                                                  parameterData: {},
+                                                );
+                                              }
+                                            } else {
+                                              showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                barrierColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .customColorBottomSh,
+                                                enableDrag: false,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: SubscriptionWidget(),
+                                                  );
+                                                },
+                                              ).then((value) =>
+                                                  safeSetState(() {}));
+                                            }
+                                          }
                                         },
                                         child: Icon(
                                           FFIcons.kbatteryactivity,

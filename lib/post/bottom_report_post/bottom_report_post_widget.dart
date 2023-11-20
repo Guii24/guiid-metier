@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/report/bottom_report/bottom_report_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_report_post_model.dart';
@@ -16,12 +17,14 @@ class BottomReportPostWidget extends StatefulWidget {
     this.commentPost,
     this.typeReport,
     this.user,
+    this.job,
   }) : super(key: key);
 
   final DocumentReference? post;
   final DocumentReference? commentPost;
   final String? typeReport;
   final DocumentReference? user;
+  final DocumentReference? job;
 
   @override
   _BottomReportPostWidgetState createState() => _BottomReportPostWidgetState();
@@ -93,10 +96,11 @@ class _BottomReportPostWidgetState extends State<BottomReportPostWidget> {
                           type: widget.typeReport!,
                           post: widget.post,
                           userRef: widget.user,
+                          job: widget.job,
                         ),
                       );
                     },
-                  ).then((value) => setState(() {}));
+                  ).then((value) => safeSetState(() {}));
                 },
                 text: 'REPORT',
                 options: FFButtonOptions(
