@@ -407,7 +407,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                 child: Image.network(
                                                   valueOrDefault<String>(
                                                     stackUsersRecord.photoUrl,
-                                                    'https://firebasestчorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*rkimyz*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NjA5NDAyMC4xNzguMS4xNjk2MDk0MDc0LjYuMC4w',
+                                                    'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b',
                                                   ),
                                                   fit: BoxFit.cover,
                                                 ),

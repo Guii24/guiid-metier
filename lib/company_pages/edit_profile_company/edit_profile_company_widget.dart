@@ -189,7 +189,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   fadeOutDuration: Duration(milliseconds: 500),
                                   imageUrl: valueOrDefault<String>(
                                     FFAppState().profilePhotoCompany,
-                                    'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                    'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b',
                                   ),
                                   width: 90.0,
                                   height: 90.0,

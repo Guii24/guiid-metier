@@ -196,7 +196,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                       if (widget.postRef!.postImagesList.length >= 1)
                         Container(
                           width: double.infinity,
-                          height: MediaQuery.sizeOf(context).height * 0.345,
+                          height: MediaQuery.sizeOf(context).height * 0.69,
                           child: Stack(
                             children: [
                               Builder(
@@ -205,8 +205,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                       FFAppState().uploadPhotoPost.toList();
                                   return Container(
                                     width: double.infinity,
-                                    height: MediaQuery.sizeOf(context).height *
-                                        0.345,
+                                    height: double.infinity,
                                     child: PageView.builder(
                                       controller: _model.pageViewController ??=
                                           PageController(
@@ -227,10 +226,8 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                           child: Image.network(
                                             imgItem,
                                             width: double.infinity,
-                                            height: MediaQuery.sizeOf(context)
-                                                    .height *
-                                                0.345,
-                                            fit: BoxFit.contain,
+                                            height: double.infinity,
+                                            fit: BoxFit.cover,
                                           ),
                                         );
                                       },

@@ -73,7 +73,7 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
                     child: Image.network(
                       widget.wearItem!.wearImage,
                       width: double.infinity,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),

@@ -204,7 +204,6 @@ final parametersBuilderMap =
       ),
   'MyProfileCompany': ParameterData.none(),
   'EditProfileCompany': ParameterData.none(),
-  'test': ParameterData.none(),
   'VerificationLogin': (data) async => ParameterData(
         allParams: {
           'userPhone': getParameter<String>(data, 'userPhone'),

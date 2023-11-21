@@ -335,7 +335,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                       if (FFAppState().uploadPhotoPost.length >= 1)
                         Container(
                           width: MediaQuery.sizeOf(context).width * 1.0,
-                          height: MediaQuery.sizeOf(context).height * 0.55,
+                          height: MediaQuery.sizeOf(context).height * 0.69,
                           child: Stack(
                             children: [
                               Builder(
@@ -344,8 +344,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                       FFAppState().uploadPhotoPost.toList();
                                   return Container(
                                     width: double.infinity,
-                                    height: MediaQuery.sizeOf(context).height *
-                                        0.55,
+                                    height: double.infinity,
                                     child: PageView.builder(
                                       controller: _model.pageViewController ??=
                                           PageController(
@@ -360,13 +359,14 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                           borderRadius: BorderRadius.only(
                                             bottomLeft: Radius.circular(0.0),
                                             bottomRight: Radius.circular(0.0),
-                                            topLeft: Radius.circular(5.0),
+                                            topLeft: Radius.circular(0.0),
                                             topRight: Radius.circular(5.0),
                                           ),
                                           child: Image.network(
                                             imagesItem,
                                             width: double.infinity,
-                                            fit: BoxFit.contain,
+                                            height: double.infinity,
+                                            fit: BoxFit.cover,
                                           ),
                                         );
                                       },

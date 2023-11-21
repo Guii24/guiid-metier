@@ -154,7 +154,7 @@ class _SourcingPageCopyWidgetState extends State<SourcingPageCopyWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                         child: Text(
-                          'New and hot jobs for today, updated daily',
+                          'Jobs and commerce for today, updated daily',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Libre Franklin',

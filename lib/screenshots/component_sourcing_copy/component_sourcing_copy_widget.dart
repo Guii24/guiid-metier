@@ -331,7 +331,7 @@ class _ComponentSourcingCopyWidgetState
                           child: Image.network(
                             valueOrDefault<String>(
                               rowUsersRecord.photoUrl,
-                              'https://images.unsplash.com/photo-1571513800374-df1bbe650e56?auto=format&fit=crop&q=80&w=2787&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b',
                             ),
                             width: 40.0,
                             height: 40.0,

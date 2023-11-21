@@ -440,12 +440,8 @@ class _ComponentPostRepostedWidgetState
                                           final listimgItem =
                                               listimg[listimgIndex];
                                           return ClipRRect(
-                                            borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(0.0),
-                                              bottomRight: Radius.circular(0.0),
-                                              topLeft: Radius.circular(5.0),
-                                              topRight: Radius.circular(5.0),
-                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(0.0),
                                             child: Image.network(
                                               listimgItem,
                                               width: double.infinity,

@@ -59,7 +59,6 @@ export '/company_pages/my_profile_company/my_profile_company_widget.dart'
     show MyProfileCompanyWidget;
 export '/company_pages/edit_profile_company/edit_profile_company_widget.dart'
     show EditProfileCompanyWidget;
-export '/test/test_widget.dart' show TestWidget;
 export '/onboarding_sign_in/verification_login/verification_login_widget.dart'
     show VerificationLoginWidget;
 export '/nav_bar/main_page/main_page_widget.dart' show MainPageWidget;

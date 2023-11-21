@@ -333,11 +333,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => EditProfileCompanyWidget(),
         ),
         FFRoute(
-          name: 'test',
-          path: '/test',
-          builder: (context, params) => TestWidget(),
-        ),
-        FFRoute(
           name: 'VerificationLogin',
           path: '/verificationLogin',
           builder: (context, params) => VerificationLoginWidget(
