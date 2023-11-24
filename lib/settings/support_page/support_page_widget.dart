@@ -166,165 +166,177 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: StreamBuilder<List<MessageRecord>>(
-                    stream: queryMessageRecord(
-                      parent: supportPageChatRecord?.reference,
-                      queryBuilder: (messageRecord) => messageRecord
-                          .orderBy('message_time', descending: true),
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 30.0,
-                            height: 30.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                FlutterFlowTheme.of(context).primary,
+                if (supportPageChatRecord != null)
+                  Expanded(
+                    child: StreamBuilder<List<MessageRecord>>(
+                      stream: queryMessageRecord(
+                        parent: supportPageChatRecord?.reference,
+                        queryBuilder: (messageRecord) => messageRecord
+                            .orderBy('message_time', descending: true),
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 30.0,
+                              height: 30.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  FlutterFlowTheme.of(context).primary,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }
-                      List<MessageRecord> containerMessageRecordList =
-                          snapshot.data!;
-                      return Container(
-                        decoration: BoxDecoration(),
-                        child: Builder(
-                          builder: (context) {
-                            final notificationDate = functions
-                                .messageStringDate(
-                                    containerMessageRecordList.toList())
-                                .toList();
-                            if (notificationDate.isEmpty) {
-                              return Center(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  child: EmptySupportMessagesWidget(),
-                                ),
-                              );
-                            }
-                            return ListView.builder(
-                              padding: EdgeInsets.fromLTRB(
-                                0,
-                                0,
-                                0,
-                                12.0,
-                              ),
-                              reverse: true,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: notificationDate.length,
-                              itemBuilder: (context, notificationDateIndex) {
-                                final notificationDateItem =
-                                    notificationDate[notificationDateIndex];
-                                return Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 16.0, 0.0),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 16.0, 0.0, 0.0),
-                                          child: Text(
-                                            notificationDateItem,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark38,
-                                                  fontSize: 13.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                          ),
-                                        ),
-                                        StreamBuilder<List<MessageRecord>>(
-                                          stream: queryMessageRecord(
-                                            parent: supportPageChatRecord
-                                                ?.reference,
-                                            queryBuilder: (messageRecord) =>
-                                                messageRecord
-                                                    .where(
-                                                      'message_time_string',
-                                                      isEqualTo:
-                                                          notificationDateItem,
-                                                    )
-                                                    .orderBy('message_time'),
-                                          ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 30.0,
-                                                  height: 30.0,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    valueColor:
-                                                        AlwaysStoppedAnimation<
-                                                            Color>(
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            List<MessageRecord>
-                                                listViewMessageRecordList =
-                                                snapshot.data!;
-                                            return ListView.builder(
-                                              padding: EdgeInsets.zero,
-                                              primary: false,
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.vertical,
-                                              itemCount:
-                                                  listViewMessageRecordList
-                                                      .length,
-                                              itemBuilder:
-                                                  (context, listViewIndex) {
-                                                final listViewMessageRecord =
-                                                    listViewMessageRecordList[
-                                                        listViewIndex];
-                                                return Container(
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                  ),
-                                                  child: SupportCompanentWidget(
-                                                    key: Key(
-                                                        'Keynv8_${listViewIndex}_of_${listViewMessageRecordList.length}'),
-                                                    messageItem:
-                                                        listViewMessageRecord,
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
+                          );
+                        }
+                        List<MessageRecord> containerMessageRecordList =
+                            snapshot.data!;
+                        return Container(
+                          decoration: BoxDecoration(),
+                          child: Builder(
+                            builder: (context) {
+                              final notificationDate = functions
+                                  .messageStringDate(
+                                      containerMessageRecordList.toList())
+                                  .toList();
+                              if (notificationDate.isEmpty) {
+                                return Center(
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    child: EmptySupportMessagesWidget(),
                                   ),
                                 );
-                              },
-                            );
-                          },
-                        ),
-                      );
-                    },
+                              }
+                              return ListView.builder(
+                                padding: EdgeInsets.fromLTRB(
+                                  0,
+                                  0,
+                                  0,
+                                  12.0,
+                                ),
+                                reverse: true,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: notificationDate.length,
+                                itemBuilder: (context, notificationDateIndex) {
+                                  final notificationDateItem =
+                                      notificationDate[notificationDateIndex];
+                                  return Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 16.0, 0.0, 0.0),
+                                            child: Text(
+                                              notificationDateItem,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily:
+                                                        'Libre Franklin',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .dark38,
+                                                    fontSize: 13.0,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                            ),
+                                          ),
+                                          StreamBuilder<List<MessageRecord>>(
+                                            stream: queryMessageRecord(
+                                              parent: supportPageChatRecord
+                                                  ?.reference,
+                                              queryBuilder: (messageRecord) =>
+                                                  messageRecord
+                                                      .where(
+                                                        'message_time_string',
+                                                        isEqualTo:
+                                                            notificationDateItem,
+                                                      )
+                                                      .orderBy('message_time'),
+                                            ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 30.0,
+                                                    height: 30.0,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                              Color>(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              List<MessageRecord>
+                                                  listViewMessageRecordList =
+                                                  snapshot.data!;
+                                              return ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                primary: false,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount:
+                                                    listViewMessageRecordList
+                                                        .length,
+                                                itemBuilder:
+                                                    (context, listViewIndex) {
+                                                  final listViewMessageRecord =
+                                                      listViewMessageRecordList[
+                                                          listViewIndex];
+                                                  return Container(
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                    child:
+                                                        SupportCompanentWidget(
+                                                      key: Key(
+                                                          'Keynv8_${listViewIndex}_of_${listViewMessageRecordList.length}'),
+                                                      messageItem:
+                                                          listViewMessageRecord,
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
+                if (!(supportPageChatRecord != null))
+                  Expanded(
+                    child: wrapWithModel(
+                      model: _model.emptySupportMessagesModel,
+                      updateCallback: () => setState(() {}),
+                      child: EmptySupportMessagesWidget(),
+                    ),
+                  ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
                   child: Material(

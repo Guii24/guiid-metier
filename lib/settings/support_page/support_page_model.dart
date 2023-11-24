@@ -20,6 +20,8 @@ class SupportPageModel extends FlutterFlowModel<SupportPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // Model for EmptySupportMessages component.
+  late EmptySupportMessagesModel emptySupportMessagesModel;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
@@ -29,10 +31,14 @@ class SupportPageModel extends FlutterFlowModel<SupportPageWidget> {
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    emptySupportMessagesModel =
+        createModel(context, () => EmptySupportMessagesModel());
+  }
 
   void dispose() {
     unfocusNode.dispose();
+    emptySupportMessagesModel.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }

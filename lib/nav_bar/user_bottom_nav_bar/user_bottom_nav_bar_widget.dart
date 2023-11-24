@@ -482,7 +482,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Your account has been suspended. Contact support for further info.',
+                                                'Your account has been suspended. Please, contact support.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -591,7 +591,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Your account has been suspended. Contact support for further info.',
+                                                'Your account has been suspended. Please, contact support.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -725,7 +725,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Your account has been suspended. Contact support for further info.',
+                                                'Your account has been suspended. Please, contact support.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -834,7 +834,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Your account has been suspended. Contact support for further info.',
+                                                'Your account has been suspended. Please, contact support.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -1356,7 +1356,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Your account has been suspended. Contact support for further info.',
+                                                'Your account has been suspended. Please, contact support.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -1465,7 +1465,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Your account has been suspended. Contact support for further info.',
+                                                'Your account has been suspended. Please, contact support.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -1599,7 +1599,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Your account has been suspended. Contact support for further info.',
+                                                'Your account has been suspended. Please, contact support.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -1708,7 +1708,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Your account has been suspended. Contact support for further info.',
+                                                'Your account has been suspended. Please, contact support.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium

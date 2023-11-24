@@ -5,6 +5,10 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "post_type",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "post_category",
           "arrayConfig": "CONTAINS"
         },
@@ -89,6 +93,20 @@
         {
           "fieldPath": "message_time",
           "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "post",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "post_category",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "post_time_posted",
+          "order": "DESCENDING"
         }
       ]
     }

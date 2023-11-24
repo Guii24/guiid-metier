@@ -381,6 +381,10 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                     ? _model.choosenCategory
                                     : null,
                               )
+                              .where(
+                                'post_type',
+                                isEqualTo: 'post',
+                              )
                               .orderBy('post_time_posted', descending: true),
                         ),
                         builder: (context, snapshot) {

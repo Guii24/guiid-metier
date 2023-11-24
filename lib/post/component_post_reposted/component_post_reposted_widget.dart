@@ -5,6 +5,7 @@ import '/components/subscription_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/post/bottom_comment/bottom_comment_widget.dart';
 import '/post/bottom_editop_delete_post/bottom_editop_delete_post_widget.dart';
 import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -732,7 +733,7 @@ class _ComponentPostRepostedWidgetState
                                                 .showSnackBar(
                                               SnackBar(
                                                 content: Text(
-                                                  'Your account has been suspended. Contact support for further info.',
+                                                  'Your account has been suspended. Please, contact support.',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -852,35 +853,109 @@ class _ComponentPostRepostedWidgetState
                                             ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          15.0, 0.0, 0.0, 0.0),
-                                      child: Icon(
-                                        FFIcons.kproperty1comments,
-                                        color:
-                                            FlutterFlowTheme.of(context).dark88,
-                                        size: 24.0,
-                                      ),
-                                    ),
                                     Expanded(
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            4.0, 0.0, 0.0, 0.0),
-                                        child: Text(
-                                          '${formatNumber(
-                                            containerPostRecord
-                                                .postCommentsList.length,
-                                            formatType: FormatType.compact,
-                                          )} comments',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Libre Franklin',
+                                            15.0, 0.0, 0.0, 0.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            if (valueOrDefault<bool>(
+                                                currentUserDocument
+                                                    ?.userBlockedUserByAdmin,
+                                                false)) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Your account has been suspended. Please, contact support.',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 14.0,
+                                                        ),
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 3000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
+                                            } else {
+                                              await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Color(0x01000000),
+                                                barrierColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .dark38,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: BottomCommentWidget(
+                                                      post: containerPostRecord
+                                                          .reference,
+                                                      userRef:
+                                                          columnUsersRecord,
+                                                    ),
+                                                  );
+                                                },
+                                              ).then((value) =>
+                                                  safeSetState(() {}));
+                                            }
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Icon(
+                                                FFIcons.kproperty1comments,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .dark68,
-                                                fontSize: 14.0,
+                                                        .dark88,
+                                                size: 24.0,
                                               ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        4.0, 0.0, 0.0, 0.0),
+                                                child: Text(
+                                                  '${formatNumber(
+                                                    containerPostRecord
+                                                        .postCommentsList
+                                                        .length,
+                                                    formatType:
+                                                        FormatType.compact,
+                                                  )} comments',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .dark68,
+                                                        fontSize: 14.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

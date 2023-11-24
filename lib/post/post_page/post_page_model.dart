@@ -27,6 +27,8 @@ class PostPageModel extends FlutterFlowModel<PostPageWidget> {
 
   bool commentShoePost = false;
 
+  String text = '';
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

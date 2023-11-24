@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/post/bottom_comment/bottom_comment_widget.dart';
 import '/post/bottom_editop_delete_post/bottom_editop_delete_post_widget.dart';
 import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import '/post/bottom_share_post/bottom_share_post_widget.dart';
