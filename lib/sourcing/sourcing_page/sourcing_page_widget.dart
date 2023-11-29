@@ -101,15 +101,17 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
                 ),
               ),
             ),
-            title: Text(
-              'Guiid Metier',
-              style: FlutterFlowTheme.of(context).titleMedium.override(
-                    fontFamily: 'NewYork',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w600,
-                    useGoogleFonts: false,
-                  ),
+            title: Align(
+              alignment: AlignmentDirectional(0.00, 0.00),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0.0),
+                child: Image.asset(
+                  'assets/images/Rectangle.png',
+                  width: MediaQuery.sizeOf(context).width * 0.2,
+                  height: MediaQuery.sizeOf(context).height * 0.04,
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
             actions: [
               Align(
@@ -177,7 +179,7 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                         child: Text(
-                          'New and hot jobs for today, updated daily',
+                          'Jobs and commerce for today, updated daily',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Libre Franklin',

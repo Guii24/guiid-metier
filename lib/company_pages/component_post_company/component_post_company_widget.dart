@@ -81,7 +81,7 @@ class _ComponentPostCompanyWidgetState
           width: double.infinity,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(0.0),
           ),
           child: StreamBuilder<UsersRecord>(
             stream: UsersRecord.getDocument(containerPostRecord.postCreator!),
@@ -118,21 +118,16 @@ class _ComponentPostCompanyWidgetState
                               width: double.infinity,
                               height: double.infinity,
                               child: PageView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
                                 controller: _model.pageViewController ??=
                                     PageController(
                                         initialPage: min(0, images.length - 1)),
+                                onPageChanged: (_) => setState(() {}),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: images.length,
                                 itemBuilder: (context, imagesIndex) {
                                   final imagesItem = images[imagesIndex];
                                   return ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(0.0),
-                                      bottomRight: Radius.circular(0.0),
-                                      topLeft: Radius.circular(5.0),
-                                      topRight: Radius.circular(5.0),
-                                    ),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     child: Image.network(
                                       imagesItem,
                                       width: double.infinity,

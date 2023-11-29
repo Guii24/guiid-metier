@@ -79,7 +79,7 @@ class _ComponentPostRepostedWidgetState
           width: double.infinity,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(0.0),
           ),
           child: StreamBuilder<UsersRecord>(
             stream: UsersRecord.getDocument(containerPostRecord.postCreator!),
@@ -428,13 +428,12 @@ class _ComponentPostRepostedWidgetState
                                       width: double.infinity,
                                       height: double.infinity,
                                       child: PageView.builder(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
                                         controller: _model
                                                 .pageViewController ??=
                                             PageController(
                                                 initialPage:
                                                     min(0, listimg.length - 1)),
+                                        onPageChanged: (_) => setState(() {}),
                                         scrollDirection: Axis.horizontal,
                                         itemCount: listimg.length,
                                         itemBuilder: (context, listimgIndex) {

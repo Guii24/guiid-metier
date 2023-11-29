@@ -64,7 +64,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             automaticallyImplyLeading: false,
             leading: Align(
-              alignment: AlignmentDirectional(0.00, 0.00),
+              alignment: AlignmentDirectional(-1.00, 0.00),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: AuthUserStreamWidget(
@@ -97,19 +97,21 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                 ),
               ),
             ),
-            title: Text(
-              'Guiid Metier',
-              style: FlutterFlowTheme.of(context).titleMedium.override(
-                    fontFamily: 'NewYork',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w600,
-                    useGoogleFonts: false,
-                  ),
+            title: Align(
+              alignment: AlignmentDirectional(0.00, 0.00),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  'assets/images/Rectangle.png',
+                  width: MediaQuery.sizeOf(context).width * 0.2,
+                  height: MediaQuery.sizeOf(context).height * 0.04,
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
             actions: [
               Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+                alignment: AlignmentDirectional(1.00, 0.00),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
                   child: FlutterFlowIconButton(

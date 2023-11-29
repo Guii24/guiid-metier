@@ -104,10 +104,10 @@ class _WearPhotoCropUIState extends State<WearPhotoCropUI> {
               aspectRatio: 1 / 1,
               withCircleUi: false,
               initialAreaBuilder: (rect) => Rect.fromLTRB(
-                rect.left + 4,
-                rect.top + 125,
-                rect.right - 4,
-                rect.bottom - 125,
+                rect.left + 0,
+                rect.top + 126,
+                rect.right - 0,
+                rect.bottom - 126,
               ),
 
               baseColor: const Color.fromARGB(255, 0, 3, 22),
