@@ -1591,7 +1591,7 @@ String? notificationFormatString() {
 
 String dateformatforSub(String value) {
   // formted jsondateformat to dateformat 'MMMM dd, yyyy'
-  final jsonDate = '{"date": "2022-02-14T12:00:00.000Z"}';
+  final jsonDate = '{"date": "${value}"}';
   final parsedJson = jsonDecode(jsonDate);
   final date = DateTime.parse(parsedJson['date']);
   final formattedDate = DateFormat('MMMM dd, yyyy').format(date);
