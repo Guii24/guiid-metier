@@ -45,6 +45,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
         FFAppState().choosenjobtype1 = '';
         FFAppState().choosenjobType2 = '';
         FFAppState().selectedJobType = '';
+        FFAppState().jobType3 = '';
       });
     });
 
@@ -1170,7 +1171,8 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                         FFAppState().countryInfo,
                                         r'''$.code''',
                                       ).toString(),
-                                      jobTypeNotApplicable: 'Not applicable',
+                                      jobTypeNotApplicable:
+                                          FFAppState().jobType3,
                                     ));
                                 context.safePop();
                                 showAlignedDialog(

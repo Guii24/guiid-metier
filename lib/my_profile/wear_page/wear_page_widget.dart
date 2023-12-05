@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/push_notifications/push_notifications_util.dart';
+import '/backend/schema/structs/index.dart';
 import '/components/subscription_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -778,7 +779,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                             elevation: 0.0,
                             child: Container(
                               width: double.infinity,
-                              height: 65.0,
+                              height: 79.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
@@ -791,7 +792,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                 alignment: AlignmentDirectional(0.00, -1.00),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 7.5, 16.0, 0.0),
+                                      10.0, 7.5, 16.0, 24.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
@@ -808,7 +809,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                           child: Image.network(
                                             valueOrDefault<String>(
                                               currentUserPhoto,
-                                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+                                              'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b',
                                             ),
                                             fit: BoxFit.cover,
                                           ),

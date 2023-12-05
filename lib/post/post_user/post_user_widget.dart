@@ -117,27 +117,14 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    context.pushNamed('CreatePost');
-                                  },
-                                  child: Text(
-                                    'Guiid Metier',
-                                    style: FlutterFlowTheme.of(context)
-                                        .titleLarge
-                                        .override(
-                                          fontFamily: 'NewYork',
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.w600,
-                                          useGoogleFonts: false,
-                                        ),
-                                  ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(0.0),
+                                child: Image.asset(
+                                  'assets/images/Rectangle.png',
+                                  width: MediaQuery.sizeOf(context).width * 0.2,
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.04,
+                                  fit: BoxFit.contain,
                                 ),
                               ),
                               Align(
@@ -381,6 +368,10 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                     ? _model.choosenCategory
                                     : null,
                               )
+                              .where(
+                                'post_type',
+                                isEqualTo: 'post',
+                              )
                               .orderBy('post_time_posted', descending: true),
                         ),
                         builder: (context, snapshot) {
@@ -400,7 +391,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                           }
                           List<PostRecord> listViewPostRecordList =
                               snapshot.data!;
-                          return ListView.separated(
+                          return ListView.builder(
                             padding: EdgeInsets.fromLTRB(
                               0,
                               10.0,
@@ -411,7 +402,6 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: listViewPostRecordList.length,
-                            separatorBuilder: (_, __) => SizedBox(height: 10.0),
                             itemBuilder: (context, listViewIndex) {
                               final listViewPostRecord =
                                   listViewPostRecordList[listViewIndex];

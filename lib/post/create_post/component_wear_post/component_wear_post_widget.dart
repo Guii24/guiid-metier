@@ -63,18 +63,16 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
         children: [
           Container(
             width: double.infinity,
-            height: MediaQuery.sizeOf(context).height * 0.55,
+            height: MediaQuery.sizeOf(context).height * 0.69,
             child: Stack(
               children: [
-                Align(
-                  alignment: AlignmentDirectional(0.00, 0.00),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(0.0),
-                    child: Image.network(
-                      widget.wearItem!.wearImage,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(0.0),
+                  child: Image.network(
+                    widget.wearItem!.wearImage,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ],

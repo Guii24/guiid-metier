@@ -224,7 +224,7 @@ class _ArticlesComponentWidgetState extends State<ArticlesComponentWidget> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Your account has been suspended. Contact support for further info.',
+                                  'Your account has been suspended. Please, contact support.',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(

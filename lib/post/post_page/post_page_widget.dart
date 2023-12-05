@@ -984,14 +984,16 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  if (stackUsersRecord
-                                                      .hasUserBlockedUserByAdmin()) {
+                                                  if (valueOrDefault<bool>(
+                                                      currentUserDocument
+                                                          ?.userBlockedUserByAdmin,
+                                                      false)) {
                                                     ScaffoldMessenger.of(
                                                             context)
                                                         .showSnackBar(
                                                       SnackBar(
                                                         content: Text(
-                                                          'Your account has been suspended. Contact support for further info.',
+                                                          'Your account has been suspended. Please, contact support.',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -1152,7 +1154,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                       .showSnackBar(
                                                     SnackBar(
                                                       content: Text(
-                                                        'Your account has been suspended. Contact support for further info.',
+                                                        'Your account has been suspended. Please, contact support.',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1284,7 +1286,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                   .showSnackBar(
                                                 SnackBar(
                                                   content: Text(
-                                                    'Your account has been suspended. Contact support for further info.',
+                                                    'Your account has been suspended. Please, contact support.',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
@@ -1568,6 +1570,15 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                 _model.textController.text == ''
                                             ? null
                                             : () async {
+                                                setState(() {
+                                                  _model.text = _model
+                                                      .textController.text;
+                                                });
+                                                setState(() {
+                                                  _model.textController
+                                                      ?.clear();
+                                                });
+
                                                 var commentPostRecordReference =
                                                     CommentPostRecord.createDoc(
                                                         postPagePostRecord
@@ -1577,8 +1588,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                         createCommentPostRecordData(
                                                   commentPostUser:
                                                       currentUserReference,
-                                                  commentPostText: _model
-                                                      .textController.text,
+                                                  commentPostText: _model.text,
                                                   commentPostTime:
                                                       getCurrentTimestamp,
                                                 ));
@@ -1587,9 +1597,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                         createCommentPostRecordData(
                                                           commentPostUser:
                                                               currentUserReference,
-                                                          commentPostText: _model
-                                                              .textController
-                                                              .text,
+                                                          commentPostText:
+                                                              _model.text,
                                                           commentPostTime:
                                                               getCurrentTimestamp,
                                                         ),
@@ -1612,8 +1621,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                               .reference,
                                                       notificationCreationDate:
                                                           getCurrentTimestamp,
-                                                      notificationText: _model
-                                                          .textController.text,
+                                                      notificationText:
+                                                          _model.text,
                                                     ));
                                                 if (stackUsersRecord
                                                     .userNotification) {
@@ -1646,8 +1655,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                   ),
                                                 });
                                                 setState(() {
-                                                  _model.textController
-                                                      ?.clear();
+                                                  _model.text = '';
                                                 });
 
                                                 setState(() {});

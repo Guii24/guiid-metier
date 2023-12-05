@@ -5,6 +5,7 @@ import '/components/subscription_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/post/bottom_comment/bottom_comment_widget.dart';
 import '/post/bottom_editop_delete_post/bottom_editop_delete_post_widget.dart';
 import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import '/custom_code/actions/index.dart' as actions;

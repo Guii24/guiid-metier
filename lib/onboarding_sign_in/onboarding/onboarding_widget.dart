@@ -224,7 +224,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     30.0, 0.0, 30.0, 16.0),
                                 child: Text(
-                                  'WEAR, WE ARE, WARES',
+                                  'WEAR, WE ARE',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium

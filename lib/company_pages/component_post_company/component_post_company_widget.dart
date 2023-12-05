@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/post/bottom_comment/bottom_comment_widget.dart';
 import '/post/bottom_editop_delete_post/bottom_editop_delete_post_widget.dart';
 import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import '/post/bottom_share_post/bottom_share_post_widget.dart';
@@ -80,7 +81,7 @@ class _ComponentPostCompanyWidgetState
           width: double.infinity,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(0.0),
           ),
           child: StreamBuilder<UsersRecord>(
             stream: UsersRecord.getDocument(containerPostRecord.postCreator!),
@@ -117,21 +118,16 @@ class _ComponentPostCompanyWidgetState
                               width: double.infinity,
                               height: double.infinity,
                               child: PageView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
                                 controller: _model.pageViewController ??=
                                     PageController(
                                         initialPage: min(0, images.length - 1)),
+                                onPageChanged: (_) => setState(() {}),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: images.length,
                                 itemBuilder: (context, imagesIndex) {
                                   final imagesItem = images[imagesIndex];
                                   return ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(0.0),
-                                      bottomRight: Radius.circular(0.0),
-                                      topLeft: Radius.circular(5.0),
-                                      topRight: Radius.circular(5.0),
-                                    ),
+                                    borderRadius: BorderRadius.circular(0.0),
                                     child: Image.network(
                                       imagesItem,
                                       width: double.infinity,
@@ -562,7 +558,7 @@ class _ComponentPostCompanyWidgetState
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                          'Your account has been suspended. Contact support for further info.',
+                                          'Your account has been suspended. Please, contact support.',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -664,32 +660,153 @@ class _ComponentPostCompanyWidgetState
                                     ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  15.0, 0.0, 0.0, 0.0),
-                              child: Icon(
-                                FFIcons.kproperty1comments,
-                                color: FlutterFlowTheme.of(context).dark88,
-                                size: 24.0,
-                              ),
-                            ),
                             Expanded(
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    4.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  '${formatNumber(
-                                    containerPostRecord.postCommentsList.length,
-                                    formatType: FormatType.compact,
-                                  )} comments',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Libre Franklin',
-                                        color:
-                                            FlutterFlowTheme.of(context).dark68,
-                                        fontSize: 14.0,
+                                    15.0, 0.0, 0.0, 0.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    if (valueOrDefault<bool>(
+                                        currentUserDocument
+                                            ?.userBlockedUserByAdmin,
+                                        false)) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Your account has been suspended. Please, contact support.',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  fontSize: 14.0,
+                                                ),
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 3000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                        ),
+                                      );
+                                    } else {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Color(0x01000000),
+                                        barrierColor:
+                                            FlutterFlowTheme.of(context).dark38,
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: BottomCommentWidget(
+                                              post:
+                                                  containerPostRecord.reference,
+                                              userRef: columnUsersRecord,
+                                            ),
+                                          );
+                                        },
+                                      ).then((value) => safeSetState(() {}));
+                                    }
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Color(0x01000000),
+                                            barrierColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .dark38,
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding:
+                                                    MediaQuery.viewInsetsOf(
+                                                        context),
+                                                child: BottomCommentWidget(
+                                                  post: containerPostRecord
+                                                      .reference,
+                                                  userRef: columnUsersRecord,
+                                                ),
+                                              );
+                                            },
+                                          ).then(
+                                              (value) => safeSetState(() {}));
+                                        },
+                                        child: Icon(
+                                          FFIcons.kproperty1comments,
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          size: 24.0,
+                                        ),
                                       ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            4.0, 0.0, 0.0, 0.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Color(0x01000000),
+                                              barrierColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark38,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: BottomCommentWidget(
+                                                    post: containerPostRecord
+                                                        .reference,
+                                                    userRef: columnUsersRecord,
+                                                  ),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+                                          },
+                                          child: Text(
+                                            '${formatNumber(
+                                              containerPostRecord
+                                                  .postCommentsList.length,
+                                              formatType: FormatType.compact,
+                                            )} comments',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Libre Franklin',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark68,
+                                                  fontSize: 14.0,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -710,7 +827,7 @@ class _ComponentPostCompanyWidgetState
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                        'Your account has been suspended. Contact support for further info.',
+                                        'Your account has been suspended. Please, contact support.',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
