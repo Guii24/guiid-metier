@@ -37,6 +37,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
     super.dispose();
   }
 
+  bool showText = true;
   @override
   Widget build(BuildContext context) {
     if (isiOS) {
@@ -57,183 +58,182 @@ class _PostUserWidgetState extends State<PostUserWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: NestedScrollView(
           floatHeaderSlivers: true,
-          headerSliverBuilder: (context, _) => [
+          headerSliverBuilder: (context, bool isScrolled){
+            return [
             SliverAppBar(
               expandedHeight: 130.0,
-              pinned: false,
-              floating: true,
-              snap: true,
+              pinned: true,
+              floating: false,
+              snap: false,
+              title:isScrolled == false?Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(
+                    16.0, 30.0, 8.0, 17.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional(0.00, 0.00),
+                      child: AuthUserStreamWidget(
+                        builder: (context) => InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            if (valueOrDefault(
+                                currentUserDocument?.userType,
+                                '') ==
+                                'Company') {
+                              context.pushNamed('MyProfileCompany');
+                            } else {
+                              context.pushNamed('MyProfile');
+                            }
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50.0),
+                            child: Image.network(
+                              valueOrDefault<String>(
+                                currentUserPhoto,
+                                'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*1ktxoqe*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NzkxNTc4Ni4yNzAuMS4xNjk3OTE1ODcyLjU4LjAuMA..',
+                              ),
+                              width: 34.0,
+                              height: 34.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(0.0),
+                      child: Image.asset(
+                        'assets/images/Rectangle.png',
+                        width: MediaQuery.sizeOf(context).width * 0.2,
+                        height:
+                        MediaQuery.sizeOf(context).height * 0.04,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(0.00, 0.00),
+                      child: FlutterFlowIconButton(
+                        borderColor: Colors.transparent,
+                        borderRadius: 30.0,
+                        borderWidth: 1.0,
+                        buttonSize: 40.0,
+                        icon: Icon(
+                          FFIcons.kproperty1notification,
+                          color: FlutterFlowTheme.of(context)
+                              .primaryText,
+                          size: 24.0,
+                        ),
+                        onPressed: () async {
+                          context.pushNamed('Notifications');
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ):SizedBox.shrink(),
               backgroundColor: FlutterFlowTheme.of(context).primary,
               automaticallyImplyLeading: false,
               actions: [],
+              // bottom:  PreferredSize(
+              //   child: preferredSize: Size(double.infinity, 80),),
               flexibleSpace: FlexibleSpaceBar(
-                title: Align(
-                  alignment: AlignmentDirectional(0.00, -1.00),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 30.0, 8.0, 17.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
-                                child: AuthUserStreamWidget(
-                                  builder: (context) => InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      if (valueOrDefault(
-                                              currentUserDocument?.userType,
-                                              '') ==
-                                          'Company') {
-                                        context.pushNamed('MyProfileCompany');
-                                      } else {
-                                        context.pushNamed('MyProfile');
-                                      }
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(50.0),
-                                      child: Image.network(
-                                        valueOrDefault<String>(
-                                          currentUserPhoto,
-                                          'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b&_gl=1*1ktxoqe*_ga*MTM0NzUzNDc1NS4xNjg4NDU4OTk3*_ga_CW55HF8NVT*MTY5NzkxNTc4Ni4yNzAuMS4xNjk3OTE1ODcyLjU4LjAuMA..',
-                                        ),
-                                        width: 34.0,
-                                        height: 34.0,
-                                        fit: BoxFit.cover,
-                                      ),
+                title:LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    print(constraints.biggest);
+                    if(constraints.biggest.height == 80.0){
+                        showText = false;
+                    }
+                    return Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                setState(() {
+                                  _model.choosenCategory = '';
+                                });
+                              },
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 0.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
+                                child: Container(
+                                  height: 35.0,
+                                  decoration: BoxDecoration(
+                                    color: _model.choosenCategory == null ||
+                                        _model.choosenCategory == ''
+                                        ? FlutterFlowTheme.of(context)
+                                        .primaryText
+                                        : FlutterFlowTheme.of(context)
+                                        .primary,
+                                    borderRadius:
+                                    BorderRadius.circular(4.0),
+                                    border: Border.all(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      width: 1.0,
                                     ),
                                   ),
-                                ),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(0.0),
-                                child: Image.asset(
-                                  'assets/images/Rectangle.png',
-                                  width: MediaQuery.sizeOf(context).width * 0.2,
-                                  height:
-                                      MediaQuery.sizeOf(context).height * 0.04,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30.0,
-                                  borderWidth: 1.0,
-                                  buttonSize: 40.0,
-                                  icon: Icon(
-                                    FFIcons.kproperty1notification,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 24.0,
-                                  ),
-                                  onPressed: () async {
-                                    context.pushNamed('Notifications');
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(-1.00, 0.00),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    setState(() {
-                                      _model.choosenCategory = '';
-                                    });
-                                  },
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    elevation: 0.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                    child: Container(
-                                      height: 35.0,
-                                      decoration: BoxDecoration(
-                                        color: _model.choosenCategory == null ||
-                                                _model.choosenCategory == ''
-                                            ? FlutterFlowTheme.of(context)
-                                                .primaryText
-                                            : FlutterFlowTheme.of(context)
-                                                .primary,
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        border: Border.all(
-                                          color: FlutterFlowTheme.of(context)
+                                  child: Align(
+                                    alignment:
+                                    AlignmentDirectional(0.00, 0.00),
+                                    child: Padding(
+                                      padding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          12.0, 5.0, 12.0, 5.0),
+                                      child: Text(
+                                        'All',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color:
+                                          _model.choosenCategory ==
+                                              null ||
+                                              _model.choosenCategory ==
+                                                  ''
+                                              ? FlutterFlowTheme.of(
+                                              context)
+                                              .primary
+                                              : FlutterFlowTheme.of(
+                                              context)
                                               .primaryText,
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                      child: Align(
-                                        alignment:
-                                            AlignmentDirectional(0.00, 0.00),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 5.0, 12.0, 5.0),
-                                          child: Text(
-                                            'All',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color:
-                                                      _model.choosenCategory ==
-                                                                  null ||
-                                                              _model.choosenCategory ==
-                                                                  ''
-                                                          ? FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary
-                                                          : FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                  fontSize: 15.0,
-                                                ),
-                                          ),
+                                          fontSize: 15.0,
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                AuthUserStreamWidget(
-                                  builder: (context) => Builder(
-                                    builder: (context) {
-                                      final category = (currentUserDocument
-                                                  ?.userPreferences
-                                                  ?.toList() ??
-                                              [])
-                                          .toList();
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: List.generate(category.length,
-                                                (categoryIndex) {
+                              ),
+                            ),
+                            AuthUserStreamWidget(
+                              builder: (context) => Builder(
+                                builder: (context) {
+                                  final category = (currentUserDocument
+                                      ?.userPreferences
+                                      ?.toList() ??
+                                      [])
+                                      .toList();
+                                  return Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: List.generate(category.length,
+                                            (categoryIndex) {
                                           final categoryItem =
-                                              category[categoryIndex];
+                                          category[categoryIndex];
                                           return InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -250,68 +250,68 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                               elevation: 0.0,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(4.0),
+                                                BorderRadius.circular(4.0),
                                               ),
                                               child: Container(
                                                 height: 35.0,
                                                 decoration: BoxDecoration(
                                                   color: valueOrDefault<Color>(
                                                     _model.choosenCategory ==
-                                                            categoryItem
+                                                        categoryItem
                                                         ? FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryText
+                                                        context)
+                                                        .primaryText
                                                         : FlutterFlowTheme.of(
-                                                                context)
-                                                            .primary,
+                                                        context)
+                                                        .primary,
                                                     FlutterFlowTheme.of(context)
                                                         .primary,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          4.0),
+                                                  BorderRadius.circular(
+                                                      4.0),
                                                   border: Border.all(
                                                     color: FlutterFlowTheme.of(
-                                                            context)
+                                                        context)
                                                         .primaryText,
                                                     width: 1.0,
                                                   ),
                                                 ),
                                                 child: Align(
                                                   alignment:
-                                                      AlignmentDirectional(
-                                                          0.00, 0.00),
+                                                  AlignmentDirectional(
+                                                      0.00, 0.00),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(12.0, 5.0,
-                                                                12.0, 5.0),
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(12.0, 5.0,
+                                                        12.0, 5.0),
                                                     child: Text(
                                                       categoryItem,
                                                       style:
+                                                      FlutterFlowTheme.of(
+                                                          context)
+                                                          .bodyMedium
+                                                          .override(
+                                                        fontFamily:
+                                                        'Libre Franklin',
+                                                        color:
+                                                        valueOrDefault<
+                                                            Color>(
+                                                          _model.choosenCategory ==
+                                                              categoryItem
+                                                              ? FlutterFlowTheme.of(
+                                                              context)
+                                                              .primary
+                                                              : FlutterFlowTheme.of(
+                                                              context)
+                                                              .primaryText,
                                                           FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Libre Franklin',
-                                                                color:
-                                                                    valueOrDefault<
-                                                                        Color>(
-                                                                  _model.choosenCategory ==
-                                                                          categoryItem
-                                                                      ? FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary
-                                                                      : FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                ),
-                                                                fontSize: 15.0,
-                                                              ),
+                                                              context)
+                                                              .primaryText,
+                                                        ),
+                                                        fontSize: 15.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -319,27 +319,25 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                             ),
                                           );
                                         })
-                                            .divide(SizedBox(width: 8.0))
-                                            .addToStart(SizedBox(width: 8.0))
-                                            .addToEnd(SizedBox(width: 8.0)),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ].addToStart(SizedBox(width: 16.0)),
+                                        .divide(SizedBox(width: 8.0))
+                                        .addToStart(SizedBox(width: 8.0))
+                                        .addToEnd(SizedBox(width: 8.0)),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
+                          ].addToStart(SizedBox(width: 16.0)),
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  }
                 ),
                 centerTitle: true,
                 expandedTitleScale: 1.0,
               ),
               elevation: 1.0,
             )
-          ],
+          ];},
           body: Builder(
             builder: (context) {
               return Container(
