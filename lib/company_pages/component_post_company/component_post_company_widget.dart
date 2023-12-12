@@ -237,9 +237,11 @@ class _ComponentPostCompanyWidgetState
                                             0.0, 0.0, 0.0, 3.0),
                                         child: Text(
                                           dateTimeFormat(
-                                              'relative',
-                                              containerPostRecord
-                                                  .postTimePosted!),
+                                            'relative',
+                                            containerPostRecord.postTimePosted!,
+                                            locale: FFLocalizations.of(context)
+                                                .languageCode,
+                                          ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(

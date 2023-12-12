@@ -36,11 +36,6 @@ class PostRecord extends FirestoreRecord {
   DocumentReference? get postCreator => _postCreator;
   bool hasPostCreator() => _postCreator != null;
 
-  // "post_activities" field.
-  List<DocumentReference>? _postActivities;
-  List<DocumentReference> get postActivities => _postActivities ?? const [];
-  bool hasPostActivities() => _postActivities != null;
-
   // "post_comments_list" field.
   List<DocumentReference>? _postCommentsList;
   List<DocumentReference> get postCommentsList => _postCommentsList ?? const [];
@@ -91,12 +86,16 @@ class PostRecord extends FirestoreRecord {
   bool get postBlocked => _postBlocked ?? false;
   bool hasPostBlocked() => _postBlocked != null;
 
+  // "post_activities" field.
+  List<DocumentReference>? _postActivities;
+  List<DocumentReference> get postActivities => _postActivities ?? const [];
+  bool hasPostActivities() => _postActivities != null;
+
   void _initializeFields() {
     _postImagesList = getDataList(snapshotData['post_images_list']);
     _postText = snapshotData['post_text'] as String?;
     _postTimePosted = snapshotData['post_time_posted'] as DateTime?;
     _postCreator = snapshotData['post_creator'] as DocumentReference?;
-    _postActivities = getDataList(snapshotData['post_activities']);
     _postCommentsList = getDataList(snapshotData['post_comments_list']);
     _postCategory = getDataList(snapshotData['post_category']);
     _postIsReposted = snapshotData['post_isReposted'] as bool?;
@@ -112,6 +111,7 @@ class PostRecord extends FirestoreRecord {
     _postReported = snapshotData['post_reported'] as bool?;
     _postReportedRef = snapshotData['post_reported_ref'] as DocumentReference?;
     _postBlocked = snapshotData['post_blocked'] as bool?;
+    _postActivities = getDataList(snapshotData['post_activities']);
   }
 
   static CollectionReference get collection =>
@@ -187,7 +187,6 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         e1?.postText == e2?.postText &&
         e1?.postTimePosted == e2?.postTimePosted &&
         e1?.postCreator == e2?.postCreator &&
-        listEquality.equals(e1?.postActivities, e2?.postActivities) &&
         listEquality.equals(e1?.postCommentsList, e2?.postCommentsList) &&
         listEquality.equals(e1?.postCategory, e2?.postCategory) &&
         e1?.postIsReposted == e2?.postIsReposted &&
@@ -197,7 +196,8 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         e1?.postType == e2?.postType &&
         e1?.postReported == e2?.postReported &&
         e1?.postReportedRef == e2?.postReportedRef &&
-        e1?.postBlocked == e2?.postBlocked;
+        e1?.postBlocked == e2?.postBlocked &&
+        listEquality.equals(e1?.postActivities, e2?.postActivities);
   }
 
   @override
@@ -206,7 +206,6 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         e?.postText,
         e?.postTimePosted,
         e?.postCreator,
-        e?.postActivities,
         e?.postCommentsList,
         e?.postCategory,
         e?.postIsReposted,
@@ -216,7 +215,8 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         e?.postType,
         e?.postReported,
         e?.postReportedRef,
-        e?.postBlocked
+        e?.postBlocked,
+        e?.postActivities
       ]);
 
   @override

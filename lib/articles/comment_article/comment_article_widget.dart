@@ -137,12 +137,38 @@ class _CommentArticleWidgetState extends State<CommentArticleWidget> {
                             ),
                             Text(
                               dateTimeFormat(
-                                          'yMd',
-                                          containerCommentArticleRecord
-                                              .commentArticleTime) ==
-                                      dateTimeFormat('yMd', getCurrentTimestamp)
-                                  ? 'Today at ${dateTimeFormat('jm', containerCommentArticleRecord.commentArticleTime)}'
-                                  : '${dateTimeFormat('d/M/y', containerCommentArticleRecord.commentArticleTime)} at ${dateTimeFormat('jm', containerCommentArticleRecord.commentArticleTime)}',
+                                        'yMd',
+                                        containerCommentArticleRecord
+                                            .commentArticleTime,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      ) ==
+                                      dateTimeFormat(
+                                        'yMd',
+                                        getCurrentTimestamp,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      )
+                                  ? 'Today at ${dateTimeFormat(
+                                      'jm',
+                                      containerCommentArticleRecord
+                                          .commentArticleTime,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    )}'
+                                  : '${dateTimeFormat(
+                                      'd/M/y',
+                                      containerCommentArticleRecord
+                                          .commentArticleTime,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    )} at ${dateTimeFormat(
+                                      'jm',
+                                      containerCommentArticleRecord
+                                          .commentArticleTime,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    )}',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(

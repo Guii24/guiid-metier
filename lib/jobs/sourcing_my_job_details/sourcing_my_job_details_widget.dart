@@ -484,8 +484,12 @@ class _SourcingMyJobDetailsWidgetState
                                         ),
                                       ),
                                       Text(
-                                        dateTimeFormat('relative',
-                                            widget.jobDoc!.jobCreationDate!),
+                                        dateTimeFormat(
+                                          'relative',
+                                          widget.jobDoc!.jobCreationDate!,
+                                          locale: FFLocalizations.of(context)
+                                              .languageCode,
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -866,9 +870,14 @@ class _SourcingMyJobDetailsWidgetState
                                                       ),
                                                       Text(
                                                         dateTimeFormat(
-                                                            'relative',
-                                                            jobApplicantsItem
-                                                                .jobApplicantsCreationDate!),
+                                                          'relative',
+                                                          jobApplicantsItem
+                                                              .jobApplicantsCreationDate!,
+                                                          locale:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .languageCode,
+                                                        ),
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)

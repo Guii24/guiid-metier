@@ -184,9 +184,13 @@ class _ComponentNotificationWidgetState
                                               ),
                                               Text(
                                                 dateTimeFormat(
-                                                    'relative',
-                                                    widget.notification!
-                                                        .notificationCreationDate!),
+                                                  'relative',
+                                                  widget.notification!
+                                                      .notificationCreationDate!,
+                                                  locale: FFLocalizations.of(
+                                                          context)
+                                                      .languageCode,
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -397,9 +401,13 @@ class _ComponentNotificationWidgetState
                                             ),
                                             Text(
                                               dateTimeFormat(
-                                                  'relative',
-                                                  widget.notification!
-                                                      .notificationCreationDate!),
+                                                'relative',
+                                                widget.notification!
+                                                    .notificationCreationDate!,
+                                                locale:
+                                                    FFLocalizations.of(context)
+                                                        .languageCode,
+                                              ),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -517,9 +525,12 @@ class _ComponentNotificationWidgetState
                                         ),
                                         Text(
                                           dateTimeFormat(
-                                              'relative',
-                                              widget.notification!
-                                                  .notificationCreationDate!),
+                                            'relative',
+                                            widget.notification!
+                                                .notificationCreationDate!,
+                                            locale: FFLocalizations.of(context)
+                                                .languageCode,
+                                          ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -852,9 +863,13 @@ class _ComponentNotificationWidgetState
                                             ),
                                             Text(
                                               dateTimeFormat(
-                                                  'relative',
-                                                  widget.notification!
-                                                      .notificationCreationDate!),
+                                                'relative',
+                                                widget.notification!
+                                                    .notificationCreationDate!,
+                                                locale:
+                                                    FFLocalizations.of(context)
+                                                        .languageCode,
+                                              ),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -998,9 +1013,13 @@ class _ComponentNotificationWidgetState
                                             ),
                                             Text(
                                               dateTimeFormat(
-                                                  'relative',
-                                                  widget.notification!
-                                                      .notificationCreationDate!),
+                                                'relative',
+                                                widget.notification!
+                                                    .notificationCreationDate!,
+                                                locale:
+                                                    FFLocalizations.of(context)
+                                                        .languageCode,
+                                              ),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium

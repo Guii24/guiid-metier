@@ -379,9 +379,13 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                             3.0),
                                                                 child: Text(
                                                                   dateTimeFormat(
-                                                                      'relative',
-                                                                      postPageRepostedPostRecord
-                                                                          .postTimePosted!),
+                                                                    'relative',
+                                                                    postPageRepostedPostRecord
+                                                                        .postTimePosted!,
+                                                                    locale: FFLocalizations.of(
+                                                                            context)
+                                                                        .languageCode,
+                                                                  ),
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -902,9 +906,13 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                             ),
                                                             Text(
                                                               dateTimeFormat(
-                                                                  'relative',
-                                                                  columnPostRecord
-                                                                      .postTimePosted!),
+                                                                'relative',
+                                                                columnPostRecord
+                                                                    .postTimePosted!,
+                                                                locale: FFLocalizations.of(
+                                                                        context)
+                                                                    .languageCode,
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium

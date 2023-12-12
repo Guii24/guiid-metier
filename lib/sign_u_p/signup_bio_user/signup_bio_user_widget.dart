@@ -311,8 +311,14 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                   ),
                                                 if (FFAppState().activeCalendar)
                                                   Text(
-                                                    dateTimeFormat('yMd',
-                                                        FFAppState().bornDate),
+                                                    dateTimeFormat(
+                                                      'yMd',
+                                                      FFAppState().bornDate,
+                                                      locale:
+                                                          FFLocalizations.of(
+                                                                  context)
+                                                              .languageCode,
+                                                    ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium

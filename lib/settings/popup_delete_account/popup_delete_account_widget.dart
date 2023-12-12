@@ -1,7 +1,11 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -122,10 +126,85 @@ class _PopupDeleteAccountWidgetState extends State<PopupDeleteAccountWidget> {
                             EdgeInsetsDirectional.fromSTEB(7.0, 0.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            await actions.reAuthUser(
+                              currentUserEmail,
+                              '123456',
+                            );
+                            _model.articles = await queryArticlesRecordOnce(
+                              queryBuilder: (articlesRecord) =>
+                                  articlesRecord.where(
+                                'article_creator',
+                                isEqualTo: currentUserReference,
+                              ),
+                            );
+                            _model.chats = await queryChatRecordOnce(
+                              queryBuilder: (chatRecord) => chatRecord.where(
+                                'chat_with_support_creator',
+                                isEqualTo: currentUserReference,
+                              ),
+                            );
+                            _model.articlesComments =
+                                await queryCommentArticleRecordOnce(
+                              queryBuilder: (commentArticleRecord) =>
+                                  commentArticleRecord.where(
+                                'comment_article_user',
+                                isEqualTo: currentUserReference,
+                              ),
+                            );
+                            _model.commentPost =
+                                await queryCommentPostRecordOnce(
+                              queryBuilder: (commentPostRecord) =>
+                                  commentPostRecord.where(
+                                'comment_post_user',
+                                isEqualTo: currentUserReference,
+                              ),
+                            );
+                            _model.jobApplicants =
+                                await queryJobApplicantsRecordOnce(
+                              queryBuilder: (jobApplicantsRecord) =>
+                                  jobApplicantsRecord.where(
+                                'job_applicant_user',
+                                isEqualTo: currentUserReference,
+                              ),
+                            );
+                            _model.notifications =
+                                await queryNotificationRecordOnce(
+                              queryBuilder: (notificationRecord) =>
+                                  notificationRecord.where(
+                                'notification_from',
+                                isEqualTo: currentUserReference,
+                              ),
+                            );
+                            _model.posts = await queryPostRecordOnce(
+                              queryBuilder: (postRecord) => postRecord.where(
+                                'post_creator',
+                                isEqualTo: currentUserReference,
+                              ),
+                            );
+                            await actions.deleteUserData(
+                              _model.posts?.toList(),
+                              _model.commentPost?.toList(),
+                              _model.articles?.toList(),
+                              _model.articlesComments?.toList(),
+                              _model.jobApplicants?.toList(),
+                              _model.chats?.toList(),
+                              _model.notifications?.toList(),
+                            );
                             await authManager.deleteUser(context);
                             Navigator.pop(context);
 
-                            context.goNamedAuth('SpashScreen', context.mounted);
+                            context.goNamed(
+                              'Onboarding',
+                              extra: <String, dynamic>{
+                                kTransitionInfoKey: TransitionInfo(
+                                  hasTransition: true,
+                                  transitionType: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 0),
+                                ),
+                              },
+                            );
+
+                            setState(() {});
                           },
                           text: 'YES',
                           options: FFButtonOptions(

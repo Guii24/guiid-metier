@@ -190,9 +190,12 @@ class _BottomJobDetailsApplicantWidgetState
                                       0.0, 3.0, 0.0, 0.0),
                                   child: Text(
                                     dateTimeFormat(
-                                        'yMMMd',
-                                        widget.jobApplicantDoc!
-                                            .jobApplicantsCreationDate!),
+                                      'yMMMd',
+                                      widget.jobApplicantDoc!
+                                          .jobApplicantsCreationDate!,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(

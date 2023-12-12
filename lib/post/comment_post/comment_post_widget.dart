@@ -143,13 +143,38 @@ class _CommentPostWidgetState extends State<CommentPostWidget> {
                               ),
                               Text(
                                 dateTimeFormat(
-                                            'yMd',
-                                            containerCommentPostRecord
-                                                .commentPostTime) ==
+                                          'yMd',
+                                          containerCommentPostRecord
+                                              .commentPostTime,
+                                          locale: FFLocalizations.of(context)
+                                              .languageCode,
+                                        ) ==
                                         dateTimeFormat(
-                                            'yMd', getCurrentTimestamp)
-                                    ? 'Today at ${dateTimeFormat('jm', containerCommentPostRecord.commentPostTime)}'
-                                    : '${dateTimeFormat('d/M/y', containerCommentPostRecord.commentPostTime)} at ${dateTimeFormat('jm', containerCommentPostRecord.commentPostTime)}',
+                                          'yMd',
+                                          getCurrentTimestamp,
+                                          locale: FFLocalizations.of(context)
+                                              .languageCode,
+                                        )
+                                    ? 'Today at ${dateTimeFormat(
+                                        'jm',
+                                        containerCommentPostRecord
+                                            .commentPostTime,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      )}'
+                                    : '${dateTimeFormat(
+                                        'd/M/y',
+                                        containerCommentPostRecord
+                                            .commentPostTime,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      )} at ${dateTimeFormat(
+                                        'jm',
+                                        containerCommentPostRecord
+                                            .commentPostTime,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      )}',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(

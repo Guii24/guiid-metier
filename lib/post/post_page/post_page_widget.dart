@@ -453,9 +453,14 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                       ),
                                                       Text(
                                                         dateTimeFormat(
-                                                            'relative',
-                                                            postPagePostRecord
-                                                                .postTimePosted!),
+                                                          'relative',
+                                                          postPagePostRecord
+                                                              .postTimePosted!,
+                                                          locale:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .languageCode,
+                                                        ),
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)

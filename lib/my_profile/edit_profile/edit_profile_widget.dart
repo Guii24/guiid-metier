@@ -413,8 +413,14 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                 if (FFAppState().bornDate !=
                                                     null)
                                                   Text(
-                                                    dateTimeFormat('yMd',
-                                                        FFAppState().bornDate),
+                                                    dateTimeFormat(
+                                                      'yMd',
+                                                      FFAppState().bornDate,
+                                                      locale:
+                                                          FFLocalizations.of(
+                                                                  context)
+                                                              .languageCode,
+                                                    ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium

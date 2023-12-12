@@ -429,8 +429,12 @@ class _BottomJobDetailsWidgetState extends State<BottomJobDetailsWidget> {
                                     ),
                                   ),
                                   Text(
-                                    dateTimeFormat('relative',
-                                        widget.jobDoc!.jobCreationDate!),
+                                    dateTimeFormat(
+                                      'relative',
+                                      widget.jobDoc!.jobCreationDate!,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(

@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/components/take_photo_profile_company_widget.dart';
 import '/components/take_photo_profile_user_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -953,217 +954,273 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                     child: Align(
                                       alignment:
                                           AlignmentDirectional(0.00, 1.00),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          if (_model.formKey2.currentState ==
-                                                  null ||
-                                              !_model.formKey2.currentState!
-                                                  .validate()) {
-                                            return;
+                                      child: StreamBuilder<List<UsersRecord>>(
+                                        stream: queryUsersRecord(
+                                          queryBuilder: (usersRecord) =>
+                                              usersRecord.where(
+                                            'email',
+                                            isEqualTo:
+                                                '${functions.deleteSpaceAndDivider('${getJsonField(
+                                              FFAppState().countryInfo,
+                                              r'''$.dial_code''',
+                                            ).toString()}${_model.userPhoneController.text}')}@gmail.com',
+                                          ),
+                                          singleRecord: true,
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 30.0,
+                                                height: 30.0,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
                                           }
-                                          if (FFAppState().profilePhoto ==
-                                                  null ||
-                                              FFAppState().profilePhoto == '') {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Please upload a profile photo.',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Libre Franklin',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 3000),
-                                                backgroundColor:
-                                                    Color(0xCD000000),
-                                              ),
-                                            );
-                                          } else if (!functions.counter(
-                                              _model.userPhoneController.text,
-                                              14)) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Please enter a valid phone number.',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Libre Franklin',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 3000),
-                                                backgroundColor:
-                                                    Color(0xCD000000),
-                                              ),
-                                            );
-                                          } else if (!_model
-                                              .checkboxuserValue!) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Please mark checkbox',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Libre Franklin',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 3000),
-                                                backgroundColor:
-                                                    Color(0xCD000000),
-                                              ),
-                                            );
-                                          } else if (functions
-                                              .containsProfanity(_model
-                                                  .userNameController.text)) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'No profanity words allowed',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Libre Franklin',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 3000),
-                                                backgroundColor:
-                                                    Color(0xCD000000),
-                                              ),
-                                            );
-                                          } else {
-                                            context.pushNamed(
-                                              'VerificationSignUp',
-                                              queryParameters: {
-                                                'userName': serializeParam(
-                                                  _model
-                                                      .userNameController.text,
-                                                  ParamType.String,
-                                                ),
-                                                'userPhone': serializeParam(
-                                                  functions
-                                                      .deleteSpaceAndDivider(
-                                                          '${getJsonField(
-                                                    FFAppState().countryInfo,
-                                                    r'''$.dial_code''',
-                                                  ).toString()}${_model.userPhoneController.text}'),
-                                                  ParamType.String,
-                                                ),
-                                                'profilePhoto': serializeParam(
-                                                  FFAppState().profilePhoto,
-                                                  ParamType.String,
-                                                ),
-                                                'userType': serializeParam(
-                                                  'User',
-                                                  ParamType.String,
-                                                ),
-                                                'phoneoriginal': serializeParam(
+                                          List<UsersRecord>
+                                              buttonUsersRecordList =
+                                              snapshot.data!;
+                                          final buttonUsersRecord =
+                                              buttonUsersRecordList.isNotEmpty
+                                                  ? buttonUsersRecordList.first
+                                                  : null;
+                                          return FFButtonWidget(
+                                            onPressed: () async {
+                                              if (_model.formKey2
+                                                          .currentState ==
+                                                      null ||
+                                                  !_model.formKey2.currentState!
+                                                      .validate()) {
+                                                return;
+                                              }
+                                              if (FFAppState().profilePhoto ==
+                                                      null ||
+                                                  FFAppState().profilePhoto ==
+                                                      '') {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Please upload a profile photo.',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelLarge
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                    duration: Duration(
+                                                        milliseconds: 3000),
+                                                    backgroundColor:
+                                                        Color(0xCD000000),
+                                                  ),
+                                                );
+                                              } else if (!functions.counter(
                                                   _model
                                                       .userPhoneController.text,
-                                                  ParamType.String,
-                                                ),
-                                                'phoneName': serializeParam(
-                                                  getJsonField(
-                                                    FFAppState().countryInfo,
-                                                    r'''$.name''',
-                                                  ).toString(),
-                                                  ParamType.String,
-                                                ),
-                                                'phoneCode': serializeParam(
-                                                  getJsonField(
-                                                    FFAppState().countryInfo,
-                                                    r'''$.code''',
-                                                  ).toString(),
-                                                  ParamType.String,
-                                                ),
-                                                'phoneFlag': serializeParam(
-                                                  getJsonField(
-                                                    FFAppState().countryInfo,
-                                                    r'''$.flag''',
-                                                  ).toString(),
-                                                  ParamType.String,
-                                                ),
-                                                'phoneDialCode': serializeParam(
-                                                  getJsonField(
-                                                    FFAppState().countryInfo,
-                                                    r'''$.dial_code''',
-                                                  ).toString(),
-                                                  ParamType.String,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          }
-                                        },
-                                        text: 'CONTINUE',
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 48.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          iconPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily:
-                                                        'Libre Franklin',
-                                                    color: Colors.white,
-                                                    fontSize: 15.0,
-                                                    letterSpacing: 0.5,
+                                                  14)) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Please enter a valid phone number.',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelLarge
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                    duration: Duration(
+                                                        milliseconds: 3000),
+                                                    backgroundColor:
+                                                        Color(0xCD000000),
                                                   ),
-                                          elevation: 0.0,
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                        ),
+                                                );
+                                              } else if (!_model
+                                                  .checkboxuserValue!) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Please mark checkbox',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelLarge
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                    duration: Duration(
+                                                        milliseconds: 3000),
+                                                    backgroundColor:
+                                                        Color(0xCD000000),
+                                                  ),
+                                                );
+                                              } else if (functions
+                                                  .containsProfanity(_model
+                                                      .userNameController
+                                                      .text)) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'No profanity words allowed',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelLarge
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Libre Franklin',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                    duration: Duration(
+                                                        milliseconds: 3000),
+                                                    backgroundColor:
+                                                        Color(0xCD000000),
+                                                  ),
+                                                );
+                                              } else {
+                                                context.pushNamed(
+                                                  'VerificationSignUp',
+                                                  queryParameters: {
+                                                    'userName': serializeParam(
+                                                      _model.userNameController
+                                                          .text,
+                                                      ParamType.String,
+                                                    ),
+                                                    'userPhone': serializeParam(
+                                                      functions
+                                                          .deleteSpaceAndDivider(
+                                                              '${getJsonField(
+                                                        FFAppState()
+                                                            .countryInfo,
+                                                        r'''$.dial_code''',
+                                                      ).toString()}${_model.userPhoneController.text}'),
+                                                      ParamType.String,
+                                                    ),
+                                                    'profilePhoto':
+                                                        serializeParam(
+                                                      FFAppState().profilePhoto,
+                                                      ParamType.String,
+                                                    ),
+                                                    'userType': serializeParam(
+                                                      'User',
+                                                      ParamType.String,
+                                                    ),
+                                                    'phoneoriginal':
+                                                        serializeParam(
+                                                      _model.userPhoneController
+                                                          .text,
+                                                      ParamType.String,
+                                                    ),
+                                                    'phoneName': serializeParam(
+                                                      getJsonField(
+                                                        FFAppState()
+                                                            .countryInfo,
+                                                        r'''$.name''',
+                                                      ).toString(),
+                                                      ParamType.String,
+                                                    ),
+                                                    'phoneCode': serializeParam(
+                                                      getJsonField(
+                                                        FFAppState()
+                                                            .countryInfo,
+                                                        r'''$.code''',
+                                                      ).toString(),
+                                                      ParamType.String,
+                                                    ),
+                                                    'phoneFlag': serializeParam(
+                                                      getJsonField(
+                                                        FFAppState()
+                                                            .countryInfo,
+                                                        r'''$.flag''',
+                                                      ).toString(),
+                                                      ParamType.String,
+                                                    ),
+                                                    'phoneDialCode':
+                                                        serializeParam(
+                                                      getJsonField(
+                                                        FFAppState()
+                                                            .countryInfo,
+                                                        r'''$.dial_code''',
+                                                      ).toString(),
+                                                      ParamType.String,
+                                                    ),
+                                                  }.withoutNulls,
+                                                );
+                                              }
+                                            },
+                                            text: 'CONTINUE',
+                                            options: FFButtonOptions(
+                                              width: double.infinity,
+                                              height: 48.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Libre Franklin',
+                                                        color: Colors.white,
+                                                        fontSize: 15.0,
+                                                        letterSpacing: 0.5,
+                                                      ),
+                                              elevation: 0.0,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),

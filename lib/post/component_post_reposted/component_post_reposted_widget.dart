@@ -149,8 +149,12 @@ class _ComponentPostRepostedWidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 3.0),
                                   child: Text(
-                                    dateTimeFormat('relative',
-                                        containerPostRecord.postTimePosted!),
+                                    dateTimeFormat(
+                                      'relative',
+                                      containerPostRecord.postTimePosted!,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -605,9 +609,14 @@ class _ComponentPostRepostedWidgetState
                                                                 0.0, 3.0),
                                                     child: Text(
                                                       dateTimeFormat(
-                                                          'relative',
-                                                          columnPostRecord
-                                                              .postTimePosted!),
+                                                        'relative',
+                                                        columnPostRecord
+                                                            .postTimePosted!,
+                                                        locale:
+                                                            FFLocalizations.of(
+                                                                    context)
+                                                                .languageCode,
+                                                      ),
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)

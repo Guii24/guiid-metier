@@ -231,8 +231,12 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 3.0),
                                   child: Text(
-                                    dateTimeFormat('relative',
-                                        containerPostRecord.postTimePosted!),
+                                    dateTimeFormat(
+                                      'relative',
+                                      containerPostRecord.postTimePosted!,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(

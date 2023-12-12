@@ -115,7 +115,11 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                                 0.0, 4.0, 0.0, 0.0),
                             child: Text(
                               dateTimeFormat(
-                                  'jm', widget.messageItem!.messageTime!),
+                                'jm',
+                                widget.messageItem!.messageTime!,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -181,7 +185,11 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                                 0.0, 4.0, 0.0, 0.0),
                             child: Text(
                               dateTimeFormat(
-                                  'jm', widget.messageItem!.messageTime!),
+                                'jm',
+                                widget.messageItem!.messageTime!,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(

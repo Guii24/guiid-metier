@@ -361,7 +361,11 @@ class _ComponentSourcingCopyWidgetState
                           children: [
                             Text(
                               dateTimeFormat(
-                                  'relative', widget.jobDoc!.jobCreationDate!),
+                                'relative',
+                                widget.jobDoc!.jobCreationDate!,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
