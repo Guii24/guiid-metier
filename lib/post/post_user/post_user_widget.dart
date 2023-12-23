@@ -21,11 +21,22 @@ class PostUserWidget extends StatefulWidget {
 
 class _PostUserWidgetState extends State<PostUserWidget> {
   late PostUserModel _model;
+  final ScrollController _controller = ScrollController();
+  double _scrollOffset = 0;
+
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
+    _controller.addListener(() {
+      setState(() {
+        _scrollOffset = _controller.offset;
+        print(_scrollOffset);
+      });
+
+
+        });
     super.initState();
     _model = createModel(context, () => PostUserModel());
   }
@@ -33,7 +44,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
   @override
   void dispose() {
     _model.dispose();
-
+    _controller.dispose();
     super.dispose();
   }
 
@@ -59,7 +70,8 @@ class _PostUserWidgetState extends State<PostUserWidget> {
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
             SliverAppBar(
-              expandedHeight: 148.0,
+              expandedHeight:  (_scrollOffset < 50.0 ? 100 : 148),
+
               pinned: false,
               floating: true,
               snap: true,
@@ -77,10 +89,12 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 30.0, 8.0, 17.0),
-                          child: Row(
+                          child:
+                            Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -148,6 +162,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                             ],
                           ),
                         ),
+                        if (_scrollOffset >= 50)
                         Align(
                           alignment: AlignmentDirectional(-1.0, 0.0),
                           child: SingleChildScrollView(
@@ -356,13 +371,190 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                   ),
                 ),
                 child: SingleChildScrollView(
+                  controller: _controller,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(
-                        'Hello World',
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                      ),
+                      if (_scrollOffset <= 50)
+                        Align(
+                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    setState(() {
+                                      _model.choosenCategory = '';
+                                    });
+                                  },
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    elevation: 0.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                    child: Container(
+                                      height: 35.0,
+                                      decoration: BoxDecoration(
+                                        color: _model.choosenCategory == null ||
+                                            _model.choosenCategory == ''
+                                            ? FlutterFlowTheme.of(context)
+                                            .primaryText
+                                            : Colors.transparent,
+                                        borderRadius:
+                                        BorderRadius.circular(4.0),
+                                        border: Border.all(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      child: Align(
+                                        alignment:
+                                        AlignmentDirectional(0.0, 0.0),
+                                        child: Padding(
+                                          padding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              12.0, 5.0, 12.0, 5.0),
+                                          child: Text(
+                                            'All',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                              _model.choosenCategory ==
+                                                  null ||
+                                                  _model.choosenCategory ==
+                                                      ''
+                                                  ? FlutterFlowTheme.of(
+                                                  context)
+                                                  .primary
+                                                  : FlutterFlowTheme.of(
+                                                  context)
+                                                  .primaryText,
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                AuthUserStreamWidget(
+                                  builder: (context) => Builder(
+                                    builder: (context) {
+                                      final category = (currentUserDocument
+                                          ?.userPreferences
+                                          ?.toList() ??
+                                          [])
+                                          .toList();
+                                      return Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: List.generate(category.length,
+                                                (categoryIndex) {
+                                              final categoryItem =
+                                              category[categoryIndex];
+                                              return InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor: Colors.transparent,
+                                                onTap: () async {
+                                                  setState(() {
+                                                    _model.choosenCategory =
+                                                        categoryItem;
+                                                  });
+                                                },
+                                                child: Material(
+                                                  color: Colors.transparent,
+                                                  elevation: 0.0,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(4.0),
+                                                  ),
+                                                  child: Container(
+                                                    height: 35.0,
+                                                    decoration: BoxDecoration(
+                                                      color: valueOrDefault<Color>(
+                                                        _model.choosenCategory ==
+                                                            categoryItem
+                                                            ? FlutterFlowTheme.of(
+                                                            context)
+                                                            .primaryText
+                                                            : Colors.transparent,
+                                                        FlutterFlowTheme.of(context)
+                                                            .primary,
+                                                      ),
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                          4.0),
+                                                      border: Border.all(
+                                                        color: FlutterFlowTheme.of(
+                                                            context)
+                                                            .primaryText,
+                                                        width: 1.0,
+                                                      ),
+                                                    ),
+                                                    child: Align(
+                                                      alignment:
+                                                      AlignmentDirectional(
+                                                          0.0, 0.0),
+                                                      child: Padding(
+                                                        padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(12.0, 5.0,
+                                                            12.0, 5.0),
+                                                        child: Text(
+                                                          categoryItem,
+                                                          style:
+                                                          FlutterFlowTheme.of(
+                                                              context)
+                                                              .bodyMedium
+                                                              .override(
+                                                            fontFamily:
+                                                            'Libre Franklin',
+                                                            color:
+                                                            valueOrDefault<
+                                                                Color>(
+                                                              _model.choosenCategory ==
+                                                                  categoryItem
+                                                                  ? FlutterFlowTheme.of(
+                                                                  context)
+                                                                  .primary
+                                                                  : FlutterFlowTheme.of(
+                                                                  context)
+                                                                  .primaryText,
+                                                              FlutterFlowTheme.of(
+                                                                  context)
+                                                                  .primaryText,
+                                                            ),
+                                                            fontSize: 15.0,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            })
+                                            .divide(SizedBox(width: 8.0))
+                                            .addToStart(SizedBox(width: 8.0))
+                                            .addToEnd(SizedBox(width: 8.0)),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ].addToStart(SizedBox(width: 16.0)),
+                            ),
+                          ),
+                        ),
                       StreamBuilder<List<PostRecord>>(
                         stream: queryPostRecord(
                           queryBuilder: (postRecord) => postRecord
