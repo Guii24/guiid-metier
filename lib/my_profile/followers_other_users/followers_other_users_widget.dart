@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/component_follow/component_follow_widget.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -96,10 +95,29 @@ class _FollowersOtherUsersWidgetState extends State<FollowersOtherUsersWidget> {
           top: true,
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-            child: Builder(
-              builder: (context) {
-                final followersUser =
-                    widget.userDoc?.userFollowers?.toList() ?? [];
+            child: StreamBuilder<List<UsersRecord>>(
+              stream: queryUsersRecord(
+                queryBuilder: (usersRecord) => usersRecord.where(
+                  'user_following',
+                  arrayContains: widget.userDoc?.reference,
+                ),
+              ),
+              builder: (context, snapshot) {
+                // Customize what your widget looks like when it's loading.
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: SizedBox(
+                      width: 30.0,
+                      height: 30.0,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          FlutterFlowTheme.of(context).primary,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                List<UsersRecord> listViewUsersRecordList = snapshot.data!;
                 return ListView.separated(
                   padding: EdgeInsets.fromLTRB(
                     0,
@@ -108,14 +126,15 @@ class _FollowersOtherUsersWidgetState extends State<FollowersOtherUsersWidget> {
                     0,
                   ),
                   scrollDirection: Axis.vertical,
-                  itemCount: followersUser.length,
+                  itemCount: listViewUsersRecordList.length,
                   separatorBuilder: (_, __) => SizedBox(height: 20.0),
-                  itemBuilder: (context, followersUserIndex) {
-                    final followersUserItem = followersUser[followersUserIndex];
+                  itemBuilder: (context, listViewIndex) {
+                    final listViewUsersRecord =
+                        listViewUsersRecordList[listViewIndex];
                     return ComponentFollowWidget(
                       key: Key(
-                          'Keyz2e_${followersUserIndex}_of_${followersUser.length}'),
-                      userRef: followersUserItem,
+                          'Keyz2e_${listViewIndex}_of_${listViewUsersRecordList.length}'),
+                      userRef: listViewUsersRecord.reference,
                     );
                   },
                 );

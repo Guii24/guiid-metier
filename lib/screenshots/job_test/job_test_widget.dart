@@ -182,7 +182,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.00, -1.00),
+                alignment: AlignmentDirectional(0.0, -1.0),
                 child: Container(
                   width: double.infinity,
                   height: 100.0,
@@ -245,7 +245,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.00, 1.00),
+                alignment: AlignmentDirectional(0.0, 1.0),
                 child: Container(
                   width: double.infinity,
                   constraints: BoxConstraints(
@@ -269,7 +269,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
@@ -676,7 +676,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(0.00, 1.00),
+                                    alignment: AlignmentDirectional(0.0, 1.0),
                                     child: FFButtonWidget(
                                       onPressed: () {
                                         print('Button pressed ...');

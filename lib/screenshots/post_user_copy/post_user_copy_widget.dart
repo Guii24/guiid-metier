@@ -68,7 +68,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
               actions: [],
               flexibleSpace: FlexibleSpaceBar(
                 title: Align(
-                  alignment: AlignmentDirectional(0.00, -1.00),
+                  alignment: AlignmentDirectional(0.0, -1.0),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
@@ -85,7 +85,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(50.0),
                                   child: Image.network(
@@ -97,7 +97,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 child: Text(
                                   'Guiid Metier',
                                   style: FlutterFlowTheme.of(context)
@@ -111,7 +111,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 child: FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
                                   borderRadius: 30.0,
@@ -132,7 +132,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1.00, 0.00),
+                          alignment: AlignmentDirectional(-1.0, 0.0),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
@@ -173,7 +173,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.00, 0.00),
+                                            AlignmentDirectional(0.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -263,7 +263,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                                                 child: Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.00, 0.00),
+                                                          0.0, 0.0),
                                                   child: Padding(
                                                     padding:
                                                         EdgeInsetsDirectional

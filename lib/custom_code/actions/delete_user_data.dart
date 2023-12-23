@@ -10,6 +10,10 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import '../../auth/firebase_auth/auth_util.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 Future deleteUserData(
   List<PostRecord>? posts,
   List<CommentPostRecord>? postComments,
@@ -39,6 +43,22 @@ Future deleteUserData(
   }
   for (var i in notifications ?? []) {
     i.reference.delete();
+  }
+  String collectionName = 'users';
+  String fieldToRemove = 'following';
+  final CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection(collectionName);
+  try {
+    QuerySnapshot querySnapshot = await collectionReference.get();
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      List<dynamic> currentList = doc[fieldToRemove] ?? [];
+      currentList.remove(currentUserReference);
+      await collectionReference
+          .doc(doc.id)
+          .update({fieldToRemove: currentList});
+    }
+  } catch (e) {
+    print("Error removing values from list field: $e");
   }
   // Add your function code here!
 }

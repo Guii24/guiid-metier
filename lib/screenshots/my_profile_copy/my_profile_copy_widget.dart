@@ -168,7 +168,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                           child: Stack(
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 child: AuthUserStreamWidget(
                                   builder: (context) => Container(
                                     width: 80.0,
@@ -192,7 +192,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(1.00, 1.00),
+                                alignment: AlignmentDirectional(1.0, 1.0),
                                 child: Material(
                                   color: Colors.transparent,
                                   elevation: 0.0,
@@ -211,8 +211,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                       ),
                                     ),
                                     child: Align(
-                                      alignment:
-                                          AlignmentDirectional(0.00, 0.00),
+                                      alignment: AlignmentDirectional(0.0, 0.0),
                                       child: Icon(
                                         FFIcons.kplus,
                                         color: FlutterFlowTheme.of(context)

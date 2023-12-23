@@ -64,7 +64,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             automaticallyImplyLeading: false,
             leading: Align(
-              alignment: AlignmentDirectional(-1.00, 0.00),
+              alignment: AlignmentDirectional(-1.0, 0.0),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: AuthUserStreamWidget(
@@ -98,7 +98,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
               ),
             ),
             title: Align(
-              alignment: AlignmentDirectional(0.00, 0.00),
+              alignment: AlignmentDirectional(0.0, 0.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
@@ -111,7 +111,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
             ),
             actions: [
               Align(
-                alignment: AlignmentDirectional(1.00, 0.00),
+                alignment: AlignmentDirectional(1.0, 0.0),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
                   child: FlutterFlowIconButton(

@@ -131,7 +131,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
           ),
           actions: [
             Align(
-              alignment: AlignmentDirectional(0.00, 0.00),
+              alignment: AlignmentDirectional(0.0, 0.0),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
                 child: FFButtonWidget(
@@ -237,7 +237,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                               ),
                               if (FFAppState().uploadPhotoPost.length > 1)
                                 Align(
-                                  alignment: AlignmentDirectional(-1.00, 1.00),
+                                  alignment: AlignmentDirectional(-1.0, 1.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         16.0, 0.0, 0.0, 16.0),
@@ -259,7 +259,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                         ),
                                         child: Align(
                                           alignment:
-                                              AlignmentDirectional(0.00, 0.00),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '${(_model.pageViewCurrentIndex + 1).toString()}/${FFAppState().uploadPhotoPost.length.toString()}',
                                             style: FlutterFlowTheme.of(context)
@@ -278,7 +278,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                   ),
                                 ),
                               Align(
-                                alignment: AlignmentDirectional(1.00, 1.00),
+                                alignment: AlignmentDirectional(1.0, 1.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 16.0, 16.0),
@@ -308,7 +308,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                         ),
                                         child: Align(
                                           alignment:
-                                              AlignmentDirectional(0.00, 0.00),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
                                             FFIcons.kproperty1trash,
                                             color: FlutterFlowTheme.of(context)
@@ -411,7 +411,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.00, 1.00),
+                alignment: AlignmentDirectional(0.0, 1.0),
                 child: Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 13.0, 16.0, 12.0),
@@ -514,7 +514,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                       ),
                       Flexible(
                         child: Align(
-                          alignment: AlignmentDirectional(-1.00, 0.00),
+                          alignment: AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 10.0, 0.0, 0.0, 0.0),

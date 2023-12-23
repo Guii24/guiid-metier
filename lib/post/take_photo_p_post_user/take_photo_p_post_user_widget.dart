@@ -168,7 +168,7 @@ class _TakePhotoPPostUserWidgetState extends State<TakePhotoPPostUserWidget> {
                   options: FFButtonOptions(
                     width: double.infinity,
                     height: 60.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    padding: EdgeInsets.all(0.0),
                     iconPadding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     color: Colors.white,
@@ -306,7 +306,7 @@ class _TakePhotoPPostUserWidgetState extends State<TakePhotoPPostUserWidget> {
                   options: FFButtonOptions(
                     width: double.infinity,
                     height: 60.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    padding: EdgeInsets.all(0.0),
                     iconPadding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     color: Colors.white,
@@ -342,7 +342,7 @@ class _TakePhotoPPostUserWidgetState extends State<TakePhotoPPostUserWidget> {
               options: FFButtonOptions(
                 width: double.infinity,
                 height: 60.0,
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                padding: EdgeInsets.all(0.0),
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: Colors.white,
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(

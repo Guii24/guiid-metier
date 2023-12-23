@@ -2,24 +2,24 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{document} {
-      allow create: if request.auth != null;
+      allow create: if true;
       allow read: if true;
       allow write: if true;
-      allow delete: if request.auth != null;
+      allow delete: if true;
     }
 
     match /post/{document} {
       allow create: if request.auth != null;
       allow read: if request.auth != null;
       allow write: if request.auth != null;
-      allow delete: if request.auth != null;
+      allow delete: if resource.data.post_creator == /databases/$(database)/documents/users/$(request.auth.uid);
     }
 
     match /post/{parent}/comment_post/{document} {
       allow create: if request.auth != null;
       allow read: if request.auth != null;
       allow write: if request.auth != null;
-      allow delete: if request.auth != null;
+      allow delete: if resource.data.comment_post_user == /databases/$(database)/documents/users/$(request.auth.uid);
     }
 
     match /{path=**}/comment_post/{document} {
@@ -31,14 +31,14 @@ service cloud.firestore {
       allow create: if request.auth != null;
       allow read: if request.auth != null;
       allow write: if request.auth != null;
-      allow delete: if request.auth != null;
+      allow delete: if resource.data.article_creator == /databases/$(database)/documents/users/$(request.auth.uid);
     }
 
     match /articles/{parent}/comment_article/{document} {
       allow create: if request.auth != null;
       allow read: if request.auth != null;
       allow write: if request.auth != null;
-      allow delete: if request.auth != null;
+      allow delete: if resource.data.comment_article_user == /databases/$(database)/documents/users/$(request.auth.uid);
     }
 
     match /{path=**}/comment_article/{document} {
@@ -57,14 +57,14 @@ service cloud.firestore {
       allow create: if request.auth != null;
       allow read: if request.auth != null;
       allow write: if request.auth != null;
-      allow delete: if request.auth != null;
+      allow delete: if resource.data.company_creator == /databases/$(database)/documents/users/$(request.auth.uid);
     }
 
     match /job/{parent}/job_applicants/{document} {
       allow create: if request.auth != null;
       allow read: if request.auth != null;
       allow write: if request.auth != null;
-      allow delete: if request.auth != null;
+      allow delete: if resource.data.job_applicant_user == /databases/$(database)/documents/users/$(request.auth.uid);
     }
 
     match /{path=**}/job_applicants/{document} {
@@ -76,7 +76,7 @@ service cloud.firestore {
       allow create: if request.auth != null;
       allow read: if request.auth != null;
       allow write: if request.auth != null;
-      allow delete: if true;
+      allow delete: if resource.data.chat_with_support_creator == /databases/$(database)/documents/users/$(request.auth.uid);
     }
 
     match /chat/{parent}/message/{document} {
@@ -95,7 +95,7 @@ service cloud.firestore {
       allow create: if request.auth != null;
       allow read: if request.auth != null;
       allow write: if request.auth != null;
-      allow delete: if true;
+      allow delete: if resource.data.notification_from == /databases/$(database)/documents/users/$(request.auth.uid);
     }
 
     match /FAQ/{document} {

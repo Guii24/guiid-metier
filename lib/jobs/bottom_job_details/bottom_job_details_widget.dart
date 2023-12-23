@@ -71,7 +71,7 @@ class _BottomJobDetailsWidgetState extends State<BottomJobDetailsWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+                alignment: AlignmentDirectional(0.0, 0.0),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -264,7 +264,7 @@ class _BottomJobDetailsWidgetState extends State<BottomJobDetailsWidget> {
                                     ),
                                   ),
                                   child: Align(
-                                    alignment: AlignmentDirectional(0.00, 0.00),
+                                    alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           9.0, 6.0, 9.0, 6.0),
@@ -609,7 +609,7 @@ class _BottomJobDetailsWidgetState extends State<BottomJobDetailsWidget> {
                           (widget.jobDoc?.jobTypeNotApplicable !=
                               'Not applicable'))
                         Align(
-                          alignment: AlignmentDirectional(0.00, 1.00),
+                          alignment: AlignmentDirectional(0.0, 1.0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (valueOrDefault<bool>(
@@ -702,7 +702,7 @@ class _BottomJobDetailsWidgetState extends State<BottomJobDetailsWidget> {
                           (widget.jobDoc?.jobTypeNotApplicable !=
                               'Not applicable'))
                         Align(
-                          alignment: AlignmentDirectional(0.00, 1.00),
+                          alignment: AlignmentDirectional(0.0, 1.0),
                           child: FFButtonWidget(
                             onPressed: () {
                               print('Button pressed ...');

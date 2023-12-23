@@ -71,14 +71,14 @@ class _LogInWidgetState extends State<LogInWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+            padding: EdgeInsets.all(16.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'WELCOME BACK!0',
+                  'WELCOME BACK!',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).primaryText,
@@ -301,7 +301,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                 ),
                 if (_model.showValid)
                   Align(
-                    alignment: AlignmentDirectional(-1.00, 0.00),
+                    alignment: AlignmentDirectional(-1.0, 0.0),
                     child: Text(
                       'Incorrect phone number or user doesn’t exist.',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(

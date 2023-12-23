@@ -43,8 +43,9 @@ class WearItemsStruct extends FFFirebaseStruct {
         wearImage: data['wear_image'] as String?,
       );
 
-  static WearItemsStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? WearItemsStruct.fromMap(data) : null;
+  static WearItemsStruct? maybeFromMap(dynamic data) => data is Map
+      ? WearItemsStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'wear_text': _wearText,

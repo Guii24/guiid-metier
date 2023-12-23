@@ -160,7 +160,7 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
             ),
             actions: [
               Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+                alignment: AlignmentDirectional(0.0, 0.0),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
                   child: Text(

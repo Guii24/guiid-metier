@@ -71,8 +71,9 @@ class RecentSearchStruct extends FFFirebaseStruct {
         searchUser: data['search_user'] as DocumentReference?,
       );
 
-  static RecentSearchStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? RecentSearchStruct.fromMap(data) : null;
+  static RecentSearchStruct? maybeFromMap(dynamic data) => data is Map
+      ? RecentSearchStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'search_post': _searchPost,

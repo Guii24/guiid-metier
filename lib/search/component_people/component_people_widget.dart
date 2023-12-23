@@ -64,7 +64,7 @@ class _ComponentPeopleWidgetState extends State<ComponentPeopleWidget> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
+          padding: EdgeInsets.all(15.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,

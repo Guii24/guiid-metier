@@ -196,12 +196,12 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                0.00, 0.00),
+                                                                0.0, 0.0),
                                                         child: Image.network(
                                                           getJsonField(
                                                             imagesItem,
                                                             r'''$.url''',
-                                                          ),
+                                                          ).toString(),
                                                           width:
                                                               double.infinity,
                                                           height:
@@ -230,13 +230,13 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                         child: Align(
                                                           alignment:
                                                               AlignmentDirectional(
-                                                                  0.00, 0.00),
+                                                                  0.0, 0.0),
                                                           child:
                                                               FlutterFlowVideoPlayer(
                                                             path: getJsonField(
                                                               imagesItem,
                                                               r'''$.url''',
-                                                            ),
+                                                            ).toString(),
                                                             videoType: VideoType
                                                                 .network,
                                                             width:
@@ -272,7 +272,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                         1)
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(1.00, 1.00),
+                                            AlignmentDirectional(1.0, 1.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -296,7 +296,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                               ),
                                               child: Align(
                                                 alignment: AlignmentDirectional(
-                                                    0.00, 0.00),
+                                                    0.0, 0.0),
                                                 child: Text(
                                                   '${(_model.pageViewCurrentIndex + 1).toString()}/${functions.newCustomFunction(articlePageArticlesRecord.articleImageList.toList(), articlePageArticlesRecord.videos.toList()).length.toString()}',
                                                   style: FlutterFlowTheme.of(
@@ -471,7 +471,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                 ),
                 if (!_model.commentShow)
                   Align(
-                    alignment: AlignmentDirectional(0.00, 1.00),
+                    alignment: AlignmentDirectional(0.0, 1.0),
                     child: Container(
                       width: double.infinity,
                       height: 91.0,
@@ -489,7 +489,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                         ),
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.00, 1.00),
+                        alignment: AlignmentDirectional(0.0, 1.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               20.0, 0.0, 20.0, 34.0),
@@ -809,7 +809,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                   ),
                 if (_model.commentShow)
                   Align(
-                    alignment: AlignmentDirectional(0.00, 1.00),
+                    alignment: AlignmentDirectional(0.0, 1.0),
                     child: Material(
                       color: Colors.transparent,
                       elevation: 0.0,
@@ -825,7 +825,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                           ),
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.00, -1.00),
+                          alignment: AlignmentDirectional(0.0, -1.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 10.0, 7.5, 16.0, 0.0),

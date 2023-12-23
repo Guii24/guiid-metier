@@ -119,7 +119,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
               ),
               actions: [
                 Align(
-                  alignment: AlignmentDirectional(0.00, 0.00),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: FlutterFlowIconButton(
                     borderRadius: 100.0,
                     buttonSize: 45.0,
@@ -380,7 +380,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                       ),
                       if (!_model.commentShoePost)
                         Align(
-                          alignment: AlignmentDirectional(0.00, 1.00),
+                          alignment: AlignmentDirectional(0.0, 1.0),
                           child: Container(
                             width: double.infinity,
                             height: 85.0,
@@ -773,7 +773,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                         ),
                       if (_model.commentShoePost)
                         Align(
-                          alignment: AlignmentDirectional(0.00, 1.00),
+                          alignment: AlignmentDirectional(0.0, 1.0),
                           child: Material(
                             color: Colors.transparent,
                             elevation: 0.0,
@@ -789,7 +789,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                 ),
                               ),
                               child: Align(
-                                alignment: AlignmentDirectional(0.00, -1.00),
+                                alignment: AlignmentDirectional(0.0, -1.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10.0, 7.5, 16.0, 24.0),

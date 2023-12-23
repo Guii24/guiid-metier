@@ -133,7 +133,7 @@ class _ComponentPostCompanyWidgetState
                                       width: double.infinity,
                                       height: double.infinity,
                                       fit: BoxFit.cover,
-                                      alignment: Alignment(0.00, 0.00),
+                                      alignment: Alignment(0.0, 0.0),
                                     ),
                                   );
                                 },
@@ -143,7 +143,7 @@ class _ComponentPostCompanyWidgetState
                         ),
                         if (containerPostRecord.postImagesList.length > 1)
                           Align(
-                            alignment: AlignmentDirectional(1.00, 1.00),
+                            alignment: AlignmentDirectional(1.0, 1.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 16.0, 16.0),
@@ -161,7 +161,7 @@ class _ComponentPostCompanyWidgetState
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
                                   child: Align(
-                                    alignment: AlignmentDirectional(0.00, 0.00),
+                                    alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Text(
                                       '${(_model.pageViewCurrentIndex + 1).toString()}/${containerPostRecord.postImagesList.length.toString()}',
                                       style: FlutterFlowTheme.of(context)
@@ -182,8 +182,7 @@ class _ComponentPostCompanyWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
+                    padding: EdgeInsets.all(15.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -699,24 +698,46 @@ class _ComponentPostCompanyWidgetState
                                         ),
                                       );
                                     } else {
-                                      await showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        backgroundColor: Color(0x01000000),
-                                        barrierColor:
-                                            FlutterFlowTheme.of(context).dark38,
-                                        context: context,
-                                        builder: (context) {
-                                          return Padding(
-                                            padding: MediaQuery.viewInsetsOf(
-                                                context),
-                                            child: BottomCommentWidget(
-                                              post:
-                                                  containerPostRecord.reference,
-                                              userRef: columnUsersRecord,
-                                            ),
-                                          );
-                                        },
-                                      ).then((value) => safeSetState(() {}));
+                                      if (valueOrDefault<bool>(
+                                          currentUserDocument?.userSubscription,
+                                          false)) {
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Color(0x01000000),
+                                          barrierColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .dark38,
+                                          context: context,
+                                          builder: (context) {
+                                            return Padding(
+                                              padding: MediaQuery.viewInsetsOf(
+                                                  context),
+                                              child: BottomCommentWidget(
+                                                post: containerPostRecord
+                                                    .reference,
+                                                userRef: columnUsersRecord,
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) => safeSetState(() {}));
+                                      } else {
+                                        showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          barrierColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .customColorBottomSh,
+                                          enableDrag: false,
+                                          context: context,
+                                          builder: (context) {
+                                            return Padding(
+                                              padding: MediaQuery.viewInsetsOf(
+                                                  context),
+                                              child: SubscriptionWidget(),
+                                            );
+                                          },
+                                        ).then((value) => safeSetState(() {}));
+                                      }
                                     }
                                   },
                                   child: Row(

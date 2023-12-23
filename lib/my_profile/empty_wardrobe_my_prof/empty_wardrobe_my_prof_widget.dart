@@ -42,7 +42,7 @@ class _EmptyWardrobeMyProfWidgetState extends State<EmptyWardrobeMyProfWidget> {
     context.watch<FFAppState>();
 
     return Align(
-      alignment: AlignmentDirectional(0.00, 0.00),
+      alignment: AlignmentDirectional(0.0, 0.0),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +55,7 @@ class _EmptyWardrobeMyProfWidgetState extends State<EmptyWardrobeMyProfWidget> {
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: Align(
-              alignment: AlignmentDirectional(0.00, 0.00),
+              alignment: AlignmentDirectional(0.0, 0.0),
               child: Icon(
                 FFIcons.kproperty1wardrobe,
                 color: Colors.black,

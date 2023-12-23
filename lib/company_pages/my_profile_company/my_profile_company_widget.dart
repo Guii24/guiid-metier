@@ -180,7 +180,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(1.00, 1.00),
+                              alignment: AlignmentDirectional(1.0, 1.0),
                               child: Material(
                                 color: Colors.transparent,
                                 elevation: 0.0,
@@ -199,7 +199,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                     ),
                                   ),
                                   child: Align(
-                                    alignment: AlignmentDirectional(0.00, 0.00),
+                                    alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Icon(
                                       FFIcons.kplus,
                                       color:

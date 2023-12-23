@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import '../schema/structs/index.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
@@ -34,13 +35,14 @@ class InfoCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      alwaysAllowBody: false,
     );
   }
 
-  dynamic expireDate(dynamic response) => getJsonField(
+  String? expireDate(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.subscriber.entitlements.Premium.expires_date''',
-      );
+      ));
 }
 
 /// End revenueCat Group Code
@@ -63,40 +65,49 @@ class GoogleAutoCompleteCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      alwaysAllowBody: false,
     );
   }
 
-  static dynamic text(dynamic response) => getJsonField(
+  static List<String>? text(dynamic response) => (getJsonField(
         response,
         r'''$.predictions[:].structured_formatting.main_text''',
         true,
-      );
-  static dynamic prediction(dynamic response) => getJsonField(
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? prediction(dynamic response) => (getJsonField(
         response,
         r'''$.predictions[:].description''',
         true,
-      );
-  static dynamic city(dynamic response) => getJsonField(
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static String? city(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.predictions[0].terms[0].value''',
-      );
-  static dynamic state(dynamic response) => getJsonField(
+      ));
+  static String? state(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.predictions[0].terms[1].value''',
-      );
-  static dynamic country(dynamic response) => getJsonField(
+      ));
+  static String? country(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.predictions[0].terms[2].value''',
-      );
-  static dynamic status(dynamic response) => getJsonField(
+      ));
+  static String? status(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.status''',
-      );
-  static dynamic terms(dynamic response) => getJsonField(
+      ));
+  static List? terms(dynamic response) => getJsonField(
         response,
         r'''$.predictions[:].terms''',
         true,
-      );
+      ) as List?;
 }
 
 class TwilioCall {
@@ -124,6 +135,7 @@ class TwilioCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      alwaysAllowBody: false,
     );
   }
 }

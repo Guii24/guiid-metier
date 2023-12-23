@@ -76,7 +76,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+                alignment: AlignmentDirectional(0.0, 0.0),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 13.0, 0.0, 0.0),
                   child: Material(

@@ -52,7 +52,7 @@ class _EmptyPostMyProfWidgetState extends State<EmptyPostMyProfWidget> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Align(
-            alignment: AlignmentDirectional(0.00, 0.00),
+            alignment: AlignmentDirectional(0.0, 0.0),
             child: Icon(
               FFIcons.kicons1,
               color: Colors.black,

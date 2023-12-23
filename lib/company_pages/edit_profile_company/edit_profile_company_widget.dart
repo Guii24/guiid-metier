@@ -150,7 +150,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Align(
-                          alignment: AlignmentDirectional(0.00, 0.00),
+                          alignment: AlignmentDirectional(0.0, 0.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 26.0, 0.0, 0.0),
@@ -200,7 +200,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(0.00, 0.00),
+                          alignment: AlignmentDirectional(0.0, 0.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 15.0, 0.0, 44.0),
@@ -358,7 +358,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                             child: Stack(
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(0.00, 1.00),
+                                  alignment: AlignmentDirectional(0.0, 1.0),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
                                     focusColor: Colors.transparent,
@@ -493,7 +493,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.00, 0.00),
+                                            AlignmentDirectional(0.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -642,7 +642,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(0.00, 1.00),
+                          alignment: AlignmentDirectional(0.0, 1.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 16.0),
@@ -1098,7 +1098,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(1.00, 1.00),
+                alignment: AlignmentDirectional(1.0, 1.0),
                 child: Material(
                   color: Colors.transparent,
                   elevation: 0.0,
@@ -1115,7 +1115,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                       ],
                     ),
                     child: Align(
-                      alignment: AlignmentDirectional(0.00, -1.00),
+                      alignment: AlignmentDirectional(0.0, -1.0),
                       child: Builder(
                         builder: (context) => Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(

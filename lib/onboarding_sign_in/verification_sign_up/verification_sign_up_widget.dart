@@ -224,7 +224,7 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                         ),
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.00, 0.00),
+                        alignment: AlignmentDirectional(0.0, 0.0),
                         child: FlutterFlowTimer(
                           initialTime: _model.timerMilliseconds,
                           getDisplayTime: (value) =>
@@ -285,7 +285,7 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                           borderRadius: BorderRadius.circular(100.0),
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.00, 0.00),
+                          alignment: AlignmentDirectional(0.0, 0.0),
                           child: Text(
                             'Send again',
                             style: FlutterFlowTheme.of(context)

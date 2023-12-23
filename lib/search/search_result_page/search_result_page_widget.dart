@@ -174,8 +174,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                           EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
                       buttonMargin:
                           EdgeInsetsDirectional.fromSTEB(8.0, 10.0, 8.0, 0.0),
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(4.0, 4.0, 4.0, 4.0),
+                      padding: EdgeInsets.all(4.0),
                       tabs: [
                         Tab(
                           text: 'People',
@@ -216,8 +215,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                         .length !=
                                     0)
                                   Align(
-                                    alignment:
-                                        AlignmentDirectional(-1.00, 0.00),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 15.0, 0.0, 10.0),
@@ -321,8 +319,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                         .length !=
                                     0)
                                   Align(
-                                    alignment:
-                                        AlignmentDirectional(-1.00, 0.00),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 15.0, 0.0, 10.0),
@@ -455,7 +452,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                 0)
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
+                                                    -1.0, 0.0),
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
@@ -603,7 +600,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                 0)
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
+                                                    -1.0, 0.0),
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(16.0, 15.0, 0.0,
@@ -725,7 +722,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                 0)
                                               Align(
                                                 alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
+                                                    -1.0, 0.0),
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(16.0, 15.0, 0.0,

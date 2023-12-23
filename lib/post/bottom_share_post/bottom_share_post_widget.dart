@@ -228,8 +228,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          12.0, 12.0, 12.0, 12.0),
+                      padding: EdgeInsets.all(12.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -320,7 +319,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                 options: FFButtonOptions(
                   width: double.infinity,
                   height: 33.0,
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  padding: EdgeInsets.all(0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primary,

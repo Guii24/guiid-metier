@@ -43,7 +43,7 @@ class _PopupCancelWidgetState extends State<PopupCancelWidget> {
     context.watch<FFAppState>();
 
     return Align(
-      alignment: AlignmentDirectional(0.00, 0.00),
+      alignment: AlignmentDirectional(0.0, 0.0),
       child: Material(
         color: Colors.transparent,
         elevation: 0.0,
@@ -57,7 +57,7 @@ class _PopupCancelWidgetState extends State<PopupCancelWidget> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(30.0, 30.0, 30.0, 30.0),
+            padding: EdgeInsets.all(30.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,

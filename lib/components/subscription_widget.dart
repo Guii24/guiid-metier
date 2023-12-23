@@ -61,7 +61,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
             fit: BoxFit.cover,
           ),
           Align(
-            alignment: AlignmentDirectional(0.00, 0.00),
+            alignment: AlignmentDirectional(0.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +111,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                         scrollDirection: Axis.horizontal,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(0.00, -1.00),
+                            alignment: AlignmentDirectional(0.0, -1.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -150,7 +150,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.00, -1.00),
+                            alignment: AlignmentDirectional(0.0, -1.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -217,7 +217,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.00, -1.00),
+                            alignment: AlignmentDirectional(0.0, -1.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -284,7 +284,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.00, -1.00),
+                            alignment: AlignmentDirectional(0.0, -1.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -351,7 +351,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.00, -1.00),
+                            alignment: AlignmentDirectional(0.0, -1.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -420,7 +420,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                         ],
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0.00, 0.80),
+                        alignment: AlignmentDirectional(0.0, 0.8),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 10.0),
@@ -471,8 +471,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                         ),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -491,7 +490,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                   borderRadius: BorderRadius.circular(6.0),
                                 ),
                                 child: Align(
-                                  alignment: AlignmentDirectional(0.00, 0.00),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Icon(
                                     FFIcons.kproperty1subscription,
                                     color: Colors.black,
@@ -689,7 +688,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
             ),
           ),
           Align(
-            alignment: AlignmentDirectional(-1.00, -0.88),
+            alignment: AlignmentDirectional(-1.0, -0.88),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(19.0, 0.0, 0.0, 0.0),
               child: FlutterFlowIconButton(

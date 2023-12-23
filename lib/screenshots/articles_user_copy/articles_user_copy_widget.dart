@@ -63,7 +63,7 @@ class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             automaticallyImplyLeading: false,
             leading: Align(
-              alignment: AlignmentDirectional(0.00, 0.00),
+              alignment: AlignmentDirectional(0.0, 0.0),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: AuthUserStreamWidget(
@@ -108,7 +108,7 @@ class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
             ),
             actions: [
               Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+                alignment: AlignmentDirectional(0.0, 0.0),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
                   child: FlutterFlowIconButton(
@@ -283,8 +283,7 @@ class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
                                     borderRadius: BorderRadius.circular(21.0),
                                   ),
                                   child: Align(
-                                    alignment:
-                                        AlignmentDirectional(-1.00, 0.00),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: Container(
                                       width: 96.0,
                                       height: 4.0,

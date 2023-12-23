@@ -63,7 +63,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.00, 1.00),
+                    alignment: AlignmentDirectional(0.0, 1.0),
                     child: Material(
                       color: Colors.transparent,
                       elevation: 0.0,
@@ -371,7 +371,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.00, 0.96),
+                    alignment: AlignmentDirectional(0.0, 0.96),
                     child: Builder(
                       builder: (context) => InkWell(
                         splashColor: Colors.transparent,
@@ -415,8 +415,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                5.0, 5.0, 5.0, 5.0),
+                            padding: EdgeInsets.all(5.0),
                             child: Container(
                               width: 56.0,
                               height: 56.0,
@@ -454,7 +453,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.00, 1.00),
+                    alignment: AlignmentDirectional(0.0, 1.0),
                     child: Material(
                       color: Colors.transparent,
                       elevation: 0.0,
@@ -774,7 +773,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.00, 0.91),
+                    alignment: AlignmentDirectional(0.0, 0.91),
                     child: Builder(
                       builder: (context) => InkWell(
                         splashColor: Colors.transparent,
@@ -818,8 +817,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                5.0, 5.0, 5.0, 5.0),
+                            padding: EdgeInsets.all(5.0),
                             child: Container(
                               width: 56.0,
                               height: 56.0,

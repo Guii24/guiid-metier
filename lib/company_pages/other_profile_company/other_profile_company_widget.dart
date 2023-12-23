@@ -348,29 +348,81 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        context.pushNamed('Followers');
+                                        context.pushNamed(
+                                          'FollowersOtherUsers',
+                                          queryParameters: {
+                                            'userDoc': serializeParam(
+                                              otherProfileCompanyUsersRecord,
+                                              ParamType.Document,
+                                            ),
+                                          }.withoutNulls,
+                                          extra: <String, dynamic>{
+                                            'userDoc':
+                                                otherProfileCompanyUsersRecord,
+                                          },
+                                        );
                                       },
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            valueOrDefault<String>(
-                                              formatNumber(
-                                                otherProfileCompanyUsersRecord
-                                                    .userFollowers.length,
-                                                formatType: FormatType.compact,
-                                              ),
-                                              '0',
+                                          FutureBuilder<int>(
+                                            future: queryUsersRecordCount(
+                                              queryBuilder: (usersRecord) =>
+                                                  usersRecord
+                                                      .where(
+                                                        'email',
+                                                        isNotEqualTo: null,
+                                                      )
+                                                      .where(
+                                                        'user_following',
+                                                        arrayContains:
+                                                            widget.userRef,
+                                                      ),
                                             ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: Color(0xFF171A1F),
-                                                  fontSize: 15.0,
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 30.0,
+                                                    height: 30.0,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                              Color>(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              int textCount = snapshot.data!;
+                                              return Text(
+                                                valueOrDefault<String>(
+                                                  formatNumber(
+                                                    textCount,
+                                                    formatType:
+                                                        FormatType.compact,
+                                                  ),
+                                                  '0',
                                                 ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color:
+                                                              Color(0xFF171A1F),
+                                                          fontSize: 15.0,
+                                                        ),
+                                              );
+                                            },
                                           ),
                                           Text(
                                             'Followers',
@@ -556,7 +608,13 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                       fontFamily: 'Libre Franklin',
                                       fontSize: 17.0,
                                     ),
-                                unselectedLabelStyle: TextStyle(),
+                                unselectedLabelStyle:
+                                    FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          fontSize: 17.0,
+                                        ),
                                 indicatorColor:
                                     FlutterFlowTheme.of(context).secondary,
                                 indicatorWeight: 2.0,

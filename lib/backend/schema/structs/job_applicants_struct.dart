@@ -37,8 +37,9 @@ class JobApplicantsStruct extends FFFirebaseStruct {
         jobApplicantUser: data['job_applicant_user'] as DocumentReference?,
       );
 
-  static JobApplicantsStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? JobApplicantsStruct.fromMap(data) : null;
+  static JobApplicantsStruct? maybeFromMap(dynamic data) => data is Map
+      ? JobApplicantsStruct.fromMap(data.cast<String, dynamic>())
+      : null;
 
   Map<String, dynamic> toMap() => {
         'job_applicant_creation_date': _jobApplicantCreationDate,

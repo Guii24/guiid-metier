@@ -133,7 +133,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(0.00, 0.00),
+              alignment: AlignmentDirectional(0.0, 0.0),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 30.0),
                 child: Text(
@@ -220,7 +220,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
               },
             ),
             Align(
-              alignment: AlignmentDirectional(0.00, 0.00),
+              alignment: AlignmentDirectional(0.0, 0.0),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 30.0),
                 child: Text(

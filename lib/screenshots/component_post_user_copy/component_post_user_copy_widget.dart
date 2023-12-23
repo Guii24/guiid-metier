@@ -141,7 +141,7 @@ class _ComponentPostUserCopyWidgetState
                                       width: MediaQuery.sizeOf(context).width *
                                           1.0,
                                       fit: BoxFit.cover,
-                                      alignment: Alignment(0.00, 0.00),
+                                      alignment: Alignment(0.0, 0.0),
                                     ),
                                   );
                                 },

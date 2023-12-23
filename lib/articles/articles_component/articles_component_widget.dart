@@ -106,7 +106,7 @@ class _ArticlesComponentWidgetState extends State<ArticlesComponentWidget> {
                               FlutterFlowTheme.of(context).secondaryBackground,
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.00, 0.00),
+                          alignment: AlignmentDirectional(0.0, 0.0),
                           child: FlutterFlowVideoPlayer(
                             path: getJsonField(
                               functions
@@ -116,7 +116,7 @@ class _ArticlesComponentWidgetState extends State<ArticlesComponentWidget> {
                                       containerArticlesRecord.videos.toList())
                                   .first,
                               r'''$.url''',
-                            ),
+                            ).toString(),
                             videoType: VideoType.network,
                             width: double.infinity,
                             height: double.infinity,
@@ -157,14 +157,14 @@ class _ArticlesComponentWidgetState extends State<ArticlesComponentWidget> {
                                     containerArticlesRecord.videos.toList())
                                 .first,
                             r'''$.url''',
-                          ),
+                          ).toString(),
                           width: double.infinity,
                           height: double.infinity,
                           fit: BoxFit.cover,
                         ),
                       ),
                     Align(
-                      alignment: AlignmentDirectional(1.00, 1.00),
+                      alignment: AlignmentDirectional(1.0, 1.0),
                       child: Material(
                         color: Colors.transparent,
                         elevation: 0.0,
@@ -183,7 +183,7 @@ class _ArticlesComponentWidgetState extends State<ArticlesComponentWidget> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(-1.00, 1.00),
+                      alignment: AlignmentDirectional(-1.0, 1.0),
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 0.0, 36.0, 16.0),

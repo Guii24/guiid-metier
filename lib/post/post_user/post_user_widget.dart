@@ -59,7 +59,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
             SliverAppBar(
-              expandedHeight: 130.0,
+              expandedHeight: 148.0,
               pinned: false,
               floating: true,
               snap: true,
@@ -68,7 +68,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
               actions: [],
               flexibleSpace: FlexibleSpaceBar(
                 title: Align(
-                  alignment: AlignmentDirectional(0.00, -1.00),
+                  alignment: AlignmentDirectional(0.0, -1.0),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
@@ -85,7 +85,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 child: AuthUserStreamWidget(
                                   builder: (context) => InkWell(
                                     splashColor: Colors.transparent,
@@ -128,7 +128,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 child: FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
                                   borderRadius: 30.0,
@@ -149,7 +149,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1.00, 0.00),
+                          alignment: AlignmentDirectional(-1.0, 0.0),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
@@ -190,7 +190,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.00, 0.00),
+                                            AlignmentDirectional(0.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -280,7 +280,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                                 child: Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0.00, 0.00),
+                                                          0.0, 0.0),
                                                   child: Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
@@ -359,6 +359,10 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      Text(
+                        'Hello World',
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                      ),
                       StreamBuilder<List<PostRecord>>(
                         stream: queryPostRecord(
                           queryBuilder: (postRecord) => postRecord

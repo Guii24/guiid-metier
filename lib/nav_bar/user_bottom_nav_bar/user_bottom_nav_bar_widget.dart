@@ -43,7 +43,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
     context.watch<FFAppState>();
 
     return Align(
-      alignment: AlignmentDirectional(0.00, 0.00),
+      alignment: AlignmentDirectional(0.0, 0.0),
       child: InkWell(
         splashColor: Colors.transparent,
         focusColor: Colors.transparent,
@@ -64,7 +64,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                   child: Stack(
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(0.00, 1.00),
+                        alignment: AlignmentDirectional(0.0, 1.0),
                         child: Material(
                           color: Colors.transparent,
                           elevation: 0.0,
@@ -404,7 +404,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0.00, 0.92),
+                        alignment: AlignmentDirectional(0.0, 0.91),
                         child: Container(
                           width: 66.0,
                           height: 66.0,
@@ -420,8 +420,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                5.0, 5.0, 5.0, 5.0),
+                            padding: EdgeInsets.all(5.0),
                             child: Container(
                               width: 56.0,
                               height: 56.0,
@@ -442,7 +441,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       if (valueOrDefault(currentUserDocument?.userType, '') ==
                           'User')
                         Align(
-                          alignment: AlignmentDirectional(0.00, 0.66),
+                          alignment: AlignmentDirectional(0.0, 0.66),
                           child: AuthUserStreamWidget(
                             builder: (context) => Material(
                               color: Colors.transparent,
@@ -685,7 +684,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       if (valueOrDefault(currentUserDocument?.userType, '') !=
                           'User')
                         Align(
-                          alignment: AlignmentDirectional(0.00, 0.66),
+                          alignment: AlignmentDirectional(0.0, 0.66),
                           child: AuthUserStreamWidget(
                             builder: (context) => Material(
                               color: Colors.transparent,
@@ -938,7 +937,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                   child: Stack(
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(0.00, 1.00),
+                        alignment: AlignmentDirectional(0.0, 1.0),
                         child: Material(
                           color: Colors.transparent,
                           elevation: 0.0,
@@ -1279,7 +1278,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0.00, 0.90),
+                        alignment: AlignmentDirectional(0.0, 0.88),
                         child: Container(
                           width: 66.0,
                           height: 66.0,
@@ -1295,8 +1294,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                5.0, 5.0, 5.0, 5.0),
+                            padding: EdgeInsets.all(5.0),
                             child: Container(
                               width: 56.0,
                               height: 56.0,
@@ -1316,7 +1314,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       if (valueOrDefault(currentUserDocument?.userType, '') ==
                           'User')
                         Align(
-                          alignment: AlignmentDirectional(0.00, 0.67),
+                          alignment: AlignmentDirectional(0.0, 0.65),
                           child: AuthUserStreamWidget(
                             builder: (context) => Material(
                               color: Colors.transparent,
@@ -1559,7 +1557,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                       if (valueOrDefault(currentUserDocument?.userType, '') !=
                           'User')
                         Align(
-                          alignment: AlignmentDirectional(0.00, 0.67),
+                          alignment: AlignmentDirectional(0.0, 0.65),
                           child: AuthUserStreamWidget(
                             builder: (context) => Material(
                               color: Colors.transparent,

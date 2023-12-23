@@ -136,7 +136,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
               ),
               actions: [
                 Align(
-                  alignment: AlignmentDirectional(0.00, 0.00),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
@@ -148,7 +148,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                         shape: BoxShape.circle,
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.00, 0.00),
+                        alignment: AlignmentDirectional(0.0, 0.0),
                         child: Icon(
                           FFIcons.kproperty1support2,
                           color: FlutterFlowTheme.of(context).primary,

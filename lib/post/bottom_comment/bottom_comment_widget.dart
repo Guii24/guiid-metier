@@ -192,7 +192,7 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.00, 1.00),
+                    alignment: AlignmentDirectional(0.0, 1.0),
                     child: Material(
                       color: Colors.transparent,
                       elevation: 0.0,
@@ -208,7 +208,7 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                           ),
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.00, -1.00),
+                          alignment: AlignmentDirectional(0.0, -1.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 10.0, 7.5, 16.0, 24.0),

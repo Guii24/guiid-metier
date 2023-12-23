@@ -57,7 +57,7 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
-                  alignment: AlignmentDirectional(0.00, 0.00),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
@@ -69,7 +69,7 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                         shape: BoxShape.circle,
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0.00, 0.00),
+                        alignment: AlignmentDirectional(0.0, 0.0),
                         child: Icon(
                           FFIcons.kproperty1support2,
                           color: FlutterFlowTheme.of(context).primary,
@@ -165,7 +165,7 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.00, -1.00),
+                            alignment: AlignmentDirectional(-1.0, -1.0),
                             child: Text(
                               valueOrDefault<String>(
                                 widget.messageItem?.messageText,

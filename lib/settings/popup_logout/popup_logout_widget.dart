@@ -58,7 +58,7 @@ class _PopupLogoutWidgetState extends State<PopupLogoutWidget> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(30.0, 30.0, 30.0, 30.0),
+            padding: EdgeInsets.all(30.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -132,8 +132,6 @@ class _PopupLogoutWidgetState extends State<PopupLogoutWidget> {
                               FFAppState().postreport = [];
                               FFAppState().popupSelected = '';
                               FFAppState().profilePhoto = '';
-                              FFAppState().countryInfo = jsonDecode(
-                                  '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
                               FFAppState().profilePhotoCompany = '';
                               FFAppState().choosenPreference = [];
                               FFAppState().activeCalendar = false;

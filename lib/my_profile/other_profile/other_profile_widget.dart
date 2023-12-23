@@ -120,7 +120,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
               ),
               actions: [
                 Align(
-                  alignment: AlignmentDirectional(0.00, 0.00),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
@@ -456,22 +456,62 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            valueOrDefault<String>(
-                                              formatNumber(
-                                                otherProfileUsersRecord
-                                                    .userFollowers.length,
-                                                formatType: FormatType.compact,
-                                              ),
-                                              '0',
+                                          FutureBuilder<int>(
+                                            future: queryUsersRecordCount(
+                                              queryBuilder: (usersRecord) =>
+                                                  usersRecord
+                                                      .where(
+                                                        'email',
+                                                        isNotEqualTo: null,
+                                                      )
+                                                      .where(
+                                                        'user_following',
+                                                        arrayContains:
+                                                            widget.userRef,
+                                                      ),
                                             ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: Color(0xFF171A1F),
-                                                  fontSize: 15.0,
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 30.0,
+                                                    height: 30.0,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                              Color>(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              int textCount = snapshot.data!;
+                                              return Text(
+                                                valueOrDefault<String>(
+                                                  formatNumber(
+                                                    textCount,
+                                                    formatType:
+                                                        FormatType.compact,
+                                                  ),
+                                                  '0',
                                                 ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color:
+                                                              Color(0xFF171A1F),
+                                                          fontSize: 15.0,
+                                                        ),
+                                              );
+                                            },
                                           ),
                                           Text(
                                             'Followers',
@@ -519,22 +559,62 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            valueOrDefault<String>(
-                                              formatNumber(
-                                                otherProfileUsersRecord
-                                                    .userFollowing.length,
-                                                formatType: FormatType.compact,
-                                              ),
-                                              '0',
+                                          FutureBuilder<int>(
+                                            future: queryUsersRecordCount(
+                                              queryBuilder: (usersRecord) =>
+                                                  usersRecord
+                                                      .where(
+                                                        'email',
+                                                        isNotEqualTo: null,
+                                                      )
+                                                      .where(
+                                                        'user_followers',
+                                                        arrayContains:
+                                                            widget.userRef,
+                                                      ),
                                             ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: Color(0xFF171A1F),
-                                                  fontSize: 15.0,
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 30.0,
+                                                    height: 30.0,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                              Color>(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              int textCount = snapshot.data!;
+                                              return Text(
+                                                valueOrDefault<String>(
+                                                  formatNumber(
+                                                    textCount,
+                                                    formatType:
+                                                        FormatType.compact,
+                                                  ),
+                                                  '0',
                                                 ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color:
+                                                              Color(0xFF171A1F),
+                                                          fontSize: 15.0,
+                                                        ),
+                                              );
+                                            },
                                           ),
                                           Text(
                                             'Following',
@@ -803,7 +883,13 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                         fontFamily: 'Libre Franklin',
                                         fontSize: 17.0,
                                       ),
-                                  unselectedLabelStyle: TextStyle(),
+                                  unselectedLabelStyle:
+                                      FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Libre Franklin',
+                                            fontSize: 17.0,
+                                          ),
                                   indicatorColor:
                                       FlutterFlowTheme.of(context).secondary,
                                   indicatorWeight: 2.0,
@@ -828,7 +914,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                   children: [
                                     Align(
                                       alignment:
-                                          AlignmentDirectional(0.00, -1.00),
+                                          AlignmentDirectional(0.0, -1.0),
                                       child: Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
@@ -1398,7 +1484,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                     ),
                                     Align(
                                       alignment:
-                                          AlignmentDirectional(0.00, -1.00),
+                                          AlignmentDirectional(0.0, -1.0),
                                       child: Container(
                                         width: double.infinity,
                                         height:

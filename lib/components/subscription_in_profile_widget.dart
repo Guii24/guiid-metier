@@ -71,7 +71,7 @@ class _SubscriptionInProfileWidgetState
             fit: BoxFit.cover,
           ),
           Align(
-            alignment: AlignmentDirectional(0.00, 0.00),
+            alignment: AlignmentDirectional(0.0, 0.0),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 44.0),
               child: Column(
@@ -107,7 +107,7 @@ class _SubscriptionInProfileWidgetState
                           scrollDirection: Axis.horizontal,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(0.00, -1.00),
+                              alignment: AlignmentDirectional(0.0, -1.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -147,7 +147,7 @@ class _SubscriptionInProfileWidgetState
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0.00, -1.00),
+                              alignment: AlignmentDirectional(0.0, -1.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -216,7 +216,7 @@ class _SubscriptionInProfileWidgetState
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0.00, -1.00),
+                              alignment: AlignmentDirectional(0.0, -1.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -285,7 +285,7 @@ class _SubscriptionInProfileWidgetState
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0.00, -1.00),
+                              alignment: AlignmentDirectional(0.0, -1.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -354,7 +354,7 @@ class _SubscriptionInProfileWidgetState
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0.00, -1.00),
+                              alignment: AlignmentDirectional(0.0, -1.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -425,7 +425,7 @@ class _SubscriptionInProfileWidgetState
                           ],
                         ),
                         Align(
-                          alignment: AlignmentDirectional(0.00, 0.80),
+                          alignment: AlignmentDirectional(0.0, 0.8),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 10.0),
@@ -476,8 +476,7 @@ class _SubscriptionInProfileWidgetState
                           ),
                         ),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 16.0, 16.0, 16.0),
+                          padding: EdgeInsets.all(16.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -506,7 +505,7 @@ class _SubscriptionInProfileWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              AlignmentDirectional(0.00, 0.00),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Icon(
                                             FFIcons.kproperty1subscription,
                                             color: Colors.black,
@@ -647,8 +646,8 @@ class _SubscriptionInProfileWidgetState
                                             textAlign: TextAlign.end,
                                           ),
                                           Align(
-                                            alignment: AlignmentDirectional(
-                                                1.00, 0.00),
+                                            alignment:
+                                                AlignmentDirectional(1.0, 0.0),
                                             child: Text(
                                               '7-days free trial',
                                               style:
@@ -706,7 +705,7 @@ class _SubscriptionInProfileWidgetState
                                                           ?.jsonBody ??
                                                       ''),
                                                 )
-                                                .toString()),
+                                                .toString()!),
                                         style: TextStyle(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
@@ -749,7 +748,7 @@ class _SubscriptionInProfileWidgetState
             ),
           ),
           Align(
-            alignment: AlignmentDirectional(-1.00, -0.88),
+            alignment: AlignmentDirectional(-1.0, -0.88),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(19.0, 0.0, 0.0, 0.0),
               child: FlutterFlowIconButton(
