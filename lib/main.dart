@@ -106,6 +106,7 @@ class _MyAppState extends State<MyApp> {
         Locale('en'),
       ],
       theme: ThemeData(
+        useMaterial3: false,
         brightness: Brightness.light,
         scrollbarTheme: ScrollbarThemeData(),
       ),
