@@ -1,31 +1,47 @@
-import '/auth/firebase_auth/auth_util.dart';
+// Automatic FlutterFlow imports
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/backend/schema/structs/index.dart';
+import '/actions/actions.dart' as action_blocks;
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'index.dart'; // Imports other custom widgets
+import '/custom_code/actions/index.dart'; // Imports custom actions
+import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import 'package:flutter/material.dart';
+// Begin custom widget code
+// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+
+import 'package:guiid_metier/post/post_user/post_user_model.dart';
+
+import '/auth/firebase_auth/auth_util.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/post_types/post_types_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'post_user_model.dart';
-export 'post_user_model.dart';
 
-class PostUserWidget extends StatefulWidget {
-  const PostUserWidget({Key? key}) : super(key: key);
+class TestPageWidget extends StatefulWidget {
+  const TestPageWidget({Key? key}) : super(key: key);
 
   @override
-  _PostUserWidgetState createState() => _PostUserWidgetState();
+  _TestPageWidgetState createState() => _TestPageWidgetState();
 }
 
-class _PostUserWidgetState extends State<PostUserWidget> {
+class _TestPageWidgetState extends State<TestPageWidget> {
   late PostUserModel _model;
+  final ScrollController _controller = ScrollController();
+  double _scrollOffset = 0;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
+    _controller.addListener(() {
+      setState(() {
+        _scrollOffset = _controller.offset;
+      });
+    });
     super.initState();
     _model = createModel(context, () => PostUserModel());
   }
@@ -33,7 +49,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
   @override
   void dispose() {
     _model.dispose();
-
+    _controller.dispose();
     super.dispose();
   }
 
@@ -356,26 +372,15 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                   ),
                 ),
                 child: SingleChildScrollView(
+                  controller: _controller,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Align(
-                        alignment: AlignmentDirectional(-1.0, 0.0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 20.0, 0.0, 0.0),
-                          child: Text(
-                            'POSTS',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Libre Franklin',
-                                  fontSize: 17.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
+                      if (_scrollOffset <= 100)
+                        Text(
+                          'Hello World',
+                          style: FlutterFlowTheme.of(context).bodyMedium,
                         ),
-                      ),
                       StreamBuilder<List<PostRecord>>(
                         stream: queryPostRecord(
                           queryBuilder: (postRecord) => postRecord

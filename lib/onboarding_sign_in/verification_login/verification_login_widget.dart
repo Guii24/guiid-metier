@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
@@ -6,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -43,6 +45,13 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.timerController.onStartTimer();
+      setState(() {
+        _model.code = random_data.randomInteger(1000, 9999).toString();
+      });
+      await TwilioCall.call(
+        to: widget.userPhone,
+        body: 'Your GMSM verification code is: ${_model.code}',
+      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -129,7 +138,7 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                   child: custom_widgets.PinCode(
                     width: double.infinity,
                     height: 120.0,
-                    code: '1111',
+                    code: _model.code!,
                     onCompleted: () async {
                       GoRouter.of(context).prepareAuthEvent();
 

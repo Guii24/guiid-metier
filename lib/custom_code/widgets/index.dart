@@ -11,3 +11,4 @@ export 'calendars.dart' show Calendars;
 export 'pin_code.dart' show PinCode;
 export 'icon_managers.dart' show IconManagers;
 export 'wear_photo_crop_u_i.dart' show WearPhotoCropUI;
+export 'test_page.dart' show TestPage;
