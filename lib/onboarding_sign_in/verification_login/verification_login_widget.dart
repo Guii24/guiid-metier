@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
@@ -6,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -43,6 +45,13 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.timerController.onStartTimer();
+      setState(() {
+        _model.code = random_data.randomInteger(1000, 9999).toString();
+      });
+      await TwilioCall.call(
+        to: widget.userPhone,
+        body: 'Your GMSM verification code is: ${_model.code}',
+      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -99,10 +108,10 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
           title: Text(
             'VERIFICATION',
             style: FlutterFlowTheme.of(context).titleMedium.override(
-                  fontFamily: 'Libre Franklin',
-                  color: FlutterFlowTheme.of(context).dark88,
-                  fontSize: 16.0,
-                ),
+              fontFamily: 'Libre Franklin',
+              color: FlutterFlowTheme.of(context).dark88,
+              fontSize: 16.0,
+            ),
           ),
           actions: [],
           centerTitle: true,
@@ -118,10 +127,10 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                 Text(
                   'We have sent a code to your number',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Libre Franklin',
-                        color: FlutterFlowTheme.of(context).dark68,
-                        fontSize: 15.0,
-                      ),
+                    fontFamily: 'Libre Franklin',
+                    color: FlutterFlowTheme.of(context).dark68,
+                    fontSize: 15.0,
+                  ),
                 ),
                 Container(
                   width: double.infinity,
@@ -129,7 +138,7 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                   child: custom_widgets.PinCode(
                     width: double.infinity,
                     height: 120.0,
-                    code: '1111',
+                    code: _model.code!,
                     onCompleted: () async {
                       GoRouter.of(context).prepareAuthEvent();
 
@@ -152,10 +161,10 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                   child: Text(
                     'Didn\'t receive a code?',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Libre Franklin',
-                          color: FlutterFlowTheme.of(context).dark68,
-                          fontSize: 15.0,
-                        ),
+                      fontFamily: 'Libre Franklin',
+                      color: FlutterFlowTheme.of(context).dark68,
+                      fontSize: 15.0,
+                    ),
                   ),
                 ),
                 if (_model.timerMilliseconds != 0)
@@ -181,11 +190,11 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                           initialTime: _model.timerMilliseconds,
                           getDisplayTime: (value) =>
                               StopWatchTimer.getDisplayTime(
-                            value,
-                            hours: false,
-                            minute: false,
-                            milliSecond: false,
-                          ),
+                                value,
+                                hours: false,
+                                minute: false,
+                                milliSecond: false,
+                              ),
                           controller: _model.timerController,
                           updateStateInterval: Duration(milliseconds: 1000),
                           onChanged: (value, displayTime, shouldUpdate) {
@@ -200,12 +209,12 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                           },
                           textAlign: TextAlign.start,
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark88,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Libre Franklin',
+                            color: FlutterFlowTheme.of(context).dark88,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
@@ -243,11 +252,11 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: FlutterFlowTheme.of(context).dark88,
-                                  fontSize: 17.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              fontFamily: 'Libre Franklin',
+                              color: FlutterFlowTheme.of(context).dark88,
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),

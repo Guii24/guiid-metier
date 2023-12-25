@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -7,6 +8,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -58,6 +60,13 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.timerController.onStartTimer();
+      setState(() {
+        _model.code = random_data.randomInteger(1000, 9999).toString();
+      });
+      await TwilioCall.call(
+        to: widget.userPhone,
+        body: 'Your GMSM verification code is: ${_model.code}',
+      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -110,10 +119,10 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
           title: Text(
             'VERIFICATION',
             style: FlutterFlowTheme.of(context).titleMedium.override(
-                  fontFamily: 'Libre Franklin',
-                  color: FlutterFlowTheme.of(context).dark88,
-                  fontSize: 16.0,
-                ),
+              fontFamily: 'Libre Franklin',
+              color: FlutterFlowTheme.of(context).dark88,
+              fontSize: 16.0,
+            ),
           ),
           actions: [],
           centerTitle: true,
@@ -129,10 +138,10 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                 Text(
                   'We have sent a code to your number',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Libre Franklin',
-                        color: FlutterFlowTheme.of(context).dark68,
-                        fontSize: 15.0,
-                      ),
+                    fontFamily: 'Libre Franklin',
+                    color: FlutterFlowTheme.of(context).dark68,
+                    fontSize: 15.0,
+                  ),
                 ),
                 Container(
                   width: double.infinity,
@@ -140,7 +149,7 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                   child: custom_widgets.PinCode(
                     width: double.infinity,
                     height: 120.0,
-                    code: '1111',
+                    code: _model.code!,
                     onCompleted: () async {
                       GoRouter.of(context).prepareAuthEvent();
                       if ('123456' != '123456') {
@@ -166,24 +175,24 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                       await UsersRecord.collection
                           .doc(user.uid)
                           .update(createUsersRecordData(
-                            phoneNumber: widget.phoneoriginal,
-                            photoUrl: widget.profilePhoto,
-                            userType: widget.userType,
-                            displayName: widget.userName,
-                            createdTime: getCurrentTimestamp,
-                            userPhoneName: widget.phoneName,
-                            userPhoneCode: widget.phoneCode,
-                            userPhoneFlag: widget.phoneFlag,
-                            userPhoneDialCode: widget.phoneDialCode,
-                            userContactPhone: widget.phoneoriginal,
-                            userContactName: widget.phoneName,
-                            userContactCode: widget.phoneCode,
-                            userContactFlag: widget.phoneFlag,
-                            userContactDialCode: widget.phoneDialCode,
-                            userNotification: true,
-                            userSubscription: false,
-                            userBlockedUserByAdmin: false,
-                          ));
+                        phoneNumber: widget.phoneoriginal,
+                        photoUrl: widget.profilePhoto,
+                        userType: widget.userType,
+                        displayName: widget.userName,
+                        createdTime: getCurrentTimestamp,
+                        userPhoneName: widget.phoneName,
+                        userPhoneCode: widget.phoneCode,
+                        userPhoneFlag: widget.phoneFlag,
+                        userPhoneDialCode: widget.phoneDialCode,
+                        userContactPhone: widget.phoneoriginal,
+                        userContactName: widget.phoneName,
+                        userContactCode: widget.phoneCode,
+                        userContactFlag: widget.phoneFlag,
+                        userContactDialCode: widget.phoneDialCode,
+                        userNotification: true,
+                        userSubscription: false,
+                        userBlockedUserByAdmin: false,
+                      ));
 
                       if (widget.userType == 'User') {
                         context.goNamedAuth('signupBioUser', context.mounted);
@@ -200,10 +209,10 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                   child: Text(
                     'Didn\'t receive a code?',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Libre Franklin',
-                          color: FlutterFlowTheme.of(context).dark68,
-                          fontSize: 15.0,
-                        ),
+                      fontFamily: 'Libre Franklin',
+                      color: FlutterFlowTheme.of(context).dark68,
+                      fontSize: 15.0,
+                    ),
                   ),
                 ),
                 if (_model.timerMilliseconds != 00)
@@ -229,11 +238,11 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                           initialTime: _model.timerMilliseconds,
                           getDisplayTime: (value) =>
                               StopWatchTimer.getDisplayTime(
-                            value,
-                            hours: false,
-                            minute: false,
-                            milliSecond: false,
-                          ),
+                                value,
+                                hours: false,
+                                minute: false,
+                                milliSecond: false,
+                              ),
                           controller: _model.timerController,
                           updateStateInterval: Duration(milliseconds: 1000),
                           onChanged: (value, displayTime, shouldUpdate) {
@@ -248,12 +257,12 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                           },
                           textAlign: TextAlign.start,
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Libre Franklin',
-                                    color: FlutterFlowTheme.of(context).dark88,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Libre Franklin',
+                            color: FlutterFlowTheme.of(context).dark88,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
@@ -291,11 +300,11 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Libre Franklin',
-                                  color: FlutterFlowTheme.of(context).dark88,
-                                  fontSize: 17.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              fontFamily: 'Libre Franklin',
+                              color: FlutterFlowTheme.of(context).dark88,
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
