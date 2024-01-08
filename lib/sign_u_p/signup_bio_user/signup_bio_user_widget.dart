@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/sign_u_p/bottom_preference/bottom_preference_widget.dart';
 import '/sign_u_p/sign_up_location/sign_up_location_widget.dart';
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -237,21 +236,18 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        await showAlignedDialog(
+                                        await showDialog(
                                           context: context,
-                                          isGlobal: true,
-                                          avoidOverflow: false,
-                                          targetAnchor: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
-                                          followerAnchor: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
                                           builder: (dialogContext) {
-                                            return Material(
-                                              color: Colors.transparent,
+                                            return Dialog(
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
                                               child: GestureDetector(
                                                 onTap: () => _model.unfocusNode
                                                         .canRequestFocus

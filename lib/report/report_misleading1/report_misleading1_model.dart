@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/report/bottom_report/bottom_report_widget.dart';
 import '/report/custom_dialog_reportsent/custom_dialog_reportsent_widget.dart';
 import 'report_misleading1_widget.dart' show ReportMisleading1Widget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

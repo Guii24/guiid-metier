@@ -7,7 +7,6 @@ import '/settings/popup_block_user/popup_block_user_widget.dart';
 import '/settings/popup_unblock_user/popup_unblock_user_widget.dart';
 import 'bottom_reportand_block_user_widget.dart'
     show BottomReportandBlockUserWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

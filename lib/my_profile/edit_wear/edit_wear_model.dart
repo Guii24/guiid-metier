@@ -12,7 +12,6 @@ import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_wear/take_photo_wear_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'edit_wear_widget.dart' show EditWearWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

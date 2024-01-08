@@ -13,7 +13,6 @@ import '/post/component_post_user/component_post_user_widget.dart';
 import '/settings/popup_unblock_user/popup_unblock_user_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -802,18 +801,16 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                             child: AuthUserStreamWidget(
                               builder: (context) => FFButtonWidget(
                                 onPressed: () async {
-                                  await showAlignedDialog(
+                                  await showDialog(
                                     context: context,
-                                    isGlobal: true,
-                                    avoidOverflow: false,
-                                    targetAnchor: AlignmentDirectional(0.0, 0.0)
-                                        .resolve(Directionality.of(context)),
-                                    followerAnchor: AlignmentDirectional(
-                                            0.0, 0.0)
-                                        .resolve(Directionality.of(context)),
                                     builder: (dialogContext) {
-                                      return Material(
-                                        color: Colors.transparent,
+                                      return Dialog(
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
                                         child: GestureDetector(
                                           onTap: () => _model
                                                   .unfocusNode.canRequestFocus
@@ -905,6 +902,13 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                     ),
                                   ],
                                   controller: _model.tabBarController,
+                                  onTap: (i) async {
+                                    [
+                                      () async {},
+                                      () async {},
+                                      () async {}
+                                    ][i]();
+                                  },
                                 ),
                               ),
                               Expanded(

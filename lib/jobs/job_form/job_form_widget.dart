@@ -10,7 +10,6 @@ import '/flutter_flow/upload_data.dart';
 import '/onboarding_sign_in/country_code/country_code_widget.dart';
 import '/sourcing/popup_sourcing/popup_sourcing_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -1387,14 +1386,15 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                             }
                             final buttonUsersRecord = snapshot.data!;
                             return FFButtonWidget(
-                              onPressed: (_model.textController1.text == null ||
+                              onPressed: ((_model.textController1.text ==
+                                              null ||
                                           _model.textController1.text == '') ||
                                       (_model.textController2.text == null ||
                                           _model.textController2.text == '') ||
                                       (_model.textController3.text == null ||
                                           _model.textController3.text == '') ||
                                       (_model.uploadedFileUrl1 == null ||
-                                          _model.uploadedFileUrl1 == '')
+                                          _model.uploadedFileUrl1 == ''))
                                   ? null
                                   : () async {
                                       if (!functions.validatorEmail(
@@ -1437,7 +1437,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                             getJsonField(
                                               FFAppState().countryInfo,
                                               r'''$.code''',
-                                            ).toString(),
+                                            )?.toString(),
                                             ' +1',
                                           ),
                                           jobApplicantPhoneDialCode:
@@ -1445,7 +1445,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                             getJsonField(
                                               FFAppState().countryInfo,
                                               r'''$.dial_code''',
-                                            ).toString(),
+                                            )?.toString(),
                                             'US',
                                           ),
                                         ));
@@ -1460,22 +1460,19 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                           ),
                                         });
                                         context.safePop();
-                                        showAlignedDialog(
+                                        showDialog(
                                           barrierDismissible: false,
                                           context: context,
-                                          isGlobal: true,
-                                          avoidOverflow: false,
-                                          targetAnchor: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
-                                          followerAnchor: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
                                           builder: (dialogContext) {
-                                            return Material(
-                                              color: Colors.transparent,
+                                            return Dialog(
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
                                               child: GestureDetector(
                                                 onTap: () => _model.unfocusNode
                                                         .canRequestFocus

@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/popup_delete_comment_post/popup_delete_comment_post_widget.dart';
 import 'bottom_delete_comment_post_widget.dart'
     show BottomDeleteCommentPostWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

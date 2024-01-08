@@ -4,7 +4,6 @@ import '/nav_bar/user_bottom_nav_bar/user_bottom_nav_bar_widget.dart';
 import 'dart:async';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'nav_bar_widget.dart' show NavBarWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';

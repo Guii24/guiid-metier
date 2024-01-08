@@ -10,7 +10,6 @@ import '/post/create_post/custom_dialog_create_post/custom_dialog_create_post_wi
 import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_p_post_user/take_photo_p_post_user_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -96,17 +95,14 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                 size: 24.0,
               ),
               onPressed: () async {
-                await showAlignedDialog(
+                await showDialog(
                   context: context,
-                  isGlobal: true,
-                  avoidOverflow: false,
-                  targetAnchor: AlignmentDirectional(0.0, 0.0)
-                      .resolve(Directionality.of(context)),
-                  followerAnchor: AlignmentDirectional(0.0, 0.0)
-                      .resolve(Directionality.of(context)),
                   builder: (dialogContext) {
-                    return Material(
-                      color: Colors.transparent,
+                    return Dialog(
+                      insetPadding: EdgeInsets.zero,
+                      backgroundColor: Colors.transparent,
+                      alignment: AlignmentDirectional(0.0, 0.0)
+                          .resolve(Directionality.of(context)),
                       child: GestureDetector(
                         onTap: () => _model.unfocusNode.canRequestFocus
                             ? FocusScope.of(context)
@@ -158,9 +154,9 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                       }
                       List<UsersRecord> buttonUsersRecordList = snapshot.data!;
                       return FFButtonWidget(
-                        onPressed: (_model.textController.text == null ||
+                        onPressed: ((_model.textController.text == null ||
                                     _model.textController.text == '') ||
-                                (FFAppState().choosenPreference.length == 0)
+                                (FFAppState().choosenPreference.length == 0))
                             ? null
                             : () async {
                                 if ((_model.textController.text != null &&
@@ -208,20 +204,18 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                     FFAppState().choosenPurpose = '';
                                     FFAppState().choosenPurposeAndPref = [];
                                   });
-                                  showAlignedDialog(
+                                  showDialog(
                                     barrierColor: Color(0x02000000),
                                     barrierDismissible: false,
                                     context: context,
-                                    isGlobal: true,
-                                    avoidOverflow: false,
-                                    targetAnchor: AlignmentDirectional(0.0, 0.0)
-                                        .resolve(Directionality.of(context)),
-                                    followerAnchor: AlignmentDirectional(
-                                            0.0, -1.0)
-                                        .resolve(Directionality.of(context)),
                                     builder: (dialogContext) {
-                                      return Material(
-                                        color: Colors.transparent,
+                                      return Dialog(
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            AlignmentDirectional(0.0, -1.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
                                         child: GestureDetector(
                                           onTap: () => _model
                                                   .unfocusNode.canRequestFocus

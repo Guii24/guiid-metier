@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/create_post/botton_select_category/botton_select_category_widget.dart';
 import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_p_post_user/take_photo_p_post_user_widget.dart';
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -97,17 +96,14 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                 size: 24.0,
               ),
               onPressed: () async {
-                await showAlignedDialog(
+                await showDialog(
                   context: context,
-                  isGlobal: true,
-                  avoidOverflow: false,
-                  targetAnchor: AlignmentDirectional(0.0, 0.0)
-                      .resolve(Directionality.of(context)),
-                  followerAnchor: AlignmentDirectional(0.0, 0.0)
-                      .resolve(Directionality.of(context)),
                   builder: (dialogContext) {
-                    return Material(
-                      color: Colors.transparent,
+                    return Dialog(
+                      insetPadding: EdgeInsets.zero,
+                      backgroundColor: Colors.transparent,
+                      alignment: AlignmentDirectional(0.0, 0.0)
+                          .resolve(Directionality.of(context)),
                       child: GestureDetector(
                         onTap: () => _model.unfocusNode.canRequestFocus
                             ? FocusScope.of(context)

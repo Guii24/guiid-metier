@@ -11,7 +11,6 @@ import '/onboarding_sign_in/country_code/country_code_widget.dart';
 import '/sourcing/popup_sourcing/popup_sourcing_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'job_form_widget.dart' show JobFormWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_storage/firebase_storage.dart';

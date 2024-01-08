@@ -2,7 +2,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/popup_delete_comment_post/popup_delete_comment_post_widget.dart';
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -84,18 +83,15 @@ class _BottomDeleteCommentPostWidgetState
                   child: FFButtonWidget(
                     onPressed: () async {
                       Navigator.pop(context);
-                      await showAlignedDialog(
+                      await showDialog(
                         barrierDismissible: false,
                         context: context,
-                        isGlobal: true,
-                        avoidOverflow: false,
-                        targetAnchor: AlignmentDirectional(0.0, 0.0)
-                            .resolve(Directionality.of(context)),
-                        followerAnchor: AlignmentDirectional(0.0, 0.0)
-                            .resolve(Directionality.of(context)),
                         builder: (dialogContext) {
-                          return Material(
-                            color: Colors.transparent,
+                          return Dialog(
+                            insetPadding: EdgeInsets.zero,
+                            backgroundColor: Colors.transparent,
+                            alignment: AlignmentDirectional(0.0, 0.0)
+                                .resolve(Directionality.of(context)),
                             child: PopupDeleteCommentPostWidget(
                               postref: widget.postref,
                               commentPostref: widget.commentref,

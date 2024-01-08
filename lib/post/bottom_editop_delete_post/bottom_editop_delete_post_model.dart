@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/popup_delete_post/popup_delete_post_widget.dart';
 import 'bottom_editop_delete_post_widget.dart'
     show BottomEditopDeletePostWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';

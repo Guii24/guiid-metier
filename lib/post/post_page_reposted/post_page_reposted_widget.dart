@@ -1662,9 +1662,9 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                             .primaryText,
                                         size: 30.0,
                                       ),
-                                      onPressed: _model.textController.text ==
+                                      onPressed: (_model.textController.text ==
                                                   null ||
-                                              _model.textController.text == ''
+                                              _model.textController.text == '')
                                           ? null
                                           : () async {
                                               var commentPostRecordReference =

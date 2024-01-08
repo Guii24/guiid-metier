@@ -9,7 +9,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/settings/popup_delete_account/popup_delete_account_widget.dart';
 import '/settings/popup_logout/popup_logout_widget.dart';
 import 'settings_widget.dart' show SettingsWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

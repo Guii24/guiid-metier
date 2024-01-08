@@ -446,6 +446,9 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                           ),
                         ],
                         controller: _model.tabBarController,
+                        onTap: (i) async {
+                          [() async {}, () async {}, () async {}][i]();
+                        },
                       ),
                     ),
                     Expanded(

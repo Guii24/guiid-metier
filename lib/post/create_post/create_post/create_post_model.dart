@@ -11,7 +11,6 @@ import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_p_post_user/take_photo_p_post_user_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'create_post_widget.dart' show CreatePostWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';

@@ -193,6 +193,15 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                         ),
                       ],
                       controller: _model.tabBarController,
+                      onTap: (i) async {
+                        [
+                          () async {},
+                          () async {},
+                          () async {},
+                          () async {},
+                          () async {}
+                        ][i]();
+                      },
                     ),
                   ),
                   Expanded(

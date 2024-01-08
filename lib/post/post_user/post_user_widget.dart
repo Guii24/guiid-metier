@@ -59,10 +59,10 @@ class _PostUserWidgetState extends State<PostUserWidget> {
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
             SliverAppBar(
-              expandedHeight: 148.0,
-              pinned: false,
-              floating: true,
-              snap: true,
+              expandedHeight: 100.0,
+              collapsedHeight: 80.0,
+              pinned: true,
+              floating: false,
               backgroundColor: FlutterFlowTheme.of(context).primary,
               automaticallyImplyLeading: false,
               actions: [],
@@ -148,188 +148,6 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                             ],
                           ),
                         ),
-                        Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    setState(() {
-                                      _model.choosenCategory = '';
-                                    });
-                                  },
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    elevation: 0.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                    child: Container(
-                                      height: 35.0,
-                                      decoration: BoxDecoration(
-                                        color: _model.choosenCategory == null ||
-                                                _model.choosenCategory == ''
-                                            ? FlutterFlowTheme.of(context)
-                                                .primaryText
-                                            : FlutterFlowTheme.of(context)
-                                                .primary,
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        border: Border.all(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                      child: Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 5.0, 12.0, 5.0),
-                                          child: Text(
-                                            'All',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color:
-                                                      _model.choosenCategory ==
-                                                                  null ||
-                                                              _model.choosenCategory ==
-                                                                  ''
-                                                          ? FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary
-                                                          : FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                  fontSize: 15.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                AuthUserStreamWidget(
-                                  builder: (context) => Builder(
-                                    builder: (context) {
-                                      final category = (currentUserDocument
-                                                  ?.userPreferences
-                                                  ?.toList() ??
-                                              [])
-                                          .toList();
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: List.generate(category.length,
-                                                (categoryIndex) {
-                                          final categoryItem =
-                                              category[categoryIndex];
-                                          return InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              setState(() {
-                                                _model.choosenCategory =
-                                                    categoryItem;
-                                              });
-                                            },
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              elevation: 0.0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(4.0),
-                                              ),
-                                              child: Container(
-                                                height: 35.0,
-                                                decoration: BoxDecoration(
-                                                  color: valueOrDefault<Color>(
-                                                    _model.choosenCategory ==
-                                                            categoryItem
-                                                        ? FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryText
-                                                        : FlutterFlowTheme.of(
-                                                                context)
-                                                            .primary,
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          4.0),
-                                                  border: Border.all(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    width: 1.0,
-                                                  ),
-                                                ),
-                                                child: Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0.0, 0.0),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(12.0, 5.0,
-                                                                12.0, 5.0),
-                                                    child: Text(
-                                                      categoryItem,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Libre Franklin',
-                                                                color:
-                                                                    valueOrDefault<
-                                                                        Color>(
-                                                                  _model.choosenCategory ==
-                                                                          categoryItem
-                                                                      ? FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary
-                                                                      : FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                ),
-                                                                fontSize: 15.0,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        })
-                                            .divide(SizedBox(width: 8.0))
-                                            .addToStart(SizedBox(width: 8.0))
-                                            .addToEnd(SizedBox(width: 8.0)),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ].addToStart(SizedBox(width: 16.0)),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -337,6 +155,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                 centerTitle: true,
                 expandedTitleScale: 1.0,
               ),
+              toolbarHeight: 70.0,
               elevation: 1.0,
             )
           ],
@@ -373,6 +192,180 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                   fontSize: 17.0,
                                   fontWeight: FontWeight.w600,
                                 ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(-1.0, 0.0),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  setState(() {
+                                    _model.choosenCategory = '';
+                                  });
+                                },
+                                child: Material(
+                                  color: Colors.transparent,
+                                  elevation: 0.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                  child: Container(
+                                    height: 35.0,
+                                    decoration: BoxDecoration(
+                                      color: _model.choosenCategory == null ||
+                                              _model.choosenCategory == ''
+                                          ? FlutterFlowTheme.of(context)
+                                              .primaryText
+                                          : FlutterFlowTheme.of(context)
+                                              .primary,
+                                      borderRadius: BorderRadius.circular(4.0),
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    child: Align(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 5.0, 12.0, 5.0),
+                                        child: Text(
+                                          'All',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Libre Franklin',
+                                                color: _model
+                                                                .choosenCategory ==
+                                                            null ||
+                                                        _model.choosenCategory ==
+                                                            ''
+                                                    ? FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary
+                                                    : FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                fontSize: 15.0,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              AuthUserStreamWidget(
+                                builder: (context) => Builder(
+                                  builder: (context) {
+                                    final category = (currentUserDocument
+                                                ?.userPreferences
+                                                ?.toList() ??
+                                            [])
+                                        .toList();
+                                    return Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: List.generate(category.length,
+                                              (categoryIndex) {
+                                        final categoryItem =
+                                            category[categoryIndex];
+                                        return InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            setState(() {
+                                              _model.choosenCategory =
+                                                  categoryItem;
+                                            });
+                                          },
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            elevation: 0.0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                            ),
+                                            child: Container(
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                color: valueOrDefault<Color>(
+                                                  _model.choosenCategory ==
+                                                          categoryItem
+                                                      ? FlutterFlowTheme.of(
+                                                              context)
+                                                          .primaryText
+                                                      : FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary,
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0),
+                                                border: Border.all(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  width: 1.0,
+                                                ),
+                                              ),
+                                              child: Align(
+                                                alignment: AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          12.0, 5.0, 12.0, 5.0),
+                                                  child: Text(
+                                                    categoryItem,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          color: valueOrDefault<
+                                                              Color>(
+                                                            _model.choosenCategory ==
+                                                                    categoryItem
+                                                                ? FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary
+                                                                : FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                          ),
+                                                          fontSize: 15.0,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      })
+                                          .divide(SizedBox(width: 8.0))
+                                          .addToStart(SizedBox(width: 8.0))
+                                          .addToEnd(SizedBox(width: 8.0)),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ].addToStart(SizedBox(width: 16.0)),
                           ),
                         ),
                       ),

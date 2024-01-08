@@ -9,7 +9,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/sign_u_p/bottom_preference/bottom_preference_widget.dart';
 import '/sign_u_p/sign_up_location/sign_up_location_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -353,21 +352,18 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        await showAlignedDialog(
+                                        await showDialog(
                                           context: context,
-                                          isGlobal: true,
-                                          avoidOverflow: false,
-                                          targetAnchor: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
-                                          followerAnchor: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
                                           builder: (dialogContext) {
-                                            return Material(
-                                              color: Colors.transparent,
+                                            return Dialog(
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
                                               child: GestureDetector(
                                                 onTap: () => _model.unfocusNode
                                                         .canRequestFocus
@@ -1191,8 +1187,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 10.0, 16.0, 0.0),
                         child: FFButtonWidget(
-                          onPressed: _model.textController1.text == null ||
-                                  _model.textController1.text == ''
+                          onPressed: (_model.textController1.text == null ||
+                                  _model.textController1.text == '')
                               ? null
                               : () async {
                                   if (functions.containsProfanity(

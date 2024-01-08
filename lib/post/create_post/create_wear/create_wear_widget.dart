@@ -11,7 +11,6 @@ import '/post/create_post/custom_dialog_create_wear/custom_dialog_create_wear_wi
 import '/post/create_post/empty_create_wear/empty_create_wear_widget.dart';
 import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_wear/take_photo_wear_widget.dart';
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -80,17 +79,14 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                 size: 24.0,
               ),
               onPressed: () async {
-                await showAlignedDialog(
+                await showDialog(
                   context: context,
-                  isGlobal: true,
-                  avoidOverflow: false,
-                  targetAnchor: AlignmentDirectional(0.0, 0.0)
-                      .resolve(Directionality.of(context)),
-                  followerAnchor: AlignmentDirectional(0.0, 0.0)
-                      .resolve(Directionality.of(context)),
                   builder: (dialogContext) {
-                    return Material(
-                      color: Colors.transparent,
+                    return Dialog(
+                      insetPadding: EdgeInsets.zero,
+                      backgroundColor: Colors.transparent,
+                      alignment: AlignmentDirectional(0.0, 0.0)
+                          .resolve(Directionality.of(context)),
                       child: GestureDetector(
                         onTap: () => _model.unfocusNode.canRequestFocus
                             ? FocusScope.of(context)
@@ -142,7 +138,7 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                       }
                       List<UsersRecord> buttonUsersRecordList = snapshot.data!;
                       return FFButtonWidget(
-                        onPressed: FFAppState().wearItems.length == 0
+                        onPressed: (FFAppState().wearItems.length == 0)
                             ? null
                             : () async {
                                 await Future.delayed(
@@ -168,20 +164,16 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                                   FFAppState().wearItems = [];
                                 });
                                 context.safePop();
-                                showAlignedDialog(
+                                showDialog(
                                   barrierColor: Color(0x02000000),
                                   barrierDismissible: false,
                                   context: context,
-                                  isGlobal: true,
-                                  avoidOverflow: false,
-                                  targetAnchor: AlignmentDirectional(0.0, 0.0)
-                                      .resolve(Directionality.of(context)),
-                                  followerAnchor:
-                                      AlignmentDirectional(0.0, -1.0)
-                                          .resolve(Directionality.of(context)),
                                   builder: (dialogContext) {
-                                    return Material(
-                                      color: Colors.transparent,
+                                    return Dialog(
+                                      insetPadding: EdgeInsets.zero,
+                                      backgroundColor: Colors.transparent,
+                                      alignment: AlignmentDirectional(0.0, -1.0)
+                                          .resolve(Directionality.of(context)),
                                       child: GestureDetector(
                                         onTap: () => _model
                                                 .unfocusNode.canRequestFocus

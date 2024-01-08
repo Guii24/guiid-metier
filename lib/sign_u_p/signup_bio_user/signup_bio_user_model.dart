@@ -8,7 +8,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/sign_u_p/bottom_preference/bottom_preference_widget.dart';
 import '/sign_u_p/sign_up_location/sign_up_location_widget.dart';
 import 'signup_bio_user_widget.dart' show SignupBioUserWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';

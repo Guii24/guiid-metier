@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/report/bottom_report/bottom_report_widget.dart';
 import '/report/custom_dialog_reportsent/custom_dialog_reportsent_widget.dart';
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -195,19 +194,16 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
                   }
 
                   Navigator.pop(context);
-                  showAlignedDialog(
+                  showDialog(
                     barrierColor: Color(0x02000000),
                     barrierDismissible: false,
                     context: context,
-                    isGlobal: true,
-                    avoidOverflow: false,
-                    targetAnchor: AlignmentDirectional(0.0, 0.0)
-                        .resolve(Directionality.of(context)),
-                    followerAnchor: AlignmentDirectional(0.0, -1.0)
-                        .resolve(Directionality.of(context)),
                     builder: (dialogContext) {
-                      return Material(
-                        color: Colors.transparent,
+                      return Dialog(
+                        insetPadding: EdgeInsets.zero,
+                        backgroundColor: Colors.transparent,
+                        alignment: AlignmentDirectional(0.0, -1.0)
+                            .resolve(Directionality.of(context)),
                         child: CustomDialogReportsentWidget(),
                       );
                     },

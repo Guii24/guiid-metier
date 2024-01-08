@@ -9,7 +9,6 @@ import '/jobs/job_type/job_type_widget.dart';
 import '/onboarding_sign_in/country_code/country_code_widget.dart';
 import '/sign_u_p/sign_up_location/sign_up_location_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -1175,20 +1174,16 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                           FFAppState().jobType3,
                                     ));
                                 context.safePop();
-                                showAlignedDialog(
+                                showDialog(
                                   barrierColor: Color(0x02000000),
                                   barrierDismissible: false,
                                   context: context,
-                                  isGlobal: true,
-                                  avoidOverflow: false,
-                                  targetAnchor: AlignmentDirectional(0.0, 0.0)
-                                      .resolve(Directionality.of(context)),
-                                  followerAnchor:
-                                      AlignmentDirectional(0.0, -1.0)
-                                          .resolve(Directionality.of(context)),
                                   builder: (dialogContext) {
-                                    return Material(
-                                      color: Colors.transparent,
+                                    return Dialog(
+                                      insetPadding: EdgeInsets.zero,
+                                      backgroundColor: Colors.transparent,
+                                      alignment: AlignmentDirectional(0.0, -1.0)
+                                          .resolve(Directionality.of(context)),
                                       child: GestureDetector(
                                         onTap: () => _model
                                                 .unfocusNode.canRequestFocus

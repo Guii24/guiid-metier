@@ -11,7 +11,6 @@ import '/post/create_post/empty_create_wear/empty_create_wear_widget.dart';
 import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_wear/take_photo_wear_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -145,19 +144,16 @@ class _EditWearWidgetState extends State<EditWearWidget> {
                       await actions.updatePage(
                         context,
                       );
-                      showAlignedDialog(
+                      showDialog(
                         barrierColor: Color(0x02000000),
                         barrierDismissible: false,
                         context: context,
-                        isGlobal: true,
-                        avoidOverflow: false,
-                        targetAnchor: AlignmentDirectional(0.0, 0.0)
-                            .resolve(Directionality.of(context)),
-                        followerAnchor: AlignmentDirectional(0.0, -1.0)
-                            .resolve(Directionality.of(context)),
                         builder: (dialogContext) {
-                          return Material(
-                            color: Colors.transparent,
+                          return Dialog(
+                            insetPadding: EdgeInsets.zero,
+                            backgroundColor: Colors.transparent,
+                            alignment: AlignmentDirectional(0.0, -1.0)
+                                .resolve(Directionality.of(context)),
                             child: GestureDetector(
                               onTap: () => _model.unfocusNode.canRequestFocus
                                   ? FocusScope.of(context)

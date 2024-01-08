@@ -11,7 +11,6 @@ import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -176,19 +175,16 @@ class _VerificationEditPhoneWidgetState
                           FFAppState().pageIndex = 0;
                         });
                         context.safePop();
-                        showAlignedDialog(
+                        showDialog(
                           barrierColor: Color(0x02000000),
                           barrierDismissible: false,
                           context: context,
-                          isGlobal: true,
-                          avoidOverflow: false,
-                          targetAnchor: AlignmentDirectional(0.0, 0.0)
-                              .resolve(Directionality.of(context)),
-                          followerAnchor: AlignmentDirectional(0.0, -1.0)
-                              .resolve(Directionality.of(context)),
                           builder: (dialogContext) {
-                            return Material(
-                              color: Colors.transparent,
+                            return Dialog(
+                              insetPadding: EdgeInsets.zero,
+                              backgroundColor: Colors.transparent,
+                              alignment: AlignmentDirectional(0.0, -1.0)
+                                  .resolve(Directionality.of(context)),
                               child: GestureDetector(
                                 onTap: () => _model.unfocusNode.canRequestFocus
                                     ? FocusScope.of(context)

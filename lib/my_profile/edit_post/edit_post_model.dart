@@ -8,7 +8,6 @@ import '/post/create_post/botton_select_category/botton_select_category_widget.d
 import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_p_post_user/take_photo_p_post_user_widget.dart';
 import 'edit_post_widget.dart' show EditPostWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';

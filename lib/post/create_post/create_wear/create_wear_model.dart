@@ -12,7 +12,6 @@ import '/post/create_post/empty_create_wear/empty_create_wear_widget.dart';
 import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_wear/take_photo_wear_widget.dart';
 import 'create_wear_widget.dart' show CreateWearWidget;
-import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
