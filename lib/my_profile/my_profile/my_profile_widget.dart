@@ -453,21 +453,47 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Flexible(
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Text(
+                                    FutureBuilder<int>(
+                                      future: queryUsersRecordCount(
+                                        queryBuilder: (usersRecord) =>
+                                            usersRecord
+                                                .where(
+                                                  'email',
+                                                  isNotEqualTo: null,
+                                                )
+                                                .where(
+                                                  'user_following',
+                                                  arrayContains:
+                                                      currentUserReference,
+                                                ),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 30.0,
+                                              height: 30.0,
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        int textCount = snapshot.data!;
+                                        return Text(
                                           valueOrDefault<String>(
                                             formatNumber(
-                                              (currentUserDocument
-                                                          ?.userFollowers
-                                                          ?.toList() ??
-                                                      [])
-                                                  .length,
+                                              textCount,
                                               formatType: FormatType.compact,
                                             ),
                                             '0',
                                           ),
-                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -475,8 +501,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                                 color: Color(0xFF171A1F),
                                                 fontSize: 15.0,
                                               ),
-                                        ),
-                                      ),
+                                        );
+                                      },
                                     ),
                                     Text(
                                       'Followers',
@@ -512,21 +538,47 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Flexible(
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Text(
+                                    FutureBuilder<int>(
+                                      future: queryUsersRecordCount(
+                                        queryBuilder: (usersRecord) =>
+                                            usersRecord
+                                                .where(
+                                                  'email',
+                                                  isNotEqualTo: null,
+                                                )
+                                                .where(
+                                                  'user_followers',
+                                                  arrayContains:
+                                                      currentUserReference,
+                                                ),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 30.0,
+                                              height: 30.0,
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        int textCount = snapshot.data!;
+                                        return Text(
                                           valueOrDefault<String>(
                                             formatNumber(
-                                              (currentUserDocument
-                                                          ?.userFollowing
-                                                          ?.toList() ??
-                                                      [])
-                                                  .length,
+                                              textCount,
                                               formatType: FormatType.compact,
                                             ),
                                             '0',
                                           ),
-                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -534,8 +586,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                                 color: Color(0xFF171A1F),
                                                 fontSize: 15.0,
                                               ),
-                                        ),
-                                      ),
+                                        );
+                                      },
                                     ),
                                     Text(
                                       'Following',
