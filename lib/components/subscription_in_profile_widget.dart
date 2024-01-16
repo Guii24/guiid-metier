@@ -699,13 +699,9 @@ class _SubscriptionInProfileWidgetState
                                       ),
                                       TextSpan(
                                         text: functions.dateformatforSub(
-                                            RevenueCatGroup.infoCall
-                                                .expireDate(
-                                                  (_model.apiResult7qk
-                                                          ?.jsonBody ??
-                                                      ''),
-                                                )
-                                                .toString()!),
+                                            RevenueCatGroup.infoCall.expireDate(
+                                          (_model.apiResult7qk?.jsonBody ?? ''),
+                                        )!),
                                         style: TextStyle(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,

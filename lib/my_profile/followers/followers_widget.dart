@@ -1,10 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/component_follow/component_follow_widget.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -90,33 +90,50 @@ class _FollowersWidgetState extends State<FollowersWidget> {
           top: true,
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-            child: AuthUserStreamWidget(
-              builder: (context) => Builder(
-                builder: (context) {
-                  final followers =
-                      (currentUserDocument?.userFollowers?.toList() ?? [])
-                          .toList();
-                  return ListView.separated(
-                    padding: EdgeInsets.fromLTRB(
-                      0,
-                      20.0,
-                      0,
-                      0,
-                    ),
-                    scrollDirection: Axis.vertical,
-                    itemCount: followers.length,
-                    separatorBuilder: (_, __) => SizedBox(height: 20.0),
-                    itemBuilder: (context, followersIndex) {
-                      final followersItem = followers[followersIndex];
-                      return ComponentFollowWidget(
-                        key: Key(
-                            'Keyxd4_${followersIndex}_of_${followers.length}'),
-                        userRef: followersItem,
-                      );
-                    },
-                  );
-                },
+            child: StreamBuilder<List<UsersRecord>>(
+              stream: queryUsersRecord(
+                queryBuilder: (usersRecord) => usersRecord.where(
+                  'user_following',
+                  arrayContains: currentUserReference,
+                ),
               ),
+              builder: (context, snapshot) {
+                // Customize what your widget looks like when it's loading.
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: SizedBox(
+                      width: 30.0,
+                      height: 30.0,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          FlutterFlowTheme.of(context).primary,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                List<UsersRecord> listViewUsersRecordList = snapshot.data!;
+                return ListView.separated(
+                  padding: EdgeInsets.fromLTRB(
+                    0,
+                    20.0,
+                    0,
+                    0,
+                  ),
+                  scrollDirection: Axis.vertical,
+                  itemCount: listViewUsersRecordList.length,
+                  separatorBuilder: (_, __) => SizedBox(height: 20.0),
+                  itemBuilder: (context, listViewIndex) {
+                    final listViewUsersRecord =
+                        listViewUsersRecordList[listViewIndex];
+                    return ComponentFollowWidget(
+                      key: Key(
+                          'Keyxd4_${listViewIndex}_of_${listViewUsersRecordList.length}'),
+                      userRef: listViewUsersRecord.reference,
+                    );
+                  },
+                );
+              },
             ),
           ),
         ),

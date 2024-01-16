@@ -6,8 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
 import '/my_profile/empty_wardrobe_my_prof/empty_wardrobe_my_prof_widget.dart';
-import '/post/component_post_reposted/component_post_reposted_widget.dart';
-import '/post/component_post_user/component_post_user_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'my_profile_widget.dart' show MyProfileWidget;
 import 'package:cached_network_image/cached_network_image.dart';

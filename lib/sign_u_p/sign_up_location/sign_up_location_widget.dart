@@ -231,7 +231,7 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                                 _model.textController.text != '') &&
                             (GoogleAutoCompleteCall.status(
                                   containerGoogleAutoCompleteResponse.jsonBody,
-                                ).toString() ==
+                                ) ==
                                 'OK'))
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(

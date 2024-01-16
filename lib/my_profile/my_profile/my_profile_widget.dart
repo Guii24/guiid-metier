@@ -6,8 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
 import '/my_profile/empty_wardrobe_my_prof/empty_wardrobe_my_prof_widget.dart';
-import '/post/component_post_reposted/component_post_reposted_widget.dart';
-import '/post/component_post_user/component_post_user_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -700,7 +698,6 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                       0,
                                       35.0,
                                     ),
-                                    shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     itemCount: listViewPostRecordList.length,
                                     separatorBuilder: (_, __) =>
@@ -719,109 +716,6 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              if (!listViewPostRecord
-                                                  .postIsReposted)
-                                                InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    context.pushNamed(
-                                                      'PostPage',
-                                                      queryParameters: {
-                                                        'postRef':
-                                                            serializeParam(
-                                                          listViewPostRecord
-                                                              .reference,
-                                                          ParamType
-                                                              .DocumentReference,
-                                                        ),
-                                                      }.withoutNulls,
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                      border: Border.all(
-                                                        color:
-                                                            Color(0xFFEBEBEB),
-                                                        width: 1.0,
-                                                      ),
-                                                    ),
-                                                    child:
-                                                        ComponentPostUserWidget(
-                                                      key: Key(
-                                                          'Keya26_${listViewIndex}_of_${listViewPostRecordList.length}'),
-                                                      postDoc:
-                                                          listViewPostRecord
-                                                              .reference,
-                                                    ),
-                                                  ),
-                                                ),
-                                              if (listViewPostRecord
-                                                  .postIsReposted)
-                                                InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    context.pushNamed(
-                                                      'PostPageReposted',
-                                                      queryParameters: {
-                                                        'postRef':
-                                                            serializeParam(
-                                                          listViewPostRecord
-                                                              .reference,
-                                                          ParamType
-                                                              .DocumentReference,
-                                                        ),
-                                                      }.withoutNulls,
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                      border: Border.all(
-                                                        color:
-                                                            Color(0xFFEBEBEB),
-                                                        width: 1.0,
-                                                      ),
-                                                    ),
-                                                    child:
-                                                        ComponentPostRepostedWidget(
-                                                      key: Key(
-                                                          'Keyo7k_${listViewIndex}_of_${listViewPostRecordList.length}'),
-                                                      postReposted:
-                                                          listViewPostRecord
-                                                              .reference,
-                                                    ),
-                                                  ),
-                                                ),
-                                            ],
                                           ),
                                         ),
                                       );
