@@ -149,6 +149,169 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: FutureBuilder<int>(
+                                future: queryPostRecordCount(
+                                  queryBuilder: (postRecord) => postRecord
+                                      .where(
+                                        'post_creator',
+                                        isEqualTo: currentUserReference,
+                                      )
+                                      .orderBy('post_time_posted',
+                                          descending: true),
+                                ),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 30.0,
+                                        height: 30.0,
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  int textCount = snapshot.data!;
+                                  return Text(
+                                    '20',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color: Color(0xFF171A1F),
+                                          fontSize: 15.0,
+                                        ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Text(
+                              'Posts',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Libre Franklin',
+                                    color: Color(0xFF9D9FA3),
+                                    fontSize: 11.0,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      VerticalDivider(
+                        width: 1.0,
+                        thickness: 1.0,
+                        indent: 7.0,
+                        endIndent: 7.0,
+                        color: FlutterFlowTheme.of(context).line,
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            context.pushNamed('Followers');
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  '176',
+                                  textAlign: TextAlign.center,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Libre Franklin',
+                                        color: Color(0xFF171A1F),
+                                        fontSize: 15.0,
+                                      ),
+                                ),
+                              ),
+                              Text(
+                                'Followers',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Libre Franklin',
+                                      color: Color(0xFF9D9FA3),
+                                      fontSize: 11.0,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      VerticalDivider(
+                        width: 1.0,
+                        thickness: 1.0,
+                        indent: 7.0,
+                        endIndent: 7.0,
+                        color: FlutterFlowTheme.of(context).line,
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            context.pushNamed('Following');
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  '151',
+                                  textAlign: TextAlign.center,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Libre Franklin',
+                                        color: Color(0xFF171A1F),
+                                        fontSize: 15.0,
+                                      ),
+                                ),
+                              ),
+                              Text(
+                                'Following',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Libre Franklin',
+                                      color: Color(0xFF9D9FA3),
+                                      fontSize: 11.0,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,

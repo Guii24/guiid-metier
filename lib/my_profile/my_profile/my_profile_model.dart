@@ -6,6 +6,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
 import '/my_profile/empty_wardrobe_my_prof/empty_wardrobe_my_prof_widget.dart';
+import '/post/component_post_reposted/component_post_reposted_widget.dart';
+import '/post/component_post_user/component_post_user_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'my_profile_widget.dart' show MyProfileWidget;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,21 +18,32 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MyProfileModel extends FlutterFlowModel<MyProfileWidget> {
+  ///  Local state fields for this page.
+
+  String activeTab = 'Posts';
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for TabBar widget.
-  TabController? tabBarController;
-  int get tabBarCurrentIndex =>
-      tabBarController != null ? tabBarController!.index : 0;
+  // Models for ComponentPostUser dynamic component.
+  late FlutterFlowDynamicModels<ComponentPostUserModel> componentPostUserModels;
+  // Models for ComponentPostReposted dynamic component.
+  late FlutterFlowDynamicModels<ComponentPostRepostedModel>
+      componentPostRepostedModels;
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    componentPostUserModels =
+        FlutterFlowDynamicModels(() => ComponentPostUserModel());
+    componentPostRepostedModels =
+        FlutterFlowDynamicModels(() => ComponentPostRepostedModel());
+  }
 
   void dispose() {
     unfocusNode.dispose();
-    tabBarController?.dispose();
+    componentPostUserModels.dispose();
+    componentPostRepostedModels.dispose();
   }
 
   /// Action blocks are added here.

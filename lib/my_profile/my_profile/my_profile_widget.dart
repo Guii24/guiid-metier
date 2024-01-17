@@ -6,6 +6,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/empty_post_my_prof/empty_post_my_prof_widget.dart';
 import '/my_profile/empty_wardrobe_my_prof/empty_wardrobe_my_prof_widget.dart';
+import '/post/component_post_reposted/component_post_reposted_widget.dart';
+import '/post/component_post_user/component_post_user_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +25,7 @@ class MyProfileWidget extends StatefulWidget {
   _MyProfileWidgetState createState() => _MyProfileWidgetState();
 }
 
-class _MyProfileWidgetState extends State<MyProfileWidget>
-    with TickerProviderStateMixin {
+class _MyProfileWidgetState extends State<MyProfileWidget> {
   late MyProfileModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -43,12 +44,6 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
         );
       });
     });
-
-    _model.tabBarController = TabController(
-      vsync: this,
-      length: 3,
-      initialIndex: 0,
-    )..addListener(() => setState(() {}));
   }
 
   @override
@@ -139,14 +134,14 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
         ),
         body: Container(
           width: double.infinity,
-          height: double.infinity,
+          height: MediaQuery.sizeOf(context).height * 1.0,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
           ),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
@@ -607,291 +602,470 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Column(
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Align(
-                        alignment: Alignment(0.0, 0),
-                        child: TabBar(
-                          labelColor: FlutterFlowTheme.of(context).dark88,
-                          unselectedLabelColor:
-                              FlutterFlowTheme.of(context).dark88,
-                          labelStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Libre Franklin',
-                                    fontSize: 17.0,
-                                  ),
-                          unselectedLabelStyle: TextStyle(),
-                          indicatorColor:
-                              FlutterFlowTheme.of(context).secondary,
-                          indicatorWeight: 2.0,
-                          tabs: [
-                            Tab(
-                              text: 'Posts',
-                            ),
-                            Tab(
-                              text: 'About',
-                            ),
-                            Tab(
-                              text: 'Wear',
-                            ),
-                          ],
-                          controller: _model.tabBarController,
-                          onTap: (i) async {
-                            [() async {}, () async {}, () async {}][i]();
+                      Expanded(
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            setState(() {
+                              _model.activeTab = 'Posts';
+                            });
                           },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 0.0, 12.0),
+                                child: Text(
+                                  'Posts',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Libre Franklin',
+                                        color:
+                                            FlutterFlowTheme.of(context).dark88,
+                                        fontSize: 17.0,
+                                      ),
+                                ),
+                              ),
+                              if (_model.activeTab == 'Posts')
+                                Container(
+                                  width: double.infinity,
+                                  height: 2.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                       Expanded(
-                        child: TabBarView(
-                          controller: _model.tabBarController,
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: [
-                            KeepAliveWidgetWrapper(
-                              builder: (context) =>
-                                  StreamBuilder<List<PostRecord>>(
-                                stream: queryPostRecord(
-                                  queryBuilder: (postRecord) => postRecord
-                                      .where(
-                                        'post_creator',
-                                        isEqualTo: currentUserReference,
-                                      )
-                                      .where(
-                                        'post_type',
-                                        isEqualTo: 'post',
-                                      )
-                                      .orderBy('post_time_posted',
-                                          descending: true),
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 30.0,
-                                        height: 30.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
-                                        ),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            setState(() {
+                              _model.activeTab = 'About';
+                            });
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 0.0, 12.0),
+                                child: Text(
+                                  'About',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Libre Franklin',
+                                        color:
+                                            FlutterFlowTheme.of(context).dark88,
+                                        fontSize: 17.0,
                                       ),
-                                    );
-                                  }
-                                  List<PostRecord> listViewPostRecordList =
-                                      snapshot.data!;
-                                  if (listViewPostRecordList.isEmpty) {
-                                    return Container(
-                                      width: double.infinity,
-                                      height:
-                                          MediaQuery.sizeOf(context).height *
-                                              0.65,
-                                      child: EmptyPostMyProfWidget(),
-                                    );
-                                  }
-                                  return ListView.separated(
-                                    padding: EdgeInsets.fromLTRB(
-                                      0,
-                                      16.0,
-                                      0,
-                                      35.0,
+                                ),
+                              ),
+                              if (_model.activeTab == 'About')
+                                Container(
+                                  width: double.infinity,
+                                  height: 2.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            setState(() {
+                              _model.activeTab = 'Wear';
+                            });
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 0.0, 12.0),
+                                child: Text(
+                                  'Wear',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Libre Franklin',
+                                        color:
+                                            FlutterFlowTheme.of(context).dark88,
+                                        fontSize: 17.0,
+                                      ),
+                                ),
+                              ),
+                              if (_model.activeTab == 'Wear')
+                                Container(
+                                  width: double.infinity,
+                                  height: 2.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Builder(
+                    builder: (context) {
+                      if (_model.activeTab == 'Posts') {
+                        return Container(
+                          width: double.infinity,
+                          height: 100.0,
+                          decoration: BoxDecoration(),
+                          child: FutureBuilder<List<PostRecord>>(
+                            future: queryPostRecordOnce(
+                              queryBuilder: (postRecord) => postRecord
+                                  .where(
+                                    'post_creator',
+                                    isEqualTo: currentUserReference,
+                                    isNull: (currentUserReference) == null,
+                                  )
+                                  .where(
+                                    'post_type',
+                                    isEqualTo: 'post',
+                                    isNull: ('post') == null,
+                                  )
+                                  .orderBy('post_time_posted',
+                                      descending: true),
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 30.0,
+                                    height: 30.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
+                                      ),
                                     ),
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: listViewPostRecordList.length,
-                                    separatorBuilder: (_, __) =>
-                                        SizedBox(height: 10.0),
-                                    itemBuilder: (context, listViewIndex) {
-                                      final listViewPostRecord =
-                                          listViewPostRecordList[listViewIndex];
-                                      return Material(
-                                        color: Colors.transparent,
-                                        elevation: 0.0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                        ),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
+                                  ),
+                                );
+                              }
+                              List<PostRecord> listViewPostRecordList =
+                                  snapshot.data!;
+                              if (listViewPostRecordList.isEmpty) {
+                                return Container(
+                                  width: double.infinity,
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.65,
+                                  child: EmptyPostMyProfWidget(),
+                                );
+                              }
+                              return ListView.separated(
+                                padding: EdgeInsets.fromLTRB(
+                                  0,
+                                  16.0,
+                                  0,
+                                  35.0,
+                                ),
+                                scrollDirection: Axis.vertical,
+                                itemCount: listViewPostRecordList.length,
+                                separatorBuilder: (_, __) =>
+                                    SizedBox(height: 10.0),
+                                itemBuilder: (context, listViewIndex) {
+                                  final listViewPostRecord =
+                                      listViewPostRecordList[listViewIndex];
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      if (!listViewPostRecord.postIsReposted)
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              'PostPage',
+                                              queryParameters: {
+                                                'postRef': serializeParam(
+                                                  listViewPostRecord.reference,
+                                                  ParamType.DocumentReference,
+                                                ),
+                                              }.withoutNulls,
+                                            );
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                              border: Border.all(
+                                                color: Color(0xFFEBEBEB),
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                            child: wrapWithModel(
+                                              model: _model
+                                                  .componentPostUserModels
+                                                  .getModel(
+                                                listViewPostRecord.reference.id,
+                                                listViewIndex,
+                                              ),
+                                              updateCallback: () =>
+                                                  setState(() {}),
+                                              child: ComponentPostUserWidget(
+                                                key: Key(
+                                                  'Keydem_${listViewPostRecord.reference.id}',
+                                                ),
+                                                postDoc: listViewPostRecord
+                                                    .reference,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      );
-                                    },
+                                      if (listViewPostRecord.postIsReposted)
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              'PostPageReposted',
+                                              queryParameters: {
+                                                'postRef': serializeParam(
+                                                  listViewPostRecord.reference,
+                                                  ParamType.DocumentReference,
+                                                ),
+                                              }.withoutNulls,
+                                            );
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                              border: Border.all(
+                                                color: Color(0xFFEBEBEB),
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                            child: wrapWithModel(
+                                              model: _model
+                                                  .componentPostRepostedModels
+                                                  .getModel(
+                                                listViewPostRecord.reference.id,
+                                                listViewIndex,
+                                              ),
+                                              updateCallback: () =>
+                                                  setState(() {}),
+                                              child:
+                                                  ComponentPostRepostedWidget(
+                                                key: Key(
+                                                  'Keyg71_${listViewPostRecord.reference.id}',
+                                                ),
+                                                postReposted: listViewPostRecord
+                                                    .reference,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    ],
                                   );
                                 },
-                              ),
-                            ),
-                            KeepAliveWidgetWrapper(
-                              builder: (context) => SingleChildScrollView(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 20.0, 0.0, 0.0),
-                                      child: Text(
-                                        'About (bio)',
+                              );
+                            },
+                          ),
+                        );
+                      } else if (_model.activeTab == 'About') {
+                        return Align(
+                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 0.0),
+                                  child: Text(
+                                    'About (bio)',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                                if (valueOrDefault(
+                                            currentUserDocument?.userBio, '') !=
+                                        null &&
+                                    valueOrDefault(
+                                            currentUserDocument?.userBio, '') !=
+                                        '')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 0.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        valueOrDefault(
+                                            currentUserDocument?.userBio, ''),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Libre Franklin',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .dark88,
-                                              fontSize: 17.0,
-                                              fontWeight: FontWeight.w600,
+                                                      .dark68,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                              lineHeight: 1.5,
                                             ),
                                       ),
                                     ),
-                                    if (valueOrDefault(
-                                                currentUserDocument?.userBio,
-                                                '') !=
-                                            null &&
-                                        valueOrDefault(
-                                                currentUserDocument?.userBio,
-                                                '') !=
-                                            '')
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 8.0, 0.0, 0.0),
-                                        child: AuthUserStreamWidget(
-                                          builder: (context) => Text(
-                                            valueOrDefault(
-                                                currentUserDocument?.userBio,
-                                                ''),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark68,
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.normal,
-                                                  lineHeight: 1.5,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    if (valueOrDefault(
-                                                currentUserDocument?.userBio,
-                                                '') ==
-                                            null ||
-                                        valueOrDefault(
-                                                currentUserDocument?.userBio,
-                                                '') ==
-                                            '')
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 8.0, 0.0, 0.0),
-                                        child: AuthUserStreamWidget(
-                                          builder: (context) => Text(
-                                            'Information is not available',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark68,
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 20.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Preferences',
+                                  ),
+                                if (valueOrDefault(
+                                            currentUserDocument?.userBio, '') ==
+                                        null ||
+                                    valueOrDefault(
+                                            currentUserDocument?.userBio, '') ==
+                                        '')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 0.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        'Information is not available',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Libre Franklin',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .dark88,
-                                              fontSize: 17.0,
-                                              fontWeight: FontWeight.w600,
+                                                      .dark68,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
                                             ),
                                       ),
                                     ),
-                                    if ((currentUserDocument?.userPreferences
-                                                    ?.toList() ??
-                                                [])
-                                            .length !=
-                                        0)
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 10.0, 0.0, 0.0),
-                                        child: AuthUserStreamWidget(
-                                          builder: (context) => Builder(
-                                            builder: (context) {
-                                              final preferences =
-                                                  (currentUserDocument
-                                                              ?.userPreferences
-                                                              ?.toList() ??
-                                                          [])
-                                                      .toList();
-                                              return Wrap(
-                                                spacing: 10.0,
-                                                runSpacing: 10.0,
-                                                alignment: WrapAlignment.start,
-                                                crossAxisAlignment:
-                                                    WrapCrossAlignment.start,
-                                                direction: Axis.horizontal,
-                                                runAlignment:
-                                                    WrapAlignment.start,
-                                                verticalDirection:
-                                                    VerticalDirection.down,
-                                                clipBehavior: Clip.none,
-                                                children: List.generate(
-                                                    preferences.length,
-                                                    (preferencesIndex) {
-                                                  final preferencesItem =
-                                                      preferences[
-                                                          preferencesIndex];
-                                                  return Material(
-                                                    color: Colors.transparent,
-                                                    elevation: 0.0,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                    ),
-                                                    child: Container(
-                                                      height: 39.0,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                        border: Border.all(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
+                                  ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Preferences',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                                if ((currentUserDocument?.userPreferences
+                                                ?.toList() ??
+                                            [])
+                                        .length !=
+                                    0)
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 10.0, 0.0, 0.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Builder(
+                                        builder: (context) {
+                                          final preferences =
+                                              (currentUserDocument
+                                                          ?.userPreferences
+                                                          ?.toList() ??
+                                                      [])
+                                                  .toList();
+                                          return Wrap(
+                                            spacing: 10.0,
+                                            runSpacing: 10.0,
+                                            alignment: WrapAlignment.start,
+                                            crossAxisAlignment:
+                                                WrapCrossAlignment.start,
+                                            direction: Axis.horizontal,
+                                            runAlignment: WrapAlignment.start,
+                                            verticalDirection:
+                                                VerticalDirection.down,
+                                            clipBehavior: Clip.none,
+                                            children: List.generate(
+                                                preferences.length,
+                                                (preferencesIndex) {
+                                              final preferencesItem =
+                                                  preferences[preferencesIndex];
+                                              return Material(
+                                                color: Colors.transparent,
+                                                elevation: 0.0,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
+                                                ),
+                                                child: Container(
+                                                  height: 39.0,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                    border: Border.all(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
                                                               .line,
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    12.0,
-                                                                    8.0,
-                                                                    12.0,
-                                                                    8.0),
-                                                        child: Text(
-                                                          preferencesItem,
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
+                                                      width: 1.0,
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(12.0, 8.0,
+                                                                12.0, 8.0),
+                                                    child: Text(
+                                                      preferencesItem,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
                                                               .bodyMedium
                                                               .override(
                                                                 fontFamily:
@@ -901,295 +1075,277 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                                                     .dark88,
                                                                 fontSize: 15.0,
                                                               ),
-                                                        ),
-                                                      ),
                                                     ),
-                                                  );
-                                                }),
+                                                  ),
+                                                ),
                                               );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    if ((currentUserDocument?.userPreferences
-                                                    ?.toList() ??
-                                                [])
-                                            .length ==
-                                        0)
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 10.0, 0.0, 0.0),
-                                        child: AuthUserStreamWidget(
-                                          builder: (context) => Text(
-                                            'Information is not available',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark68,
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 20.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Education',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Libre Franklin',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .dark88,
-                                              fontSize: 17.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                            }),
+                                          );
+                                        },
                                       ),
                                     ),
-                                    if (valueOrDefault(
-                                                currentUserDocument
-                                                    ?.userEducation,
-                                                '') !=
-                                            null &&
-                                        valueOrDefault(
-                                                currentUserDocument
-                                                    ?.userEducation,
-                                                '') !=
-                                            '')
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 8.0, 0.0, 0.0),
-                                        child: AuthUserStreamWidget(
-                                          builder: (context) => Text(
-                                            valueOrDefault(
-                                                currentUserDocument
-                                                    ?.userEducation,
-                                                ''),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark68,
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.normal,
-                                                  lineHeight: 1.5,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    if (valueOrDefault(
-                                                currentUserDocument
-                                                    ?.userEducation,
-                                                '') ==
-                                            null ||
-                                        valueOrDefault(
-                                                currentUserDocument
-                                                    ?.userEducation,
-                                                '') ==
-                                            '')
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 8.0, 0.0, 0.0),
-                                        child: AuthUserStreamWidget(
-                                          builder: (context) => Text(
-                                            'Information is not available',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark68,
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 20.0, 0.0, 8.0),
-                                      child: Text(
-                                        'Job',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Libre Franklin',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .dark88,
-                                              fontSize: 17.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ),
-                                    if (valueOrDefault(
-                                                currentUserDocument?.userJob,
-                                                '') ==
-                                            null ||
-                                        valueOrDefault(
-                                                currentUserDocument?.userJob,
-                                                '') ==
-                                            '')
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 35.0),
-                                        child: AuthUserStreamWidget(
-                                          builder: (context) => Text(
-                                            'Information is not available',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark68,
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    if (valueOrDefault(
-                                                currentUserDocument?.userJob,
-                                                '') !=
-                                            null &&
-                                        valueOrDefault(
-                                                currentUserDocument?.userJob,
-                                                '') !=
-                                            '')
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 35.0),
-                                        child: AuthUserStreamWidget(
-                                          builder: (context) => Text(
-                                            valueOrDefault(
-                                                currentUserDocument?.userJob,
-                                                ''),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Libre Franklin',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .dark68,
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.normal,
-                                                  lineHeight: 1.5,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            KeepAliveWidgetWrapper(
-                              builder: (context) => Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 8.0),
-                                child: StreamBuilder<List<PostRecord>>(
-                                  stream: queryPostRecord(
-                                    queryBuilder: (postRecord) => postRecord
-                                        .where(
-                                          'post_creator',
-                                          isEqualTo: currentUserReference,
-                                        )
-                                        .where(
-                                          'post_type',
-                                          isEqualTo: 'wear',
-                                        )
-                                        .orderBy('post_time_posted'),
                                   ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 30.0,
-                                          height: 30.0,
-                                          child: CircularProgressIndicator(
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
+                                if ((currentUserDocument?.userPreferences
+                                                ?.toList() ??
+                                            [])
+                                        .length ==
+                                    0)
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 10.0, 0.0, 0.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        'Information is not available',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark68,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
                                             ),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<PostRecord> gridViewPostRecordList =
-                                        snapshot.data!;
-                                    if (gridViewPostRecordList.isEmpty) {
-                                      return Center(
-                                        child: Container(
-                                          width: double.infinity,
-                                          child: EmptyWardrobeMyProfWidget(),
-                                        ),
-                                      );
-                                    }
-                                    return GridView.builder(
-                                      padding: EdgeInsets.zero,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 5.0,
-                                        mainAxisSpacing: 5.0,
-                                        childAspectRatio: 1.0,
                                       ),
-                                      primary: false,
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: gridViewPostRecordList.length,
-                                      itemBuilder: (context, gridViewIndex) {
-                                        final gridViewPostRecord =
-                                            gridViewPostRecordList[
-                                                gridViewIndex];
-                                        return InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            context.pushNamed(
-                                              'WearPage',
-                                              queryParameters: {
-                                                'postDoc': serializeParam(
-                                                  gridViewPostRecord.reference,
-                                                  ParamType.DocumentReference,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          },
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                            child: Image.network(
-                                              gridViewPostRecord.postWearItems
-                                                  .first.wearImage,
-                                              width: 116.0,
-                                              height: 113.0,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
+                                    ),
+                                  ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Education',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
                                 ),
-                              ),
+                                if (valueOrDefault(
+                                            currentUserDocument?.userEducation,
+                                            '') !=
+                                        null &&
+                                    valueOrDefault(
+                                            currentUserDocument?.userEducation,
+                                            '') !=
+                                        '')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 0.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        valueOrDefault(
+                                            currentUserDocument?.userEducation,
+                                            ''),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark68,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                              lineHeight: 1.5,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                if (valueOrDefault(
+                                            currentUserDocument?.userEducation,
+                                            '') ==
+                                        null ||
+                                    valueOrDefault(
+                                            currentUserDocument?.userEducation,
+                                            '') ==
+                                        '')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 0.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        'Information is not available',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark68,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 8.0),
+                                  child: Text(
+                                    'Job',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Libre Franklin',
+                                          color: FlutterFlowTheme.of(context)
+                                              .dark88,
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                                if (valueOrDefault(
+                                            currentUserDocument?.userJob, '') ==
+                                        null ||
+                                    valueOrDefault(
+                                            currentUserDocument?.userJob, '') ==
+                                        '')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 35.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        'Information is not available',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark68,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                if (valueOrDefault(
+                                            currentUserDocument?.userJob, '') !=
+                                        null &&
+                                    valueOrDefault(
+                                            currentUserDocument?.userJob, '') !=
+                                        '')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 35.0),
+                                    child: AuthUserStreamWidget(
+                                      builder: (context) => Text(
+                                        valueOrDefault(
+                                            currentUserDocument?.userJob, ''),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Libre Franklin',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .dark68,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.normal,
+                                              lineHeight: 1.5,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
+                          ),
+                        );
+                      } else {
+                        return Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 16.0, 0.0, 8.0),
+                          child: StreamBuilder<List<PostRecord>>(
+                            stream: queryPostRecord(
+                              queryBuilder: (postRecord) => postRecord
+                                  .where(
+                                    'post_creator',
+                                    isEqualTo: currentUserReference,
+                                  )
+                                  .where(
+                                    'post_type',
+                                    isEqualTo: 'wear',
+                                  )
+                                  .orderBy('post_time_posted'),
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 30.0,
+                                    height: 30.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<PostRecord> gridViewPostRecordList =
+                                  snapshot.data!;
+                              if (gridViewPostRecordList.isEmpty) {
+                                return Center(
+                                  child: Container(
+                                    width: double.infinity,
+                                    child: EmptyWardrobeMyProfWidget(),
+                                  ),
+                                );
+                              }
+                              return GridView.builder(
+                                padding: EdgeInsets.zero,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 5.0,
+                                  mainAxisSpacing: 5.0,
+                                  childAspectRatio: 1.0,
+                                ),
+                                primary: false,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: gridViewPostRecordList.length,
+                                itemBuilder: (context, gridViewIndex) {
+                                  final gridViewPostRecord =
+                                      gridViewPostRecordList[gridViewIndex];
+                                  return InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed(
+                                        'WearPage',
+                                        queryParameters: {
+                                          'postDoc': serializeParam(
+                                            gridViewPostRecord.reference,
+                                            ParamType.DocumentReference,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      child: Image.network(
+                                        gridViewPostRecord
+                                            .postWearItems.first.wearImage,
+                                        width: 116.0,
+                                        height: 113.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ),
               ],
