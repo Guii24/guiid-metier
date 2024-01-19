@@ -18,13 +18,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MyProfileModel extends FlutterFlowModel<MyProfileWidget> {
-  ///  Local state fields for this page.
-
-  String activeTab = 'Posts';
-
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // State field(s) for TabBar widget.
+  TabController? tabBarController;
+  int get tabBarCurrentIndex =>
+      tabBarController != null ? tabBarController!.index : 0;
+
   // Models for ComponentPostUser dynamic component.
   late FlutterFlowDynamicModels<ComponentPostUserModel> componentPostUserModels;
   // Models for ComponentPostReposted dynamic component.
@@ -42,6 +43,7 @@ class MyProfileModel extends FlutterFlowModel<MyProfileWidget> {
 
   void dispose() {
     unfocusNode.dispose();
+    tabBarController?.dispose();
     componentPostUserModels.dispose();
     componentPostRepostedModels.dispose();
   }

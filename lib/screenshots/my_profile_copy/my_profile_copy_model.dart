@@ -16,10 +16,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MyProfileCopyModel extends FlutterFlowModel<MyProfileCopyWidget> {
-  ///  Local state fields for this page.
-
-  String activeTab = 'Posts';
-
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
