@@ -14,7 +14,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -24,14 +23,14 @@ export 'job_form_model.dart';
 
 class JobFormWidget extends StatefulWidget {
   const JobFormWidget({
-    Key? key,
+    super.key,
     required this.jobDoc,
-  }) : super(key: key);
+  });
 
   final JobRecord? jobDoc;
 
   @override
-  _JobFormWidgetState createState() => _JobFormWidgetState();
+  State<JobFormWidget> createState() => _JobFormWidgetState();
 }
 
 class _JobFormWidgetState extends State<JobFormWidget> {
@@ -80,15 +79,6 @@ class _JobFormWidgetState extends State<JobFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -1465,6 +1455,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                           context: context,
                                           builder: (dialogContext) {
                                             return Dialog(
+                                              elevation: 0,
                                               insetPadding: EdgeInsets.zero,
                                               backgroundColor:
                                                   Colors.transparent,

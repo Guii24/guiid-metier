@@ -52,8 +52,8 @@ class CommentArticleRecord extends FirestoreRecord {
           ? parent.collection('comment_article')
           : FirebaseFirestore.instance.collectionGroup('comment_article');
 
-  static DocumentReference createDoc(DocumentReference parent) =>
-      parent.collection('comment_article').doc();
+  static DocumentReference createDoc(DocumentReference parent, {String? id}) =>
+      parent.collection('comment_article').doc(id);
 
   static Stream<CommentArticleRecord> getDocument(DocumentReference ref) =>
       ref.snapshots().map((s) => CommentArticleRecord.fromSnapshot(s));

@@ -15,7 +15,6 @@ import '/sourcing/component_sourcing/component_sourcing_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'other_profile_company_model.dart';
@@ -23,14 +22,14 @@ export 'other_profile_company_model.dart';
 
 class OtherProfileCompanyWidget extends StatefulWidget {
   const OtherProfileCompanyWidget({
-    Key? key,
+    super.key,
     required this.userRef,
-  }) : super(key: key);
+  });
 
   final DocumentReference? userRef;
 
   @override
-  _OtherProfileCompanyWidgetState createState() =>
+  State<OtherProfileCompanyWidget> createState() =>
       _OtherProfileCompanyWidgetState();
 }
 
@@ -61,15 +60,6 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return StreamBuilder<UsersRecord>(
@@ -640,158 +630,176 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                 controller: _model.tabBarController,
                                 physics: const NeverScrollableScrollPhysics(),
                                 children: [
-                                  StreamBuilder<List<PostRecord>>(
-                                    stream: queryPostRecord(
-                                      queryBuilder: (postRecord) =>
-                                          postRecord.where(
-                                        'post_creator',
-                                        isEqualTo: widget.userRef,
-                                      ),
-                                    ),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: SizedBox(
-                                            width: 30.0,
-                                            height: 30.0,
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
-                                              ),
+                                  SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        StreamBuilder<List<PostRecord>>(
+                                          stream: queryPostRecord(
+                                            queryBuilder: (postRecord) =>
+                                                postRecord.where(
+                                              'post_creator',
+                                              isEqualTo: widget.userRef,
                                             ),
                                           ),
-                                        );
-                                      }
-                                      List<PostRecord> listViewPostRecordList =
-                                          snapshot.data!;
-                                      if (listViewPostRecordList.isEmpty) {
-                                        return Center(
-                                          child: EmptyPostMyProfWidget(),
-                                        );
-                                      }
-                                      return ListView.separated(
-                                        padding: EdgeInsets.fromLTRB(
-                                          0,
-                                          16.0,
-                                          0,
-                                          35.0,
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 30.0,
+                                                  height: 30.0,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                            Color>(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            List<PostRecord>
+                                                listViewPostRecordList =
+                                                snapshot.data!;
+                                            if (listViewPostRecordList
+                                                .isEmpty) {
+                                              return Center(
+                                                child: EmptyPostMyProfWidget(),
+                                              );
+                                            }
+                                            return ListView.separated(
+                                              padding: EdgeInsets.fromLTRB(
+                                                0,
+                                                16.0,
+                                                0,
+                                                35.0,
+                                              ),
+                                              primary: false,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount:
+                                                  listViewPostRecordList.length,
+                                              separatorBuilder: (_, __) =>
+                                                  SizedBox(height: 10.0),
+                                              itemBuilder:
+                                                  (context, listViewIndex) {
+                                                final listViewPostRecord =
+                                                    listViewPostRecordList[
+                                                        listViewIndex];
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    if (!listViewPostRecord
+                                                        .postIsReposted)
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      5.0),
+                                                          border: Border.all(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .line,
+                                                            width: 1.0,
+                                                          ),
+                                                        ),
+                                                        child: InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
+                                                          onTap: () async {
+                                                            context.pushNamed(
+                                                              'PostPage',
+                                                              queryParameters: {
+                                                                'postRef':
+                                                                    serializeParam(
+                                                                  listViewPostRecord
+                                                                      .reference,
+                                                                  ParamType
+                                                                      .DocumentReference,
+                                                                ),
+                                                              }.withoutNulls,
+                                                            );
+                                                          },
+                                                          child:
+                                                              ComponentPostCompanyWidget(
+                                                            key: Key(
+                                                                'Keyzm6_${listViewIndex}_of_${listViewPostRecordList.length}'),
+                                                            postCompany:
+                                                                listViewPostRecord
+                                                                    .reference,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    if (listViewPostRecord
+                                                        .postIsReposted)
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      5.0),
+                                                          border: Border.all(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .line,
+                                                            width: 1.0,
+                                                          ),
+                                                        ),
+                                                        child: InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
+                                                          onTap: () async {
+                                                            context.pushNamed(
+                                                              'PostPageReposted',
+                                                              queryParameters: {
+                                                                'postRef':
+                                                                    serializeParam(
+                                                                  listViewPostRecord
+                                                                      .reference,
+                                                                  ParamType
+                                                                      .DocumentReference,
+                                                                ),
+                                                              }.withoutNulls,
+                                                            );
+                                                          },
+                                                          child:
+                                                              ComponentPostRepostedWidget(
+                                                            key: Key(
+                                                                'Keybes_${listViewIndex}_of_${listViewPostRecordList.length}'),
+                                                            postReposted:
+                                                                listViewPostRecord
+                                                                    .reference,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
-                                        scrollDirection: Axis.vertical,
-                                        itemCount:
-                                            listViewPostRecordList.length,
-                                        separatorBuilder: (_, __) =>
-                                            SizedBox(height: 10.0),
-                                        itemBuilder: (context, listViewIndex) {
-                                          final listViewPostRecord =
-                                              listViewPostRecordList[
-                                                  listViewIndex];
-                                          return Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              if (!listViewPostRecord
-                                                  .postIsReposted)
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                    border: Border.all(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .line,
-                                                      width: 1.0,
-                                                    ),
-                                                  ),
-                                                  child: InkWell(
-                                                    splashColor:
-                                                        Colors.transparent,
-                                                    focusColor:
-                                                        Colors.transparent,
-                                                    hoverColor:
-                                                        Colors.transparent,
-                                                    highlightColor:
-                                                        Colors.transparent,
-                                                    onTap: () async {
-                                                      context.pushNamed(
-                                                        'PostPage',
-                                                        queryParameters: {
-                                                          'postRef':
-                                                              serializeParam(
-                                                            listViewPostRecord
-                                                                .reference,
-                                                            ParamType
-                                                                .DocumentReference,
-                                                          ),
-                                                        }.withoutNulls,
-                                                      );
-                                                    },
-                                                    child:
-                                                        ComponentPostCompanyWidget(
-                                                      key: Key(
-                                                          'Keyzm6_${listViewIndex}_of_${listViewPostRecordList.length}'),
-                                                      postCompany:
-                                                          listViewPostRecord
-                                                              .reference,
-                                                    ),
-                                                  ),
-                                                ),
-                                              if (listViewPostRecord
-                                                  .postIsReposted)
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                    border: Border.all(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .line,
-                                                      width: 1.0,
-                                                    ),
-                                                  ),
-                                                  child: InkWell(
-                                                    splashColor:
-                                                        Colors.transparent,
-                                                    focusColor:
-                                                        Colors.transparent,
-                                                    hoverColor:
-                                                        Colors.transparent,
-                                                    highlightColor:
-                                                        Colors.transparent,
-                                                    onTap: () async {
-                                                      context.pushNamed(
-                                                        'PostPageReposted',
-                                                        queryParameters: {
-                                                          'postRef':
-                                                              serializeParam(
-                                                            listViewPostRecord
-                                                                .reference,
-                                                            ParamType
-                                                                .DocumentReference,
-                                                          ),
-                                                        }.withoutNulls,
-                                                      );
-                                                    },
-                                                    child:
-                                                        ComponentPostRepostedWidget(
-                                                      key: Key(
-                                                          'Keybes_${listViewIndex}_of_${listViewPostRecordList.length}'),
-                                                      postReposted:
-                                                          listViewPostRecord
-                                                              .reference,
-                                                    ),
-                                                  ),
-                                                ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
+                                      ],
+                                    ),
                                   ),
                                   SingleChildScrollView(
                                     child: Column(

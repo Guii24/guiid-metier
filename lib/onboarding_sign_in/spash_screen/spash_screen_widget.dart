@@ -8,17 +8,16 @@ import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'spash_screen_model.dart';
 export 'spash_screen_model.dart';
 
 class SpashScreenWidget extends StatefulWidget {
-  const SpashScreenWidget({Key? key}) : super(key: key);
+  const SpashScreenWidget({super.key});
 
   @override
-  _SpashScreenWidgetState createState() => _SpashScreenWidgetState();
+  State<SpashScreenWidget> createState() => _SpashScreenWidgetState();
 }
 
 class _SpashScreenWidgetState extends State<SpashScreenWidget> {
@@ -73,15 +72,6 @@ class _SpashScreenWidgetState extends State<SpashScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

@@ -5,17 +5,16 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'faq_model.dart';
 export 'faq_model.dart';
 
 class FaqWidget extends StatefulWidget {
-  const FaqWidget({Key? key}) : super(key: key);
+  const FaqWidget({super.key});
 
   @override
-  _FaqWidgetState createState() => _FaqWidgetState();
+  State<FaqWidget> createState() => _FaqWidgetState();
 }
 
 class _FaqWidgetState extends State<FaqWidget> {
@@ -38,15 +37,6 @@ class _FaqWidgetState extends State<FaqWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -147,6 +137,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                   width: double.infinity,
                                   color: Colors.white,
                                   child: ExpandableNotifier(
+                                    initialExpanded: false,
                                     child: ExpandablePanel(
                                       header: Text(
                                         columnFaqRecord.question,

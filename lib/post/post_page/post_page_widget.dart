@@ -17,7 +17,6 @@ import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'post_page_model.dart';
@@ -25,14 +24,14 @@ export 'post_page_model.dart';
 
 class PostPageWidget extends StatefulWidget {
   const PostPageWidget({
-    Key? key,
+    super.key,
     required this.postRef,
-  }) : super(key: key);
+  });
 
   final DocumentReference? postRef;
 
   @override
-  _PostPageWidgetState createState() => _PostPageWidgetState();
+  State<PostPageWidget> createState() => _PostPageWidgetState();
 }
 
 class _PostPageWidgetState extends State<PostPageWidget> {
@@ -65,15 +64,6 @@ class _PostPageWidgetState extends State<PostPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return StreamBuilder<PostRecord>(

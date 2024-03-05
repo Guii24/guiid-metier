@@ -7,7 +7,6 @@ import '/report/bottom_report/bottom_report_widget.dart';
 import '/report/custom_dialog_reportsent/custom_dialog_reportsent_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'report_misleading1_model.dart';
@@ -15,7 +14,7 @@ export 'report_misleading1_model.dart';
 
 class ReportMisleading1Widget extends StatefulWidget {
   const ReportMisleading1Widget({
-    Key? key,
+    super.key,
     this.post,
     this.type,
     this.commentpost,
@@ -23,7 +22,7 @@ class ReportMisleading1Widget extends StatefulWidget {
     this.textType,
     this.userRef,
     this.job,
-  }) : super(key: key);
+  });
 
   final DocumentReference? post;
   final String? type;
@@ -34,7 +33,7 @@ class ReportMisleading1Widget extends StatefulWidget {
   final DocumentReference? job;
 
   @override
-  _ReportMisleading1WidgetState createState() =>
+  State<ReportMisleading1Widget> createState() =>
       _ReportMisleading1WidgetState();
 }
 
@@ -200,6 +199,7 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
                     context: context,
                     builder: (dialogContext) {
                       return Dialog(
+                        elevation: 0,
                         insetPadding: EdgeInsets.zero,
                         backgroundColor: Colors.transparent,
                         alignment: AlignmentDirectional(0.0, -1.0)

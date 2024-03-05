@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/post/component_post_user/component_post_user_widget.dart';
 import 'post_types_for_search_widget.dart' show PostTypesForSearchWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +19,7 @@ class PostTypesForSearchModel
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {
     componentPostUserModel =
         createModel(context, () => ComponentPostUserModel());
@@ -27,6 +27,7 @@ class PostTypesForSearchModel
         createModel(context, () => ComponentPostCompanyModel());
   }
 
+  @override
   void dispose() {
     componentPostUserModel.dispose();
     componentPostCompanyModel.dispose();

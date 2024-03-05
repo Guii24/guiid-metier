@@ -17,10 +17,10 @@ import 'signup_bio_company_model.dart';
 export 'signup_bio_company_model.dart';
 
 class SignupBioCompanyWidget extends StatefulWidget {
-  const SignupBioCompanyWidget({Key? key}) : super(key: key);
+  const SignupBioCompanyWidget({super.key});
 
   @override
-  _SignupBioCompanyWidgetState createState() => _SignupBioCompanyWidgetState();
+  State<SignupBioCompanyWidget> createState() => _SignupBioCompanyWidgetState();
 }
 
 class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
@@ -53,15 +53,6 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

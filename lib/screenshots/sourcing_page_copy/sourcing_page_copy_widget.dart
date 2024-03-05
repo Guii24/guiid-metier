@@ -6,17 +6,16 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/jobs/empty_jobs/empty_jobs_widget.dart';
 import '/screenshots/component_sourcing_copy/component_sourcing_copy_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'sourcing_page_copy_model.dart';
 export 'sourcing_page_copy_model.dart';
 
 class SourcingPageCopyWidget extends StatefulWidget {
-  const SourcingPageCopyWidget({Key? key}) : super(key: key);
+  const SourcingPageCopyWidget({super.key});
 
   @override
-  _SourcingPageCopyWidgetState createState() => _SourcingPageCopyWidgetState();
+  State<SourcingPageCopyWidget> createState() => _SourcingPageCopyWidgetState();
 }
 
 class _SourcingPageCopyWidgetState extends State<SourcingPageCopyWidget> {
@@ -39,15 +38,6 @@ class _SourcingPageCopyWidgetState extends State<SourcingPageCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

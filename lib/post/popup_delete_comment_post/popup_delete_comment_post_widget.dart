@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_delete_comment_post_model.dart';
@@ -13,16 +12,16 @@ export 'popup_delete_comment_post_model.dart';
 
 class PopupDeleteCommentPostWidget extends StatefulWidget {
   const PopupDeleteCommentPostWidget({
-    Key? key,
+    super.key,
     this.commentPostref,
     this.postref,
-  }) : super(key: key);
+  });
 
   final DocumentReference? commentPostref;
   final DocumentReference? postref;
 
   @override
-  _PopupDeleteCommentPostWidgetState createState() =>
+  State<PopupDeleteCommentPostWidget> createState() =>
       _PopupDeleteCommentPostWidgetState();
 }
 

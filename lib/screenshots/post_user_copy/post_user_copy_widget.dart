@@ -6,17 +6,16 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/screenshots/component_post_user_copy/component_post_user_copy_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'post_user_copy_model.dart';
 export 'post_user_copy_model.dart';
 
 class PostUserCopyWidget extends StatefulWidget {
-  const PostUserCopyWidget({Key? key}) : super(key: key);
+  const PostUserCopyWidget({super.key});
 
   @override
-  _PostUserCopyWidgetState createState() => _PostUserCopyWidgetState();
+  State<PostUserCopyWidget> createState() => _PostUserCopyWidgetState();
 }
 
 class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
@@ -39,15 +38,6 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return WillPopScope(

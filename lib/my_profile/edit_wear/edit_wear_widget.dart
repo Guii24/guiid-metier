@@ -14,7 +14,6 @@ import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'edit_wear_model.dart';
@@ -22,14 +21,14 @@ export 'edit_wear_model.dart';
 
 class EditWearWidget extends StatefulWidget {
   const EditWearWidget({
-    Key? key,
+    super.key,
     required this.postDoc,
-  }) : super(key: key);
+  });
 
   final PostRecord? postDoc;
 
   @override
-  _EditWearWidgetState createState() => _EditWearWidgetState();
+  State<EditWearWidget> createState() => _EditWearWidgetState();
 }
 
 class _EditWearWidgetState extends State<EditWearWidget> {
@@ -60,15 +59,6 @@ class _EditWearWidgetState extends State<EditWearWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -150,6 +140,7 @@ class _EditWearWidgetState extends State<EditWearWidget> {
                         context: context,
                         builder: (dialogContext) {
                           return Dialog(
+                            elevation: 0,
                             insetPadding: EdgeInsets.zero,
                             backgroundColor: Colors.transparent,
                             alignment: AlignmentDirectional(0.0, -1.0)

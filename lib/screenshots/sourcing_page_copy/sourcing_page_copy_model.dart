@@ -7,7 +7,6 @@ import '/jobs/empty_jobs/empty_jobs_widget.dart';
 import '/screenshots/component_sourcing_copy/component_sourcing_copy_widget.dart';
 import 'sourcing_page_copy_widget.dart' show SourcingPageCopyWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +17,10 @@ class SourcingPageCopyModel extends FlutterFlowModel<SourcingPageCopyWidget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {
     unfocusNode.dispose();
   }

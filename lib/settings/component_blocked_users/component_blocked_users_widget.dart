@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_blocked_users_model.dart';
@@ -14,14 +13,14 @@ export 'component_blocked_users_model.dart';
 
 class ComponentBlockedUsersWidget extends StatefulWidget {
   const ComponentBlockedUsersWidget({
-    Key? key,
+    super.key,
     required this.userRef,
-  }) : super(key: key);
+  });
 
   final DocumentReference? userRef;
 
   @override
-  _ComponentBlockedUsersWidgetState createState() =>
+  State<ComponentBlockedUsersWidget> createState() =>
       _ComponentBlockedUsersWidgetState();
 }
 

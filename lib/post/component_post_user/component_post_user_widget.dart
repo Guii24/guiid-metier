@@ -13,7 +13,6 @@ import '/post/bottom_share_post/bottom_share_post_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_post_user_model.dart';
@@ -21,14 +20,14 @@ export 'component_post_user_model.dart';
 
 class ComponentPostUserWidget extends StatefulWidget {
   const ComponentPostUserWidget({
-    Key? key,
+    super.key,
     required this.postDoc,
-  }) : super(key: key);
+  });
 
   final DocumentReference? postDoc;
 
   @override
-  _ComponentPostUserWidgetState createState() =>
+  State<ComponentPostUserWidget> createState() =>
       _ComponentPostUserWidgetState();
 }
 

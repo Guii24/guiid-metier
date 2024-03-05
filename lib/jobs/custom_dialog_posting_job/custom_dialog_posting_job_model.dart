@@ -4,7 +4,6 @@ import 'custom_dialog_posting_job_widget.dart'
     show CustomDialogPostingJobWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +11,10 @@ class CustomDialogPostingJobModel
     extends FlutterFlowModel<CustomDialogPostingJobWidget> {
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {}
 
   /// Action blocks are added here.

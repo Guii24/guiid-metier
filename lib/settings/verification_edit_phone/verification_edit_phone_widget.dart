@@ -14,7 +14,6 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'verification_edit_phone_model.dart';
@@ -22,14 +21,14 @@ export 'verification_edit_phone_model.dart';
 
 class VerificationEditPhoneWidget extends StatefulWidget {
   const VerificationEditPhoneWidget({
-    Key? key,
+    super.key,
     required this.phoneOrifinal,
     required this.phoneNumberEdited,
     required this.phoneName,
     required this.phoneCode,
     required this.phoneFlag,
     required this.phoneDialCode,
-  }) : super(key: key);
+  });
 
   final String? phoneOrifinal;
   final String? phoneNumberEdited;
@@ -39,7 +38,7 @@ class VerificationEditPhoneWidget extends StatefulWidget {
   final String? phoneDialCode;
 
   @override
-  _VerificationEditPhoneWidgetState createState() =>
+  State<VerificationEditPhoneWidget> createState() =>
       _VerificationEditPhoneWidgetState();
 }
 
@@ -71,15 +70,6 @@ class _VerificationEditPhoneWidgetState
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -181,6 +171,7 @@ class _VerificationEditPhoneWidgetState
                           context: context,
                           builder: (dialogContext) {
                             return Dialog(
+                              elevation: 0,
                               insetPadding: EdgeInsets.zero,
                               backgroundColor: Colors.transparent,
                               alignment: AlignmentDirectional(0.0, -1.0)

@@ -10,17 +10,16 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart'
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'subscription_model.dart';
 export 'subscription_model.dart';
 
 class SubscriptionWidget extends StatefulWidget {
-  const SubscriptionWidget({Key? key}) : super(key: key);
+  const SubscriptionWidget({super.key});
 
   @override
-  _SubscriptionWidgetState createState() => _SubscriptionWidgetState();
+  State<SubscriptionWidget> createState() => _SubscriptionWidgetState();
 }
 
 class _SubscriptionWidgetState extends State<SubscriptionWidget> {

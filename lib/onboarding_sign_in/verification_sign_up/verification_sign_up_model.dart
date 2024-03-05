@@ -13,7 +13,6 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'verification_sign_up_widget.dart' show VerificationSignUpWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -39,8 +38,10 @@ class VerificationSignUpModel
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {
     unfocusNode.dispose();
     timerController.dispose();

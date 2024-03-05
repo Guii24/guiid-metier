@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -12,10 +11,10 @@ import 'phone_number_page_model.dart';
 export 'phone_number_page_model.dart';
 
 class PhoneNumberPageWidget extends StatefulWidget {
-  const PhoneNumberPageWidget({Key? key}) : super(key: key);
+  const PhoneNumberPageWidget({super.key});
 
   @override
-  _PhoneNumberPageWidgetState createState() => _PhoneNumberPageWidgetState();
+  State<PhoneNumberPageWidget> createState() => _PhoneNumberPageWidgetState();
 }
 
 class _PhoneNumberPageWidgetState extends State<PhoneNumberPageWidget> {
@@ -41,15 +40,6 @@ class _PhoneNumberPageWidgetState extends State<PhoneNumberPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

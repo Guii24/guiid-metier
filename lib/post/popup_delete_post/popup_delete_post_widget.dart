@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_delete_post_model.dart';
@@ -11,14 +10,14 @@ export 'popup_delete_post_model.dart';
 
 class PopupDeletePostWidget extends StatefulWidget {
   const PopupDeletePostWidget({
-    Key? key,
+    super.key,
     this.postfer,
-  }) : super(key: key);
+  });
 
   final PostRecord? postfer;
 
   @override
-  _PopupDeletePostWidgetState createState() => _PopupDeletePostWidgetState();
+  State<PopupDeletePostWidget> createState() => _PopupDeletePostWidgetState();
 }
 
 class _PopupDeletePostWidgetState extends State<PopupDeletePostWidget> {

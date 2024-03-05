@@ -11,7 +11,6 @@ import '/settings/popup_logout/popup_logout_widget.dart';
 import 'settings_widget.dart' show SettingsWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +23,10 @@ class SettingsModel extends FlutterFlowModel<SettingsWidget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {
     unfocusNode.dispose();
   }

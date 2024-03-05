@@ -10,17 +10,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'search_page_copy_model.dart';
 export 'search_page_copy_model.dart';
 
 class SearchPageCopyWidget extends StatefulWidget {
-  const SearchPageCopyWidget({Key? key}) : super(key: key);
+  const SearchPageCopyWidget({super.key});
 
   @override
-  _SearchPageCopyWidgetState createState() => _SearchPageCopyWidgetState();
+  State<SearchPageCopyWidget> createState() => _SearchPageCopyWidgetState();
 }
 
 class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
@@ -53,15 +52,6 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

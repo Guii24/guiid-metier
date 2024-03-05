@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_job_details_model.dart';
@@ -13,14 +12,14 @@ export 'bottom_job_details_model.dart';
 
 class BottomJobDetailsWidget extends StatefulWidget {
   const BottomJobDetailsWidget({
-    Key? key,
+    super.key,
     required this.jobDoc,
-  }) : super(key: key);
+  });
 
   final JobRecord? jobDoc;
 
   @override
-  _BottomJobDetailsWidgetState createState() => _BottomJobDetailsWidgetState();
+  State<BottomJobDetailsWidget> createState() => _BottomJobDetailsWidgetState();
 }
 
 class _BottomJobDetailsWidgetState extends State<BottomJobDetailsWidget> {

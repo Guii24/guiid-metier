@@ -11,7 +11,6 @@ import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'verification_login_model.dart';
@@ -19,16 +18,16 @@ export 'verification_login_model.dart';
 
 class VerificationLoginWidget extends StatefulWidget {
   const VerificationLoginWidget({
-    Key? key,
+    super.key,
     this.userPhone,
     this.countrycode,
-  }) : super(key: key);
+  });
 
   final String? userPhone;
   final dynamic countrycode;
 
   @override
-  _VerificationLoginWidgetState createState() =>
+  State<VerificationLoginWidget> createState() =>
       _VerificationLoginWidgetState();
 }
 
@@ -66,15 +65,6 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -138,7 +128,7 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                   child: custom_widgets.PinCode(
                     width: double.infinity,
                     height: 120.0,
-                    code: _model.code!,
+                    code: getRemoteConfigInt('code').toString(),
                     onCompleted: () async {
                       GoRouter.of(context).prepareAuthEvent();
 

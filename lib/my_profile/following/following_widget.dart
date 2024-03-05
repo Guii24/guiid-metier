@@ -6,17 +6,16 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/component_following/component_following_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'following_model.dart';
 export 'following_model.dart';
 
 class FollowingWidget extends StatefulWidget {
-  const FollowingWidget({Key? key}) : super(key: key);
+  const FollowingWidget({super.key});
 
   @override
-  _FollowingWidgetState createState() => _FollowingWidgetState();
+  State<FollowingWidget> createState() => _FollowingWidgetState();
 }
 
 class _FollowingWidgetState extends State<FollowingWidget> {
@@ -39,15 +38,6 @@ class _FollowingWidgetState extends State<FollowingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

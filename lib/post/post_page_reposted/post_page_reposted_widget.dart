@@ -15,7 +15,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'post_page_reposted_model.dart';
@@ -23,14 +22,14 @@ export 'post_page_reposted_model.dart';
 
 class PostPageRepostedWidget extends StatefulWidget {
   const PostPageRepostedWidget({
-    Key? key,
+    super.key,
     required this.postRef,
-  }) : super(key: key);
+  });
 
   final DocumentReference? postRef;
 
   @override
-  _PostPageRepostedWidgetState createState() => _PostPageRepostedWidgetState();
+  State<PostPageRepostedWidget> createState() => _PostPageRepostedWidgetState();
 }
 
 class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
@@ -66,15 +65,6 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return StreamBuilder<PostRecord>(

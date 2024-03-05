@@ -8,7 +8,6 @@ import '/report/custom_dialog_reportsent/custom_dialog_reportsent_widget.dart';
 import 'report_misleading1_widget.dart' show ReportMisleading1Widget;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +19,10 @@ class ReportMisleading1Model extends FlutterFlowModel<ReportMisleading1Widget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {}
 
   /// Action blocks are added here.

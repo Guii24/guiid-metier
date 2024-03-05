@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/report/bottom_report/bottom_report_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_report_post_model.dart';
@@ -12,13 +11,13 @@ export 'bottom_report_post_model.dart';
 
 class BottomReportPostWidget extends StatefulWidget {
   const BottomReportPostWidget({
-    Key? key,
+    super.key,
     this.post,
     this.commentPost,
     this.typeReport,
     this.user,
     this.job,
-  }) : super(key: key);
+  });
 
   final DocumentReference? post;
   final DocumentReference? commentPost;
@@ -27,7 +26,7 @@ class BottomReportPostWidget extends StatefulWidget {
   final DocumentReference? job;
 
   @override
-  _BottomReportPostWidgetState createState() => _BottomReportPostWidgetState();
+  State<BottomReportPostWidget> createState() => _BottomReportPostWidgetState();
 }
 
 class _BottomReportPostWidgetState extends State<BottomReportPostWidget> {

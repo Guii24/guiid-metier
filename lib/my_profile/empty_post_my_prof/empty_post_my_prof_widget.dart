@@ -1,17 +1,16 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'empty_post_my_prof_model.dart';
 export 'empty_post_my_prof_model.dart';
 
 class EmptyPostMyProfWidget extends StatefulWidget {
-  const EmptyPostMyProfWidget({Key? key}) : super(key: key);
+  const EmptyPostMyProfWidget({super.key});
 
   @override
-  _EmptyPostMyProfWidgetState createState() => _EmptyPostMyProfWidgetState();
+  State<EmptyPostMyProfWidget> createState() => _EmptyPostMyProfWidgetState();
 }
 
 class _EmptyPostMyProfWidgetState extends State<EmptyPostMyProfWidget> {

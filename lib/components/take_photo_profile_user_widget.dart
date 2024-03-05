@@ -5,17 +5,16 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'take_photo_profile_user_model.dart';
 export 'take_photo_profile_user_model.dart';
 
 class TakePhotoProfileUserWidget extends StatefulWidget {
-  const TakePhotoProfileUserWidget({Key? key}) : super(key: key);
+  const TakePhotoProfileUserWidget({super.key});
 
   @override
-  _TakePhotoProfileUserWidgetState createState() =>
+  State<TakePhotoProfileUserWidget> createState() =>
       _TakePhotoProfileUserWidgetState();
 }
 

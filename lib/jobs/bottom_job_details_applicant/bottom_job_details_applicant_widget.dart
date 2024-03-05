@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -12,14 +11,14 @@ export 'bottom_job_details_applicant_model.dart';
 
 class BottomJobDetailsApplicantWidget extends StatefulWidget {
   const BottomJobDetailsApplicantWidget({
-    Key? key,
+    super.key,
     required this.jobApplicantDoc,
-  }) : super(key: key);
+  });
 
   final JobApplicantsRecord? jobApplicantDoc;
 
   @override
-  _BottomJobDetailsApplicantWidgetState createState() =>
+  State<BottomJobDetailsApplicantWidget> createState() =>
       _BottomJobDetailsApplicantWidgetState();
 }
 

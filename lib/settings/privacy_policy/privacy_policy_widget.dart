@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +10,10 @@ import 'privacy_policy_model.dart';
 export 'privacy_policy_model.dart';
 
 class PrivacyPolicyWidget extends StatefulWidget {
-  const PrivacyPolicyWidget({Key? key}) : super(key: key);
+  const PrivacyPolicyWidget({super.key});
 
   @override
-  _PrivacyPolicyWidgetState createState() => _PrivacyPolicyWidgetState();
+  State<PrivacyPolicyWidget> createState() => _PrivacyPolicyWidgetState();
 }
 
 class _PrivacyPolicyWidgetState extends State<PrivacyPolicyWidget> {
@@ -37,15 +36,6 @@ class _PrivacyPolicyWidgetState extends State<PrivacyPolicyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

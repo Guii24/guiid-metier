@@ -13,17 +13,16 @@ import '/post/create_post/popup_cancel/popup_cancel_widget.dart';
 import '/post/take_photo_wear/take_photo_wear_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'create_wear_model.dart';
 export 'create_wear_model.dart';
 
 class CreateWearWidget extends StatefulWidget {
-  const CreateWearWidget({Key? key}) : super(key: key);
+  const CreateWearWidget({super.key});
 
   @override
-  _CreateWearWidgetState createState() => _CreateWearWidgetState();
+  State<CreateWearWidget> createState() => _CreateWearWidgetState();
 }
 
 class _CreateWearWidgetState extends State<CreateWearWidget> {
@@ -46,15 +45,6 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -83,6 +73,7 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                   context: context,
                   builder: (dialogContext) {
                     return Dialog(
+                      elevation: 0,
                       insetPadding: EdgeInsets.zero,
                       backgroundColor: Colors.transparent,
                       alignment: AlignmentDirectional(0.0, 0.0)
@@ -170,6 +161,7 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                                   context: context,
                                   builder: (dialogContext) {
                                     return Dialog(
+                                      elevation: 0,
                                       insetPadding: EdgeInsets.zero,
                                       backgroundColor: Colors.transparent,
                                       alignment: AlignmentDirectional(0.0, -1.0)

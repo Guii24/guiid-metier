@@ -14,7 +14,6 @@ import '/custom_code/actions/index.dart' as actions;
 import 'component_post_company_widget.dart' show ComponentPostCompanyWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -33,8 +32,10 @@ class ComponentPostCompanyModel
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {}
 
   /// Action blocks are added here.

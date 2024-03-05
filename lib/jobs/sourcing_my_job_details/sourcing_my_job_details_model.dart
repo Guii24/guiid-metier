@@ -7,7 +7,6 @@ import '/jobs/bottom_editor_delete_job/bottom_editor_delete_job_widget.dart';
 import '/jobs/bottom_job_details_applicant/bottom_job_details_applicant_widget.dart';
 import 'sourcing_my_job_details_widget.dart' show SourcingMyJobDetailsWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +18,10 @@ class SourcingMyJobDetailsModel
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {
     unfocusNode.dispose();
   }

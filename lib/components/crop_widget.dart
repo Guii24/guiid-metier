@@ -2,7 +2,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'crop_model.dart';
@@ -10,14 +9,14 @@ export 'crop_model.dart';
 
 class CropWidget extends StatefulWidget {
   const CropWidget({
-    Key? key,
+    super.key,
     required this.img,
-  }) : super(key: key);
+  });
 
   final FFUploadedFile? img;
 
   @override
-  _CropWidgetState createState() => _CropWidgetState();
+  State<CropWidget> createState() => _CropWidgetState();
 }
 
 class _CropWidgetState extends State<CropWidget> {

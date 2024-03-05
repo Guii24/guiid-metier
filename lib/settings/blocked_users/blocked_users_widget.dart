@@ -6,17 +6,16 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/settings/component_blocked_users/component_blocked_users_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'blocked_users_model.dart';
 export 'blocked_users_model.dart';
 
 class BlockedUsersWidget extends StatefulWidget {
-  const BlockedUsersWidget({Key? key}) : super(key: key);
+  const BlockedUsersWidget({super.key});
 
   @override
-  _BlockedUsersWidgetState createState() => _BlockedUsersWidgetState();
+  State<BlockedUsersWidget> createState() => _BlockedUsersWidgetState();
 }
 
 class _BlockedUsersWidgetState extends State<BlockedUsersWidget> {
@@ -39,15 +38,6 @@ class _BlockedUsersWidgetState extends State<BlockedUsersWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

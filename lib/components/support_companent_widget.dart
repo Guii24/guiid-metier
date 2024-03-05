@@ -3,7 +3,6 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'support_companent_model.dart';
@@ -11,14 +10,14 @@ export 'support_companent_model.dart';
 
 class SupportCompanentWidget extends StatefulWidget {
   const SupportCompanentWidget({
-    Key? key,
+    super.key,
     required this.messageItem,
-  }) : super(key: key);
+  });
 
   final MessageRecord? messageItem;
 
   @override
-  _SupportCompanentWidgetState createState() => _SupportCompanentWidgetState();
+  State<SupportCompanentWidget> createState() => _SupportCompanentWidgetState();
 }
 
 class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {

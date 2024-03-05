@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/component_following/component_following_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'following_other_users_model.dart';
@@ -13,14 +12,14 @@ export 'following_other_users_model.dart';
 
 class FollowingOtherUsersWidget extends StatefulWidget {
   const FollowingOtherUsersWidget({
-    Key? key,
+    super.key,
     this.userDoc,
-  }) : super(key: key);
+  });
 
   final UsersRecord? userDoc;
 
   @override
-  _FollowingOtherUsersWidgetState createState() =>
+  State<FollowingOtherUsersWidget> createState() =>
       _FollowingOtherUsersWidgetState();
 }
 
@@ -44,15 +43,6 @@ class _FollowingOtherUsersWidgetState extends State<FollowingOtherUsersWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

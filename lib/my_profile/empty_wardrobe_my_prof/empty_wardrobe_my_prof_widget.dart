@@ -1,17 +1,16 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'empty_wardrobe_my_prof_model.dart';
 export 'empty_wardrobe_my_prof_model.dart';
 
 class EmptyWardrobeMyProfWidget extends StatefulWidget {
-  const EmptyWardrobeMyProfWidget({Key? key}) : super(key: key);
+  const EmptyWardrobeMyProfWidget({super.key});
 
   @override
-  _EmptyWardrobeMyProfWidgetState createState() =>
+  State<EmptyWardrobeMyProfWidget> createState() =>
       _EmptyWardrobeMyProfWidgetState();
 }
 

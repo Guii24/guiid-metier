@@ -11,7 +11,6 @@ import 'my_profile_copy_widget.dart' show MyProfileCopyWidget;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -26,8 +25,10 @@ class MyProfileCopyModel extends FlutterFlowModel<MyProfileCopyWidget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {
     unfocusNode.dispose();
     tabBarController?.dispose();

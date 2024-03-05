@@ -32,6 +32,8 @@ void main() async {
     loadDataAfterLaunch: true,
   );
 
+  await initializeFirebaseRemoteConfig();
+
   runApp(ChangeNotifierProvider(
     create: (context) => appState,
     child: MyApp(),
@@ -107,7 +109,6 @@ class _MyAppState extends State<MyApp> {
       ],
       theme: ThemeData(
         brightness: Brightness.light,
-        scrollbarTheme: ScrollbarThemeData(),
       ),
       themeMode: _themeMode,
       routerConfig: _router,

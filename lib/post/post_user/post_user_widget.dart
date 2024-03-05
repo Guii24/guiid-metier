@@ -6,17 +6,16 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/post_types/post_types_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'post_user_model.dart';
 export 'post_user_model.dart';
 
 class PostUserWidget extends StatefulWidget {
-  const PostUserWidget({Key? key}) : super(key: key);
+  const PostUserWidget({super.key});
 
   @override
-  _PostUserWidgetState createState() => _PostUserWidgetState();
+  State<PostUserWidget> createState() => _PostUserWidgetState();
 }
 
 class _PostUserWidgetState extends State<PostUserWidget> {
@@ -39,15 +38,6 @@ class _PostUserWidgetState extends State<PostUserWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return WillPopScope(

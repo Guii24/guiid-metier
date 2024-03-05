@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:pin_code_fields/pin_code_fields.dart'; // Import the package
 
 class PinCode extends StatefulWidget {
@@ -34,19 +35,28 @@ class PinCode extends StatefulWidget {
 }
 
 class _PinCodeState extends State<PinCode> {
+  int? remoteConfigValue; // Will hold the fetched config value
   TextEditingController? _pinCodeController; // Declare the controller
   bool isPinCodeDone = false;
-
+  int _remoteConfig = getRemoteConfigInt('code');
   @override
   void initState() {
     super.initState();
     _pinCodeController = TextEditingController(); // Initialize controller
+    loadRemoteConfig(); // Load remote config on init
   }
 
   @override
   void dispose() {
     _pinCodeController!.dispose(); // Dispose of the controller
     super.dispose();
+  }
+
+  Future<void> loadRemoteConfig() async {
+    final int fetchedValue = await getRemoteConfigInt("code");
+    setState(() {
+      remoteConfigValue = fetchedValue;
+    });
   }
 
   @override
@@ -93,7 +103,7 @@ class _PinCodeState extends State<PinCode> {
               setState(() {});
             }, // Add your onChanged logic if needed
             onCompleted: (pin) async {
-              if ((pin == widget.code) || (pin == '1111')) {
+              if (pin == widget.code || pin == remoteConfigValue.toString()) {
                 widget.onCompleted.call();
               }
             },

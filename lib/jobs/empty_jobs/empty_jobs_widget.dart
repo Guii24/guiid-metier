@@ -1,17 +1,16 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'empty_jobs_model.dart';
 export 'empty_jobs_model.dart';
 
 class EmptyJobsWidget extends StatefulWidget {
-  const EmptyJobsWidget({Key? key}) : super(key: key);
+  const EmptyJobsWidget({super.key});
 
   @override
-  _EmptyJobsWidgetState createState() => _EmptyJobsWidgetState();
+  State<EmptyJobsWidget> createState() => _EmptyJobsWidgetState();
 }
 
 class _EmptyJobsWidgetState extends State<EmptyJobsWidget> {

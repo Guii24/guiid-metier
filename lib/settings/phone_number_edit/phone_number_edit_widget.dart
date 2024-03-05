@@ -9,7 +9,6 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +16,10 @@ import 'phone_number_edit_model.dart';
 export 'phone_number_edit_model.dart';
 
 class PhoneNumberEditWidget extends StatefulWidget {
-  const PhoneNumberEditWidget({Key? key}) : super(key: key);
+  const PhoneNumberEditWidget({super.key});
 
   @override
-  _PhoneNumberEditWidgetState createState() => _PhoneNumberEditWidgetState();
+  State<PhoneNumberEditWidget> createState() => _PhoneNumberEditWidgetState();
 }
 
 class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
@@ -56,15 +55,6 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -248,7 +238,14 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
-                                              child: CountryCodeWidget(),
+                                              child: CountryCodeWidget(
+                                                userType: valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.userType,
+                                                    ''),
+                                                signin: false,
+                                                editprofCompany: true,
+                                              ),
                                             ),
                                           );
                                         },

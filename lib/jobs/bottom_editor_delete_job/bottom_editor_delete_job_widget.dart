@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/jobs/popup_delete_job_post/popup_delete_job_post_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_editor_delete_job_model.dart';
@@ -12,14 +11,14 @@ export 'bottom_editor_delete_job_model.dart';
 
 class BottomEditorDeleteJobWidget extends StatefulWidget {
   const BottomEditorDeleteJobWidget({
-    Key? key,
+    super.key,
     this.jobDoc,
-  }) : super(key: key);
+  });
 
   final JobRecord? jobDoc;
 
   @override
-  _BottomEditorDeleteJobWidgetState createState() =>
+  State<BottomEditorDeleteJobWidget> createState() =>
       _BottomEditorDeleteJobWidgetState();
 }
 
@@ -90,6 +89,7 @@ class _BottomEditorDeleteJobWidgetState
                               context: context,
                               builder: (dialogContext) {
                                 return Dialog(
+                                  elevation: 0,
                                   insetPadding: EdgeInsets.zero,
                                   backgroundColor: Colors.transparent,
                                   alignment: AlignmentDirectional(0.0, 0.0)

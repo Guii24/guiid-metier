@@ -8,17 +8,16 @@ import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'search_page_model.dart';
 export 'search_page_model.dart';
 
 class SearchPageWidget extends StatefulWidget {
-  const SearchPageWidget({Key? key}) : super(key: key);
+  const SearchPageWidget({super.key});
 
   @override
-  _SearchPageWidgetState createState() => _SearchPageWidgetState();
+  State<SearchPageWidget> createState() => _SearchPageWidgetState();
 }
 
 class _SearchPageWidgetState extends State<SearchPageWidget> {
@@ -51,15 +50,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

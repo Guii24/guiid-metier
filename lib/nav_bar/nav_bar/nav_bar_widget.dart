@@ -4,7 +4,6 @@ import '/nav_bar/user_bottom_nav_bar/user_bottom_nav_bar_widget.dart';
 import 'dart:async';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -12,10 +11,10 @@ import 'nav_bar_model.dart';
 export 'nav_bar_model.dart';
 
 class NavBarWidget extends StatefulWidget {
-  const NavBarWidget({Key? key}) : super(key: key);
+  const NavBarWidget({super.key});
 
   @override
-  _NavBarWidgetState createState() => _NavBarWidgetState();
+  State<NavBarWidget> createState() => _NavBarWidgetState();
 }
 
 class _NavBarWidgetState extends State<NavBarWidget> {
@@ -413,6 +412,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                               context: context,
                               builder: (dialogContext) {
                                 return Dialog(
+                                  elevation: 0,
                                   insetPadding: EdgeInsets.zero,
                                   backgroundColor: Colors.transparent,
                                   alignment: AlignmentDirectional(0.0, 0.0)
@@ -841,6 +841,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                               context: context,
                               builder: (dialogContext) {
                                 return Dialog(
+                                  elevation: 0,
                                   insetPadding: EdgeInsets.zero,
                                   backgroundColor: Colors.transparent,
                                   alignment: AlignmentDirectional(0.0, 0.0)

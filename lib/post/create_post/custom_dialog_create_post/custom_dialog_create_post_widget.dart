@@ -2,17 +2,16 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'custom_dialog_create_post_model.dart';
 export 'custom_dialog_create_post_model.dart';
 
 class CustomDialogCreatePostWidget extends StatefulWidget {
-  const CustomDialogCreatePostWidget({Key? key}) : super(key: key);
+  const CustomDialogCreatePostWidget({super.key});
 
   @override
-  _CustomDialogCreatePostWidgetState createState() =>
+  State<CustomDialogCreatePostWidget> createState() =>
       _CustomDialogCreatePostWidgetState();
 }
 

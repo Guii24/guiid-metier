@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_top_article_model.dart';
@@ -11,14 +10,14 @@ export 'component_top_article_model.dart';
 
 class ComponentTopArticleWidget extends StatefulWidget {
   const ComponentTopArticleWidget({
-    Key? key,
+    super.key,
     this.topArticle,
-  }) : super(key: key);
+  });
 
   final DocumentReference? topArticle;
 
   @override
-  _ComponentTopArticleWidgetState createState() =>
+  State<ComponentTopArticleWidget> createState() =>
       _ComponentTopArticleWidgetState();
 }
 

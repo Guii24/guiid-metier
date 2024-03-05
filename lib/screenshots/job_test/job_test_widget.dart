@@ -6,17 +6,16 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/jobs/empty_jobs/empty_jobs_widget.dart';
 import '/screenshots/component_sourcing_copy/component_sourcing_copy_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'job_test_model.dart';
 export 'job_test_model.dart';
 
 class JobTestWidget extends StatefulWidget {
-  const JobTestWidget({Key? key}) : super(key: key);
+  const JobTestWidget({super.key});
 
   @override
-  _JobTestWidgetState createState() => _JobTestWidgetState();
+  State<JobTestWidget> createState() => _JobTestWidgetState();
 }
 
 class _JobTestWidgetState extends State<JobTestWidget> {
@@ -39,15 +38,6 @@ class _JobTestWidgetState extends State<JobTestWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

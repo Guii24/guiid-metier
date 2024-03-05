@@ -20,14 +20,14 @@ export 'edit_post_job_page_model.dart';
 
 class EditPostJobPageWidget extends StatefulWidget {
   const EditPostJobPageWidget({
-    Key? key,
+    super.key,
     required this.jobDoc,
-  }) : super(key: key);
+  });
 
   final JobRecord? jobDoc;
 
   @override
-  _EditPostJobPageWidgetState createState() => _EditPostJobPageWidgetState();
+  State<EditPostJobPageWidget> createState() => _EditPostJobPageWidgetState();
 }
 
 class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
@@ -86,15 +86,6 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

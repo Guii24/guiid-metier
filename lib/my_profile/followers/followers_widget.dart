@@ -6,17 +6,16 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/component_follow/component_follow_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'followers_model.dart';
 export 'followers_model.dart';
 
 class FollowersWidget extends StatefulWidget {
-  const FollowersWidget({Key? key}) : super(key: key);
+  const FollowersWidget({super.key});
 
   @override
-  _FollowersWidgetState createState() => _FollowersWidgetState();
+  State<FollowersWidget> createState() => _FollowersWidgetState();
 }
 
 class _FollowersWidgetState extends State<FollowersWidget> {
@@ -39,15 +38,6 @@ class _FollowersWidgetState extends State<FollowersWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

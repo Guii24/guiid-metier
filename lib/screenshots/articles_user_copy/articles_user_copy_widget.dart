@@ -6,17 +6,16 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'articles_user_copy_model.dart';
 export 'articles_user_copy_model.dart';
 
 class ArticlesUserCopyWidget extends StatefulWidget {
-  const ArticlesUserCopyWidget({Key? key}) : super(key: key);
+  const ArticlesUserCopyWidget({super.key});
 
   @override
-  _ArticlesUserCopyWidgetState createState() => _ArticlesUserCopyWidgetState();
+  State<ArticlesUserCopyWidget> createState() => _ArticlesUserCopyWidgetState();
 }
 
 class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
@@ -39,15 +38,6 @@ class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

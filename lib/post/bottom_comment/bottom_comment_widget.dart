@@ -8,7 +8,6 @@ import '/post/comment_post/comment_post_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_comment_model.dart';
@@ -16,16 +15,16 @@ export 'bottom_comment_model.dart';
 
 class BottomCommentWidget extends StatefulWidget {
   const BottomCommentWidget({
-    Key? key,
+    super.key,
     this.post,
     this.userRef,
-  }) : super(key: key);
+  });
 
   final DocumentReference? post;
   final UsersRecord? userRef;
 
   @override
-  _BottomCommentWidgetState createState() => _BottomCommentWidgetState();
+  State<BottomCommentWidget> createState() => _BottomCommentWidgetState();
 }
 
 class _BottomCommentWidgetState extends State<BottomCommentWidget> {

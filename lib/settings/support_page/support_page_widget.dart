@@ -11,17 +11,16 @@ import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'support_page_model.dart';
 export 'support_page_model.dart';
 
 class SupportPageWidget extends StatefulWidget {
-  const SupportPageWidget({Key? key}) : super(key: key);
+  const SupportPageWidget({super.key});
 
   @override
-  _SupportPageWidgetState createState() => _SupportPageWidgetState();
+  State<SupportPageWidget> createState() => _SupportPageWidgetState();
 }
 
 class _SupportPageWidgetState extends State<SupportPageWidget> {
@@ -47,15 +46,6 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return StreamBuilder<List<ChatRecord>>(

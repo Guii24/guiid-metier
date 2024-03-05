@@ -80,11 +80,13 @@ class SignUPModel extends FlutterFlowModel<SignUPWidget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {
     userNameControllerValidator = _userNameControllerValidator;
     companyNameControllerValidator = _companyNameControllerValidator;
   }
 
+  @override
   void dispose() {
     unfocusNode.dispose();
     tabBarController?.dispose();

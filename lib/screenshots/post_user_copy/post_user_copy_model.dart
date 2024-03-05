@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/screenshots/component_post_user_copy/component_post_user_copy_widget.dart';
 import 'post_user_copy_widget.dart' show PostUserCopyWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +17,10 @@ class PostUserCopyModel extends FlutterFlowModel<PostUserCopyWidget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {}
 
   /// Action blocks are added here.

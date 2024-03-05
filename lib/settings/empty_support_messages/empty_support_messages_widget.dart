@@ -1,17 +1,16 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'empty_support_messages_model.dart';
 export 'empty_support_messages_model.dart';
 
 class EmptySupportMessagesWidget extends StatefulWidget {
-  const EmptySupportMessagesWidget({Key? key}) : super(key: key);
+  const EmptySupportMessagesWidget({super.key});
 
   @override
-  _EmptySupportMessagesWidgetState createState() =>
+  State<EmptySupportMessagesWidget> createState() =>
       _EmptySupportMessagesWidgetState();
 }
 

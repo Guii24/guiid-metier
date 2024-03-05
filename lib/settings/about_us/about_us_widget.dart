@@ -3,17 +3,16 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'about_us_model.dart';
 export 'about_us_model.dart';
 
 class AboutUsWidget extends StatefulWidget {
-  const AboutUsWidget({Key? key}) : super(key: key);
+  const AboutUsWidget({super.key});
 
   @override
-  _AboutUsWidgetState createState() => _AboutUsWidgetState();
+  State<AboutUsWidget> createState() => _AboutUsWidgetState();
 }
 
 class _AboutUsWidgetState extends State<AboutUsWidget> {
@@ -36,15 +35,6 @@ class _AboutUsWidgetState extends State<AboutUsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

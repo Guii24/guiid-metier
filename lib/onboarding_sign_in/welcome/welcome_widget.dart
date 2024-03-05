@@ -3,17 +3,16 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/onboarding_sign_in/log_in/log_in_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'welcome_model.dart';
 export 'welcome_model.dart';
 
 class WelcomeWidget extends StatefulWidget {
-  const WelcomeWidget({Key? key}) : super(key: key);
+  const WelcomeWidget({super.key});
 
   @override
-  _WelcomeWidgetState createState() => _WelcomeWidgetState();
+  State<WelcomeWidget> createState() => _WelcomeWidgetState();
 }
 
 class _WelcomeWidgetState extends State<WelcomeWidget> {
@@ -36,15 +35,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return Scaffold(

@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/my_profile/popup_wardrobe_delete/popup_wardrobe_delete_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_editor_delete_wear_model.dart';
@@ -12,14 +11,14 @@ export 'bottom_editor_delete_wear_model.dart';
 
 class BottomEditorDeleteWearWidget extends StatefulWidget {
   const BottomEditorDeleteWearWidget({
-    Key? key,
+    super.key,
     this.postDoc,
-  }) : super(key: key);
+  });
 
   final PostRecord? postDoc;
 
   @override
-  _BottomEditorDeleteWearWidgetState createState() =>
+  State<BottomEditorDeleteWearWidget> createState() =>
       _BottomEditorDeleteWearWidgetState();
 }
 
@@ -91,6 +90,7 @@ class _BottomEditorDeleteWearWidgetState
                               context: context,
                               builder: (dialogContext) {
                                 return Dialog(
+                                  elevation: 0,
                                   insetPadding: EdgeInsets.zero,
                                   backgroundColor: Colors.transparent,
                                   alignment: AlignmentDirectional(0.0, 0.0)

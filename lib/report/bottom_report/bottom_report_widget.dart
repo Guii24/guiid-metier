@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/report/report_misleading1/report_misleading1_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_report_model.dart';
@@ -11,13 +10,13 @@ export 'bottom_report_model.dart';
 
 class BottomReportWidget extends StatefulWidget {
   const BottomReportWidget({
-    Key? key,
+    super.key,
     this.post,
     this.commentPost,
     required this.type,
     this.userRef,
     this.job,
-  }) : super(key: key);
+  });
 
   final DocumentReference? post;
   final DocumentReference? commentPost;
@@ -26,7 +25,7 @@ class BottomReportWidget extends StatefulWidget {
   final DocumentReference? job;
 
   @override
-  _BottomReportWidgetState createState() => _BottomReportWidgetState();
+  State<BottomReportWidget> createState() => _BottomReportWidgetState();
 }
 
 class _BottomReportWidgetState extends State<BottomReportWidget> {

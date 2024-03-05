@@ -6,7 +6,6 @@ import '/jobs/bottom_editor_delete_job/bottom_editor_delete_job_widget.dart';
 import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_sourcing_model.dart';
@@ -14,14 +13,14 @@ export 'component_sourcing_model.dart';
 
 class ComponentSourcingWidget extends StatefulWidget {
   const ComponentSourcingWidget({
-    Key? key,
+    super.key,
     required this.jobDoc,
-  }) : super(key: key);
+  });
 
   final JobRecord? jobDoc;
 
   @override
-  _ComponentSourcingWidgetState createState() =>
+  State<ComponentSourcingWidget> createState() =>
       _ComponentSourcingWidgetState();
 }
 

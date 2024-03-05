@@ -7,7 +7,6 @@ import '/settings/popup_block_user/popup_block_user_widget.dart';
 import '/settings/popup_unblock_user/popup_unblock_user_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_reportand_block_user_model.dart';
@@ -15,16 +14,16 @@ export 'bottom_reportand_block_user_model.dart';
 
 class BottomReportandBlockUserWidget extends StatefulWidget {
   const BottomReportandBlockUserWidget({
-    Key? key,
+    super.key,
     this.user,
     this.name,
-  }) : super(key: key);
+  });
 
   final DocumentReference? user;
   final String? name;
 
   @override
-  _BottomReportandBlockUserWidgetState createState() =>
+  State<BottomReportandBlockUserWidget> createState() =>
       _BottomReportandBlockUserWidgetState();
 }
 
@@ -149,6 +148,7 @@ class _BottomReportandBlockUserWidgetState
                                   context: context,
                                   builder: (dialogContext) {
                                     return Dialog(
+                                      elevation: 0,
                                       insetPadding: EdgeInsets.zero,
                                       backgroundColor: Colors.transparent,
                                       alignment: AlignmentDirectional(0.0, 0.0)
@@ -166,6 +166,7 @@ class _BottomReportandBlockUserWidgetState
                                   context: context,
                                   builder: (dialogContext) {
                                     return Dialog(
+                                      elevation: 0,
                                       insetPadding: EdgeInsets.zero,
                                       backgroundColor: Colors.transparent,
                                       alignment: AlignmentDirectional(0.0, 0.0)

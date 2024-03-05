@@ -7,15 +7,16 @@ import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import 'component_sourcing_widget.dart' show ComponentSourcingWidget;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ComponentSourcingModel extends FlutterFlowModel<ComponentSourcingWidget> {
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {}
 
   /// Action blocks are added here.

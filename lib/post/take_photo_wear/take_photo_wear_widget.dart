@@ -5,17 +5,16 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'take_photo_wear_model.dart';
 export 'take_photo_wear_model.dart';
 
 class TakePhotoWearWidget extends StatefulWidget {
-  const TakePhotoWearWidget({Key? key}) : super(key: key);
+  const TakePhotoWearWidget({super.key});
 
   @override
-  _TakePhotoWearWidgetState createState() => _TakePhotoWearWidgetState();
+  State<TakePhotoWearWidget> createState() => _TakePhotoWearWidgetState();
 }
 
 class _TakePhotoWearWidgetState extends State<TakePhotoWearWidget> {

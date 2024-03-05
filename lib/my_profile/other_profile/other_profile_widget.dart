@@ -16,7 +16,6 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'other_profile_model.dart';
@@ -24,14 +23,14 @@ export 'other_profile_model.dart';
 
 class OtherProfileWidget extends StatefulWidget {
   const OtherProfileWidget({
-    Key? key,
+    super.key,
     this.userRef,
-  }) : super(key: key);
+  });
 
   final DocumentReference? userRef;
 
   @override
-  _OtherProfileWidgetState createState() => _OtherProfileWidgetState();
+  State<OtherProfileWidget> createState() => _OtherProfileWidgetState();
 }
 
 class _OtherProfileWidgetState extends State<OtherProfileWidget>
@@ -61,15 +60,6 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return StreamBuilder<UsersRecord>(
@@ -805,6 +795,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                     context: context,
                                     builder: (dialogContext) {
                                       return Dialog(
+                                        elevation: 0,
                                         insetPadding: EdgeInsets.zero,
                                         backgroundColor: Colors.transparent,
                                         alignment:
@@ -925,12 +916,11 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
                                         ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Expanded(
-                                              child: StreamBuilder<
-                                                  List<PostRecord>>(
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              StreamBuilder<List<PostRecord>>(
                                                 stream: queryPostRecord(
                                                   queryBuilder: (postRecord) =>
                                                       postRecord
@@ -991,6 +981,8 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                       0,
                                                       35.0,
                                                     ),
+                                                    primary: false,
+                                                    shrinkWrap: true,
                                                     scrollDirection:
                                                         Axis.vertical,
                                                     itemCount:
@@ -1121,8 +1113,8 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                   );
                                                 },
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

@@ -12,7 +12,6 @@ import '/sourcing/component_sourcing/component_sourcing_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'search_result_page_o_l_d_widget.dart' show SearchResultPageOLDWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -28,8 +27,10 @@ class SearchResultPageOLDModel
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {
     unfocusNode.dispose();
   }

@@ -7,7 +7,6 @@ import '/onboarding_sign_in/country_code/country_code_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -16,14 +15,14 @@ export 'log_in_model.dart';
 
 class LogInWidget extends StatefulWidget {
   const LogInWidget({
-    Key? key,
+    super.key,
     required this.back,
-  }) : super(key: key);
+  });
 
   final bool? back;
 
   @override
-  _LogInWidgetState createState() => _LogInWidgetState();
+  State<LogInWidget> createState() => _LogInWidgetState();
 }
 
 class _LogInWidgetState extends State<LogInWidget> {

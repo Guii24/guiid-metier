@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/post/popup_delete_comment_post/popup_delete_comment_post_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_delete_comment_post_model.dart';
@@ -12,16 +11,16 @@ export 'bottom_delete_comment_post_model.dart';
 
 class BottomDeleteCommentPostWidget extends StatefulWidget {
   const BottomDeleteCommentPostWidget({
-    Key? key,
+    super.key,
     this.postref,
     this.commentref,
-  }) : super(key: key);
+  });
 
   final DocumentReference? postref;
   final DocumentReference? commentref;
 
   @override
-  _BottomDeleteCommentPostWidgetState createState() =>
+  State<BottomDeleteCommentPostWidget> createState() =>
       _BottomDeleteCommentPostWidgetState();
 }
 
@@ -88,6 +87,7 @@ class _BottomDeleteCommentPostWidgetState
                         context: context,
                         builder: (dialogContext) {
                           return Dialog(
+                            elevation: 0,
                             insetPadding: EdgeInsets.zero,
                             backgroundColor: Colors.transparent,
                             alignment: AlignmentDirectional(0.0, 0.0)

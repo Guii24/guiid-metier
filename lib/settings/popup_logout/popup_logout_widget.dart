@@ -3,17 +3,16 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_logout_model.dart';
 export 'popup_logout_model.dart';
 
 class PopupLogoutWidget extends StatefulWidget {
-  const PopupLogoutWidget({Key? key}) : super(key: key);
+  const PopupLogoutWidget({super.key});
 
   @override
-  _PopupLogoutWidgetState createState() => _PopupLogoutWidgetState();
+  State<PopupLogoutWidget> createState() => _PopupLogoutWidgetState();
 }
 
 class _PopupLogoutWidgetState extends State<PopupLogoutWidget> {

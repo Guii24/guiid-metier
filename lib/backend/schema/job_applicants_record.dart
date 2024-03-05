@@ -123,8 +123,8 @@ class JobApplicantsRecord extends FirestoreRecord {
           ? parent.collection('job_applicants')
           : FirebaseFirestore.instance.collectionGroup('job_applicants');
 
-  static DocumentReference createDoc(DocumentReference parent) =>
-      parent.collection('job_applicants').doc();
+  static DocumentReference createDoc(DocumentReference parent, {String? id}) =>
+      parent.collection('job_applicants').doc(id);
 
   static Stream<JobApplicantsRecord> getDocument(DocumentReference ref) =>
       ref.snapshots().map((s) => JobApplicantsRecord.fromSnapshot(s));

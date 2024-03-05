@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'comment_article_model.dart';
@@ -11,14 +10,14 @@ export 'comment_article_model.dart';
 
 class CommentArticleWidget extends StatefulWidget {
   const CommentArticleWidget({
-    Key? key,
+    super.key,
     this.commentArticleRef,
-  }) : super(key: key);
+  });
 
   final DocumentReference? commentArticleRef;
 
   @override
-  _CommentArticleWidgetState createState() => _CommentArticleWidgetState();
+  State<CommentArticleWidget> createState() => _CommentArticleWidgetState();
 }
 
 class _CommentArticleWidgetState extends State<CommentArticleWidget> {

@@ -12,16 +12,16 @@ export 'component_wear_model.dart';
 
 class ComponentWearWidget extends StatefulWidget {
   const ComponentWearWidget({
-    Key? key,
+    super.key,
     required this.wearItem,
     required this.index,
-  }) : super(key: key);
+  });
 
   final WearItemsStruct? wearItem;
   final int? index;
 
   @override
-  _ComponentWearWidgetState createState() => _ComponentWearWidgetState();
+  State<ComponentWearWidget> createState() => _ComponentWearWidgetState();
 }
 
 class _ComponentWearWidgetState extends State<ComponentWearWidget> {

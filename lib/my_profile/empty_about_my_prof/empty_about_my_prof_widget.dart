@@ -1,17 +1,16 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'empty_about_my_prof_model.dart';
 export 'empty_about_my_prof_model.dart';
 
 class EmptyAboutMyProfWidget extends StatefulWidget {
-  const EmptyAboutMyProfWidget({Key? key}) : super(key: key);
+  const EmptyAboutMyProfWidget({super.key});
 
   @override
-  _EmptyAboutMyProfWidgetState createState() => _EmptyAboutMyProfWidgetState();
+  State<EmptyAboutMyProfWidget> createState() => _EmptyAboutMyProfWidgetState();
 }
 
 class _EmptyAboutMyProfWidgetState extends State<EmptyAboutMyProfWidget> {

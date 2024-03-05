@@ -10,17 +10,16 @@ import '/post/component_post_user/component_post_user_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'my_profile_copy_model.dart';
 export 'my_profile_copy_model.dart';
 
 class MyProfileCopyWidget extends StatefulWidget {
-  const MyProfileCopyWidget({Key? key}) : super(key: key);
+  const MyProfileCopyWidget({super.key});
 
   @override
-  _MyProfileCopyWidgetState createState() => _MyProfileCopyWidgetState();
+  State<MyProfileCopyWidget> createState() => _MyProfileCopyWidgetState();
 }
 
 class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
@@ -60,15 +59,6 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

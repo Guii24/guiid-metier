@@ -21,10 +21,10 @@ import 'post_job_page_model.dart';
 export 'post_job_page_model.dart';
 
 class PostJobPageWidget extends StatefulWidget {
-  const PostJobPageWidget({Key? key}) : super(key: key);
+  const PostJobPageWidget({super.key});
 
   @override
-  _PostJobPageWidgetState createState() => _PostJobPageWidgetState();
+  State<PostJobPageWidget> createState() => _PostJobPageWidgetState();
 }
 
 class _PostJobPageWidgetState extends State<PostJobPageWidget> {
@@ -73,15 +73,6 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -1180,6 +1171,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                   context: context,
                                   builder: (dialogContext) {
                                     return Dialog(
+                                      elevation: 0,
                                       insetPadding: EdgeInsets.zero,
                                       backgroundColor: Colors.transparent,
                                       alignment: AlignmentDirectional(0.0, -1.0)

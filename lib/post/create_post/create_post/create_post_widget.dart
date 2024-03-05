@@ -21,10 +21,10 @@ import 'create_post_model.dart';
 export 'create_post_model.dart';
 
 class CreatePostWidget extends StatefulWidget {
-  const CreatePostWidget({Key? key}) : super(key: key);
+  const CreatePostWidget({super.key});
 
   @override
-  _CreatePostWidgetState createState() => _CreatePostWidgetState();
+  State<CreatePostWidget> createState() => _CreatePostWidgetState();
 }
 
 class _CreatePostWidgetState extends State<CreatePostWidget> {
@@ -63,15 +63,6 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -99,6 +90,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                   context: context,
                   builder: (dialogContext) {
                     return Dialog(
+                      elevation: 0,
                       insetPadding: EdgeInsets.zero,
                       backgroundColor: Colors.transparent,
                       alignment: AlignmentDirectional(0.0, 0.0)
@@ -210,6 +202,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                     context: context,
                                     builder: (dialogContext) {
                                       return Dialog(
+                                        elevation: 0,
                                         insetPadding: EdgeInsets.zero,
                                         backgroundColor: Colors.transparent,
                                         alignment:

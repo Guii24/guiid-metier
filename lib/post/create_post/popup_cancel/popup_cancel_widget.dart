@@ -3,17 +3,16 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_cancel_model.dart';
 export 'popup_cancel_model.dart';
 
 class PopupCancelWidget extends StatefulWidget {
-  const PopupCancelWidget({Key? key}) : super(key: key);
+  const PopupCancelWidget({super.key});
 
   @override
-  _PopupCancelWidgetState createState() => _PopupCancelWidgetState();
+  State<PopupCancelWidget> createState() => _PopupCancelWidgetState();
 }
 
 class _PopupCancelWidgetState extends State<PopupCancelWidget> {

@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_delete_job_post_model.dart';
@@ -11,14 +10,14 @@ export 'popup_delete_job_post_model.dart';
 
 class PopupDeleteJobPostWidget extends StatefulWidget {
   const PopupDeleteJobPostWidget({
-    Key? key,
+    super.key,
     required this.jobDoc,
-  }) : super(key: key);
+  });
 
   final JobRecord? jobDoc;
 
   @override
-  _PopupDeleteJobPostWidgetState createState() =>
+  State<PopupDeleteJobPostWidget> createState() =>
       _PopupDeleteJobPostWidgetState();
 }
 

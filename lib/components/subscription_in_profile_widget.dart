@@ -10,7 +10,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart'
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -18,10 +17,10 @@ import 'subscription_in_profile_model.dart';
 export 'subscription_in_profile_model.dart';
 
 class SubscriptionInProfileWidget extends StatefulWidget {
-  const SubscriptionInProfileWidget({Key? key}) : super(key: key);
+  const SubscriptionInProfileWidget({super.key});
 
   @override
-  _SubscriptionInProfileWidgetState createState() =>
+  State<SubscriptionInProfileWidget> createState() =>
       _SubscriptionInProfileWidgetState();
 }
 

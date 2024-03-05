@@ -18,10 +18,10 @@ import 'signup_bio_user_model.dart';
 export 'signup_bio_user_model.dart';
 
 class SignupBioUserWidget extends StatefulWidget {
-  const SignupBioUserWidget({Key? key}) : super(key: key);
+  const SignupBioUserWidget({super.key});
 
   @override
-  _SignupBioUserWidgetState createState() => _SignupBioUserWidgetState();
+  State<SignupBioUserWidget> createState() => _SignupBioUserWidgetState();
 }
 
 class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
@@ -64,15 +64,6 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -240,6 +231,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                           context: context,
                                           builder: (dialogContext) {
                                             return Dialog(
+                                              elevation: 0,
                                               insetPadding: EdgeInsets.zero,
                                               backgroundColor:
                                                   Colors.transparent,

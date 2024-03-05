@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_block_user_model.dart';
@@ -13,16 +12,16 @@ export 'popup_block_user_model.dart';
 
 class PopupBlockUserWidget extends StatefulWidget {
   const PopupBlockUserWidget({
-    Key? key,
+    super.key,
     required this.name,
     required this.user,
-  }) : super(key: key);
+  });
 
   final String? name;
   final DocumentReference? user;
 
   @override
-  _PopupBlockUserWidgetState createState() => _PopupBlockUserWidgetState();
+  State<PopupBlockUserWidget> createState() => _PopupBlockUserWidgetState();
 }
 
 class _PopupBlockUserWidgetState extends State<PopupBlockUserWidget> {

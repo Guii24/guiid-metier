@@ -11,7 +11,6 @@ import '/search/component_people/component_people_widget.dart';
 import '/sourcing/component_sourcing/component_sourcing_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'search_result_page_o_l_d_model.dart';
@@ -19,14 +18,14 @@ export 'search_result_page_o_l_d_model.dart';
 
 class SearchResultPageOLDWidget extends StatefulWidget {
   const SearchResultPageOLDWidget({
-    Key? key,
+    super.key,
     required this.searchingText,
-  }) : super(key: key);
+  });
 
   final String? searchingText;
 
   @override
-  _SearchResultPageOLDWidgetState createState() =>
+  State<SearchResultPageOLDWidget> createState() =>
       _SearchResultPageOLDWidgetState();
 }
 
@@ -50,15 +49,6 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

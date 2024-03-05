@@ -22,10 +22,10 @@ import 'sign_u_p_model.dart';
 export 'sign_u_p_model.dart';
 
 class SignUPWidget extends StatefulWidget {
-  const SignUPWidget({Key? key}) : super(key: key);
+  const SignUPWidget({super.key});
 
   @override
-  _SignUPWidgetState createState() => _SignUPWidgetState();
+  State<SignUPWidget> createState() => _SignUPWidgetState();
 }
 
 class _SignUPWidgetState extends State<SignUPWidget>
@@ -79,15 +79,6 @@ class _SignUPWidgetState extends State<SignUPWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -1495,6 +1486,9 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 30.0, 0.0, 8.0),
                                         child: Container(
+                                          constraints: BoxConstraints(
+                                            minHeight: 42.0,
+                                          ),
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryBackground,

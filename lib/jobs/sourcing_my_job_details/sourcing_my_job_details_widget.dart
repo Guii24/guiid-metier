@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/jobs/bottom_editor_delete_job/bottom_editor_delete_job_widget.dart';
 import '/jobs/bottom_job_details_applicant/bottom_job_details_applicant_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'sourcing_my_job_details_model.dart';
@@ -14,14 +13,14 @@ export 'sourcing_my_job_details_model.dart';
 
 class SourcingMyJobDetailsWidget extends StatefulWidget {
   const SourcingMyJobDetailsWidget({
-    Key? key,
+    super.key,
     required this.jobDoc,
-  }) : super(key: key);
+  });
 
   final JobRecord? jobDoc;
 
   @override
-  _SourcingMyJobDetailsWidgetState createState() =>
+  State<SourcingMyJobDetailsWidget> createState() =>
       _SourcingMyJobDetailsWidgetState();
 }
 
@@ -46,15 +45,6 @@ class _SourcingMyJobDetailsWidgetState
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

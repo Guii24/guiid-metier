@@ -3,17 +3,16 @@ import '/components/subscription_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'user_bottom_nav_bar_model.dart';
 export 'user_bottom_nav_bar_model.dart';
 
 class UserBottomNavBarWidget extends StatefulWidget {
-  const UserBottomNavBarWidget({Key? key}) : super(key: key);
+  const UserBottomNavBarWidget({super.key});
 
   @override
-  _UserBottomNavBarWidgetState createState() => _UserBottomNavBarWidgetState();
+  State<UserBottomNavBarWidget> createState() => _UserBottomNavBarWidgetState();
 }
 
 class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {

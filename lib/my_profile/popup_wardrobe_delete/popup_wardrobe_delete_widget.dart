@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_wardrobe_delete_model.dart';
@@ -11,14 +10,14 @@ export 'popup_wardrobe_delete_model.dart';
 
 class PopupWardrobeDeleteWidget extends StatefulWidget {
   const PopupWardrobeDeleteWidget({
-    Key? key,
+    super.key,
     this.wearDoc,
-  }) : super(key: key);
+  });
 
   final PostRecord? wearDoc;
 
   @override
-  _PopupWardrobeDeleteWidgetState createState() =>
+  State<PopupWardrobeDeleteWidget> createState() =>
       _PopupWardrobeDeleteWidgetState();
 }
 

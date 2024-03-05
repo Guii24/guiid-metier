@@ -8,7 +8,6 @@ import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'articles_component_model.dart';
@@ -16,14 +15,14 @@ export 'articles_component_model.dart';
 
 class ArticlesComponentWidget extends StatefulWidget {
   const ArticlesComponentWidget({
-    Key? key,
+    super.key,
     this.articleDoc,
-  }) : super(key: key);
+  });
 
   final DocumentReference? articleDoc;
 
   @override
-  _ArticlesComponentWidgetState createState() =>
+  State<ArticlesComponentWidget> createState() =>
       _ArticlesComponentWidgetState();
 }
 

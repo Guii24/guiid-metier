@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_people_model.dart';
@@ -15,14 +14,14 @@ export 'component_people_model.dart';
 
 class ComponentPeopleWidget extends StatefulWidget {
   const ComponentPeopleWidget({
-    Key? key,
+    super.key,
     required this.userDoc,
-  }) : super(key: key);
+  });
 
   final UsersRecord? userDoc;
 
   @override
-  _ComponentPeopleWidgetState createState() => _ComponentPeopleWidgetState();
+  State<ComponentPeopleWidget> createState() => _ComponentPeopleWidgetState();
 }
 
 class _ComponentPeopleWidgetState extends State<ComponentPeopleWidget> {

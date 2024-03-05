@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_following_model.dart';
@@ -15,14 +14,14 @@ export 'component_following_model.dart';
 
 class ComponentFollowingWidget extends StatefulWidget {
   const ComponentFollowingWidget({
-    Key? key,
+    super.key,
     required this.userRef,
-  }) : super(key: key);
+  });
 
   final DocumentReference? userRef;
 
   @override
-  _ComponentFollowingWidgetState createState() =>
+  State<ComponentFollowingWidget> createState() =>
       _ComponentFollowingWidgetState();
 }
 

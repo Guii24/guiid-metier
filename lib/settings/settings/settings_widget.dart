@@ -10,17 +10,16 @@ import '/settings/popup_delete_account/popup_delete_account_widget.dart';
 import '/settings/popup_logout/popup_logout_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'settings_model.dart';
 export 'settings_model.dart';
 
 class SettingsWidget extends StatefulWidget {
-  const SettingsWidget({Key? key}) : super(key: key);
+  const SettingsWidget({super.key});
 
   @override
-  _SettingsWidgetState createState() => _SettingsWidgetState();
+  State<SettingsWidget> createState() => _SettingsWidgetState();
 }
 
 class _SettingsWidgetState extends State<SettingsWidget> {
@@ -43,15 +42,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -694,6 +684,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               context: context,
                               builder: (dialogContext) {
                                 return Dialog(
+                                  elevation: 0,
                                   insetPadding: EdgeInsets.zero,
                                   backgroundColor: Colors.transparent,
                                   alignment: AlignmentDirectional(0.0, 0.0)
@@ -770,6 +761,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               context: context,
                               builder: (dialogContext) {
                                 return Dialog(
+                                  elevation: 0,
                                   insetPadding: EdgeInsets.zero,
                                   backgroundColor: Colors.transparent,
                                   alignment: AlignmentDirectional(0.0, 0.0)

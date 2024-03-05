@@ -2,7 +2,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'tesst_model.dart';
@@ -10,14 +9,14 @@ export 'tesst_model.dart';
 
 class TesstWidget extends StatefulWidget {
   const TesstWidget({
-    Key? key,
+    super.key,
     required this.searchingText,
-  }) : super(key: key);
+  });
 
   final String? searchingText;
 
   @override
-  _TesstWidgetState createState() => _TesstWidgetState();
+  State<TesstWidget> createState() => _TesstWidgetState();
 }
 
 class _TesstWidgetState extends State<TesstWidget> {
@@ -40,15 +39,6 @@ class _TesstWidgetState extends State<TesstWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

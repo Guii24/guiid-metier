@@ -2,17 +2,16 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_sourcing_model.dart';
 export 'popup_sourcing_model.dart';
 
 class PopupSourcingWidget extends StatefulWidget {
-  const PopupSourcingWidget({Key? key}) : super(key: key);
+  const PopupSourcingWidget({super.key});
 
   @override
-  _PopupSourcingWidgetState createState() => _PopupSourcingWidgetState();
+  State<PopupSourcingWidget> createState() => _PopupSourcingWidgetState();
 }
 
 class _PopupSourcingWidgetState extends State<PopupSourcingWidget> {

@@ -12,7 +12,6 @@ import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'verification_sign_up_model.dart';
@@ -20,7 +19,7 @@ export 'verification_sign_up_model.dart';
 
 class VerificationSignUpWidget extends StatefulWidget {
   const VerificationSignUpWidget({
-    Key? key,
+    super.key,
     this.userName,
     this.userPhone,
     this.profilePhoto,
@@ -30,7 +29,7 @@ class VerificationSignUpWidget extends StatefulWidget {
     required this.phoneCode,
     required this.phoneFlag,
     required this.phoneDialCode,
-  }) : super(key: key);
+  });
 
   final String? userName;
   final String? userPhone;
@@ -43,7 +42,7 @@ class VerificationSignUpWidget extends StatefulWidget {
   final String? phoneDialCode;
 
   @override
-  _VerificationSignUpWidgetState createState() =>
+  State<VerificationSignUpWidget> createState() =>
       _VerificationSignUpWidgetState();
 }
 
@@ -81,15 +80,6 @@ class _VerificationSignUpWidgetState extends State<VerificationSignUpWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

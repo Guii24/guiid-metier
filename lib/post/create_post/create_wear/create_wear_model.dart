@@ -14,7 +14,6 @@ import '/post/take_photo_wear/take_photo_wear_widget.dart';
 import 'create_wear_widget.dart' show CreateWearWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -25,8 +24,10 @@ class CreateWearModel extends FlutterFlowModel<CreateWearWidget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {
     unfocusNode.dispose();
   }

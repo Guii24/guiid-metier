@@ -13,7 +13,6 @@ import 'my_profile_widget.dart' show MyProfileWidget;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +33,7 @@ class MyProfileModel extends FlutterFlowModel<MyProfileWidget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {
     componentPostUserModels =
         FlutterFlowDynamicModels(() => ComponentPostUserModel());
@@ -41,6 +41,7 @@ class MyProfileModel extends FlutterFlowModel<MyProfileWidget> {
         FlutterFlowDynamicModels(() => ComponentPostRepostedModel());
   }
 
+  @override
   void dispose() {
     unfocusNode.dispose();
     tabBarController?.dispose();

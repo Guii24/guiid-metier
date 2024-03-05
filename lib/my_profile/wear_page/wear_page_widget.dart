@@ -16,7 +16,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'wear_page_model.dart';
@@ -24,14 +23,14 @@ export 'wear_page_model.dart';
 
 class WearPageWidget extends StatefulWidget {
   const WearPageWidget({
-    Key? key,
+    super.key,
     required this.postDoc,
-  }) : super(key: key);
+  });
 
   final DocumentReference? postDoc;
 
   @override
-  _WearPageWidgetState createState() => _WearPageWidgetState();
+  State<WearPageWidget> createState() => _WearPageWidgetState();
 }
 
 class _WearPageWidgetState extends State<WearPageWidget> {
@@ -64,15 +63,6 @@ class _WearPageWidgetState extends State<WearPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return StreamBuilder<PostRecord>(

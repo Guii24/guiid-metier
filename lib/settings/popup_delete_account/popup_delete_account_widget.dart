@@ -7,17 +7,16 @@ import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'popup_delete_account_model.dart';
 export 'popup_delete_account_model.dart';
 
 class PopupDeleteAccountWidget extends StatefulWidget {
-  const PopupDeleteAccountWidget({Key? key}) : super(key: key);
+  const PopupDeleteAccountWidget({super.key});
 
   @override
-  _PopupDeleteAccountWidgetState createState() =>
+  State<PopupDeleteAccountWidget> createState() =>
       _PopupDeleteAccountWidgetState();
 }
 

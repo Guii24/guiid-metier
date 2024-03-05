@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/jobs/bottom_editor_delete_job/bottom_editor_delete_job_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_sourcing_copy_model.dart';
@@ -12,14 +11,14 @@ export 'component_sourcing_copy_model.dart';
 
 class ComponentSourcingCopyWidget extends StatefulWidget {
   const ComponentSourcingCopyWidget({
-    Key? key,
+    super.key,
     required this.jobDoc,
-  }) : super(key: key);
+  });
 
   final JobRecord? jobDoc;
 
   @override
-  _ComponentSourcingCopyWidgetState createState() =>
+  State<ComponentSourcingCopyWidget> createState() =>
       _ComponentSourcingCopyWidgetState();
 }
 

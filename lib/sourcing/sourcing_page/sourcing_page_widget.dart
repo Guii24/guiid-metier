@@ -8,17 +8,16 @@ import '/jobs/bottom_job_details/bottom_job_details_widget.dart';
 import '/jobs/empty_jobs/empty_jobs_widget.dart';
 import '/sourcing/component_sourcing/component_sourcing_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'sourcing_page_model.dart';
 export 'sourcing_page_model.dart';
 
 class SourcingPageWidget extends StatefulWidget {
-  const SourcingPageWidget({Key? key}) : super(key: key);
+  const SourcingPageWidget({super.key});
 
   @override
-  _SourcingPageWidgetState createState() => _SourcingPageWidgetState();
+  State<SourcingPageWidget> createState() => _SourcingPageWidgetState();
 }
 
 class _SourcingPageWidgetState extends State<SourcingPageWidget> {
@@ -41,15 +40,6 @@ class _SourcingPageWidgetState extends State<SourcingPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(

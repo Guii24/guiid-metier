@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_share_post_model.dart';
@@ -13,16 +12,16 @@ export 'bottom_share_post_model.dart';
 
 class BottomSharePostWidget extends StatefulWidget {
   const BottomSharePostWidget({
-    Key? key,
+    super.key,
     required this.repostpost,
     required this.user,
-  }) : super(key: key);
+  });
 
   final DocumentReference? repostpost;
   final DocumentReference? user;
 
   @override
-  _BottomSharePostWidgetState createState() => _BottomSharePostWidgetState();
+  State<BottomSharePostWidget> createState() => _BottomSharePostWidgetState();
 }
 
 class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {

@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_notification_model.dart';
@@ -14,14 +13,14 @@ export 'component_notification_model.dart';
 
 class ComponentNotificationWidget extends StatefulWidget {
   const ComponentNotificationWidget({
-    Key? key,
+    super.key,
     this.notification,
-  }) : super(key: key);
+  });
 
   final NotificationRecord? notification;
 
   @override
-  _ComponentNotificationWidgetState createState() =>
+  State<ComponentNotificationWidget> createState() =>
       _ComponentNotificationWidgetState();
 }
 

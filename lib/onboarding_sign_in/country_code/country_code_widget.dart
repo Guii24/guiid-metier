@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'country_code_model.dart';
@@ -11,18 +10,18 @@ export 'country_code_model.dart';
 
 class CountryCodeWidget extends StatefulWidget {
   const CountryCodeWidget({
-    Key? key,
+    super.key,
     this.userType,
     this.signin,
     this.editprofCompany,
-  }) : super(key: key);
+  });
 
   final String? userType;
   final bool? signin;
   final bool? editprofCompany;
 
   @override
-  _CountryCodeWidgetState createState() => _CountryCodeWidgetState();
+  State<CountryCodeWidget> createState() => _CountryCodeWidgetState();
 }
 
 class _CountryCodeWidgetState extends State<CountryCodeWidget> {

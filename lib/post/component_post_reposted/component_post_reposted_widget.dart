@@ -11,7 +11,6 @@ import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'component_post_reposted_model.dart';
@@ -19,14 +18,14 @@ export 'component_post_reposted_model.dart';
 
 class ComponentPostRepostedWidget extends StatefulWidget {
   const ComponentPostRepostedWidget({
-    Key? key,
+    super.key,
     this.postReposted,
-  }) : super(key: key);
+  });
 
   final DocumentReference? postReposted;
 
   @override
-  _ComponentPostRepostedWidgetState createState() =>
+  State<ComponentPostRepostedWidget> createState() =>
       _ComponentPostRepostedWidgetState();
 }
 

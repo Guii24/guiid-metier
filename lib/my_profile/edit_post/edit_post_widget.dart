@@ -19,14 +19,14 @@ export 'edit_post_model.dart';
 
 class EditPostWidget extends StatefulWidget {
   const EditPostWidget({
-    Key? key,
+    super.key,
     required this.postRef,
-  }) : super(key: key);
+  });
 
   final PostRecord? postRef;
 
   @override
-  _EditPostWidgetState createState() => _EditPostWidgetState();
+  State<EditPostWidget> createState() => _EditPostWidgetState();
 }
 
 class _EditPostWidgetState extends State<EditPostWidget> {
@@ -63,15 +63,6 @@ class _EditPostWidgetState extends State<EditPostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -100,6 +91,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                   context: context,
                   builder: (dialogContext) {
                     return Dialog(
+                      elevation: 0,
                       insetPadding: EdgeInsets.zero,
                       backgroundColor: Colors.transparent,
                       alignment: AlignmentDirectional(0.0, 0.0)

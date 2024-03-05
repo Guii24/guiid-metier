@@ -6,7 +6,6 @@ import '/post/bottom_delete_comment_post/bottom_delete_comment_post_widget.dart'
 import '/post/bottom_report_post/bottom_report_post_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'comment_post_model.dart';
@@ -14,16 +13,16 @@ export 'comment_post_model.dart';
 
 class CommentPostWidget extends StatefulWidget {
   const CommentPostWidget({
-    Key? key,
+    super.key,
     this.commentPostref,
     this.postref,
-  }) : super(key: key);
+  });
 
   final DocumentReference? commentPostref;
   final DocumentReference? postref;
 
   @override
-  _CommentPostWidgetState createState() => _CommentPostWidgetState();
+  State<CommentPostWidget> createState() => _CommentPostWidgetState();
 }
 
 class _CommentPostWidgetState extends State<CommentPostWidget> {

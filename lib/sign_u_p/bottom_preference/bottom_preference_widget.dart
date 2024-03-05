@@ -2,17 +2,16 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'bottom_preference_model.dart';
 export 'bottom_preference_model.dart';
 
 class BottomPreferenceWidget extends StatefulWidget {
-  const BottomPreferenceWidget({Key? key}) : super(key: key);
+  const BottomPreferenceWidget({super.key});
 
   @override
-  _BottomPreferenceWidgetState createState() => _BottomPreferenceWidgetState();
+  State<BottomPreferenceWidget> createState() => _BottomPreferenceWidgetState();
 }
 
 class _BottomPreferenceWidgetState extends State<BottomPreferenceWidget> {
