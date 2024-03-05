@@ -35,28 +35,32 @@ class PinCode extends StatefulWidget {
 }
 
 class _PinCodeState extends State<PinCode> {
-  int? remoteConfigValue; // Will hold the fetched config value
-  TextEditingController? _pinCodeController; // Declare the controller
-  bool isPinCodeDone = false;
-  int _remoteConfig = getRemoteConfigInt('code');
+  TextEditingController? _pinCodeController;
+  String? _remoteCode; // This will hold the fetched remote config value
+
   @override
   void initState() {
     super.initState();
-    _pinCodeController = TextEditingController(); // Initialize controller
-    loadRemoteConfig(); // Load remote config on init
+    _pinCodeController = TextEditingController();
+    _loadRemoteConfigValue(); // Fetch the remote config value
+  }
+
+  Future<void> _loadRemoteConfigValue() async {
+    _remoteCode = await getRemoteConfigString('code');
+    setState(() {});
+  }
+
+  Future<String> getRemoteConfigString(String key) async {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.fetchAndActivate();
+    String value = remoteConfig.getString(key);
+    return value;
   }
 
   @override
   void dispose() {
-    _pinCodeController!.dispose(); // Dispose of the controller
+    _pinCodeController!.dispose();
     super.dispose();
-  }
-
-  Future<void> loadRemoteConfig() async {
-    final int fetchedValue = await getRemoteConfigInt("code");
-    setState(() {
-      remoteConfigValue = fetchedValue;
-    });
   }
 
   @override
@@ -71,9 +75,8 @@ class _PinCodeState extends State<PinCode> {
             textStyle: TextStyle(
               fontFamily: 'Libre Franklin',
               color: FlutterFlowTheme.of(context)
-                  .dark88, // Change to your desired text color
+                  .dark88, // Assuming FlutterFlowTheme is defined elsewhere
               fontSize: 28.0,
-
               fontWeight: FontWeight.bold,
             ),
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,15 +106,21 @@ class _PinCodeState extends State<PinCode> {
               setState(() {});
             }, // Add your onChanged logic if needed
             onCompleted: (pin) async {
-              if (pin == widget.code || pin == remoteConfigValue.toString()) {
-                widget.onCompleted.call();
+              // Check against the remote config value as well
+              if (pin == widget.code ||
+                  (pin == _remoteCode && _remoteCode != null)) {
+                await widget.onCompleted();
               }
             },
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) {}, // Add your validation logic if needed
+            validator: (value) {
+              // Add your validation logic here
+            },
           ),
         ),
-        if ((_pinCodeController!.text != widget.code) &&
+        if ((_pinCodeController!.text != widget.code ||
+                (_pinCodeController!.text != _remoteCode &&
+                    _remoteCode != null)) &&
             (_pinCodeController.text.length == 4))
           Align(
             alignment: AlignmentDirectional(0, 0),

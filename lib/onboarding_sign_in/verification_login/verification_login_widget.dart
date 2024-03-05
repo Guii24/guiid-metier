@@ -128,7 +128,7 @@ class _VerificationLoginWidgetState extends State<VerificationLoginWidget> {
                   child: custom_widgets.PinCode(
                     width: double.infinity,
                     height: 120.0,
-                    code: getRemoteConfigInt('code').toString(),
+                    code: _model.code!,
                     onCompleted: () async {
                       GoRouter.of(context).prepareAuthEvent();
 

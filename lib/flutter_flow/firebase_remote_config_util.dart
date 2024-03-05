@@ -6,7 +6,7 @@ Future initializeFirebaseRemoteConfig() async {
     minimumFetchInterval: const Duration(hours: 1),
   ));
   await FirebaseRemoteConfig.instance.setDefaults(const {
-    'code': 1111,
+    'code': '',
   });
   await FirebaseRemoteConfig.instance.fetchAndActivate();
 }
