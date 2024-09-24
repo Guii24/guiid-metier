@@ -44,8 +44,6 @@ class _PopupDeleteAccountWidgetState extends State<PopupDeleteAccountWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
       child: Material(
@@ -75,6 +73,7 @@ class _PopupDeleteAccountWidgetState extends State<PopupDeleteAccountWidget> {
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Libre Franklin',
                           fontSize: 17.0,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                           lineHeight: 1.5,
                         ),
@@ -203,7 +202,7 @@ class _PopupDeleteAccountWidgetState extends State<PopupDeleteAccountWidget> {
                               },
                             );
 
-                            setState(() {});
+                            safeSetState(() {});
                           },
                           text: 'YES',
                           options: FFButtonOptions(

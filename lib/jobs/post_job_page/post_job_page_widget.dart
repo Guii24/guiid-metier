@@ -39,13 +39,12 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().selectedlocation = '';
-        FFAppState().choosenjobtype1 = '';
-        FFAppState().choosenjobType2 = '';
-        FFAppState().selectedJobType = '';
-        FFAppState().jobType3 = '';
-      });
+      FFAppState().selectedlocation = '';
+      FFAppState().choosenjobtype1 = '';
+      FFAppState().choosenjobType2 = '';
+      FFAppState().selectedJobType = '';
+      FFAppState().jobType3 = '';
+      safeSetState(() {});
     });
 
     _model.textController1 ??= TextEditingController();
@@ -57,7 +56,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
     _model.textController3 ??= TextEditingController();
     _model.textFieldFocusNode3 ??= FocusNode();
 
-    _model.userPhoneController ??= TextEditingController();
+    _model.userPhoneTextController ??= TextEditingController();
     _model.userPhoneFocusNode ??= FocusNode();
 
     _model.textController5 ??= TextEditingController();
@@ -76,9 +75,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -104,6 +101,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -135,8 +133,9 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController1',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               textInputAction: TextInputAction.done,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -149,6 +148,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 hintStyle: FlutterFlowTheme.of(context)
@@ -158,6 +158,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 16.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -194,6 +195,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                   .override(
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                               minLines: 1,
@@ -218,6 +220,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xE4F41F1F),
                                     fontSize: 12.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -232,6 +235,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -247,8 +251,9 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController2',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               textInputAction: TextInputAction.done,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -261,6 +266,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -300,6 +306,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                     lineHeight: 1.3,
                                   ),
@@ -320,6 +327,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                   ),
                         ),
                         Padding(
@@ -346,13 +354,8 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
-                                                    .unfocus(),
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -413,6 +416,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .dark38,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               if (FFAppState()
@@ -440,6 +444,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -480,6 +485,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                                           context)
                                                       .dark68,
                                                   fontSize: 13.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -502,6 +508,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xE4F41F1F),
                                     fontSize: 12.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -531,13 +538,8 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
-                                                    .unfocus(),
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -593,6 +595,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                                                     context)
                                                                 .dark38,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               if (FFAppState()
@@ -618,6 +621,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -666,6 +670,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                                           context)
                                                       .dark68,
                                                   fontSize: 13.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -688,6 +693,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xE4F41F1F),
                                     fontSize: 12.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -702,8 +708,9 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController3',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               textInputAction: TextInputAction.done,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -715,6 +722,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                       fontFamily: 'Libre Franklin',
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
+                                      letterSpacing: 0.0,
                                     ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -751,6 +759,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                               minLines: 1,
@@ -775,6 +784,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xE4F41F1F),
                                     fontSize: 12.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -789,6 +799,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -834,12 +845,8 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                           context: context,
                                           builder: (context) {
                                             return GestureDetector(
-                                              onTap: () => _model.unfocusNode
-                                                      .canRequestFocus
-                                                  ? FocusScope.of(context)
-                                                      .requestFocus(
-                                                          _model.unfocusNode)
-                                                  : FocusScope.of(context)
+                                              onTap: () =>
+                                                  FocusScope.of(context)
                                                       .unfocus(),
                                               child: Padding(
                                                 padding:
@@ -872,6 +879,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Libre Franklin',
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),
@@ -901,13 +909,15 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     ),
                                     Expanded(
                                       child: TextFormField(
-                                        controller: _model.userPhoneController,
+                                        controller:
+                                            _model.userPhoneTextController,
                                         focusNode: _model.userPhoneFocusNode,
                                         onChanged: (_) => EasyDebounce.debounce(
-                                          '_model.userPhoneController',
+                                          '_model.userPhoneTextController',
                                           Duration(milliseconds: 10),
-                                          () => setState(() {}),
+                                          () => safeSetState(() {}),
                                         ),
+                                        autofocus: false,
                                         textInputAction: TextInputAction.done,
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -922,6 +932,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark38,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                           enabledBorder: OutlineInputBorder(
@@ -966,12 +977,13 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                         minLines: 1,
                                         keyboardType: TextInputType.number,
                                         validator: _model
-                                            .userPhoneControllerValidator
+                                            .userPhoneTextControllerValidator
                                             .asValidator(context),
                                         inputFormatters: [_model.userPhoneMask],
                                       ),
@@ -990,8 +1002,9 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController5',
                               Duration(milliseconds: 10),
-                              () => setState(() {}),
+                              () => safeSetState(() {}),
                             ),
+                            autofocus: false,
                             textInputAction: TextInputAction.done,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -1003,6 +1016,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               hintStyle: FlutterFlowTheme.of(context)
@@ -1011,6 +1025,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 16.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               enabledBorder: OutlineInputBorder(
@@ -1047,6 +1062,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                 .override(
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                             minLines: 1,
@@ -1067,6 +1083,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xE4F41F1F),
                                     fontSize: 12.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -1086,7 +1103,10 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                       BoxShadow(
                         blurRadius: 15.0,
                         color: Color(0x12000000),
-                        offset: Offset(0.0, -6.0),
+                        offset: Offset(
+                          0.0,
+                          -6.0,
+                        ),
                       )
                     ],
                   ),
@@ -1100,38 +1120,33 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                           onPressed: () async {
                             if (_model.textController1.text == null ||
                                 _model.textController1.text == '') {
-                              setState(() {
-                                _model.validTitle = true;
-                              });
+                              _model.validTitle = true;
+                              safeSetState(() {});
                             } else if (FFAppState().selectedlocation == null ||
                                 FFAppState().selectedlocation == '') {
-                              setState(() {
-                                _model.validLocation = true;
-                                _model.validTitle = false;
-                              });
+                              _model.validLocation = true;
+                              _model.validTitle = false;
+                              safeSetState(() {});
                             } else if (FFAppState().selectedJobType == null ||
                                 FFAppState().selectedJobType == '') {
-                              setState(() {
-                                _model.validJobType = true;
-                                _model.validTitle = false;
-                                _model.validLocation = false;
-                              });
+                              _model.validJobType = true;
+                              _model.validTitle = false;
+                              _model.validLocation = false;
+                              safeSetState(() {});
                             } else if (_model.textController3.text == null ||
                                 _model.textController3.text == '') {
-                              setState(() {
-                                _model.validRate = true;
-                                _model.validJobType = false;
-                                _model.validLocation = false;
-                                _model.validTitle = false;
-                              });
+                              _model.validRate = true;
+                              _model.validJobType = false;
+                              _model.validLocation = false;
+                              _model.validTitle = false;
+                              safeSetState(() {});
                             } else {
                               if ((_model.textController5.text != null &&
                                       _model.textController5.text != '') &&
                                   !functions.validatorEmail(
                                       _model.textController5.text)) {
-                                setState(() {
-                                  _model.valisEmail = true;
-                                });
+                                _model.valisEmail = true;
+                                safeSetState(() {});
                               } else {
                                 await JobRecord.collection
                                     .doc()
@@ -1145,7 +1160,7 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                       jobLocation:
                                           FFAppState().selectedlocation,
                                       jobContactPhoneNumber:
-                                          _model.userPhoneController.text,
+                                          _model.userPhoneTextController.text,
                                       jobContactEmail:
                                           _model.textController5.text,
                                       jobCreationDate: getCurrentTimestamp,
@@ -1177,17 +1192,14 @@ class _PostJobPageWidgetState extends State<PostJobPageWidget> {
                                       alignment: AlignmentDirectional(0.0, -1.0)
                                           .resolve(Directionality.of(context)),
                                       child: GestureDetector(
-                                        onTap: () => _model
-                                                .unfocusNode.canRequestFocus
-                                            ? FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode)
-                                            : FocusScope.of(context).unfocus(),
+                                        onTap: () =>
+                                            FocusScope.of(dialogContext)
+                                                .unfocus(),
                                         child: CustomDialogPostingJobWidget(),
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                );
                               }
                             }
                           },

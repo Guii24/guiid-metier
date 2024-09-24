@@ -88,6 +88,7 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark88,
                         fontSize: 17.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -100,6 +101,7 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark68,
                         fontSize: 15.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
                       ),
                 ),
@@ -108,6 +110,7 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                 child: Builder(
                   builder: (context) {
                     final listreport = FFAppState().listTypeReport.toList();
+
                     return ListView.builder(
                       padding: EdgeInsets.fromLTRB(
                         0,
@@ -127,9 +130,8 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                           highlightColor: Colors.transparent,
                           onTap: () async {
                             Navigator.pop(context);
-                            setState(() {
-                              FFAppState().choosenListReport = listreportItem;
-                            });
+                            FFAppState().choosenListReport = listreportItem;
+                            safeSetState(() {});
                             await showModalBottomSheet(
                               isScrollControlled: true,
                               backgroundColor: Color(0x01000000),
@@ -139,9 +141,9 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                                 return Padding(
                                   padding: MediaQuery.viewInsetsOf(context),
                                   child: ReportMisleading1Widget(
-                                    post: widget.post,
-                                    type: widget.type,
-                                    commentpost: widget.commentPost,
+                                    post: widget!.post,
+                                    type: widget!.type,
+                                    commentpost: widget!.commentPost,
                                     reportType: () {
                                       if (FFAppState().choosenListReport ==
                                           'Misleading Promotions') {
@@ -262,8 +264,8 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                                         return 'Any other content concerns not specified in the other categories.';
                                       }
                                     }(),
-                                    userRef: widget.userRef,
-                                    job: widget.job,
+                                    userRef: widget!.userRef,
+                                    job: widget!.job,
                                   ),
                                 );
                               },
@@ -297,6 +299,7 @@ class _BottomReportWidgetState extends State<BottomReportWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark88,
                                                 fontSize: 16.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                         ),

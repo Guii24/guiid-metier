@@ -39,8 +39,6 @@ class _PopupCancelWidgetState extends State<PopupCancelWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Align(
       alignment: AlignmentDirectional(0.0, 0.0),
       child: Material(
@@ -69,6 +67,7 @@ class _PopupCancelWidgetState extends State<PopupCancelWidget> {
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Libre Franklin',
                           fontSize: 17.0,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                           lineHeight: 1.5,
                         ),
@@ -84,11 +83,10 @@ class _PopupCancelWidgetState extends State<PopupCancelWidget> {
                         child: FFButtonWidget(
                           onPressed: () async {
                             Navigator.pop(context);
-                            setState(() {
-                              FFAppState().choosenPreference = [];
-                              FFAppState().uploadPhotoPost = [];
-                              FFAppState().wearItems = [];
-                            });
+                            FFAppState().choosenPreference = [];
+                            FFAppState().uploadPhotoPost = [];
+                            FFAppState().wearItems = [];
+                            safeSetState(() {});
                             context.pop();
                           },
                           text: 'YES',

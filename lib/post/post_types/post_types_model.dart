@@ -19,8 +19,6 @@ class PostTypesModel extends FlutterFlowModel<PostTypesWidget> {
   // Model for ComponentPostReposted component.
   late ComponentPostRepostedModel componentPostRepostedModel;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     componentPostUserModel =
@@ -37,8 +35,4 @@ class PostTypesModel extends FlutterFlowModel<PostTypesWidget> {
     componentPostCompanyModel.dispose();
     componentPostRepostedModel.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

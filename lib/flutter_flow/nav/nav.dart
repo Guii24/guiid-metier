@@ -110,15 +110,42 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'VerificationSignUp',
           path: '/verificationSignUp',
           builder: (context, params) => VerificationSignUpWidget(
-            userName: params.getParam('userName', ParamType.String),
-            userPhone: params.getParam('userPhone', ParamType.String),
-            profilePhoto: params.getParam('profilePhoto', ParamType.String),
-            userType: params.getParam('userType', ParamType.String),
-            phoneoriginal: params.getParam('phoneoriginal', ParamType.String),
-            phoneName: params.getParam('phoneName', ParamType.String),
-            phoneCode: params.getParam('phoneCode', ParamType.String),
-            phoneFlag: params.getParam('phoneFlag', ParamType.String),
-            phoneDialCode: params.getParam('phoneDialCode', ParamType.String),
+            userName: params.getParam(
+              'userName',
+              ParamType.String,
+            ),
+            userPhone: params.getParam(
+              'userPhone',
+              ParamType.String,
+            ),
+            profilePhoto: params.getParam(
+              'profilePhoto',
+              ParamType.String,
+            ),
+            userType: params.getParam(
+              'userType',
+              ParamType.String,
+            ),
+            phoneoriginal: params.getParam(
+              'phoneoriginal',
+              ParamType.String,
+            ),
+            phoneName: params.getParam(
+              'phoneName',
+              ParamType.String,
+            ),
+            phoneCode: params.getParam(
+              'phoneCode',
+              ParamType.String,
+            ),
+            phoneFlag: params.getParam(
+              'phoneFlag',
+              ParamType.String,
+            ),
+            phoneDialCode: params.getParam(
+              'phoneDialCode',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -146,7 +173,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/articlePage',
           builder: (context, params) => ArticlePageWidget(
             article: params.getParam(
-                'article', ParamType.DocumentReference, false, ['articles']),
+              'article',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['articles'],
+            ),
           ),
         ),
         FFRoute(
@@ -176,7 +207,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             'jobDoc': getDoc(['job'], JobRecord.fromSnapshot),
           },
           builder: (context, params) => JobFormWidget(
-            jobDoc: params.getParam('jobDoc', ParamType.Document),
+            jobDoc: params.getParam(
+              'jobDoc',
+              ParamType.Document,
+            ),
           ),
         ),
         FFRoute(
@@ -188,7 +222,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'SearchResultPageOLD',
           path: '/searchResultPageOLD',
           builder: (context, params) => SearchResultPageOLDWidget(
-            searchingText: params.getParam('searchingText', ParamType.String),
+            searchingText: params.getParam(
+              'searchingText',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -208,7 +245,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             'postDoc': getDoc(['post'], PostRecord.fromSnapshot),
           },
           builder: (context, params) => EditWearWidget(
-            postDoc: params.getParam('postDoc', ParamType.Document),
+            postDoc: params.getParam(
+              'postDoc',
+              ParamType.Document,
+            ),
           ),
         ),
         FFRoute(
@@ -233,7 +273,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             'postRef': getDoc(['post'], PostRecord.fromSnapshot),
           },
           builder: (context, params) => EditPostWidget(
-            postRef: params.getParam('postRef', ParamType.Document),
+            postRef: params.getParam(
+              'postRef',
+              ParamType.Document,
+            ),
           ),
         ),
         FFRoute(
@@ -286,7 +329,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/otherProfile',
           builder: (context, params) => OtherProfileWidget(
             userRef: params.getParam(
-                'userRef', ParamType.DocumentReference, false, ['users']),
+              'userRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['users'],
+            ),
           ),
         ),
         FFRoute(
@@ -294,7 +341,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/otherProfileCompany',
           builder: (context, params) => OtherProfileCompanyWidget(
             userRef: params.getParam(
-                'userRef', ParamType.DocumentReference, false, ['users']),
+              'userRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['users'],
+            ),
           ),
         ),
         FFRoute(
@@ -309,7 +360,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             'jobDoc': getDoc(['job'], JobRecord.fromSnapshot),
           },
           builder: (context, params) => SourcingMyJobDetailsWidget(
-            jobDoc: params.getParam('jobDoc', ParamType.Document),
+            jobDoc: params.getParam(
+              'jobDoc',
+              ParamType.Document,
+            ),
           ),
         ),
         FFRoute(
@@ -319,7 +373,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             'jobDoc': getDoc(['job'], JobRecord.fromSnapshot),
           },
           builder: (context, params) => EditPostJobPageWidget(
-            jobDoc: params.getParam('jobDoc', ParamType.Document),
+            jobDoc: params.getParam(
+              'jobDoc',
+              ParamType.Document,
+            ),
           ),
         ),
         FFRoute(
@@ -336,8 +393,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'VerificationLogin',
           path: '/verificationLogin',
           builder: (context, params) => VerificationLoginWidget(
-            userPhone: params.getParam('userPhone', ParamType.String),
-            countrycode: params.getParam('countrycode', ParamType.JSON),
+            userPhone: params.getParam(
+              'userPhone',
+              ParamType.String,
+            ),
+            countrycode: params.getParam(
+              'countrycode',
+              ParamType.JSON,
+            ),
           ),
         ),
         FFRoute(
@@ -350,7 +413,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/postPage',
           builder: (context, params) => PostPageWidget(
             postRef: params.getParam(
-                'postRef', ParamType.DocumentReference, false, ['post']),
+              'postRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['post'],
+            ),
           ),
         ),
         FFRoute(
@@ -358,7 +425,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/postPageReposted',
           builder: (context, params) => PostPageRepostedWidget(
             postRef: params.getParam(
-                'postRef', ParamType.DocumentReference, false, ['post']),
+              'postRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['post'],
+            ),
           ),
         ),
         FFRoute(
@@ -368,7 +439,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             'userDoc': getDoc(['users'], UsersRecord.fromSnapshot),
           },
           builder: (context, params) => FollowersOtherUsersWidget(
-            userDoc: params.getParam('userDoc', ParamType.Document),
+            userDoc: params.getParam(
+              'userDoc',
+              ParamType.Document,
+            ),
           ),
         ),
         FFRoute(
@@ -378,20 +452,40 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             'userDoc': getDoc(['users'], UsersRecord.fromSnapshot),
           },
           builder: (context, params) => FollowingOtherUsersWidget(
-            userDoc: params.getParam('userDoc', ParamType.Document),
+            userDoc: params.getParam(
+              'userDoc',
+              ParamType.Document,
+            ),
           ),
         ),
         FFRoute(
           name: 'VerificationEditPhone',
           path: '/verificationEditPhone',
           builder: (context, params) => VerificationEditPhoneWidget(
-            phoneOrifinal: params.getParam('phoneOrifinal', ParamType.String),
-            phoneNumberEdited:
-                params.getParam('phoneNumberEdited', ParamType.String),
-            phoneName: params.getParam('phoneName', ParamType.String),
-            phoneCode: params.getParam('phoneCode', ParamType.String),
-            phoneFlag: params.getParam('phoneFlag', ParamType.String),
-            phoneDialCode: params.getParam('phoneDialCode', ParamType.String),
+            phoneOrifinal: params.getParam(
+              'phoneOrifinal',
+              ParamType.String,
+            ),
+            phoneNumberEdited: params.getParam(
+              'phoneNumberEdited',
+              ParamType.String,
+            ),
+            phoneName: params.getParam(
+              'phoneName',
+              ParamType.String,
+            ),
+            phoneCode: params.getParam(
+              'phoneCode',
+              ParamType.String,
+            ),
+            phoneFlag: params.getParam(
+              'phoneFlag',
+              ParamType.String,
+            ),
+            phoneDialCode: params.getParam(
+              'phoneDialCode',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -399,21 +493,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/wearPage',
           builder: (context, params) => WearPageWidget(
             postDoc: params.getParam(
-                'postDoc', ParamType.DocumentReference, false, ['post']),
+              'postDoc',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['post'],
+            ),
           ),
         ),
         FFRoute(
           name: 'tesst',
           path: '/tesst',
           builder: (context, params) => TesstWidget(
-            searchingText: params.getParam('searchingText', ParamType.String),
+            searchingText: params.getParam(
+              'searchingText',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
           name: 'SearchResultPage',
           path: '/searchResultPage',
           builder: (context, params) => SearchResultPageWidget(
-            searchingText: params.getParam('searchingText', ParamType.String),
+            searchingText: params.getParam(
+              'searchingText',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -522,7 +626,7 @@ extension _GoRouterStateExtensions on GoRouterState {
       extra != null ? extra as Map<String, dynamic> : {};
   Map<String, dynamic> get allParams => <String, dynamic>{}
     ..addAll(pathParameters)
-    ..addAll(queryParameters)
+    ..addAll(uri.queryParameters)
     ..addAll(extraMap);
   TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
       ? extraMap[kTransitionInfoKey] as TransitionInfo
@@ -541,7 +645,7 @@ class FFParameters {
   // present is the special extra parameter reserved for the transition info.
   bool get isEmpty =>
       state.allParams.isEmpty ||
-      (state.extraMap.length == 1 &&
+      (state.allParams.length == 1 &&
           state.extraMap.containsKey(kTransitionInfoKey));
   bool isAsyncParam(MapEntry<String, dynamic> param) =>
       asyncParams.containsKey(param.key) && param.value is String;
@@ -562,10 +666,11 @@ class FFParameters {
 
   dynamic getParam<T>(
     String paramName,
-    ParamType type, [
+    ParamType type, {
     bool isList = false,
     List<String>? collectionNamePath,
-  ]) {
+    StructBuilder<T>? structBuilder,
+  }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
     }
@@ -578,8 +683,13 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList,
-        collectionNamePath: collectionNamePath);
+    return deserializeParam<T>(
+      param,
+      type,
+      isList,
+      collectionNamePath: collectionNamePath,
+      structBuilder: structBuilder,
+    );
   }
 }
 
@@ -611,7 +721,7 @@ class FFRoute {
           }
 
           if (requireAuth && !appStateNotifier.loggedIn) {
-            appStateNotifier.setRedirectLocationIfUnset(state.location);
+            appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
             return '/onboarding';
           }
           return null;
@@ -690,7 +800,7 @@ class RootPageContext {
   static bool isInactiveRootPage(BuildContext context) {
     final rootPageContext = context.read<RootPageContext?>();
     final isRootPage = rootPageContext?.isRootPage ?? false;
-    final location = GoRouter.of(context).location;
+    final location = GoRouterState.of(context).uri.toString();
     return isRootPage &&
         location != '/' &&
         location != rootPageContext?.errorRoute;
@@ -700,4 +810,14 @@ class RootPageContext {
         value: RootPageContext(true, errorRoute),
         child: child,
       );
+}
+
+extension GoRouterLocationExtension on GoRouter {
+  String getCurrentLocation() {
+    final RouteMatch lastMatch = routerDelegate.currentConfiguration.last;
+    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
+        ? lastMatch.matches
+        : routerDelegate.currentConfiguration;
+    return matchList.uri.toString();
+  }
 }

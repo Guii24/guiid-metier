@@ -43,8 +43,6 @@ class _TakePhotoProfileUserWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
       child: Column(
@@ -68,7 +66,7 @@ class _TakePhotoProfileUserWidgetState
                     if (selectedMedia != null &&
                         selectedMedia.every((m) =>
                             validateFileFormat(m.storagePath, context))) {
-                      setState(() => _model.isDataUploading1 = true);
+                      safeSetState(() => _model.isDataUploading1 = true);
                       var selectedUploadedFiles = <FFUploadedFile>[];
 
                       try {
@@ -86,12 +84,12 @@ class _TakePhotoProfileUserWidgetState
                       }
                       if (selectedUploadedFiles.length ==
                           selectedMedia.length) {
-                        setState(() {
+                        safeSetState(() {
                           _model.uploadedLocalFile1 =
                               selectedUploadedFiles.first;
                         });
                       } else {
-                        setState(() {});
+                        safeSetState(() {});
                         return;
                       }
                     }
@@ -111,6 +109,7 @@ class _TakePhotoProfileUserWidgetState
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).primary,
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                           ),
@@ -118,7 +117,7 @@ class _TakePhotoProfileUserWidgetState
                           backgroundColor: Color(0xDA000000),
                         ),
                       );
-                      setState(() {
+                      safeSetState(() {
                         _model.isDataUploading1 = false;
                         _model.uploadedLocalFile1 =
                             FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -145,7 +144,7 @@ class _TakePhotoProfileUserWidgetState
                       }
                     }
 
-                    setState(() {});
+                    safeSetState(() {});
                   },
                   text: 'Take a photo',
                   options: FFButtonOptions(
@@ -159,6 +158,7 @@ class _TakePhotoProfileUserWidgetState
                           fontFamily: 'Libre Franklin',
                           color: Color(0xFF007AFF),
                           fontSize: 20.0,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.normal,
                         ),
                     elevation: 0.0,
@@ -189,7 +189,7 @@ class _TakePhotoProfileUserWidgetState
                     if (selectedMedia != null &&
                         selectedMedia.every((m) =>
                             validateFileFormat(m.storagePath, context))) {
-                      setState(() => _model.isDataUploading2 = true);
+                      safeSetState(() => _model.isDataUploading2 = true);
                       var selectedUploadedFiles = <FFUploadedFile>[];
 
                       try {
@@ -207,12 +207,12 @@ class _TakePhotoProfileUserWidgetState
                       }
                       if (selectedUploadedFiles.length ==
                           selectedMedia.length) {
-                        setState(() {
+                        safeSetState(() {
                           _model.uploadedLocalFile2 =
                               selectedUploadedFiles.first;
                         });
                       } else {
-                        setState(() {});
+                        safeSetState(() {});
                         return;
                       }
                     }
@@ -232,6 +232,7 @@ class _TakePhotoProfileUserWidgetState
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).primary,
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                           ),
@@ -239,7 +240,7 @@ class _TakePhotoProfileUserWidgetState
                           backgroundColor: Color(0xDA000000),
                         ),
                       );
-                      setState(() {
+                      safeSetState(() {
                         _model.isDataUploading2 = false;
                         _model.uploadedLocalFile2 =
                             FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -266,7 +267,7 @@ class _TakePhotoProfileUserWidgetState
                       }
                     }
 
-                    setState(() {});
+                    safeSetState(() {});
                   },
                   text: 'Choose from gallery',
                   options: FFButtonOptions(
@@ -280,6 +281,7 @@ class _TakePhotoProfileUserWidgetState
                           fontFamily: 'Libre Franklin',
                           color: Color(0xFF007AFF),
                           fontSize: 20.0,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.normal,
                         ),
                     elevation: 0.0,
@@ -315,6 +317,7 @@ class _TakePhotoProfileUserWidgetState
                       fontFamily: 'Libre Franklin',
                       color: Color(0xFF007AFF),
                       fontSize: 20.0,
+                      letterSpacing: 0.0,
                       fontWeight: FontWeight.w600,
                     ),
                 elevation: 0.0,

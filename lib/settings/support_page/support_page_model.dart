@@ -18,7 +18,6 @@ import 'package:provider/provider.dart';
 class SupportPageModel extends FlutterFlowModel<SupportPageWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // Model for EmptySupportMessages component.
   late EmptySupportMessagesModel emptySupportMessagesModel;
   // State field(s) for TextField widget.
@@ -28,8 +27,6 @@ class SupportPageModel extends FlutterFlowModel<SupportPageWidget> {
   // Stores action output result for [Backend Call - Create Document] action in Icon widget.
   ChatRecord? createChat;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     emptySupportMessagesModel =
@@ -38,13 +35,8 @@ class SupportPageModel extends FlutterFlowModel<SupportPageWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     emptySupportMessagesModel.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

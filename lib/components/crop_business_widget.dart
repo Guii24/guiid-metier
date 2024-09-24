@@ -43,8 +43,6 @@ class _CropBusinessWidgetState extends State<CropBusinessWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       height: MediaQuery.sizeOf(context).height * 1.0,
@@ -55,7 +53,7 @@ class _CropBusinessWidgetState extends State<CropBusinessWidget> {
         right: 0.0,
         bottom: 0.0,
         left: 0.0,
-        imageFile: widget.img!,
+        imageFile: widget!.img!,
         callBackAction: () async {},
       ),
     );

@@ -35,12 +35,8 @@ class _AboutUsWidgetState extends State<AboutUsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -66,6 +62,7 @@ class _AboutUsWidgetState extends State<AboutUsWidget> {
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -103,6 +100,7 @@ class _AboutUsWidgetState extends State<AboutUsWidget> {
                             fontFamily: 'Libre Franklin',
                             color: Color(0xFF171A1F),
                             fontSize: 21.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
@@ -115,6 +113,7 @@ class _AboutUsWidgetState extends State<AboutUsWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark38,
                               fontSize: 14.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -127,6 +126,7 @@ class _AboutUsWidgetState extends State<AboutUsWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,
                               fontSize: 15.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -145,6 +145,7 @@ class _AboutUsWidgetState extends State<AboutUsWidget> {
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).dark68,
                             fontSize: 15.0,
+                            letterSpacing: 0.0,
                           ),
                     ),
                     Padding(

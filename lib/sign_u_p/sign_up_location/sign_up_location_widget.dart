@@ -48,8 +48,6 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 90.0, 0.0, 0.0),
       child: Container(
@@ -97,11 +95,12 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 10.0),
                 child: Text(
-                  widget.type!,
+                  widget!.type!,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark88,
                         fontSize: 17.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -123,6 +122,7 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                     context,
                   );
                 },
+                autofocus: false,
                 obscureText: false,
                 decoration: InputDecoration(
                   isDense: true,
@@ -131,6 +131,7 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark68,
                         fontSize: 15.0,
+                        letterSpacing: 0.0,
                       ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
@@ -186,7 +187,7 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                             await actions.updatePage(
                               context,
                             );
-                            setState(() {});
+                            safeSetState(() {});
                           },
                           child: Icon(
                             Icons.clear,
@@ -195,7 +196,10 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                         )
                       : null,
                 ),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Libre Franklin',
+                      letterSpacing: 0.0,
+                    ),
                 validator: _model.textControllerValidator.asValidator(context),
               ),
               FutureBuilder<ApiCallResponse>(
@@ -218,6 +222,7 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                     );
                   }
                   final containerGoogleAutoCompleteResponse = snapshot.data!;
+
                   return Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -251,6 +256,7 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                                         .toList()
                                         ?.toList() ??
                                     [];
+
                                 return ListView.builder(
                                   padding: EdgeInsets.zero,
                                   shrinkWrap: true,
@@ -265,58 +271,57 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        setState(() {
-                                          FFAppState().selectedlocation = () {
-                                            if (getJsonField(
-                                                  locationsItem,
-                                                  r'''$[2].value''',
-                                                ) ==
-                                                null) {
-                                              return '${getJsonField(
-                                                locationsItem,
-                                                r'''$[0].value''',
-                                              ).toString()}${valueOrDefault<String>(
-                                                getJsonField(
-                                                          locationsItem,
-                                                          r'''$[1].value''',
-                                                        ) ==
-                                                        null
-                                                    ? ' '
-                                                    : ', ',
-                                                'error',
-                                              )}${valueOrDefault<String>(
-                                                getJsonField(
-                                                          locationsItem,
-                                                          r'''$[1].value''',
-                                                        ) ==
-                                                        null
-                                                    ? ' '
-                                                    : getJsonField(
-                                                        locationsItem,
-                                                        r'''$[1].value''',
-                                                      ).toString(),
-                                                'error',
-                                              )}';
-                                            } else if (getJsonField(
-                                                  locationsItem,
-                                                  r'''$[1].value''',
-                                                ) ==
-                                                null) {
-                                              return '${getJsonField(
-                                                locationsItem,
-                                                r'''$[0].value''',
-                                              ).toString()}';
-                                            } else {
-                                              return '${getJsonField(
-                                                locationsItem,
-                                                r'''$[0].value''',
-                                              ).toString()}, ${getJsonField(
+                                        FFAppState().selectedlocation = () {
+                                          if (getJsonField(
                                                 locationsItem,
                                                 r'''$[2].value''',
-                                              ).toString()}';
-                                            }
-                                          }();
-                                        });
+                                              ) ==
+                                              null) {
+                                            return '${getJsonField(
+                                              locationsItem,
+                                              r'''$[0].value''',
+                                            ).toString()}${valueOrDefault<String>(
+                                              getJsonField(
+                                                        locationsItem,
+                                                        r'''$[1].value''',
+                                                      ) ==
+                                                      null
+                                                  ? ' '
+                                                  : ', ',
+                                              'error',
+                                            )}${valueOrDefault<String>(
+                                              getJsonField(
+                                                        locationsItem,
+                                                        r'''$[1].value''',
+                                                      ) ==
+                                                      null
+                                                  ? ' '
+                                                  : getJsonField(
+                                                      locationsItem,
+                                                      r'''$[1].value''',
+                                                    ).toString(),
+                                              'error',
+                                            )}';
+                                          } else if (getJsonField(
+                                                locationsItem,
+                                                r'''$[1].value''',
+                                              ) ==
+                                              null) {
+                                            return '${getJsonField(
+                                              locationsItem,
+                                              r'''$[0].value''',
+                                            ).toString()}';
+                                          } else {
+                                            return '${getJsonField(
+                                              locationsItem,
+                                              r'''$[0].value''',
+                                            ).toString()}, ${getJsonField(
+                                              locationsItem,
+                                              r'''$[2].value''',
+                                            ).toString()}';
+                                          }
+                                        }();
+                                        safeSetState(() {});
                                         Navigator.pop(context);
                                       },
                                       child: Row(
@@ -397,7 +402,12 @@ class _SignUpLocationWidgetState extends State<SignUpLocationWidget> {
                                                 maxLines: 1,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyMedium,
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Libre Franklin',
+                                                          letterSpacing: 0.0,
+                                                        ),
                                               ),
                                             ),
                                           ),

@@ -49,10 +49,8 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<UsersRecord>(
-      stream: UsersRecord.getDocument(widget.userRef!),
+      stream: UsersRecord.getDocument(widget!.userRef!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -68,7 +66,9 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
             ),
           );
         }
+
         final containerUsersRecord = snapshot.data!;
+
         return Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -80,13 +80,13 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
             hoverColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () async {
-              if (currentUserReference != widget.userRef) {
+              if (currentUserReference != widget!.userRef) {
                 if (containerUsersRecord.userType == 'User') {
                   context.pushNamed(
                     'OtherProfile',
                     queryParameters: {
                       'userRef': serializeParam(
-                        widget.userRef,
+                        widget!.userRef,
                         ParamType.DocumentReference,
                       ),
                     }.withoutNulls,
@@ -96,7 +96,7 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                     'OtherProfileCompany',
                     queryParameters: {
                       'userRef': serializeParam(
-                        widget.userRef,
+                        widget!.userRef,
                         ParamType.DocumentReference,
                       ),
                     }.withoutNulls,
@@ -143,6 +143,7 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -154,6 +155,7 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                   ),
                         ),
                       ],
@@ -161,8 +163,8 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                   ),
                 ),
                 if ((currentUserDocument?.userFollowing?.toList() ?? [])
-                        .contains(widget.userRef) &&
-                    (widget.userRef != currentUserReference))
+                        .contains(widget!.userRef) &&
+                    (widget!.userRef != currentUserReference))
                   AuthUserStreamWidget(
                     builder: (context) => FFButtonWidget(
                       onPressed: () async {
@@ -170,12 +172,12 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                           ...mapToFirestore(
                             {
                               'user_following':
-                                  FieldValue.arrayRemove([widget.userRef]),
+                                  FieldValue.arrayRemove([widget!.userRef]),
                             },
                           ),
                         });
 
-                        await widget.userRef!.update({
+                        await widget!.userRef!.update({
                           ...mapToFirestore(
                             {
                               'user_followers': FieldValue.arrayRemove(
@@ -198,6 +200,7 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark68,
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                         elevation: 0.0,
@@ -206,8 +209,8 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                     ),
                   ),
                 if (!(currentUserDocument?.userFollowing?.toList() ?? [])
-                        .contains(widget.userRef) &&
-                    (widget.userRef != currentUserReference))
+                        .contains(widget!.userRef) &&
+                    (widget!.userRef != currentUserReference))
                   AuthUserStreamWidget(
                     builder: (context) => FFButtonWidget(
                       onPressed: () async {
@@ -215,12 +218,12 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                           ...mapToFirestore(
                             {
                               'user_following':
-                                  FieldValue.arrayUnion([widget.userRef]),
+                                  FieldValue.arrayUnion([widget!.userRef]),
                             },
                           ),
                         });
 
-                        await widget.userRef!.update({
+                        await widget!.userRef!.update({
                           ...mapToFirestore(
                             {
                               'user_followers':
@@ -261,6 +264,7 @@ class _ComponentFollowingWidgetState extends State<ComponentFollowingWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                         elevation: 0.0,

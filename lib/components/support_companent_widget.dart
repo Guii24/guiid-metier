@@ -44,12 +44,10 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (widget.messageItem?.messageAuthor != currentUserReference)
+        if (widget!.messageItem?.messageAuthor != currentUserReference)
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
             child: Row(
@@ -98,7 +96,7 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                         children: [
                           Text(
                             valueOrDefault<String>(
-                              widget.messageItem?.messageText,
+                              widget!.messageItem?.messageText,
                               'text error',
                             ),
                             style: FlutterFlowTheme.of(context)
@@ -107,6 +105,7 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                 ),
                           ),
                           Padding(
@@ -114,8 +113,8 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                                 0.0, 4.0, 0.0, 0.0),
                             child: Text(
                               dateTimeFormat(
-                                'jm',
-                                widget.messageItem!.messageTime!,
+                                "jm",
+                                widget!.messageItem!.messageTime!,
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
@@ -125,6 +124,7 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xFF71747A),
                                     fontSize: 11.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -136,7 +136,7 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
               ],
             ),
           ),
-        if (widget.messageItem?.messageAuthor == currentUserReference)
+        if (widget!.messageItem?.messageAuthor == currentUserReference)
           Flexible(
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
@@ -167,7 +167,7 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                             alignment: AlignmentDirectional(-1.0, -1.0),
                             child: Text(
                               valueOrDefault<String>(
-                                widget.messageItem?.messageText,
+                                widget!.messageItem?.messageText,
                                 'text error',
                               ),
                               style: FlutterFlowTheme.of(context)
@@ -176,6 +176,7 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -184,8 +185,8 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                                 0.0, 4.0, 0.0, 0.0),
                             child: Text(
                               dateTimeFormat(
-                                'jm',
-                                widget.messageItem!.messageTime!,
+                                "jm",
+                                widget!.messageItem!.messageTime!,
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
@@ -195,6 +196,7 @@ class _SupportCompanentWidgetState extends State<SupportCompanentWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xFF71747A),
                                     fontSize: 11.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),

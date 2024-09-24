@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/subscription_in_profile_widget.dart';
 import '/components/subscription_widget.dart';
@@ -31,6 +32,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SettingsModel());
+
+    _model.switchValue =
+        valueOrDefault<bool>(currentUserDocument?.userNotification, false);
   }
 
   @override
@@ -42,12 +46,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -73,6 +73,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -129,6 +130,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
@@ -159,6 +161,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                         onTap: () async {
                           if (valueOrDefault<bool>(
                               currentUserDocument?.userSubscription, false)) {
+                            _model.apiResult7qk =
+                                await RevenueCatGroup.infoCall.call(
+                              userId: currentUserUid,
+                            );
+
                             showModalBottomSheet(
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
@@ -168,14 +175,15 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               context: context,
                               builder: (context) {
                                 return GestureDetector(
-                                  onTap: () =>
-                                      _model.unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
+                                  onTap: () => FocusScope.of(context).unfocus(),
                                   child: Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
-                                    child: SubscriptionInProfileWidget(),
+                                    child: SubscriptionInProfileWidget(
+                                      expireDate:
+                                          RevenueCatGroup.infoCall.expireDate(
+                                        (_model.apiResult7qk?.jsonBody ?? ''),
+                                      )!,
+                                    ),
                                   ),
                                 );
                               },
@@ -190,11 +198,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               context: context,
                               builder: (context) {
                                 return GestureDetector(
-                                  onTap: () =>
-                                      _model.unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
+                                  onTap: () => FocusScope.of(context).unfocus(),
                                   child: Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
                                     child: SubscriptionWidget(),
@@ -203,6 +207,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               },
                             ).then((value) => safeSetState(() {}));
                           }
+
+                          safeSetState(() {});
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
@@ -230,6 +236,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
@@ -286,6 +293,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
@@ -342,6 +350,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
@@ -398,6 +407,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
@@ -454,6 +464,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
@@ -510,6 +521,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
@@ -566,6 +578,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
@@ -614,6 +627,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 16.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                               ),
@@ -621,12 +635,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           ),
                           AuthUserStreamWidget(
                             builder: (context) => Switch.adaptive(
-                              value: _model.switchValue ??=
-                                  valueOrDefault<bool>(
-                                      currentUserDocument?.userNotification,
-                                      false),
+                              value: _model.switchValue!,
                               onChanged: (newValue) async {
-                                setState(() => _model.switchValue = newValue!);
+                                safeSetState(
+                                    () => _model.switchValue = newValue!);
                                 if (newValue!) {
                                   await currentUserReference!
                                       .update(createUsersRecordData(
@@ -690,16 +702,13 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                   alignment: AlignmentDirectional(0.0, 0.0)
                                       .resolve(Directionality.of(context)),
                                   child: GestureDetector(
-                                    onTap: () => _model
-                                            .unfocusNode.canRequestFocus
-                                        ? FocusScope.of(context)
-                                            .requestFocus(_model.unfocusNode)
-                                        : FocusScope.of(context).unfocus(),
+                                    onTap: () =>
+                                        FocusScope.of(dialogContext).unfocus(),
                                     child: PopupLogoutWidget(),
                                   ),
                                 );
                               },
-                            ).then((value) => setState(() {}));
+                            );
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -727,6 +736,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 16.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
@@ -767,16 +777,13 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                   alignment: AlignmentDirectional(0.0, 0.0)
                                       .resolve(Directionality.of(context)),
                                   child: GestureDetector(
-                                    onTap: () => _model
-                                            .unfocusNode.canRequestFocus
-                                        ? FocusScope.of(context)
-                                            .requestFocus(_model.unfocusNode)
-                                        : FocusScope.of(context).unfocus(),
+                                    onTap: () =>
+                                        FocusScope.of(dialogContext).unfocus(),
                                     child: PopupDeleteAccountWidget(),
                                   ),
                                 );
                               },
-                            ).then((value) => setState(() {}));
+                            );
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -804,6 +811,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 16.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),

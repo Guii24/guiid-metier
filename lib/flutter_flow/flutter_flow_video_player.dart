@@ -5,6 +5,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart' show routeObserver;
 
 const kDefaultAspectRatio = 16 / 9;
@@ -18,6 +19,7 @@ Set<VideoPlayerController> _videoPlayers = Set();
 
 class FlutterFlowVideoPlayer extends StatefulWidget {
   const FlutterFlowVideoPlayer({
+    super.key,
     required this.path,
     this.videoType = VideoType.network,
     this.width,
@@ -118,7 +120,7 @@ class _FlutterFlowVideoPlayerState extends State<FlutterFlowVideoPlayer>
 
   Future _initializePlayer() async {
     _videoPlayerController = widget.videoType == VideoType.network
-        ? VideoPlayerController.network(widget.path)
+        ? VideoPlayerController.networkUrl(Uri.parse(widget.path!))
         : VideoPlayerController.asset(widget.path);
     if (kIsWeb && widget.autoPlay) {
       // Browsers generally don't allow autoplay unless it's muted.
@@ -156,7 +158,8 @@ class _FlutterFlowVideoPlayerState extends State<FlutterFlowVideoPlayer>
       if (_videoPlayerController!.value.isPlaying) {
         _videoPlayers.forEach((otherPlayer) {
           if (otherPlayer != _videoPlayerController &&
-              otherPlayer.value.isPlaying) {
+              otherPlayer.value.isPlaying &&
+              mounted) {
             setState(() {
               otherPlayer.pause();
             });
@@ -179,8 +182,9 @@ class _FlutterFlowVideoPlayerState extends State<FlutterFlowVideoPlayer>
       }
       _isFullScreen = _chewieController!.isFullScreen;
     });
-
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -199,10 +203,18 @@ class _FlutterFlowVideoPlayerState extends State<FlutterFlowVideoPlayer>
                   ? Text('Error playing video')
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 20),
-                        Text('Loading'),
+                      children: [
+                        SizedBox(
+                          width: 30.0,
+                          height: 30.0,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              FlutterFlowTheme.of(context).primary,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text('Loading'),
                       ],
                     ),
         ),

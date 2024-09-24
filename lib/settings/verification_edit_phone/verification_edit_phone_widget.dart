@@ -58,7 +58,7 @@ class _VerificationEditPhoneWidgetState
       _model.timerController.onStartTimer();
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -70,12 +70,8 @@ class _VerificationEditPhoneWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -102,6 +98,7 @@ class _VerificationEditPhoneWidgetState
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
                   fontSize: 16.0,
+                  letterSpacing: 0.0,
                 ),
           ),
           actions: [],
@@ -131,13 +128,13 @@ class _VerificationEditPhoneWidgetState
 
                         await currentUserReference!
                             .update(createUsersRecordData(
-                          phoneNumber: widget.phoneOrifinal,
-                          userPhoneName: widget.phoneName,
-                          userPhoneCode: widget.phoneCode,
-                          userPhoneFlag: widget.phoneFlag,
-                          userPhoneDialCode: widget.phoneDialCode,
+                          phoneNumber: widget!.phoneOrifinal,
+                          userPhoneName: widget!.phoneName,
+                          userPhoneCode: widget!.phoneCode,
+                          userPhoneFlag: widget!.phoneFlag,
+                          userPhoneDialCode: widget!.phoneDialCode,
                         ));
-                        if ('${widget.phoneNumberEdited}@gmail.com'.isEmpty) {
+                        if ('${widget!.phoneNumberEdited}@gmail.com'.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -149,21 +146,20 @@ class _VerificationEditPhoneWidgetState
                         }
 
                         await authManager.updateEmail(
-                          email: '${widget.phoneNumberEdited}@gmail.com',
+                          email: '${widget!.phoneNumberEdited}@gmail.com',
                           context: context,
                         );
-                        setState(() {});
+                        safeSetState(() {});
 
                         await Future.delayed(
                             const Duration(milliseconds: 1200));
-                        setState(() {
-                          FFAppState().countryInfo = jsonDecode(
-                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-                          FFAppState().countryInfoCompany = jsonDecode(
-                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-                          FFAppState().page = 'Articles';
-                          FFAppState().pageIndex = 0;
-                        });
+                        FFAppState().countryInfo = jsonDecode(
+                            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+                        FFAppState().countryInfoCompany = jsonDecode(
+                            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+                        FFAppState().page = 'Articles';
+                        FFAppState().pageIndex = 0;
+                        safeSetState(() {});
                         context.safePop();
                         showDialog(
                           barrierColor: Color(0x02000000),
@@ -177,15 +173,13 @@ class _VerificationEditPhoneWidgetState
                               alignment: AlignmentDirectional(0.0, -1.0)
                                   .resolve(Directionality.of(context)),
                               child: GestureDetector(
-                                onTap: () => _model.unfocusNode.canRequestFocus
-                                    ? FocusScope.of(context)
-                                        .requestFocus(_model.unfocusNode)
-                                    : FocusScope.of(context).unfocus(),
+                                onTap: () =>
+                                    FocusScope.of(dialogContext).unfocus(),
                                 child: CustomDialogPhoneChangeWidget(),
                               ),
                             );
                           },
-                        ).then((value) => setState(() {}));
+                        );
                       },
                       onChange: () async {},
                     ),
@@ -199,6 +193,7 @@ class _VerificationEditPhoneWidgetState
                           fontFamily: 'Libre Franklin',
                           color: FlutterFlowTheme.of(context).dark68,
                           fontSize: 15.0,
+                          letterSpacing: 0.0,
                         ),
                   ),
                 ),
@@ -222,7 +217,7 @@ class _VerificationEditPhoneWidgetState
                       child: Align(
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: FlutterFlowTimer(
-                          initialTime: _model.timerMilliseconds,
+                          initialTime: _model.timerInitialTimeMs,
                           getDisplayTime: (value) =>
                               StopWatchTimer.getDisplayTime(
                             value,
@@ -235,7 +230,7 @@ class _VerificationEditPhoneWidgetState
                           onChanged: (value, displayTime, shouldUpdate) {
                             _model.timerMilliseconds = value;
                             _model.timerValue = displayTime;
-                            if (shouldUpdate) setState(() {});
+                            if (shouldUpdate) safeSetState(() {});
                           },
                           onEnded: () async {
                             await actions.updatePage(
@@ -248,6 +243,7 @@ class _VerificationEditPhoneWidgetState
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 20.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                         ),
@@ -265,12 +261,11 @@ class _VerificationEditPhoneWidgetState
                         _model.timerController.onResetTimer();
 
                         _model.timerController.onStartTimer();
-                        setState(() {
-                          _model.code =
-                              random_data.randomInteger(1000, 9999).toString();
-                        });
+                        _model.code =
+                            random_data.randomInteger(1000, 9999).toString();
+                        safeSetState(() {});
                         await TwilioCall.call(
-                          to: widget.phoneNumberEdited,
+                          to: widget!.phoneNumberEdited,
                           body:
                               'Your GMSM verification code is: ${_model.code}',
                         );
@@ -299,6 +294,7 @@ class _VerificationEditPhoneWidgetState
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),

@@ -82,9 +82,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -110,6 +108,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -138,6 +137,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                         ),
@@ -154,8 +154,9 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController1',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
@@ -167,6 +168,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 hintStyle: FlutterFlowTheme.of(context)
@@ -176,6 +178,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 16.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -212,6 +215,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   .override(
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                               minLines: 1,
@@ -232,8 +236,9 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController2',
                               Duration(milliseconds: 10),
-                              () => setState(() {}),
+                              () => safeSetState(() {}),
                             ),
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -244,6 +249,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               hintStyle: FlutterFlowTheme.of(context)
@@ -252,6 +258,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 16.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               enabledBorder: OutlineInputBorder(
@@ -288,6 +295,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                 .override(
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                             minLines: 1,
@@ -307,8 +315,9 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController3',
                               Duration(milliseconds: 10),
-                              () => setState(() {}),
+                              () => safeSetState(() {}),
                             ),
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -319,6 +328,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               hintStyle: FlutterFlowTheme.of(context)
@@ -327,6 +337,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 16.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               enabledBorder: OutlineInputBorder(
@@ -363,6 +374,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                 .override(
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                             minLines: 1,
@@ -384,6 +396,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: Color(0xE4F41F1F),
                                   fontSize: 12.0,
+                                  letterSpacing: 0.0,
                                 ),
                           ),
                         ),
@@ -427,13 +440,8 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
-                                                    .unfocus(),
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -464,6 +472,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Libre Franklin',
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                         ),
@@ -499,8 +508,9 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                         onChanged: (_) => EasyDebounce.debounce(
                                           '_model.textController4',
                                           Duration(milliseconds: 10),
-                                          () => setState(() {}),
+                                          () => safeSetState(() {}),
                                         ),
+                                        autofocus: false,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           isDense: true,
@@ -514,6 +524,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark38,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.normal,
                                                 lineHeight: 1.0,
                                               ),
@@ -558,6 +569,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                         minLines: 1,
@@ -587,6 +599,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 17.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                         ),
@@ -607,7 +620,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   multiFile: false,
                                 );
                                 if (selectedFiles != null) {
-                                  setState(
+                                  safeSetState(
                                       () => _model.isDataUploading1 = true);
                                   var selectedUploadedFiles =
                                       <FFUploadedFile>[];
@@ -645,7 +658,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                           selectedFiles.length &&
                                       downloadUrls.length ==
                                           selectedFiles.length) {
-                                    setState(() {
+                                    safeSetState(() {
                                       _model.uploadedLocalFile1 =
                                           selectedUploadedFiles.first;
                                       _model.uploadedFileUrl1 =
@@ -656,7 +669,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                       'Success!',
                                     );
                                   } else {
-                                    setState(() {});
+                                    safeSetState(() {});
                                     showUploadMessage(
                                       context,
                                       'Failed to upload file',
@@ -706,6 +719,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                                           context)
                                                       .dark88,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -727,6 +741,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                             ),
@@ -771,6 +786,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark88,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -812,6 +828,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 17.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                         ),
@@ -826,6 +843,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                   ),
                         ),
                       ),
@@ -840,8 +858,9 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController5',
                               Duration(milliseconds: 10),
-                              () => setState(() {}),
+                              () => safeSetState(() {}),
                             ),
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -852,6 +871,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -893,6 +913,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 16.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                             minLines: 1,
@@ -918,7 +939,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   multiFile: false,
                                 );
                                 if (selectedFiles != null) {
-                                  setState(
+                                  safeSetState(
                                       () => _model.isDataUploading2 = true);
                                   var selectedUploadedFiles =
                                       <FFUploadedFile>[];
@@ -956,7 +977,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                           selectedFiles.length &&
                                       downloadUrls.length ==
                                           selectedFiles.length) {
-                                    setState(() {
+                                    safeSetState(() {
                                       _model.uploadedLocalFile2 =
                                           selectedUploadedFiles.first;
                                       _model.uploadedFileUrl2 =
@@ -967,7 +988,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                       'Success!',
                                     );
                                   } else {
-                                    setState(() {});
+                                    safeSetState(() {});
                                     showUploadMessage(
                                       context,
                                       'Failed to upload file',
@@ -1017,6 +1038,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                                           context)
                                                       .dark88,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -1038,6 +1060,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                             ),
@@ -1082,6 +1105,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark88,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -1123,6 +1147,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 17.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                         ),
@@ -1135,6 +1160,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                           child: TextFormField(
                             controller: _model.textController6,
                             focusNode: _model.textFieldFocusNode6,
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -1145,6 +1171,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -1186,6 +1213,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 16.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                             minLines: 1,
@@ -1203,6 +1231,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                           child: TextFormField(
                             controller: _model.textController7,
                             focusNode: _model.textFieldFocusNode7,
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -1213,6 +1242,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -1254,6 +1284,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 16.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                             minLines: 1,
@@ -1271,6 +1302,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                           child: TextFormField(
                             controller: _model.textController8,
                             focusNode: _model.textFieldFocusNode8,
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -1281,6 +1313,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -1322,6 +1355,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 16.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                             minLines: 1,
@@ -1346,7 +1380,10 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                       BoxShadow(
                         blurRadius: 15.0,
                         color: Color(0x12000000),
-                        offset: Offset(0.0, -6.0),
+                        offset: Offset(
+                          0.0,
+                          -6.0,
+                        ),
                       )
                     ],
                   ),
@@ -1358,7 +1395,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                             16.0, 10.0, 16.0, 10.0),
                         child: StreamBuilder<UsersRecord>(
                           stream: UsersRecord.getDocument(
-                              widget.jobDoc!.companyCreator!),
+                              widget!.jobDoc!.companyCreator!),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
@@ -1374,7 +1411,9 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                 ),
                               );
                             }
+
                             final buttonUsersRecord = snapshot.data!;
+
                             return FFButtonWidget(
                               onPressed: ((_model.textController1.text ==
                                               null ||
@@ -1389,12 +1428,11 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                   : () async {
                                       if (!functions.validatorEmail(
                                           _model.textController3.text)) {
-                                        setState(() {
-                                          _model.validEmail = true;
-                                        });
+                                        _model.validEmail = true;
+                                        safeSetState(() {});
                                       } else {
                                         await JobApplicantsRecord.createDoc(
-                                                widget.jobDoc!.reference)
+                                                widget!.jobDoc!.reference)
                                             .set(createJobApplicantsRecordData(
                                           jobApplicantsCreationDate:
                                               getCurrentTimestamp,
@@ -1421,7 +1459,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                           jobApplicantLinkedin:
                                               _model.textController8.text,
                                           jobApplicantJobRef:
-                                              widget.jobDoc?.reference,
+                                              widget!.jobDoc?.reference,
                                           jobApplicantPhoneCode:
                                               valueOrDefault<String>(
                                             getJsonField(
@@ -1440,7 +1478,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                           ),
                                         ));
 
-                                        await widget.jobDoc!.reference.update({
+                                        await widget!.jobDoc!.reference.update({
                                           ...mapToFirestore(
                                             {
                                               'job_applicants_user_list':
@@ -1465,18 +1503,14 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                                           Directionality.of(
                                                               context)),
                                               child: GestureDetector(
-                                                onTap: () => _model.unfocusNode
-                                                        .canRequestFocus
-                                                    ? FocusScope.of(context)
-                                                        .requestFocus(
-                                                            _model.unfocusNode)
-                                                    : FocusScope.of(context)
+                                                onTap: () =>
+                                                    FocusScope.of(dialogContext)
                                                         .unfocus(),
                                                 child: PopupSourcingWidget(),
                                               ),
                                             );
                                           },
-                                        ).then((value) => setState(() {}));
+                                        );
 
                                         await NotificationRecord.collection
                                             .doc()
@@ -1489,7 +1523,7 @@ class _JobFormWidgetState extends State<JobFormWidget> {
                                               notificationTo:
                                                   buttonUsersRecord.reference,
                                               notificationJob:
-                                                  widget.jobDoc?.reference,
+                                                  widget!.jobDoc?.reference,
                                             ));
                                         if (buttonUsersRecord
                                             .userNotification) {

@@ -48,7 +48,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
       vsync: this,
       length: 3,
       initialIndex: 0,
-    )..addListener(() => setState(() {}));
+    )..addListener(() => safeSetState(() {}));
   }
 
   @override
@@ -60,10 +60,8 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<UsersRecord>(
-      stream: UsersRecord.getDocument(widget.userRef!),
+      stream: UsersRecord.getDocument(widget!.userRef!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -82,11 +80,11 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
             ),
           );
         }
+
         final otherProfileCompanyUsersRecord = snapshot.data!;
+
         return GestureDetector(
-          onTap: () => _model.unfocusNode.canRequestFocus
-              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-              : FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -127,14 +125,11 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                         context: context,
                         builder: (context) {
                           return GestureDetector(
-                            onTap: () => _model.unfocusNode.canRequestFocus
-                                ? FocusScope.of(context)
-                                    .requestFocus(_model.unfocusNode)
-                                : FocusScope.of(context).unfocus(),
+                            onTap: () => FocusScope.of(context).unfocus(),
                             child: Padding(
                               padding: MediaQuery.viewInsetsOf(context),
                               child: BottomReportandBlockUserWidget(
-                                user: widget.userRef,
+                                user: widget!.userRef,
                                 name:
                                     otherProfileCompanyUsersRecord.displayName,
                               ),
@@ -204,6 +199,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                             color: FlutterFlowTheme.of(context)
                                                 .dark88,
                                             fontSize: 19.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
@@ -221,6 +217,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark68,
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ),
@@ -269,7 +266,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                             queryBuilder: (postRecord) =>
                                                 postRecord.where(
                                               'post_creator',
-                                              isEqualTo: widget.userRef,
+                                              isEqualTo: widget!.userRef,
                                             ),
                                           ),
                                           builder: (context, snapshot) {
@@ -293,6 +290,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                               );
                                             }
                                             int textCount = snapshot.data!;
+
                                             return Text(
                                               formatNumber(
                                                 textCount,
@@ -307,6 +305,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                         color:
                                                             Color(0xFF171A1F),
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             );
                                           },
@@ -319,6 +318,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                 fontFamily: 'Libre Franklin',
                                                 color: Color(0xFF9D9FA3),
                                                 fontSize: 11.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ],
@@ -368,7 +368,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                       .where(
                                                         'user_following',
                                                         arrayContains:
-                                                            widget.userRef,
+                                                            widget!.userRef,
                                                       ),
                                             ),
                                             builder: (context, snapshot) {
@@ -392,6 +392,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                 );
                                               }
                                               int textCount = snapshot.data!;
+
                                               return Text(
                                                 valueOrDefault<String>(
                                                   formatNumber(
@@ -410,6 +411,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                           color:
                                                               Color(0xFF171A1F),
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               );
                                             },
@@ -422,6 +424,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                   fontFamily: 'Libre Franklin',
                                                   color: Color(0xFF9D9FA3),
                                                   fontSize: 11.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ],
@@ -443,7 +446,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                               if (!(currentUserDocument?.userFollowing
                                           ?.toList() ??
                                       [])
-                                  .contains(widget.userRef))
+                                  .contains(widget!.userRef))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -454,12 +457,12 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                           {
                                             'user_following':
                                                 FieldValue.arrayUnion(
-                                                    [widget.userRef]),
+                                                    [widget!.userRef]),
                                           },
                                         ),
                                       });
 
-                                      await widget.userRef!.update({
+                                      await widget!.userRef!.update({
                                         ...mapToFirestore(
                                           {
                                             'user_followers':
@@ -530,7 +533,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                               if ((currentUserDocument?.userFollowing
                                           ?.toList() ??
                                       [])
-                                  .contains(widget.userRef))
+                                  .contains(widget!.userRef))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -541,12 +544,12 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                           {
                                             'user_following':
                                                 FieldValue.arrayRemove(
-                                                    [widget.userRef]),
+                                                    [widget!.userRef]),
                                           },
                                         ),
                                       });
 
-                                      await widget.userRef!.update({
+                                      await widget!.userRef!.update({
                                         ...mapToFirestore(
                                           {
                                             'user_followers':
@@ -597,6 +600,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                     .override(
                                       fontFamily: 'Libre Franklin',
                                       fontSize: 17.0,
+                                      letterSpacing: 0.0,
                                     ),
                                 unselectedLabelStyle:
                                     FlutterFlowTheme.of(context)
@@ -604,6 +608,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                         .override(
                                           fontFamily: 'Libre Franklin',
                                           fontSize: 17.0,
+                                          letterSpacing: 0.0,
                                         ),
                                 indicatorColor:
                                     FlutterFlowTheme.of(context).secondary,
@@ -639,7 +644,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                             queryBuilder: (postRecord) =>
                                                 postRecord.where(
                                               'post_creator',
-                                              isEqualTo: widget.userRef,
+                                              isEqualTo: widget!.userRef,
                                             ),
                                           ),
                                           builder: (context, snapshot) {
@@ -671,6 +676,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                 child: EmptyPostMyProfWidget(),
                                               );
                                             }
+
                                             return ListView.separated(
                                               padding: EdgeInsets.fromLTRB(
                                                 0,
@@ -821,6 +827,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                           context)
                                                       .dark88,
                                                   fontSize: 17.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
@@ -849,6 +856,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                                     context)
                                                                 .dark68,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                         lineHeight: 1.5,
@@ -878,6 +886,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                                     context)
                                                                 .dark68,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -897,6 +906,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                           context)
                                                       .dark88,
                                                   fontSize: 17.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
@@ -921,6 +931,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                                     context)
                                                                 .dark68,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -939,6 +950,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                     otherProfileCompanyUsersRecord
                                                         .userPreferences
                                                         .toList();
+
                                                 return Wrap(
                                                   spacing: 10.0,
                                                   runSpacing: 10.0,
@@ -1004,6 +1016,8 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                                       .dark88,
                                                                   fontSize:
                                                                       15.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                 ),
                                                           ),
                                                         ),
@@ -1028,6 +1042,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                           context)
                                                       .dark88,
                                                   fontSize: 17.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
@@ -1068,6 +1083,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                                     context)
                                                                 .dark68,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               if (otherProfileCompanyUsersRecord
@@ -1089,6 +1105,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                                     context)
                                                                 .dark68,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -1133,6 +1150,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                                     context)
                                                                 .dark68,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               if (otherProfileCompanyUsersRecord
@@ -1154,6 +1172,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                                     context)
                                                                 .dark68,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -1172,7 +1191,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                         queryBuilder: (jobRecord) =>
                                             jobRecord.where(
                                           'company_creator',
-                                          isEqualTo: widget.userRef,
+                                          isEqualTo: widget!.userRef,
                                         ),
                                       ),
                                       builder: (context, snapshot) {
@@ -1208,6 +1227,7 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                             ),
                                           );
                                         }
+
                                         return ListView.separated(
                                           padding: EdgeInsets.zero,
                                           scrollDirection: Axis.vertical,
@@ -1239,15 +1259,8 @@ class _OtherProfileCompanyWidgetState extends State<OtherProfileCompanyWidget>
                                                   context: context,
                                                   builder: (context) {
                                                     return GestureDetector(
-                                                      onTap: () => _model
-                                                              .unfocusNode
-                                                              .canRequestFocus
-                                                          ? FocusScope.of(
-                                                                  context)
-                                                              .requestFocus(_model
-                                                                  .unfocusNode)
-                                                          : FocusScope.of(
-                                                                  context)
+                                                      onTap: () =>
+                                                          FocusScope.of(context)
                                                               .unfocus(),
                                                       child: Padding(
                                                         padding: MediaQuery

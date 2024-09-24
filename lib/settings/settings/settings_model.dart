@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/subscription_in_profile_widget.dart';
 import '/components/subscription_widget.dart';
@@ -17,21 +18,14 @@ import 'package:provider/provider.dart';
 class SettingsModel extends FlutterFlowModel<SettingsWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
+  // Stores action output result for [Backend Call - API (info)] action in Row widget.
+  ApiCallResponse? apiResult7qk;
   // State field(s) for Switch widget.
   bool? switchValue;
-
-  /// Initialization and disposal methods.
 
   @override
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    unfocusNode.dispose();
-  }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
+  void dispose() {}
 }

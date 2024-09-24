@@ -42,38 +42,37 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().selectedlocation = valueOrDefault<String>(
-          widget.jobDoc?.jobLocation,
-          'job location error',
-        );
-        FFAppState().selectedJobType =
-            '${widget.jobDoc?.jobWorkLocation}, ${widget.jobDoc?.jobEmploymentType}';
-        FFAppState().countryCode = valueOrDefault<String>(
-          '${widget.jobDoc?.jobContactCode}${widget.jobDoc?.jobContactDialCode}',
-          'US +1',
-        );
-      });
+      FFAppState().selectedlocation = valueOrDefault<String>(
+        widget!.jobDoc?.jobLocation,
+        'job location error',
+      );
+      FFAppState().selectedJobType =
+          '${widget!.jobDoc?.jobWorkLocation}, ${widget!.jobDoc?.jobEmploymentType}';
+      FFAppState().countryCode = valueOrDefault<String>(
+        '${widget!.jobDoc?.jobContactCode}${widget!.jobDoc?.jobContactDialCode}',
+        'US +1',
+      );
+      safeSetState(() {});
     });
 
     _model.textController1 ??=
-        TextEditingController(text: widget.jobDoc?.jobTittle);
+        TextEditingController(text: widget!.jobDoc?.jobTittle);
     _model.textFieldFocusNode1 ??= FocusNode();
 
     _model.textController2 ??=
-        TextEditingController(text: widget.jobDoc?.jobDescription);
+        TextEditingController(text: widget!.jobDoc?.jobDescription);
     _model.textFieldFocusNode2 ??= FocusNode();
 
     _model.textController3 ??=
-        TextEditingController(text: widget.jobDoc?.jobSalaryRate);
+        TextEditingController(text: widget!.jobDoc?.jobSalaryRate);
     _model.textFieldFocusNode3 ??= FocusNode();
 
     _model.textController4 ??=
-        TextEditingController(text: widget.jobDoc?.jobContactPhoneNumber);
+        TextEditingController(text: widget!.jobDoc?.jobContactPhoneNumber);
     _model.textFieldFocusNode4 ??= FocusNode();
 
     _model.textController5 ??=
-        TextEditingController(text: widget.jobDoc?.jobContactEmail);
+        TextEditingController(text: widget!.jobDoc?.jobContactEmail);
     _model.textFieldFocusNode5 ??= FocusNode();
   }
 
@@ -89,9 +88,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -117,6 +114,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -148,8 +146,9 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController1',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
@@ -161,6 +160,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 hintStyle: FlutterFlowTheme.of(context)
@@ -170,6 +170,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 16.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -207,6 +208,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                               minLines: 1,
@@ -231,6 +233,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xE4F41F1F),
                                     fontSize: 12.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -245,6 +248,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -260,8 +264,9 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController2',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
@@ -273,6 +278,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -313,6 +319,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                     lineHeight: 1.3,
                                   ),
@@ -333,6 +340,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                   ),
                         ),
                         Padding(
@@ -359,13 +367,8 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
-                                                    .unfocus(),
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -427,6 +430,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                                                     context)
                                                                 .dark38,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               if (FFAppState()
@@ -454,6 +458,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -494,6 +499,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                                           context)
                                                       .dark68,
                                                   fontSize: 12.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -516,6 +522,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xE4F41F1F),
                                     fontSize: 12.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -545,13 +552,8 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
-                                                    .unfocus(),
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -607,6 +609,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                                                     context)
                                                                 .dark38,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               if (FFAppState()
@@ -629,6 +632,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -677,6 +681,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                                           context)
                                                       .dark68,
                                                   fontSize: 12.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -699,6 +704,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xE4F41F1F),
                                     fontSize: 12.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -713,8 +719,9 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController3',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
@@ -726,6 +733,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 hintStyle: FlutterFlowTheme.of(context)
@@ -735,6 +743,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                     ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -771,6 +780,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                               minLines: 1,
@@ -791,6 +801,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: Color(0xE4F41F1F),
                                     fontSize: 12.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -805,6 +816,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -850,12 +862,8 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                           context: context,
                                           builder: (context) {
                                             return GestureDetector(
-                                              onTap: () => _model.unfocusNode
-                                                      .canRequestFocus
-                                                  ? FocusScope.of(context)
-                                                      .requestFocus(
-                                                          _model.unfocusNode)
-                                                  : FocusScope.of(context)
+                                              onTap: () =>
+                                                  FocusScope.of(context)
                                                       .unfocus(),
                                               child: Padding(
                                                 padding:
@@ -882,6 +890,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Libre Franklin',
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),
@@ -904,12 +913,8 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                             context: context,
                                             builder: (context) {
                                               return GestureDetector(
-                                                onTap: () => _model.unfocusNode
-                                                        .canRequestFocus
-                                                    ? FocusScope.of(context)
-                                                        .requestFocus(
-                                                            _model.unfocusNode)
-                                                    : FocusScope.of(context)
+                                                onTap: () =>
+                                                    FocusScope.of(context)
                                                         .unfocus(),
                                                 child: Padding(
                                                   padding:
@@ -944,6 +949,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                       child: TextFormField(
                                         controller: _model.textController4,
                                         focusNode: _model.textFieldFocusNode4,
+                                        autofocus: false,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           isDense: true,
@@ -957,6 +963,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark38,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.normal,
                                                 lineHeight: 1.0,
                                               ),
@@ -1002,6 +1009,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                         minLines: 1,
@@ -1025,6 +1033,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                           child: TextFormField(
                             controller: _model.textController5,
                             focusNode: _model.textFieldFocusNode5,
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -1035,6 +1044,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               hintStyle: FlutterFlowTheme.of(context)
@@ -1043,6 +1053,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               enabledBorder: OutlineInputBorder(
@@ -1079,6 +1090,7 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                                 .override(
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                             minLines: 1,
@@ -1103,7 +1115,10 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                       BoxShadow(
                         blurRadius: 15.0,
                         color: Color(0x12000000),
-                        offset: Offset(0.0, -6.0),
+                        offset: Offset(
+                          0.0,
+                          -6.0,
+                        ),
                       )
                     ],
                   ),
@@ -1116,26 +1131,22 @@ class _EditPostJobPageWidgetState extends State<EditPostJobPageWidget> {
                         onPressed: () async {
                           if (_model.textController1.text == null ||
                               _model.textController1.text == '') {
-                            setState(() {
-                              _model.validTitle = true;
-                            });
+                            _model.validTitle = true;
+                            safeSetState(() {});
                           } else if (FFAppState().selectedlocation == null ||
                               FFAppState().selectedlocation == '') {
-                            setState(() {
-                              _model.validLocation = true;
-                            });
+                            _model.validLocation = true;
+                            safeSetState(() {});
                           } else if (FFAppState().selectedJobType == null ||
                               FFAppState().selectedJobType == '') {
-                            setState(() {
-                              _model.validjobtype = true;
-                            });
+                            _model.validjobtype = true;
+                            safeSetState(() {});
                           } else if (_model.textController3.text == null ||
                               _model.textController3.text == '') {
-                            setState(() {
-                              _model.validRate = true;
-                            });
+                            _model.validRate = true;
+                            safeSetState(() {});
                           } else {
-                            await widget.jobDoc!.reference
+                            await widget!.jobDoc!.reference
                                 .update(createJobRecordData(
                               companyCreator: currentUserReference,
                               jobTittle: _model.textController1.text,

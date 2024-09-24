@@ -39,11 +39,11 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
     _model = createModel(context, () => ComponentWearModel());
 
     _model.textController1 ??=
-        TextEditingController(text: widget.wearItem?.wearText);
+        TextEditingController(text: widget!.wearItem?.wearText);
     _model.textFieldFocusNode1 ??= FocusNode();
 
     _model.textController2 ??=
-        TextEditingController(text: widget.wearItem?.wearLink);
+        TextEditingController(text: widget!.wearItem?.wearLink);
     _model.textFieldFocusNode2 ??= FocusNode();
   }
 
@@ -56,8 +56,6 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -74,7 +72,7 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(0.0),
                   child: Image.network(
-                    widget.wearItem!.wearImage,
+                    widget!.wearItem!.wearImage,
                     width: double.infinity,
                     height: double.infinity,
                     fit: BoxFit.cover,
@@ -91,10 +89,8 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        _model.updatePage(() {
-                          FFAppState()
-                              .removeAtIndexFromWearItems(widget.index!);
-                        });
+                        FFAppState().removeAtIndexFromWearItems(widget!.index!);
+                        _model.updatePage(() {});
                         await actions.updatePage(
                           context,
                         );
@@ -121,14 +117,14 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
                   '_model.textController1',
                   Duration(milliseconds: 2000),
                   () async {
-                    setState(() {
-                      FFAppState().updateWearItemsAtIndex(
-                        widget.index!,
-                        (e) => e..wearText = _model.textController1.text,
-                      );
-                    });
+                    FFAppState().updateWearItemsAtIndex(
+                      widget!.index!,
+                      (e) => e..wearText = _model.textController1.text,
+                    );
+                    safeSetState(() {});
                   },
                 ),
+                autofocus: false,
                 obscureText: false,
                 decoration: InputDecoration(
                   hintText: 'Description',
@@ -136,6 +132,7 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark38,
                         fontSize: 15.0,
+                        letterSpacing: 0.0,
                       ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
@@ -182,6 +179,7 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
                       fontFamily: 'Libre Franklin',
                       color: FlutterFlowTheme.of(context).dark68,
                       fontSize: 15.0,
+                      letterSpacing: 0.0,
                     ),
                 maxLines: null,
                 validator: _model.textController1Validator.asValidator(context),
@@ -202,14 +200,14 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
                   '_model.textController2',
                   Duration(milliseconds: 2000),
                   () async {
-                    setState(() {
-                      FFAppState().updateWearItemsAtIndex(
-                        widget.index!,
-                        (e) => e..wearLink = _model.textController2.text,
-                      );
-                    });
+                    FFAppState().updateWearItemsAtIndex(
+                      widget!.index!,
+                      (e) => e..wearLink = _model.textController2.text,
+                    );
+                    safeSetState(() {});
                   },
                 ),
+                autofocus: false,
                 obscureText: false,
                 decoration: InputDecoration(
                   isDense: true,
@@ -218,6 +216,7 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark38,
                         fontSize: 15.0,
+                        letterSpacing: 0.0,
                       ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -257,6 +256,7 @@ class _ComponentWearWidgetState extends State<ComponentWearWidget> {
                       fontFamily: 'Libre Franklin',
                       color: FlutterFlowTheme.of(context).dark88,
                       fontSize: 16.0,
+                      letterSpacing: 0.0,
                       fontWeight: FontWeight.w500,
                     ),
                 minLines: 1,

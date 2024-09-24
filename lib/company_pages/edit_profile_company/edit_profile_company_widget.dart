@@ -42,20 +42,19 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().profilePhotoCompany = currentUserPhoto;
-        FFAppState().selectedlocation =
-            valueOrDefault(currentUserDocument?.userLocation, '');
-        FFAppState().choosenPreference =
-            (currentUserDocument?.userPreferences?.toList() ?? [])
-                .toList()
-                .cast<String>();
-        FFAppState().countryInfoCompany = functions.jsonAsString(
-            valueOrDefault(currentUserDocument?.userContactName, ''),
-            valueOrDefault(currentUserDocument?.userContactCode, ''),
-            valueOrDefault(currentUserDocument?.userContactFlag, ''),
-            valueOrDefault(currentUserDocument?.userContactDialCode, ''));
-      });
+      FFAppState().profilePhotoCompany = currentUserPhoto;
+      FFAppState().selectedlocation =
+          valueOrDefault(currentUserDocument?.userLocation, '');
+      FFAppState().choosenPreference =
+          (currentUserDocument?.userPreferences?.toList() ?? [])
+              .toList()
+              .cast<String>();
+      FFAppState().countryInfoCompany = functions.jsonAsString(
+          valueOrDefault(currentUserDocument?.userContactName, ''),
+          valueOrDefault(currentUserDocument?.userContactCode, ''),
+          valueOrDefault(currentUserDocument?.userContactFlag, ''),
+          valueOrDefault(currentUserDocument?.userContactDialCode, ''));
+      safeSetState(() {});
     });
 
     _model.textController1 ??=
@@ -87,9 +86,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -108,9 +105,8 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
             ),
             onPressed: () async {
               context.pop();
-              setState(() {
-                FFAppState().profilePhotoCompany = '';
-              });
+              FFAppState().profilePhotoCompany = '';
+              safeSetState(() {});
             },
           ),
           title: Text(
@@ -119,6 +115,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
                   fontSize: 16.0,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -153,10 +150,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                             context: context,
                             builder: (context) {
                               return GestureDetector(
-                                onTap: () => _model.unfocusNode.canRequestFocus
-                                    ? FocusScope.of(context)
-                                        .requestFocus(_model.unfocusNode)
-                                    : FocusScope.of(context).unfocus(),
+                                onTap: () => FocusScope.of(context).unfocus(),
                                 child: Padding(
                                   padding: MediaQuery.viewInsetsOf(context),
                                   child: TakePhotoProfileCompanyWidget(),
@@ -200,10 +194,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                             context: context,
                             builder: (context) {
                               return GestureDetector(
-                                onTap: () => _model.unfocusNode.canRequestFocus
-                                    ? FocusScope.of(context)
-                                        .requestFocus(_model.unfocusNode)
-                                    : FocusScope.of(context).unfocus(),
+                                onTap: () => FocusScope.of(context).unfocus(),
                                 child: Padding(
                                   padding: MediaQuery.viewInsetsOf(context),
                                   child: TakePhotoProfileCompanyWidget(),
@@ -219,6 +210,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                         ),
@@ -236,8 +228,9 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                           onChanged: (_) => EasyDebounce.debounce(
                             '_model.textController1',
                             Duration(milliseconds: 10),
-                            () => setState(() {}),
+                            () => safeSetState(() {}),
                           ),
+                          autofocus: false,
                           obscureText: false,
                           decoration: InputDecoration(
                             isDense: true,
@@ -248,6 +241,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark38,
                                   fontSize: 16.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             hintStyle: FlutterFlowTheme.of(context)
@@ -256,6 +250,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark38,
                                   fontSize: 16.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             enabledBorder: OutlineInputBorder(
@@ -292,6 +287,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                           minLines: 1,
@@ -313,6 +309,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).error,
                             fontSize: 13.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.normal,
                           ),
                     ),
@@ -340,11 +337,8 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   context: context,
                                   builder: (context) {
                                     return GestureDetector(
-                                      onTap: () => _model
-                                              .unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
+                                      onTap: () =>
+                                          FocusScope.of(context).unfocus(),
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
@@ -402,6 +396,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                                           context)
                                                       .dark88,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),
@@ -418,6 +413,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                                           context)
                                                       .dark38,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                       ],
@@ -453,6 +449,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .dark38,
                                             fontSize: 13.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -472,6 +469,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).dark88,
                             fontSize: 17.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
@@ -487,8 +485,9 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                           onChanged: (_) => EasyDebounce.debounce(
                             '_model.textController2',
                             Duration(milliseconds: 10),
-                            () => setState(() {}),
+                            () => safeSetState(() {}),
                           ),
+                          autofocus: false,
                           obscureText: false,
                           decoration: InputDecoration(
                             isDense: true,
@@ -499,6 +498,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark38,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             enabledBorder: OutlineInputBorder(
@@ -535,6 +535,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                           maxLines: 6,
@@ -557,6 +558,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).dark68,
                             fontSize: 14.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.normal,
                           ),
                     ),
@@ -570,6 +572,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).dark88,
                             fontSize: 17.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
@@ -593,10 +596,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                             context: context,
                             builder: (context) {
                               return GestureDetector(
-                                onTap: () => _model.unfocusNode.canRequestFocus
-                                    ? FocusScope.of(context)
-                                        .requestFocus(_model.unfocusNode)
-                                    : FocusScope.of(context).unfocus(),
+                                onTap: () => FocusScope.of(context).unfocus(),
                                 child: Padding(
                                   padding: MediaQuery.viewInsetsOf(context),
                                   child: BottomPreferenceWidget(),
@@ -636,6 +636,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                             fontFamily: 'Libre Franklin',
                                             color: FlutterFlowTheme.of(context)
                                                 .dark38,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   if (FFAppState().choosenPreference.length !=
@@ -646,6 +647,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                           final item = FFAppState()
                                               .choosenPreference
                                               .toList();
+
                                           return SingleChildScrollView(
                                             scrollDirection: Axis.horizontal,
                                             child: Row(
@@ -674,6 +676,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -701,6 +704,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).dark88,
                             fontSize: 17.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
@@ -745,12 +749,8 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                     context: context,
                                     builder: (context) {
                                       return GestureDetector(
-                                        onTap: () => _model
-                                                .unfocusNode.canRequestFocus
-                                            ? FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode)
-                                            : FocusScope.of(context).unfocus(),
+                                        onTap: () =>
+                                            FocusScope.of(context).unfocus(),
                                         child: Padding(
                                           padding:
                                               MediaQuery.viewInsetsOf(context),
@@ -776,6 +776,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                       .bodyMedium
                                       .override(
                                         fontFamily: 'Libre Franklin',
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,
                                       ),
                                 ),
@@ -797,13 +798,8 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                       context: context,
                                       builder: (context) {
                                         return GestureDetector(
-                                          onTap: () => _model
-                                                  .unfocusNode.canRequestFocus
-                                              ? FocusScope.of(context)
-                                                  .requestFocus(
-                                                      _model.unfocusNode)
-                                              : FocusScope.of(context)
-                                                  .unfocus(),
+                                          onTap: () =>
+                                              FocusScope.of(context).unfocus(),
                                           child: Padding(
                                             padding: MediaQuery.viewInsetsOf(
                                                 context),
@@ -838,8 +834,9 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                     onChanged: (_) => EasyDebounce.debounce(
                                       '_model.textController3',
                                       Duration(milliseconds: 10),
-                                      () => setState(() {}),
+                                      () => safeSetState(() {}),
                                     ),
+                                    autofocus: false,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       isDense: true,
@@ -851,6 +848,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .dark38,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                       enabledBorder: OutlineInputBorder(
@@ -893,6 +891,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
                                         ),
                                     minLines: 1,
@@ -921,8 +920,9 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                           onChanged: (_) => EasyDebounce.debounce(
                             '_model.textController4',
                             Duration(milliseconds: 10),
-                            () => setState(() {}),
+                            () => safeSetState(() {}),
                           ),
+                          autofocus: false,
                           textInputAction: TextInputAction.done,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -934,6 +934,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark38,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             hintStyle: FlutterFlowTheme.of(context)
@@ -942,6 +943,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark38,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             enabledBorder: OutlineInputBorder(
@@ -978,6 +980,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                           minLines: 1,
@@ -1014,6 +1017,7 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primary,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                         ),
@@ -1073,19 +1077,15 @@ class _EditProfileCompanyWidgetState extends State<EditProfileCompanyWidget> {
                                               .resolve(
                                                   Directionality.of(context)),
                                           child: GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
+                                            onTap: () =>
+                                                FocusScope.of(dialogContext)
                                                     .unfocus(),
                                             child:
                                                 CustomDialogEditProfileWidget(),
                                           ),
                                         );
                                       },
-                                    ).then((value) => setState(() {}));
+                                    );
                                   }
                                 },
                           text: 'SAVE',

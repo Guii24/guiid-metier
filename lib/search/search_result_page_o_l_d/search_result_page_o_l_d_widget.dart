@@ -49,12 +49,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -76,13 +72,14 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
             },
           ),
           title: Text(
-            widget.searchingText!.maybeHandleOverflow(
+            widget!.searchingText!.maybeHandleOverflow(
               maxChars: 30,
               replacement: '…',
             ),
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                 ),
           ),
           actions: [],
@@ -107,6 +104,7 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
               );
             }
             List<UsersRecord> containerUsersRecordList = snapshot.data!;
+
             return Container(
               width: double.infinity,
               height: double.infinity,
@@ -143,9 +141,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  setState(() {
-                                    _model.choosenTab = 'People';
-                                  });
+                                  _model.choosenTab = 'People';
+                                  safeSetState(() {});
                                 },
                                 child: Material(
                                   color: Colors.transparent,
@@ -187,6 +184,7 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                                             context)
                                                         .primaryText,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -204,9 +202,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  setState(() {
-                                    _model.choosenTab = 'Companies';
-                                  });
+                                  _model.choosenTab = 'Companies';
+                                  safeSetState(() {});
                                 },
                                 child: Material(
                                   color: Colors.transparent,
@@ -248,6 +245,7 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                                             context)
                                                         .primaryText,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -265,9 +263,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  setState(() {
-                                    _model.choosenTab = 'Articles';
-                                  });
+                                  _model.choosenTab = 'Articles';
+                                  safeSetState(() {});
                                 },
                                 child: Material(
                                   color: Colors.transparent,
@@ -309,6 +306,7 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                                             context)
                                                         .primaryText,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -326,9 +324,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  setState(() {
-                                    _model.choosenTab = 'Posts';
-                                  });
+                                  _model.choosenTab = 'Posts';
+                                  safeSetState(() {});
                                 },
                                 child: Material(
                                   color: Colors.transparent,
@@ -370,6 +367,7 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                                                 context)
                                                             .primaryText,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -387,9 +385,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  setState(() {
-                                    _model.choosenTab = 'Jobs';
-                                  });
+                                  _model.choosenTab = 'Jobs';
+                                  safeSetState(() {});
                                 },
                                 child: Material(
                                   color: Colors.transparent,
@@ -431,6 +428,7 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                                                 context)
                                                             .primaryText,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -452,6 +450,7 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
                               fontSize: 15.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w500,
                             ),
                       ),
@@ -467,11 +466,12 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                               builder: (context) {
                                 final users = functions
                                     .searchUser(
-                                        widget.searchingText!,
+                                        widget!.searchingText!,
                                         containerUsersRecordList
                                             .where((e) => e.userType == 'User')
                                             .toList())
                                     .toList();
+
                                 return ListView.builder(
                                   padding: EdgeInsets.zero,
                                   primary: false,
@@ -515,12 +515,13 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                               builder: (context) {
                                 final company = functions
                                     .searchUser(
-                                        widget.searchingText!,
+                                        widget!.searchingText!,
                                         containerUsersRecordList
                                             .where(
                                                 (e) => e.userType == 'Company')
                                             .toList())
                                     .toList();
+
                                 return ListView.builder(
                                   padding: EdgeInsets.zero,
                                   primary: false,
@@ -580,6 +581,7 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                 }
                                 List<JobRecord> containerJobRecordList =
                                     snapshot.data!;
+
                                 return Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
@@ -589,9 +591,10 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                   child: Builder(
                                     builder: (context) {
                                       final jobs = functions
-                                          .searchJob(widget.searchingText!,
+                                          .searchJob(widget!.searchingText!,
                                               containerJobRecordList.toList())
                                           .toList();
+
                                       return ListView.separated(
                                         padding: EdgeInsets.zero,
                                         primary: false,
@@ -618,13 +621,8 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                                 context: context,
                                                 builder: (context) {
                                                   return GestureDetector(
-                                                    onTap: () => _model
-                                                            .unfocusNode
-                                                            .canRequestFocus
-                                                        ? FocusScope.of(context)
-                                                            .requestFocus(_model
-                                                                .unfocusNode)
-                                                        : FocusScope.of(context)
+                                                    onTap: () =>
+                                                        FocusScope.of(context)
                                                             .unfocus(),
                                                     child: Padding(
                                                       padding: MediaQuery
@@ -674,6 +672,7 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                 }
                                 List<PostRecord> containerPostRecordList =
                                     snapshot.data!;
+
                                 return Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
@@ -683,9 +682,10 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                   child: Builder(
                                     builder: (context) {
                                       final posts = functions
-                                          .searchPosts(widget.searchingText!,
+                                          .searchPosts(widget!.searchingText!,
                                               containerPostRecordList.toList())
                                           .toList();
+
                                       return ListView.separated(
                                         padding: EdgeInsets.fromLTRB(
                                           0,
@@ -735,6 +735,7 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                 List<ArticlesRecord>
                                     containerArticlesRecordList =
                                     snapshot.data!;
+
                                 return Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
@@ -745,10 +746,11 @@ class _SearchResultPageOLDWidgetState extends State<SearchResultPageOLDWidget> {
                                     builder: (context) {
                                       final articles = functions
                                           .searchArticles(
-                                              widget.searchingText!,
+                                              widget!.searchingText!,
                                               containerArticlesRecordList
                                                   .toList())
                                           .toList();
+
                                       return ListView.separated(
                                         padding: EdgeInsets.zero,
                                         primary: false,

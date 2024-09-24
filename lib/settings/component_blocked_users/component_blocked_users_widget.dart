@@ -49,10 +49,8 @@ class _ComponentBlockedUsersWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<UsersRecord>(
-      stream: UsersRecord.getDocument(widget.userRef!),
+      stream: UsersRecord.getDocument(widget!.userRef!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -68,7 +66,9 @@ class _ComponentBlockedUsersWidgetState
             ),
           );
         }
+
         final containerUsersRecord = snapshot.data!;
+
         return Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -85,7 +85,7 @@ class _ComponentBlockedUsersWidgetState
                   'OtherProfile',
                   queryParameters: {
                     'userRef': serializeParam(
-                      widget.userRef,
+                      widget!.userRef,
                       ParamType.DocumentReference,
                     ),
                   }.withoutNulls,
@@ -95,7 +95,7 @@ class _ComponentBlockedUsersWidgetState
                   'OtherProfileCompany',
                   queryParameters: {
                     'userRef': serializeParam(
-                      widget.userRef,
+                      widget!.userRef,
                       ParamType.DocumentReference,
                     ),
                   }.withoutNulls,
@@ -141,6 +141,7 @@ class _ComponentBlockedUsersWidgetState
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -152,6 +153,7 @@ class _ComponentBlockedUsersWidgetState
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                   ),
                         ),
                       ],
@@ -164,7 +166,7 @@ class _ComponentBlockedUsersWidgetState
                       ...mapToFirestore(
                         {
                           'user_blocked_user':
-                              FieldValue.arrayRemove([widget.userRef]),
+                              FieldValue.arrayRemove([widget!.userRef]),
                         },
                       ),
                     });
@@ -181,6 +183,7 @@ class _ComponentBlockedUsersWidgetState
                           fontFamily: 'Libre Franklin',
                           color: FlutterFlowTheme.of(context).dark68,
                           fontSize: 14.0,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.normal,
                         ),
                     elevation: 0.0,

@@ -38,12 +38,8 @@ class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -92,6 +88,7 @@ class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
                     fontFamily: 'NewYork',
                     color: FlutterFlowTheme.of(context).primaryText,
                     fontSize: 20.0,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.w600,
                     useGoogleFonts: false,
                   ),
@@ -189,17 +186,20 @@ class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
                                     List<ArticlesRecord>
                                         pageViewArticlesRecordList =
                                         snapshot.data!;
+
                                     return Container(
                                       width: double.infinity,
                                       child: PageView.builder(
                                         controller: _model
                                                 .pageViewController ??=
                                             PageController(
-                                                initialPage: min(
+                                                initialPage: max(
                                                     0,
-                                                    pageViewArticlesRecordList
-                                                            .length -
-                                                        1)),
+                                                    min(
+                                                        0,
+                                                        pageViewArticlesRecordList
+                                                                .length -
+                                                            1))),
                                         scrollDirection: Axis.horizontal,
                                         itemCount:
                                             pageViewArticlesRecordList.length,
@@ -345,6 +345,7 @@ class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                               ),
@@ -373,6 +374,7 @@ class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
                                 }
                                 List<ArticlesRecord>
                                     listViewArticlesRecordList = snapshot.data!;
+
                                 return ListView.separated(
                                   padding: EdgeInsets.zero,
                                   primary: false,
@@ -407,7 +409,8 @@ class _ArticlesUserCopyWidgetState extends State<ArticlesUserCopyWidget> {
                                           listViewArticlesRecord.reference.id,
                                           listViewIndex,
                                         ),
-                                        updateCallback: () => setState(() {}),
+                                        updateCallback: () =>
+                                            safeSetState(() {}),
                                         child: ArticlesComponentWidget(
                                           key: Key(
                                             'Key9oz_${listViewArticlesRecord.reference.id}',

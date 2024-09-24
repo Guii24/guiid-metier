@@ -49,10 +49,8 @@ class _CommentPostWidgetState extends State<CommentPostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<CommentPostRecord>(
-      stream: CommentPostRecord.getDocument(widget.commentPostref!),
+      stream: CommentPostRecord.getDocument(widget!.commentPostref!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -68,7 +66,9 @@ class _CommentPostWidgetState extends State<CommentPostWidget> {
             ),
           );
         }
+
         final containerCommentPostRecord = snapshot.data!;
+
         return Container(
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -91,7 +91,9 @@ class _CommentPostWidgetState extends State<CommentPostWidget> {
                   ),
                 );
               }
+
               final columnUsersRecord = snapshot.data!;
+
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,39 +138,40 @@ class _CommentPostWidgetState extends State<CommentPostWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 15.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w600,
                                       ),
                                 ),
                               ),
                               Text(
                                 dateTimeFormat(
-                                          'yMd',
+                                          "yMd",
                                           containerCommentPostRecord
                                               .commentPostTime,
                                           locale: FFLocalizations.of(context)
                                               .languageCode,
                                         ) ==
                                         dateTimeFormat(
-                                          'yMd',
+                                          "yMd",
                                           getCurrentTimestamp,
                                           locale: FFLocalizations.of(context)
                                               .languageCode,
                                         )
                                     ? 'Today at ${dateTimeFormat(
-                                        'jm',
+                                        "jm",
                                         containerCommentPostRecord
                                             .commentPostTime,
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
                                       )}'
                                     : '${dateTimeFormat(
-                                        'd/M/y',
+                                        "d/M/y",
                                         containerCommentPostRecord
                                             .commentPostTime,
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
                                       )} at ${dateTimeFormat(
-                                        'jm',
+                                        "jm",
                                         containerCommentPostRecord
                                             .commentPostTime,
                                         locale: FFLocalizations.of(context)
@@ -181,6 +184,7 @@ class _CommentPostWidgetState extends State<CommentPostWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                             ],
@@ -206,7 +210,7 @@ class _CommentPostWidgetState extends State<CommentPostWidget> {
                                   child: BottomDeleteCommentPostWidget(
                                     commentref:
                                         containerCommentPostRecord.reference,
-                                    postref: widget.postref,
+                                    postref: widget!.postref,
                                   ),
                                 );
                               },
@@ -247,6 +251,7 @@ class _CommentPostWidgetState extends State<CommentPostWidget> {
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).dark88,
                             fontSize: 15.0,
+                            letterSpacing: 0.0,
                             lineHeight: 1.4,
                           ),
                     ),

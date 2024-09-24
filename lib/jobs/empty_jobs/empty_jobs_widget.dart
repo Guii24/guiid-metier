@@ -37,8 +37,6 @@ class _EmptyJobsWidgetState extends State<EmptyJobsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -67,6 +65,7 @@ class _EmptyJobsWidgetState extends State<EmptyJobsWidget> {
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark68,
                   fontSize: 15.0,
+                  letterSpacing: 0.0,
                 ),
           ),
         ),

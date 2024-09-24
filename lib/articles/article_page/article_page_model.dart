@@ -24,7 +24,6 @@ class ArticlePageModel extends FlutterFlowModel<ArticlePageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for PageView widget.
   PageController? pageViewController;
 
@@ -42,8 +41,6 @@ class ArticlePageModel extends FlutterFlowModel<ArticlePageWidget> {
   // Stores action output result for [Backend Call - Create Document] action in IconButton widget.
   CommentArticleRecord? comment;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     commentArticleModels =
@@ -52,13 +49,8 @@ class ArticlePageModel extends FlutterFlowModel<ArticlePageWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     commentArticleModels.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

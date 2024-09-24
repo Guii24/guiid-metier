@@ -54,12 +54,10 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 150.0, 0.0, 0.0),
       child: StreamBuilder<PostRecord>(
-        stream: PostRecord.getDocument(widget.post!),
+        stream: PostRecord.getDocument(widget!.post!),
         builder: (context, snapshot) {
           // Customize what your widget looks like when it's loading.
           if (!snapshot.hasData) {
@@ -75,7 +73,9 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
               ),
             );
           }
+
           final containerPostRecord = snapshot.data!;
+
           return Container(
             width: double.infinity,
             height: MediaQuery.sizeOf(context).height * 0.65,
@@ -126,6 +126,7 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 17.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),
@@ -157,6 +158,7 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                                 List<CommentPostRecord>
                                     listViewCommentPostRecordList =
                                     snapshot.data!;
+
                                 return ListView.separated(
                                   padding: EdgeInsets.fromLTRB(
                                     0,
@@ -244,8 +246,9 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                                         onChanged: (_) => EasyDebounce.debounce(
                                           '_model.textController',
                                           Duration(milliseconds: 10),
-                                          () => setState(() {}),
+                                          () => safeSetState(() {}),
                                         ),
+                                        autofocus: false,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           isDense: true,
@@ -259,6 +262,7 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark38,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                                 lineHeight: 1.5,
                                               ),
                                           enabledBorder: UnderlineInputBorder(
@@ -315,6 +319,7 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                               lineHeight: 1.5,
                                             ),
                                         maxLines: 2,
@@ -343,11 +348,10 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                                           _model.textController.text == '')
                                       ? null
                                       : () async {
-                                          setState(() {
-                                            _model.text =
-                                                _model.textController.text;
-                                          });
-                                          setState(() {
+                                          _model.text =
+                                              _model.textController.text;
+                                          safeSetState(() {});
+                                          safeSetState(() {
                                             _model.textController?.clear();
                                           });
 
@@ -381,7 +385,7 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                                                 notificationFrom:
                                                     currentUserReference,
                                                 notificationTo:
-                                                    widget.userRef?.reference,
+                                                    widget!.userRef?.reference,
                                                 notificationType: 'commented',
                                                 notificationPost:
                                                     containerPostRecord
@@ -396,11 +400,11 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                                               false)) {
                                             triggerPushNotification(
                                               notificationTitle:
-                                                  widget.userRef!.displayName,
+                                                  widget!.userRef!.displayName,
                                               notificationText:
                                                   'commented your post',
                                               userRefs: [
-                                                widget.userRef!.reference
+                                                widget!.userRef!.reference
                                               ],
                                               initialPageName: 'MainPage',
                                               parameterData: {},
@@ -418,11 +422,10 @@ class _BottomCommentWidgetState extends State<BottomCommentWidget> {
                                               },
                                             ),
                                           });
-                                          setState(() {
-                                            _model.text = '';
-                                          });
+                                          _model.text = '';
+                                          safeSetState(() {});
 
-                                          setState(() {});
+                                          safeSetState(() {});
                                         },
                                 ),
                               ],

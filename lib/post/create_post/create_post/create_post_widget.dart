@@ -39,13 +39,13 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().choosenPreference = [];
-        FFAppState().uploadPhotoPost = [];
-        FFAppState().choosenPurpose = '';
-      });
-      setState(() {});
-      setState(() {
+      FFAppState().choosenPreference = [];
+      FFAppState().uploadPhotoPost = [];
+      FFAppState().choosenPurpose = '';
+      safeSetState(() {});
+
+      safeSetState(() {});
+      safeSetState(() {
         _model.textController?.clear();
       });
     });
@@ -66,9 +66,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -96,15 +94,12 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                       alignment: AlignmentDirectional(0.0, 0.0)
                           .resolve(Directionality.of(context)),
                       child: GestureDetector(
-                        onTap: () => _model.unfocusNode.canRequestFocus
-                            ? FocusScope.of(context)
-                                .requestFocus(_model.unfocusNode)
-                            : FocusScope.of(context).unfocus(),
+                        onTap: () => FocusScope.of(dialogContext).unfocus(),
                         child: PopupCancelWidget(),
                       ),
                     );
                   },
-                ).then((value) => setState(() {}));
+                );
               },
             ),
           ),
@@ -114,6 +109,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
                   fontSize: 16.0,
+                  letterSpacing: 0.0,
                 ),
           ),
           actions: [
@@ -145,6 +141,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                         );
                       }
                       List<UsersRecord> buttonUsersRecordList = snapshot.data!;
+
                       return FFButtonWidget(
                         onPressed: ((_model.textController.text == null ||
                                     _model.textController.text == '') ||
@@ -190,12 +187,11 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                     },
                                   );
 
-                                  setState(() {
-                                    FFAppState().uploadPhotoPost = [];
-                                    FFAppState().choosenPreference = [];
-                                    FFAppState().choosenPurpose = '';
-                                    FFAppState().choosenPurposeAndPref = [];
-                                  });
+                                  FFAppState().uploadPhotoPost = [];
+                                  FFAppState().choosenPreference = [];
+                                  FFAppState().choosenPurpose = '';
+                                  FFAppState().choosenPurposeAndPref = [];
+                                  safeSetState(() {});
                                   showDialog(
                                     barrierColor: Color(0x02000000),
                                     barrierDismissible: false,
@@ -210,18 +206,14 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                 .resolve(
                                                     Directionality.of(context)),
                                         child: GestureDetector(
-                                          onTap: () => _model
-                                                  .unfocusNode.canRequestFocus
-                                              ? FocusScope.of(context)
-                                                  .requestFocus(
-                                                      _model.unfocusNode)
-                                              : FocusScope.of(context)
+                                          onTap: () =>
+                                              FocusScope.of(dialogContext)
                                                   .unfocus(),
                                           child: CustomDialogCreatePostWidget(),
                                         ),
                                       );
                                     },
-                                  ).then((value) => setState(() {}));
+                                  );
 
                                   await NotificationRecord.collection
                                       .doc()
@@ -262,6 +254,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
                                             ),
                                       ),
@@ -329,15 +322,16 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                 builder: (context) {
                                   final images =
                                       FFAppState().uploadPhotoPost.toList();
+
                                   return Container(
                                     width: double.infinity,
                                     height: double.infinity,
                                     child: PageView.builder(
                                       controller: _model.pageViewController ??=
                                           PageController(
-                                              initialPage:
-                                                  min(0, images.length - 1)),
-                                      onPageChanged: (_) => setState(() {}),
+                                              initialPage: max(0,
+                                                  min(0, images.length - 1))),
+                                      onPageChanged: (_) => safeSetState(() {}),
                                       scrollDirection: Axis.horizontal,
                                       itemCount: images.length,
                                       itemBuilder: (context, imagesIndex) {
@@ -396,6 +390,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                           context)
                                                       .primaryBackground,
                                                   fontSize: 13.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -429,12 +424,11 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
-                                            setState(() {
-                                              FFAppState()
-                                                  .removeAtIndexFromUploadPhotoPost(
-                                                      _model
-                                                          .pageViewCurrentIndex);
-                                            });
+                                            FFAppState()
+                                                .removeAtIndexFromUploadPhotoPost(
+                                                    _model
+                                                        .pageViewCurrentIndex);
+                                            safeSetState(() {});
                                           },
                                           child: Icon(
                                             FFIcons.kproperty1trash,
@@ -462,8 +456,9 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController',
                               Duration(milliseconds: 10),
-                              () => setState(() {}),
+                              () => safeSetState(() {}),
                             ),
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               hintText: 'Description',
@@ -473,6 +468,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                   ),
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -521,6 +517,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark68,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   lineHeight: 1.4,
                                 ),
                             maxLines: 15,
@@ -573,11 +570,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                               context: context,
                               builder: (context) {
                                 return GestureDetector(
-                                  onTap: () =>
-                                      _model.unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
+                                  onTap: () => FocusScope.of(context).unfocus(),
                                   child: Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
                                     child: TakePhotoPPostUserWidget(),
@@ -629,6 +622,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ],
@@ -655,11 +649,8 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                 context: context,
                                 builder: (context) {
                                   return GestureDetector(
-                                    onTap: () => _model
-                                            .unfocusNode.canRequestFocus
-                                        ? FocusScope.of(context)
-                                            .requestFocus(_model.unfocusNode)
-                                        : FocusScope.of(context).unfocus(),
+                                    onTap: () =>
+                                        FocusScope.of(context).unfocus(),
                                     child: Padding(
                                       padding: MediaQuery.viewInsetsOf(context),
                                       child: BottonSelectCategoryWidget(),
@@ -712,6 +703,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark88,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       if (functions
@@ -734,6 +726,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                               .toList())
                                                       ?.toList() ??
                                                   [];
+
                                               return SingleChildScrollView(
                                                 scrollDirection:
                                                     Axis.horizontal,
@@ -771,6 +764,8 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                                         context)
                                                                     .dark88,
                                                                 fontSize: 15.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                     );
                                                   }),

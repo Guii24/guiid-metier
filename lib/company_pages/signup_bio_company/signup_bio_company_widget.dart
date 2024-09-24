@@ -35,9 +35,8 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().selectedlocation = '';
-      });
+      FFAppState().selectedlocation = '';
+      safeSetState(() {});
     });
 
     _model.textController ??= TextEditingController();
@@ -56,9 +55,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -71,6 +68,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
                   fontSize: 16.0,
+                  letterSpacing: 0.0,
                 ),
           ),
           actions: [
@@ -100,6 +98,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Libre Franklin',
                           fontSize: 15.0,
+                          letterSpacing: 0.0,
                         ),
                   ),
                 ),
@@ -158,6 +157,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 19.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -188,13 +188,8 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
-                                                    .unfocus(),
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -255,6 +250,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .dark38,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               if (FFAppState()
@@ -281,6 +277,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .dark88,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -321,6 +318,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                                           context)
                                                       .dark68,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -342,6 +340,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -357,8 +356,9 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
@@ -370,6 +370,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -407,6 +408,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               maxLines: 6,
@@ -430,6 +432,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark68,
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                           ),
@@ -445,6 +448,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -471,13 +475,8 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                       context: context,
                                       builder: (context) {
                                         return GestureDetector(
-                                          onTap: () => _model
-                                                  .unfocusNode.canRequestFocus
-                                              ? FocusScope.of(context)
-                                                  .requestFocus(
-                                                      _model.unfocusNode)
-                                              : FocusScope.of(context)
-                                                  .unfocus(),
+                                          onTap: () =>
+                                              FocusScope.of(context).unfocus(),
                                           child: Padding(
                                             padding: MediaQuery.viewInsetsOf(
                                                 context),
@@ -528,6 +527,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .dark38,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                             if (FFAppState()
@@ -540,6 +540,7 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                                     final item = FFAppState()
                                                         .choosenPreference
                                                         .toList();
+
                                                     return SingleChildScrollView(
                                                       scrollDirection:
                                                           Axis.horizontal,
@@ -571,6 +572,8 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                                                       .dark88,
                                                                   fontSize:
                                                                       15.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
@@ -627,7 +630,10 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                         BoxShadow(
                           blurRadius: 15.0,
                           color: Color(0x12000000),
-                          offset: Offset(0.0, -6.0),
+                          offset: Offset(
+                            0.0,
+                            -6.0,
+                          ),
                         )
                       ],
                     ),
@@ -665,10 +671,9 @@ class _SignupBioCompanyWidgetState extends State<SignupBioCompanyWidget> {
                                       },
                                     ),
                                   });
-                                  setState(() {
-                                    FFAppState().selectedlocation = '';
-                                    FFAppState().choosenPreference = [];
-                                  });
+                                  FFAppState().selectedlocation = '';
+                                  FFAppState().choosenPreference = [];
+                                  safeSetState(() {});
 
                                   context.goNamed(
                                     'MainPage',

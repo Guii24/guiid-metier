@@ -39,8 +39,6 @@ class _PopupLogoutWidgetState extends State<PopupLogoutWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
       child: Material(
@@ -71,6 +69,7 @@ class _PopupLogoutWidgetState extends State<PopupLogoutWidget> {
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Libre Franklin',
                           fontSize: 17.0,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                           lineHeight: 1.5,
                         ),
@@ -126,19 +125,18 @@ class _PopupLogoutWidgetState extends State<PopupLogoutWidget> {
                             await authManager.signOut();
                             GoRouter.of(context).clearRedirectLocation();
 
-                            setState(() {
-                              FFAppState().selectedlocation = '';
-                              FFAppState().postreport = [];
-                              FFAppState().popupSelected = '';
-                              FFAppState().profilePhoto = '';
-                              FFAppState().profilePhotoCompany = '';
-                              FFAppState().choosenPreference = [];
-                              FFAppState().activeCalendar = false;
-                              FFAppState().page = 'Articles';
-                              FFAppState().pageIndex = 0;
-                              FFAppState().countryInfoCompany = jsonDecode(
-                                  '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-                            });
+                            FFAppState().selectedlocation = '';
+                            FFAppState().postreport = [];
+                            FFAppState().popupSelected = '';
+                            FFAppState().profilePhoto = '';
+                            FFAppState().profilePhotoCompany = '';
+                            FFAppState().choosenPreference = [];
+                            FFAppState().activeCalendar = false;
+                            FFAppState().page = 'Articles';
+                            FFAppState().pageIndex = 0;
+                            FFAppState().countryInfoCompany = jsonDecode(
+                                '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+                            safeSetState(() {});
 
                             context.goNamedAuth('Onboarding', context.mounted);
                           },

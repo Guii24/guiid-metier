@@ -34,7 +34,6 @@ class PostJobPageModel extends FlutterFlowModel<PostJobPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
@@ -49,22 +48,19 @@ class PostJobPageModel extends FlutterFlowModel<PostJobPageWidget> {
   String? Function(BuildContext, String?)? textController3Validator;
   // State field(s) for UserPhone widget.
   FocusNode? userPhoneFocusNode;
-  TextEditingController? userPhoneController;
+  TextEditingController? userPhoneTextController;
   final userPhoneMask = MaskTextInputFormatter(mask: '(###) ###-####');
-  String? Function(BuildContext, String?)? userPhoneControllerValidator;
+  String? Function(BuildContext, String?)? userPhoneTextControllerValidator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode4;
   TextEditingController? textController5;
   String? Function(BuildContext, String?)? textController5Validator;
-
-  /// Initialization and disposal methods.
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     textFieldFocusNode1?.dispose();
     textController1?.dispose();
 
@@ -75,13 +71,9 @@ class PostJobPageModel extends FlutterFlowModel<PostJobPageWidget> {
     textController3?.dispose();
 
     userPhoneFocusNode?.dispose();
-    userPhoneController?.dispose();
+    userPhoneTextController?.dispose();
 
     textFieldFocusNode4?.dispose();
     textController5?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

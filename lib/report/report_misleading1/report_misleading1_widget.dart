@@ -61,8 +61,6 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       height: MediaQuery.sizeOf(context).height * 0.37,
@@ -107,9 +105,9 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
                           return Padding(
                             padding: MediaQuery.viewInsetsOf(context),
                             child: BottomReportWidget(
-                              commentPost: widget.commentpost,
-                              type: widget.type!,
-                              post: widget.post,
+                              commentPost: widget!.commentpost,
+                              type: widget!.type!,
+                              post: widget!.post,
                             ),
                           );
                         },
@@ -123,13 +121,14 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
                   ),
                   Expanded(
                     child: Text(
-                      widget.reportType!,
+                      widget!.reportType!,
                       textAlign: TextAlign.center,
                       maxLines: 2,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).dark88,
                             fontSize: 17.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
@@ -145,11 +144,12 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
             Align(
               alignment: AlignmentDirectional(-1.0, 0.0),
               child: Text(
-                widget.textType!,
+                widget!.textType!,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Libre Franklin',
                       color: FlutterFlowTheme.of(context).dark68,
                       fontSize: 15.0,
+                      letterSpacing: 0.0,
                       fontWeight: FontWeight.normal,
                     ),
               ),
@@ -162,30 +162,30 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
                   await reportRecordReference.set(createReportRecordData(
                     reportFrom: currentUserReference,
                     reportTime: getCurrentTimestamp,
-                    reportReason: widget.reportType,
-                    reportToCommPost: widget.commentpost,
-                    reportToPost: widget.post,
-                    reportToUser: widget.userRef,
-                    reportToJob: widget.job,
+                    reportReason: widget!.reportType,
+                    reportToCommPost: widget!.commentpost,
+                    reportToPost: widget!.post,
+                    reportToUser: widget!.userRef,
+                    reportToJob: widget!.job,
                   ));
                   _model.report = ReportRecord.getDocumentFromData(
                       createReportRecordData(
                         reportFrom: currentUserReference,
                         reportTime: getCurrentTimestamp,
-                        reportReason: widget.reportType,
-                        reportToCommPost: widget.commentpost,
-                        reportToPost: widget.post,
-                        reportToUser: widget.userRef,
-                        reportToJob: widget.job,
+                        reportReason: widget!.reportType,
+                        reportToCommPost: widget!.commentpost,
+                        reportToPost: widget!.post,
+                        reportToUser: widget!.userRef,
+                        reportToJob: widget!.job,
                       ),
                       reportRecordReference);
-                  if (widget.post != null) {
-                    await widget.post!.update(createPostRecordData(
+                  if (widget!.post != null) {
+                    await widget!.post!.update(createPostRecordData(
                       postReported: true,
                       postReportedRef: _model.report?.reference,
                     ));
-                  } else if (widget.commentpost != null) {
-                    await widget.commentpost!
+                  } else if (widget!.commentpost != null) {
+                    await widget!.commentpost!
                         .update(createCommentPostRecordData(
                       commentPostReported: true,
                       commentPostReportedRef: _model.report?.reference,
@@ -207,9 +207,9 @@ class _ReportMisleading1WidgetState extends State<ReportMisleading1Widget> {
                         child: CustomDialogReportsentWidget(),
                       );
                     },
-                  ).then((value) => setState(() {}));
+                  );
 
-                  setState(() {});
+                  safeSetState(() {});
                 },
                 text: 'SEND REPORT',
                 options: FFButtonOptions(

@@ -54,10 +54,8 @@ class _ComponentPostRepostedWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<PostRecord>(
-      stream: PostRecord.getDocument(widget.postReposted!),
+      stream: PostRecord.getDocument(widget!.postReposted!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -73,7 +71,9 @@ class _ComponentPostRepostedWidgetState
             ),
           );
         }
+
         final containerPostRecord = snapshot.data!;
+
         return Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -97,7 +97,9 @@ class _ComponentPostRepostedWidgetState
                   ),
                 );
               }
+
               final columnUsersRecord = snapshot.data!;
+
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -139,6 +141,7 @@ class _ComponentPostRepostedWidgetState
                                         .override(
                                           fontFamily: 'Libre Franklin',
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -148,7 +151,7 @@ class _ComponentPostRepostedWidgetState
                                       0.0, 0.0, 0.0, 3.0),
                                   child: Text(
                                     dateTimeFormat(
-                                      'relative',
+                                      "relative",
                                       containerPostRecord.postTimePosted!,
                                       locale: FFLocalizations.of(context)
                                           .languageCode,
@@ -160,6 +163,7 @@ class _ComponentPostRepostedWidgetState
                                           color: FlutterFlowTheme.of(context)
                                               .dark68,
                                           fontSize: 14.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ),
@@ -246,6 +250,7 @@ class _ComponentPostRepostedWidgetState
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                             fontSize: 12.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                       elevation: 0.0,
@@ -305,6 +310,7 @@ class _ComponentPostRepostedWidgetState
                                             color: FlutterFlowTheme.of(context)
                                                 .dark52,
                                             fontSize: 12.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                       elevation: 0.0,
@@ -387,7 +393,9 @@ class _ComponentPostRepostedWidgetState
                           ),
                         );
                       }
+
                       final columnPostRecord = snapshot.data!;
+
                       return Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -410,6 +418,7 @@ class _ComponentPostRepostedWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                       lineHeight: 1.4,
                                     ),
                               ),
@@ -426,6 +435,7 @@ class _ComponentPostRepostedWidgetState
                                         .toList()
                                         .take(5)
                                         .toList();
+
                                     return Container(
                                       width: double.infinity,
                                       height: double.infinity,
@@ -433,9 +443,12 @@ class _ComponentPostRepostedWidgetState
                                         controller: _model
                                                 .pageViewController ??=
                                             PageController(
-                                                initialPage:
-                                                    min(0, listimg.length - 1)),
-                                        onPageChanged: (_) => setState(() {}),
+                                                initialPage: max(
+                                                    0,
+                                                    min(0,
+                                                        listimg.length - 1))),
+                                        onPageChanged: (_) =>
+                                            safeSetState(() {}),
                                         scrollDirection: Axis.horizontal,
                                         itemCount: listimg.length,
                                         itemBuilder: (context, listimgIndex) {
@@ -493,6 +506,7 @@ class _ComponentPostRepostedWidgetState
                                                                 .of(context)
                                                             .primaryBackground,
                                                         fontSize: 13.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -541,7 +555,9 @@ class _ComponentPostRepostedWidgetState
                                           ),
                                         );
                                       }
+
                                       final rowUsersRecord = snapshot.data!;
+
                                       return Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -595,6 +611,7 @@ class _ComponentPostRepostedWidgetState
                                                             fontFamily:
                                                                 'Libre Franklin',
                                                             fontSize: 15.0,
+                                                            letterSpacing: 0.0,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                           ),
@@ -607,7 +624,7 @@ class _ComponentPostRepostedWidgetState
                                                                 0.0, 3.0),
                                                     child: Text(
                                                       dateTimeFormat(
-                                                        'relative',
+                                                        "relative",
                                                         columnPostRecord
                                                             .postTimePosted!,
                                                         locale:
@@ -626,6 +643,8 @@ class _ComponentPostRepostedWidgetState
                                                                         context)
                                                                     .dark68,
                                                                 fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                     ),
                                                   ),
@@ -650,6 +669,7 @@ class _ComponentPostRepostedWidgetState
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 14.0,
+                                        letterSpacing: 0.0,
                                         lineHeight: 1.4,
                                       ),
                                 ),
@@ -663,6 +683,7 @@ class _ComponentPostRepostedWidgetState
                                           .toList()
                                           .take(3)
                                           .toList();
+
                                       return Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: List.generate(
@@ -685,6 +706,7 @@ class _ComponentPostRepostedWidgetState
                                                           context)
                                                       .dark52,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           );
                                         }),
@@ -751,6 +773,7 @@ class _ComponentPostRepostedWidgetState
                                                                     context)
                                                                 .primary,
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                                 duration: Duration(
@@ -856,6 +879,7 @@ class _ComponentPostRepostedWidgetState
                                                   FlutterFlowTheme.of(context)
                                                       .dark68,
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ),
@@ -888,6 +912,7 @@ class _ComponentPostRepostedWidgetState
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                                   ),
                                                   duration: Duration(
@@ -987,6 +1012,7 @@ class _ComponentPostRepostedWidgetState
                                                                     context)
                                                                 .dark68,
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               ),

@@ -35,12 +35,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -48,7 +44,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
           backgroundColor: Colors.transparent,
           body: wrapWithModel(
             model: _model.navBarModel,
-            updateCallback: () => setState(() {}),
+            updateCallback: () => safeSetState(() {}),
             child: NavBarWidget(),
           ),
         ),

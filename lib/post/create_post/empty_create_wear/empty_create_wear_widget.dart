@@ -37,8 +37,6 @@ class _EmptyCreateWearWidgetState extends State<EmptyCreateWearWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -49,6 +47,7 @@ class _EmptyCreateWearWidgetState extends State<EmptyCreateWearWidget> {
                 fontFamily: 'Libre Franklin',
                 color: FlutterFlowTheme.of(context).dark68,
                 fontSize: 15.0,
+                letterSpacing: 0.0,
               ),
         ),
       ],

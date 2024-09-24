@@ -23,18 +23,21 @@ class WearItemsStruct extends FFFirebaseStruct {
   String? _wearText;
   String get wearText => _wearText ?? '';
   set wearText(String? val) => _wearText = val;
+
   bool hasWearText() => _wearText != null;
 
   // "wear_link" field.
   String? _wearLink;
   String get wearLink => _wearLink ?? '';
   set wearLink(String? val) => _wearLink = val;
+
   bool hasWearLink() => _wearLink != null;
 
   // "wear_image" field.
   String? _wearImage;
   String get wearImage => _wearImage ?? '';
   set wearImage(String? val) => _wearImage = val;
+
   bool hasWearImage() => _wearImage != null;
 
   static WearItemsStruct fromMap(Map<String, dynamic> data) => WearItemsStruct(

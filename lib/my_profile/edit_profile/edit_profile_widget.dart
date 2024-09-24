@@ -39,16 +39,15 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().profilePhoto = currentUserPhoto;
-        FFAppState().bornDate = currentUserDocument?.userBirthday;
-        FFAppState().selectedlocation =
-            valueOrDefault(currentUserDocument?.userLocation, '');
-        FFAppState().choosenPreference =
-            (currentUserDocument?.userPreferences?.toList() ?? [])
-                .toList()
-                .cast<String>();
-      });
+      FFAppState().profilePhoto = currentUserPhoto;
+      FFAppState().bornDate = currentUserDocument?.userBirthday;
+      FFAppState().selectedlocation =
+          valueOrDefault(currentUserDocument?.userLocation, '');
+      FFAppState().choosenPreference =
+          (currentUserDocument?.userPreferences?.toList() ?? [])
+              .toList()
+              .cast<String>();
+      safeSetState(() {});
     });
 
     _model.textController1 ??=
@@ -80,9 +79,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -101,9 +98,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
             ),
             onPressed: () async {
               context.pop();
-              setState(() {
-                FFAppState().profilePhoto = '';
-              });
+              FFAppState().profilePhoto = '';
+              safeSetState(() {});
             },
           ),
           title: Text(
@@ -112,6 +108,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
                   fontSize: 16.0,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -145,10 +142,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             context: context,
                             builder: (context) {
                               return GestureDetector(
-                                onTap: () => _model.unfocusNode.canRequestFocus
-                                    ? FocusScope.of(context)
-                                        .requestFocus(_model.unfocusNode)
-                                    : FocusScope.of(context).unfocus(),
+                                onTap: () => FocusScope.of(context).unfocus(),
                                 child: Padding(
                                   padding: MediaQuery.viewInsetsOf(context),
                                   child: TakePhotoProfileUserWidget(),
@@ -192,11 +186,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               context: context,
                               builder: (context) {
                                 return GestureDetector(
-                                  onTap: () =>
-                                      _model.unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
+                                  onTap: () => FocusScope.of(context).unfocus(),
                                   child: Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
                                     child: TakePhotoProfileUserWidget(),
@@ -213,6 +203,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
@@ -228,8 +219,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           onChanged: (_) => EasyDebounce.debounce(
                             '_model.textController1',
                             Duration(milliseconds: 10),
-                            () => setState(() {}),
+                            () => safeSetState(() {}),
                           ),
+                          autofocus: false,
                           obscureText: false,
                           decoration: InputDecoration(
                             isDense: true,
@@ -240,6 +232,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark38,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             hintStyle: FlutterFlowTheme.of(context)
@@ -248,6 +241,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark38,
                                   fontSize: 16.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             enabledBorder: OutlineInputBorder(
@@ -284,6 +278,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                           minLines: 1,
@@ -308,6 +303,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).error,
                                     fontSize: 13.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                         ),
@@ -341,18 +337,14 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                               .resolve(
                                                   Directionality.of(context)),
                                           child: GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
+                                            onTap: () =>
+                                                FocusScope.of(dialogContext)
                                                     .unfocus(),
                                             child: CalendarWidget(),
                                           ),
                                         );
                                       },
-                                    ).then((value) => setState(() {}));
+                                    );
                                   },
                                   child: Material(
                                     color: Colors.transparent,
@@ -382,7 +374,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                             if (FFAppState().bornDate != null)
                                               Text(
                                                 dateTimeFormat(
-                                                  'yMd',
+                                                  "yMd",
                                                   FFAppState().bornDate,
                                                   locale: FFLocalizations.of(
                                                           context)
@@ -398,6 +390,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -415,6 +408,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                                   .of(context)
                                                               .dark38,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                           ],
@@ -451,6 +445,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .dark38,
                                               fontSize: 13.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ),
@@ -485,12 +480,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     context: context,
                                     builder: (context) {
                                       return GestureDetector(
-                                        onTap: () => _model
-                                                .unfocusNode.canRequestFocus
-                                            ? FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode)
-                                            : FocusScope.of(context).unfocus(),
+                                        onTap: () =>
+                                            FocusScope.of(context).unfocus(),
                                         child: Padding(
                                           padding:
                                               MediaQuery.viewInsetsOf(context),
@@ -551,6 +542,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                             context)
                                                         .dark88,
                                                     fontSize: 15.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ),
@@ -571,6 +563,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                                     context)
                                                                 .dark38,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                         ],
@@ -607,6 +600,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .dark38,
                                               fontSize: 13.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ),
@@ -626,6 +620,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
                               fontSize: 17.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -642,8 +637,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController2',
                               Duration(milliseconds: 10),
-                              () => setState(() {}),
+                              () => safeSetState(() {}),
                             ),
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -654,6 +650,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               enabledBorder: OutlineInputBorder(
@@ -692,6 +689,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             maxLines: 6,
@@ -714,6 +712,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,
                               fontSize: 14.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
                             ),
                       ),
@@ -727,6 +726,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
                               fontSize: 17.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -756,12 +756,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     context: context,
                                     builder: (context) {
                                       return GestureDetector(
-                                        onTap: () => _model
-                                                .unfocusNode.canRequestFocus
-                                            ? FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode)
-                                            : FocusScope.of(context).unfocus(),
+                                        onTap: () =>
+                                            FocusScope.of(context).unfocus(),
                                         child: Padding(
                                           padding:
                                               MediaQuery.viewInsetsOf(context),
@@ -810,6 +806,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                                     context)
                                                                 .dark38,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           if (FFAppState()
@@ -822,6 +819,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                   final item = FFAppState()
                                                       .choosenPreference
                                                       .toList();
+
                                                   return SingleChildScrollView(
                                                     scrollDirection:
                                                         Axis.horizontal,
@@ -852,6 +850,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                                         context)
                                                                     .dark88,
                                                                 fontSize: 15.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
@@ -883,6 +883,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
                               fontSize: 17.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -899,8 +900,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController3',
                               Duration(milliseconds: 10),
-                              () => setState(() {}),
+                              () => safeSetState(() {}),
                             ),
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -911,6 +913,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               enabledBorder: OutlineInputBorder(
@@ -949,6 +952,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             maxLines: 2,
@@ -972,6 +976,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,
                               fontSize: 14.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
                             ),
                       ),
@@ -985,6 +990,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
                               fontSize: 17.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -1001,8 +1007,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController4',
                               Duration(milliseconds: 10),
-                              () => setState(() {}),
+                              () => safeSetState(() {}),
                             ),
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               isDense: true,
@@ -1013,6 +1020,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               enabledBorder: OutlineInputBorder(
@@ -1051,6 +1059,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                             maxLines: 2,
@@ -1074,6 +1083,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,
                               fontSize: 14.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
                             ),
                       ),
@@ -1101,6 +1111,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primary,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                         ),

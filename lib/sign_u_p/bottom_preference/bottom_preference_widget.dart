@@ -97,6 +97,7 @@ class _BottomPreferenceWidgetState extends State<BottomPreferenceWidget> {
                       fontFamily: 'Libre Franklin',
                       color: FlutterFlowTheme.of(context).dark88,
                       fontSize: 17.0,
+                      letterSpacing: 0.0,
                       fontWeight: FontWeight.w600,
                     ),
               ),
@@ -105,6 +106,7 @@ class _BottomPreferenceWidgetState extends State<BottomPreferenceWidget> {
               child: Builder(
                 builder: (context) {
                   final pref = FFAppState().preference.toList();
+
                   return ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
@@ -121,14 +123,11 @@ class _BottomPreferenceWidgetState extends State<BottomPreferenceWidget> {
                           if (FFAppState()
                               .choosenPreference
                               .contains(prefItem)) {
-                            setState(() {
-                              FFAppState()
-                                  .removeFromChoosenPreference(prefItem);
-                            });
+                            FFAppState().removeFromChoosenPreference(prefItem);
+                            safeSetState(() {});
                           } else {
-                            setState(() {
-                              FFAppState().addToChoosenPreference(prefItem);
-                            });
+                            FFAppState().addToChoosenPreference(prefItem);
+                            safeSetState(() {});
                           }
                         },
                         child: Column(
@@ -149,6 +148,7 @@ class _BottomPreferenceWidgetState extends State<BottomPreferenceWidget> {
                                             fontFamily: 'Libre Franklin',
                                             color: FlutterFlowTheme.of(context)
                                                 .dark88,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),

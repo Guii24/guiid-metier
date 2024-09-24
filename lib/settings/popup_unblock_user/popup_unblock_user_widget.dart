@@ -48,8 +48,6 @@ class _PopupUnblockUserWidgetState extends State<PopupUnblockUserWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
       child: Column(
@@ -79,11 +77,12 @@ class _PopupUnblockUserWidgetState extends State<PopupUnblockUserWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                       child: Text(
-                        'Are you sure you want to unblock ${widget.name}?',
+                        'Are you sure you want to unblock ${widget!.name}?',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Libre Franklin',
                               fontSize: 17.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                               lineHeight: 1.5,
                             ),
@@ -139,7 +138,8 @@ class _PopupUnblockUserWidgetState extends State<PopupUnblockUserWidget> {
                                   ...mapToFirestore(
                                     {
                                       'user_blocked_user':
-                                          FieldValue.arrayRemove([widget.user]),
+                                          FieldValue.arrayRemove(
+                                              [widget!.user]),
                                     },
                                   ),
                                 });

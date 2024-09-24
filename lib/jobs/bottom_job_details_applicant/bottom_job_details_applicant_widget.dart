@@ -47,8 +47,6 @@ class _BottomJobDetailsApplicantWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -102,7 +100,7 @@ class _BottomJobDetailsApplicantWidgetState
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                 child: StreamBuilder<UsersRecord>(
                   stream: UsersRecord.getDocument(
-                      widget.jobApplicantDoc!.jobApplicantUser!),
+                      widget!.jobApplicantDoc!.jobApplicantUser!),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
@@ -118,7 +116,9 @@ class _BottomJobDetailsApplicantWidgetState
                         ),
                       );
                     }
+
                     final rowUsersRecord = snapshot.data!;
+
                     return InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -181,6 +181,7 @@ class _BottomJobDetailsApplicantWidgetState
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 15.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w600,
                                       ),
                                 ),
@@ -189,8 +190,8 @@ class _BottomJobDetailsApplicantWidgetState
                                       0.0, 3.0, 0.0, 0.0),
                                   child: Text(
                                     dateTimeFormat(
-                                      'yMMMd',
-                                      widget.jobApplicantDoc!
+                                      "yMMMd",
+                                      widget!.jobApplicantDoc!
                                           .jobApplicantsCreationDate!,
                                       locale: FFLocalizations.of(context)
                                           .languageCode,
@@ -202,6 +203,7 @@ class _BottomJobDetailsApplicantWidgetState
                                           color: FlutterFlowTheme.of(context)
                                               .dark68,
                                           fontSize: 14.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
@@ -246,7 +248,7 @@ class _BottomJobDetailsApplicantWidgetState
                           ),
                           Text(
                             valueOrDefault<String>(
-                              widget.jobApplicantDoc?.jobApplicantTittle,
+                              widget!.jobApplicantDoc?.jobApplicantTittle,
                               'error',
                             ),
                             style: FlutterFlowTheme.of(context)
@@ -255,6 +257,7 @@ class _BottomJobDetailsApplicantWidgetState
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                 ),
                           ),
                         ],
@@ -271,6 +274,7 @@ class _BottomJobDetailsApplicantWidgetState
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark88,
                         fontSize: 17.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -289,29 +293,31 @@ class _BottomJobDetailsApplicantWidgetState
                         size: 24.0,
                       ),
                     ),
-                    if (widget.jobApplicantDoc?.jobApplicantPhoneNumber !=
+                    if (widget!.jobApplicantDoc?.jobApplicantPhoneNumber !=
                             null &&
-                        widget.jobApplicantDoc?.jobApplicantPhoneNumber != '')
+                        widget!.jobApplicantDoc?.jobApplicantPhoneNumber != '')
                       Text(
                         '${valueOrDefault<String>(
-                          widget.jobApplicantDoc?.jobApplicantPhoneDialCode,
+                          widget!.jobApplicantDoc?.jobApplicantPhoneDialCode,
                           '+1',
-                        )} ${widget.jobApplicantDoc?.jobApplicantPhoneNumber}',
+                        )} ${widget!.jobApplicantDoc?.jobApplicantPhoneNumber}',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,
                               fontSize: 15.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
-                    if (widget.jobApplicantDoc?.jobApplicantPhoneNumber ==
+                    if (widget!.jobApplicantDoc?.jobApplicantPhoneNumber ==
                             null ||
-                        widget.jobApplicantDoc?.jobApplicantPhoneNumber == '')
+                        widget!.jobApplicantDoc?.jobApplicantPhoneNumber == '')
                       Text(
                         'Information is not available',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,
                               fontSize: 15.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
                             ),
                       ),
@@ -332,27 +338,29 @@ class _BottomJobDetailsApplicantWidgetState
                         size: 24.0,
                       ),
                     ),
-                    if (widget.jobApplicantDoc?.jobApplicantEmail != null &&
-                        widget.jobApplicantDoc?.jobApplicantEmail != '')
+                    if (widget!.jobApplicantDoc?.jobApplicantEmail != null &&
+                        widget!.jobApplicantDoc?.jobApplicantEmail != '')
                       Text(
                         valueOrDefault<String>(
-                          widget.jobApplicantDoc?.jobApplicantEmail,
+                          widget!.jobApplicantDoc?.jobApplicantEmail,
                           'error',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,
                               fontSize: 15.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
-                    if (widget.jobApplicantDoc?.jobApplicantEmail == null ||
-                        widget.jobApplicantDoc?.jobApplicantEmail == '')
+                    if (widget!.jobApplicantDoc?.jobApplicantEmail == null ||
+                        widget!.jobApplicantDoc?.jobApplicantEmail == '')
                       Text(
                         'Information is not available',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,
                               fontSize: 15.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
                             ),
                       ),
@@ -371,6 +379,7 @@ class _BottomJobDetailsApplicantWidgetState
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Libre Franklin',
                         fontSize: 17.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -408,7 +417,7 @@ class _BottomJobDetailsApplicantWidgetState
                                   10.0, 6.0, 10.0, 6.0),
                               child: Text(
                                 functions.getFileNameFromFirebaseStorageLink(
-                                    functions.imageToString(widget
+                                    functions.imageToString(widget!
                                         .jobApplicantDoc!.jobApplicantCv)),
                                 maxLines: 1,
                                 style: FlutterFlowTheme.of(context)
@@ -418,6 +427,7 @@ class _BottomJobDetailsApplicantWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                             ),
@@ -445,16 +455,17 @@ class _BottomJobDetailsApplicantWidgetState
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Libre Franklin',
                             fontSize: 17.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
                   ),
-                  if ((widget.jobApplicantDoc?.jobApplicantPortfolio == null ||
-                          widget.jobApplicantDoc?.jobApplicantPortfolio ==
+                  if ((widget!.jobApplicantDoc?.jobApplicantPortfolio == null ||
+                          widget!.jobApplicantDoc?.jobApplicantPortfolio ==
                               '') &&
-                      (widget.jobApplicantDoc?.jobApplicantPortfolioLink ==
+                      (widget!.jobApplicantDoc?.jobApplicantPortfolioLink ==
                               null ||
-                          widget.jobApplicantDoc?.jobApplicantPortfolioLink ==
+                          widget!.jobApplicantDoc?.jobApplicantPortfolioLink ==
                               ''))
                     Padding(
                       padding:
@@ -465,12 +476,13 @@ class _BottomJobDetailsApplicantWidgetState
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,
                               fontSize: 15.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
                             ),
                       ),
                     ),
-                  if (widget.jobApplicantDoc?.jobApplicantPortfolio != null &&
-                      widget.jobApplicantDoc?.jobApplicantPortfolio != '')
+                  if (widget!.jobApplicantDoc?.jobApplicantPortfolio != null &&
+                      widget!.jobApplicantDoc?.jobApplicantPortfolio != '')
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
@@ -506,7 +518,7 @@ class _BottomJobDetailsApplicantWidgetState
                                     child: Text(
                                       functions
                                           .getFileNameFromFirebaseStorageLink(
-                                              functions.imageToString(widget
+                                              functions.imageToString(widget!
                                                   .jobApplicantDoc!
                                                   .jobApplicantPortfolio)),
                                       maxLines: 1,
@@ -517,6 +529,7 @@ class _BottomJobDetailsApplicantWidgetState
                                             color: FlutterFlowTheme.of(context)
                                                 .dark88,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -527,9 +540,9 @@ class _BottomJobDetailsApplicantWidgetState
                         ],
                       ),
                     ),
-                  if (widget.jobApplicantDoc?.jobApplicantPortfolioLink !=
+                  if (widget!.jobApplicantDoc?.jobApplicantPortfolioLink !=
                           null &&
-                      widget.jobApplicantDoc?.jobApplicantPortfolioLink != '')
+                      widget!.jobApplicantDoc?.jobApplicantPortfolioLink != '')
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 21.0),
@@ -539,7 +552,7 @@ class _BottomJobDetailsApplicantWidgetState
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          await launchURL(widget
+                          await launchURL(widget!
                               .jobApplicantDoc!.jobApplicantPortfolioLink);
                         },
                         child: Row(
@@ -559,7 +572,7 @@ class _BottomJobDetailsApplicantWidgetState
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  await launchURL(widget.jobApplicantDoc!
+                                  await launchURL(widget!.jobApplicantDoc!
                                       .jobApplicantPortfolioLink);
                                 },
                                 child: Text(
@@ -571,6 +584,7 @@ class _BottomJobDetailsApplicantWidgetState
                                         color:
                                             FlutterFlowTheme.of(context).dark68,
                                         fontSize: 15.0,
+                                        letterSpacing: 0.0,
                                         decoration: TextDecoration.underline,
                                       ),
                                 ),
@@ -587,12 +601,12 @@ class _BottomJobDetailsApplicantWidgetState
                 thickness: 1.0,
                 color: FlutterFlowTheme.of(context).line,
               ),
-              if ((widget.jobApplicantDoc?.jobApplicantInsatgram != null &&
-                      widget.jobApplicantDoc?.jobApplicantInsatgram != '') ||
-                  (widget.jobApplicantDoc?.jobApplicantTiktok != null &&
-                      widget.jobApplicantDoc?.jobApplicantTiktok != '') ||
-                  (widget.jobApplicantDoc?.jobApplicantLinkedin != null &&
-                      widget.jobApplicantDoc?.jobApplicantLinkedin != ''))
+              if ((widget!.jobApplicantDoc?.jobApplicantInsatgram != null &&
+                      widget!.jobApplicantDoc?.jobApplicantInsatgram != '') ||
+                  (widget!.jobApplicantDoc?.jobApplicantTiktok != null &&
+                      widget!.jobApplicantDoc?.jobApplicantTiktok != '') ||
+                  (widget!.jobApplicantDoc?.jobApplicantLinkedin != null &&
+                      widget!.jobApplicantDoc?.jobApplicantLinkedin != ''))
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 10.0),
                   child: Text(
@@ -600,12 +614,13 @@ class _BottomJobDetailsApplicantWidgetState
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Libre Franklin',
                           fontSize: 17.0,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
                   ),
                 ),
-              if (widget.jobApplicantDoc?.jobApplicantInsatgram != null &&
-                  widget.jobApplicantDoc?.jobApplicantInsatgram != '')
+              if (widget!.jobApplicantDoc?.jobApplicantInsatgram != null &&
+                  widget!.jobApplicantDoc?.jobApplicantInsatgram != '')
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 18.0),
                   child: InkWell(
@@ -615,7 +630,7 @@ class _BottomJobDetailsApplicantWidgetState
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       await launchURL(
-                          'https://instagram.com/${widget.jobApplicantDoc?.jobApplicantInsatgram}');
+                          'https://instagram.com/${widget!.jobApplicantDoc?.jobApplicantInsatgram}');
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -634,7 +649,7 @@ class _BottomJobDetailsApplicantWidgetState
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              await launchURL(widget
+                              await launchURL(widget!
                                   .jobApplicantDoc!.jobApplicantInsatgram);
                             },
                             child: Text(
@@ -645,6 +660,7 @@ class _BottomJobDetailsApplicantWidgetState
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                     decoration: TextDecoration.underline,
                                   ),
@@ -655,8 +671,8 @@ class _BottomJobDetailsApplicantWidgetState
                     ),
                   ),
                 ),
-              if (widget.jobApplicantDoc?.jobApplicantTiktok != null &&
-                  widget.jobApplicantDoc?.jobApplicantTiktok != '')
+              if (widget!.jobApplicantDoc?.jobApplicantTiktok != null &&
+                  widget!.jobApplicantDoc?.jobApplicantTiktok != '')
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 18.0),
                   child: InkWell(
@@ -666,7 +682,7 @@ class _BottomJobDetailsApplicantWidgetState
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       await launchURL(
-                          'https://tiktok.com/${widget.jobApplicantDoc?.jobApplicantTiktok}');
+                          'https://tiktok.com/${widget!.jobApplicantDoc?.jobApplicantTiktok}');
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -686,7 +702,7 @@ class _BottomJobDetailsApplicantWidgetState
                             highlightColor: Colors.transparent,
                             onTap: () async {
                               await launchURL(
-                                  widget.jobApplicantDoc!.jobApplicantTiktok);
+                                  widget!.jobApplicantDoc!.jobApplicantTiktok);
                             },
                             child: Text(
                               'View TikTok profile',
@@ -696,6 +712,7 @@ class _BottomJobDetailsApplicantWidgetState
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     decoration: TextDecoration.underline,
                                   ),
                             ),
@@ -705,8 +722,8 @@ class _BottomJobDetailsApplicantWidgetState
                     ),
                   ),
                 ),
-              if (widget.jobApplicantDoc?.jobApplicantLinkedin != null &&
-                  widget.jobApplicantDoc?.jobApplicantLinkedin != '')
+              if (widget!.jobApplicantDoc?.jobApplicantLinkedin != null &&
+                  widget!.jobApplicantDoc?.jobApplicantLinkedin != '')
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 18.0),
                   child: InkWell(
@@ -716,7 +733,7 @@ class _BottomJobDetailsApplicantWidgetState
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       await launchURL(
-                          'https://linkedin.com/${widget.jobApplicantDoc?.jobApplicantLinkedin}');
+                          'https://linkedin.com/${widget!.jobApplicantDoc?.jobApplicantLinkedin}');
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -735,8 +752,8 @@ class _BottomJobDetailsApplicantWidgetState
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              await launchURL(
-                                  widget.jobApplicantDoc!.jobApplicantLinkedin);
+                              await launchURL(widget!
+                                  .jobApplicantDoc!.jobApplicantLinkedin);
                             },
                             child: Text(
                               'View Linkedin profile',
@@ -746,6 +763,7 @@ class _BottomJobDetailsApplicantWidgetState
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     decoration: TextDecoration.underline,
                                   ),
                             ),

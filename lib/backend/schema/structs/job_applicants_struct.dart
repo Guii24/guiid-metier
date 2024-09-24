@@ -22,12 +22,14 @@ class JobApplicantsStruct extends FFFirebaseStruct {
   DateTime? get jobApplicantCreationDate => _jobApplicantCreationDate;
   set jobApplicantCreationDate(DateTime? val) =>
       _jobApplicantCreationDate = val;
+
   bool hasJobApplicantCreationDate() => _jobApplicantCreationDate != null;
 
   // "job_applicant_user" field.
   DocumentReference? _jobApplicantUser;
   DocumentReference? get jobApplicantUser => _jobApplicantUser;
   set jobApplicantUser(DocumentReference? val) => _jobApplicantUser = val;
+
   bool hasJobApplicantUser() => _jobApplicantUser != null;
 
   static JobApplicantsStruct fromMap(Map<String, dynamic> data) =>

@@ -35,8 +35,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -67,6 +65,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                             fontFamily: 'NewYork',
                             color: FlutterFlowTheme.of(context).primary,
                             fontSize: 48.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w600,
                             useGoogleFonts: false,
                             lineHeight: 1.0,
@@ -125,12 +124,11 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 54.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        setState(() {
-                          FFAppState().countryInfo = jsonDecode(
-                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-                          FFAppState().countryInfoCompany = jsonDecode(
-                              '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-                        });
+                        FFAppState().countryInfo = jsonDecode(
+                            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+                        FFAppState().countryInfoCompany = jsonDecode(
+                            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+                        safeSetState(() {});
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Color(0x01000000),

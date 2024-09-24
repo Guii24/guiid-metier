@@ -37,12 +37,8 @@ class _FaqWidgetState extends State<FaqWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -68,6 +64,7 @@ class _FaqWidgetState extends State<FaqWidget> {
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -92,6 +89,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).dark68,
                             fontSize: 15.0,
+                            letterSpacing: 0.0,
                           ),
                     ),
                   ),
@@ -124,6 +122,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                           );
                         }
                         List<FaqRecord> columnFaqRecordList = snapshot.data!;
+
                         return Column(
                           mainAxisSize: MainAxisSize.max,
                           children: List.generate(columnFaqRecordList.length,
@@ -147,6 +146,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                               fontFamily: 'Libre Franklin',
                                               color: Colors.black,
                                               fontSize: 16.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
@@ -164,6 +164,7 @@ class _FaqWidgetState extends State<FaqWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark68,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),

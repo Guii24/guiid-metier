@@ -38,12 +38,8 @@ class _JobTestWidgetState extends State<JobTestWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -144,6 +140,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                     ),
                                   );
                                 }
+
                                 return ListView.separated(
                                   padding: EdgeInsets.zero,
                                   primary: false,
@@ -204,6 +201,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                 fontFamily: 'NewYork',
                                 color: FlutterFlowTheme.of(context).primaryText,
                                 fontSize: 20.0,
+                                letterSpacing: 0.0,
                                 fontWeight: FontWeight.w600,
                                 useGoogleFonts: false,
                               ),
@@ -298,6 +296,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .dark88,
                                             fontSize: 21.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
@@ -314,6 +313,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -356,6 +356,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                             ),
@@ -422,6 +423,8 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                                                         context)
                                                                     .dark88,
                                                                 fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                     ),
                                                   ),
@@ -482,6 +485,8 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                                                         context)
                                                                     .dark88,
                                                                 fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                     ),
                                                   ),
@@ -533,6 +538,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                                             context)
                                                         .dark88,
                                                     fontSize: 16.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ),
@@ -548,6 +554,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark68,
                                                 fontSize: 13.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ],
@@ -570,6 +577,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .dark88,
                                             fontSize: 17.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
@@ -583,6 +591,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark68,
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.normal,
                                           lineHeight: 1.5,
                                         ),
@@ -599,6 +608,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .dark88,
                                             fontSize: 17.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
@@ -629,6 +639,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark68,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ],
@@ -660,6 +671,7 @@ class _JobTestWidgetState extends State<JobTestWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark68,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ],

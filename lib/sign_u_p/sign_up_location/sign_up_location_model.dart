@@ -16,8 +16,6 @@ class SignUpLocationModel extends FlutterFlowModel<SignUpLocationWidget> {
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
@@ -26,8 +24,4 @@ class SignUpLocationModel extends FlutterFlowModel<SignUpLocationWidget> {
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

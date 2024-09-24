@@ -44,10 +44,8 @@ class _CommentArticleWidgetState extends State<CommentArticleWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<CommentArticleRecord>(
-      stream: CommentArticleRecord.getDocument(widget.commentArticleRef!),
+      stream: CommentArticleRecord.getDocument(widget!.commentArticleRef!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -63,7 +61,9 @@ class _CommentArticleWidgetState extends State<CommentArticleWidget> {
             ),
           );
         }
+
         final containerCommentArticleRecord = snapshot.data!;
+
         return Container(
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -86,7 +86,9 @@ class _CommentArticleWidgetState extends State<CommentArticleWidget> {
                   ),
                 );
               }
+
               final columnUsersRecord = snapshot.data!;
+
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,39 +132,40 @@ class _CommentArticleWidgetState extends State<CommentArticleWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
                             ),
                             Text(
                               dateTimeFormat(
-                                        'yMd',
+                                        "yMd",
                                         containerCommentArticleRecord
                                             .commentArticleTime,
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
                                       ) ==
                                       dateTimeFormat(
-                                        'yMd',
+                                        "yMd",
                                         getCurrentTimestamp,
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
                                       )
                                   ? 'Today at ${dateTimeFormat(
-                                      'jm',
+                                      "jm",
                                       containerCommentArticleRecord
                                           .commentArticleTime,
                                       locale: FFLocalizations.of(context)
                                           .languageCode,
                                     )}'
                                   : '${dateTimeFormat(
-                                      'd/M/y',
+                                      "d/M/y",
                                       containerCommentArticleRecord
                                           .commentArticleTime,
                                       locale: FFLocalizations.of(context)
                                           .languageCode,
                                     )} at ${dateTimeFormat(
-                                      'jm',
+                                      "jm",
                                       containerCommentArticleRecord
                                           .commentArticleTime,
                                       locale: FFLocalizations.of(context)
@@ -174,6 +177,7 @@ class _CommentArticleWidgetState extends State<CommentArticleWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ],
@@ -190,6 +194,7 @@ class _CommentArticleWidgetState extends State<CommentArticleWidget> {
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).dark88,
                             fontSize: 15.0,
+                            letterSpacing: 0.0,
                             lineHeight: 1.4,
                           ),
                     ),

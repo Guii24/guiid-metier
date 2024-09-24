@@ -42,7 +42,11 @@ class _SpashScreenWidgetState extends State<SpashScreenWidget> {
             await revenue_cat.loadOfferings();
           }
 
-          if (!isEntitled) {
+          if (isEntitled) {
+            await currentUserReference!.update(createUsersRecordData(
+              userSubscription: true,
+            ));
+          } else {
             await currentUserReference!.update(createUsersRecordData(
               userSubscription: false,
             ));
@@ -72,12 +76,8 @@ class _SpashScreenWidgetState extends State<SpashScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(

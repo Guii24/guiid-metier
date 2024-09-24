@@ -37,7 +37,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
     if (!isWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
+        safeSetState(() {
           _isKeyboardVisible = visible;
         });
       });
@@ -97,7 +97,10 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                               BoxShadow(
                                 blurRadius: 15.0,
                                 color: Color(0x13000000),
-                                offset: Offset(0.0, -6.0),
+                                offset: Offset(
+                                  0.0,
+                                  -6.0,
+                                ),
                               )
                             ],
                             borderRadius: BorderRadius.circular(0.0),
@@ -116,10 +119,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    FFAppState().update(() {
-                                      FFAppState().page = 'Articles';
-                                      FFAppState().pageIndex = 0;
-                                    });
+                                    FFAppState().page = 'Articles';
+                                    FFAppState().pageIndex = 0;
+                                    FFAppState().update(() {});
                                   },
                                   child: Container(
                                     width: 70.0,
@@ -167,6 +169,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                                         .dark38,
                                                   ),
                                                   fontSize: 10.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -184,10 +187,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    FFAppState().update(() {
-                                      FFAppState().page = 'Posts';
-                                      FFAppState().pageIndex = 1;
-                                    });
+                                    FFAppState().page = 'Posts';
+                                    FFAppState().pageIndex = 1;
+                                    FFAppState().update(() {});
                                   },
                                   child: Container(
                                     width: 70.0,
@@ -235,6 +237,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                                         .dark38,
                                                   ),
                                                   fontSize: 10.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -260,10 +263,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    FFAppState().update(() {
-                                      FFAppState().page = 'Sourcing';
-                                      FFAppState().pageIndex = 2;
-                                    });
+                                    FFAppState().page = 'Sourcing';
+                                    FFAppState().pageIndex = 2;
+                                    FFAppState().update(() {});
                                   },
                                   child: Container(
                                     width: 70.0,
@@ -313,6 +315,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                                         .dark38,
                                                   ),
                                                   fontSize: 10.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -330,10 +333,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    FFAppState().update(() {
-                                      FFAppState().page = 'Directory';
-                                      FFAppState().pageIndex = 3;
-                                    });
+                                    FFAppState().page = 'Directory';
+                                    FFAppState().pageIndex = 3;
+                                    FFAppState().update(() {});
                                   },
                                   child: Container(
                                     width: 70.0,
@@ -383,6 +385,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                                         .dark38,
                                                   ),
                                                   fontSize: 10.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -426,7 +429,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                   ),
                                 );
                               },
-                            ).then((value) => setState(() {}));
+                            );
                           },
                           child: Container(
                             width: 66.0,
@@ -437,7 +440,10 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                 BoxShadow(
                                   blurRadius: 15.0,
                                   color: Color(0x13000000),
-                                  offset: Offset(0.0, -6.0),
+                                  offset: Offset(
+                                    0.0,
+                                    -6.0,
+                                  ),
                                 )
                               ],
                               shape: BoxShape.circle,
@@ -501,7 +507,10 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                               BoxShadow(
                                 blurRadius: 15.0,
                                 color: Color(0x13000000),
-                                offset: Offset(0.0, -6.0),
+                                offset: Offset(
+                                  0.0,
+                                  -6.0,
+                                ),
                               )
                             ],
                             borderRadius: BorderRadius.circular(0.0),
@@ -523,10 +532,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Articles';
-                                        FFAppState().pageIndex = 0;
-                                      });
+                                      FFAppState().page = 'Articles';
+                                      FFAppState().pageIndex = 0;
+                                      FFAppState().update(() {});
                                     },
                                     child: Container(
                                       width: 70.0,
@@ -579,6 +587,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -596,10 +605,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Posts';
-                                        FFAppState().pageIndex = 1;
-                                      });
+                                      FFAppState().page = 'Posts';
+                                      FFAppState().pageIndex = 1;
+                                      FFAppState().update(() {});
                                     },
                                     child: Container(
                                       width: 70.0,
@@ -653,6 +661,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -678,10 +687,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Sourcing';
-                                        FFAppState().pageIndex = 2;
-                                      });
+                                      FFAppState().page = 'Sourcing';
+                                      FFAppState().pageIndex = 2;
+                                      FFAppState().update(() {});
                                     },
                                     child: Container(
                                       width: 70.0,
@@ -736,6 +744,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -753,10 +762,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Directory';
-                                        FFAppState().pageIndex = 3;
-                                      });
+                                      FFAppState().page = 'Directory';
+                                      FFAppState().pageIndex = 3;
+                                      FFAppState().update(() {});
                                     },
                                     child: Container(
                                       width: 70.0,
@@ -811,6 +819,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -855,7 +864,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                   ),
                                 );
                               },
-                            ).then((value) => setState(() {}));
+                            );
                           },
                           child: Container(
                             width: 66.0,
@@ -866,7 +875,10 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                                 BoxShadow(
                                   blurRadius: 15.0,
                                   color: Color(0x13000000),
-                                  offset: Offset(0.0, -6.0),
+                                  offset: Offset(
+                                    0.0,
+                                    -6.0,
+                                  ),
                                 )
                               ],
                               shape: BoxShape.circle,

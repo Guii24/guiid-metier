@@ -45,9 +45,8 @@ class _WearPageWidgetState extends State<WearPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        _model.commentShoePost = false;
-      });
+      _model.commentShoePost = false;
+      safeSetState(() {});
     });
 
     _model.textController ??= TextEditingController();
@@ -63,10 +62,8 @@ class _WearPageWidgetState extends State<WearPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<PostRecord>(
-      stream: PostRecord.getDocument(widget.postDoc!),
+      stream: PostRecord.getDocument(widget!.postDoc!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -85,11 +82,11 @@ class _WearPageWidgetState extends State<WearPageWidget> {
             ),
           );
         }
+
         final wearPagePostRecord = snapshot.data!;
+
         return GestureDetector(
-          onTap: () => _model.unfocusNode.canRequestFocus
-              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-              : FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFF4F3EC),
@@ -128,10 +125,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => _model.unfocusNode.canRequestFocus
-                                  ? FocusScope.of(context)
-                                      .requestFocus(_model.unfocusNode)
-                                  : FocusScope.of(context).unfocus(),
+                              onTap: () => FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomEditorDeleteWearWidget(
@@ -149,10 +143,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => _model.unfocusNode.canRequestFocus
-                                  ? FocusScope.of(context)
-                                      .requestFocus(_model.unfocusNode)
-                                  : FocusScope.of(context).unfocus(),
+                              onTap: () => FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomReportPostWidget(
@@ -188,7 +179,9 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                     ),
                   );
                 }
+
                 final stackUsersRecord = snapshot.data!;
+
                 return Container(
                   width: double.infinity,
                   height: double.infinity,
@@ -227,6 +220,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                           ),
                                         );
                                       }
+
                                       return ListView.separated(
                                         padding: EdgeInsets.fromLTRB(
                                           0,
@@ -291,6 +285,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                           context)
                                                       .dark88,
                                                   fontSize: 17.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
@@ -326,6 +321,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                             List<CommentPostRecord>
                                                 listViewCommentPostRecordList =
                                                 snapshot.data!;
+
                                             return ListView.separated(
                                               padding: EdgeInsets.fromLTRB(
                                                 0,
@@ -406,7 +402,10 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                       BoxShadow(
                                         blurRadius: 16.0,
                                         color: Color(0x1A000000),
-                                        offset: Offset(0.0, 1.0),
+                                        offset: Offset(
+                                          0.0,
+                                          1.0,
+                                        ),
                                       )
                                     ],
                                     borderRadius: BorderRadius.circular(28.0),
@@ -486,6 +485,8 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                                         context)
                                                                     .primary,
                                                                 fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                         ),
                                                         duration: Duration(
@@ -563,15 +564,8 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                         context: context,
                                                         builder: (context) {
                                                           return GestureDetector(
-                                                            onTap: () => _model
-                                                                    .unfocusNode
-                                                                    .canRequestFocus
-                                                                ? FocusScope.of(
-                                                                        context)
-                                                                    .requestFocus(
-                                                                        _model
-                                                                            .unfocusNode)
-                                                                : FocusScope.of(
+                                                            onTap: () =>
+                                                                FocusScope.of(
                                                                         context)
                                                                     .unfocus(),
                                                             child: Padding(
@@ -616,6 +610,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                             ),
@@ -654,6 +649,8 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                                       .primary,
                                                                   fontSize:
                                                                       14.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                 ),
                                                       ),
                                                       duration: Duration(
@@ -669,10 +666,9 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                       currentUserDocument
                                                           ?.userSubscription,
                                                       false)) {
-                                                    setState(() {
-                                                      _model.commentShoePost =
-                                                          true;
-                                                    });
+                                                    _model.commentShoePost =
+                                                        true;
+                                                    safeSetState(() {});
                                                   } else {
                                                     showModalBottomSheet(
                                                       isScrollControlled: true,
@@ -686,15 +682,8 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                       context: context,
                                                       builder: (context) {
                                                         return GestureDetector(
-                                                          onTap: () => _model
-                                                                  .unfocusNode
-                                                                  .canRequestFocus
-                                                              ? FocusScope.of(
-                                                                      context)
-                                                                  .requestFocus(
-                                                                      _model
-                                                                          .unfocusNode)
-                                                              : FocusScope.of(
+                                                          onTap: () =>
+                                                              FocusScope.of(
                                                                       context)
                                                                   .unfocus(),
                                                           child: Padding(
@@ -745,6 +734,8 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                                         context)
                                                                     .dark88,
                                                                 fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                     ),
                                                   ),
@@ -820,7 +811,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                   EasyDebounce.debounce(
                                                 '_model.textController',
                                                 Duration(milliseconds: 10),
-                                                () => setState(() {}),
+                                                () => safeSetState(() {}),
                                               ),
                                               autofocus: true,
                                               obscureText: false,
@@ -837,6 +828,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                                   .of(context)
                                                               .dark38,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           lineHeight: 1.5,
                                                         ),
                                                 enabledBorder:
@@ -907,6 +899,7 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         lineHeight: 1.5,
                                                       ),
                                               maxLines: 2,
@@ -1013,12 +1006,12 @@ class _WearPageWidgetState extends State<WearPageWidget> {
                                                     },
                                                   ),
                                                 });
-                                                setState(() {
+                                                safeSetState(() {
                                                   _model.textController
                                                       ?.clear();
                                                 });
 
-                                                setState(() {});
+                                                safeSetState(() {});
                                               },
                                       ),
                                     ],

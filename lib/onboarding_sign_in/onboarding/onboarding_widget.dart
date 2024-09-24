@@ -43,8 +43,6 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryText,
@@ -100,6 +98,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primary,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -195,6 +194,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primary,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -290,6 +290,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primary,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -363,6 +364,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget> {
                         duration: Duration(milliseconds: 500),
                         curve: Curves.ease,
                       );
+                      safeSetState(() {});
                     },
                     effect: smooth_page_indicator.SlideEffect(
                       spacing: 6.0,

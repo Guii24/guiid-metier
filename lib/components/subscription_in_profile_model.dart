@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -19,8 +18,6 @@ class SubscriptionInProfileModel
     extends FlutterFlowModel<SubscriptionInProfileWidget> {
   ///  State fields for stateful widgets in this component.
 
-  // Stores action output result for [Backend Call - API (info)] action in subscriptionInProfile widget.
-  ApiCallResponse? apiResult7qk;
   // State field(s) for PageView widget.
   PageController? pageViewController;
 
@@ -30,15 +27,9 @@ class SubscriptionInProfileModel
       ? pageViewController!.page!.round()
       : 0;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {}
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

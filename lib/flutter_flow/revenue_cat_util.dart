@@ -3,6 +3,9 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 
+export 'package:purchases_flutter/purchases_flutter.dart'
+    show Package, Offering;
+
 Offerings? _offerings;
 CustomerInfo? _customerInfo;
 String? _loggedInUid;

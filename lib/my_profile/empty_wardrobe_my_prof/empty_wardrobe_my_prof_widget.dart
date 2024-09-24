@@ -38,8 +38,6 @@ class _EmptyWardrobeMyProfWidgetState extends State<EmptyWardrobeMyProfWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Align(
       alignment: AlignmentDirectional(0.0, 0.0),
       child: Column(
@@ -70,6 +68,7 @@ class _EmptyWardrobeMyProfWidgetState extends State<EmptyWardrobeMyProfWidget> {
                     fontFamily: 'Libre Franklin',
                     color: FlutterFlowTheme.of(context).dark68,
                     fontSize: 15.0,
+                    letterSpacing: 0.0,
                   ),
             ),
           ),

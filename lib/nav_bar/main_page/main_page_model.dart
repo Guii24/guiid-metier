@@ -10,11 +10,8 @@ import 'package:provider/provider.dart';
 class MainPageModel extends FlutterFlowModel<MainPageWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // Model for NavBar component.
   late NavBarModel navBarModel;
-
-  /// Initialization and disposal methods.
 
   @override
   void initState(BuildContext context) {
@@ -23,11 +20,6 @@ class MainPageModel extends FlutterFlowModel<MainPageWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     navBarModel.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

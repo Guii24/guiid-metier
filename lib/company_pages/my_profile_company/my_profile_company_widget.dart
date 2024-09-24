@@ -37,16 +37,15 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().profilePhotoCompany = currentUserPhoto;
-      });
+      FFAppState().profilePhotoCompany = currentUserPhoto;
+      safeSetState(() {});
     });
 
     _model.tabBarController = TabController(
       vsync: this,
       length: 3,
       initialIndex: 0,
-    )..addListener(() => setState(() {}));
+    )..addListener(() => safeSetState(() {}));
   }
 
   @override
@@ -61,9 +60,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -222,6 +219,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 19.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -246,6 +244,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark68,
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ),
@@ -318,6 +317,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                       );
                                     }
                                     int textCount = snapshot.data!;
+
                                     return Text(
                                       formatNumber(
                                         textCount,
@@ -329,6 +329,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                             fontFamily: 'Libre Franklin',
                                             color: Color(0xFF171A1F),
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     );
                                   },
@@ -341,6 +342,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                         fontFamily: 'Libre Franklin',
                                         color: Color(0xFF9D9FA3),
                                         fontSize: 11.0,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ],
@@ -384,6 +386,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                             fontFamily: 'Libre Franklin',
                                             color: Color(0xFF171A1F),
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -395,6 +398,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                           fontFamily: 'Libre Franklin',
                                           color: Color(0xFF9D9FA3),
                                           fontSize: 11.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ],
@@ -420,6 +424,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                             FlutterFlowTheme.of(context).bodyMedium.override(
                                   fontFamily: 'Libre Franklin',
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                 ),
                         unselectedLabelStyle: TextStyle(),
                         indicatorColor: FlutterFlowTheme.of(context).secondary,
@@ -492,6 +497,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                         child: EmptyPostMyProfWidget(),
                                       );
                                     }
+
                                     return ListView.separated(
                                       padding: EdgeInsets.fromLTRB(
                                         0,
@@ -632,6 +638,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 17.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -657,6 +664,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark68,
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
                                               lineHeight: 1.5,
                                             ),
@@ -683,6 +691,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark68,
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
                                             ),
                                       ),
@@ -700,6 +709,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 17.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -720,6 +730,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                                       ?.toList() ??
                                                   [])
                                               .toList();
+
                                           return Wrap(
                                             spacing: 10.0,
                                             runSpacing: 10.0,
@@ -777,6 +788,8 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                                                         context)
                                                                     .dark88,
                                                                 fontSize: 15.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                     ),
                                                   ),
@@ -807,6 +820,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark68,
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
                                             ),
                                       ),
@@ -824,6 +838,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 17.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -854,6 +869,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .dark68,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -878,6 +894,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -923,6 +940,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -947,6 +965,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -992,6 +1011,7 @@ class _MyProfileCompanyWidgetState extends State<MyProfileCompanyWidget>
                                   ),
                                 );
                               }
+
                               return ListView.separated(
                                 padding: EdgeInsets.fromLTRB(
                                   0,

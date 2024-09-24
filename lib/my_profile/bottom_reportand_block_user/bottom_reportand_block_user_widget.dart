@@ -52,8 +52,6 @@ class _BottomReportandBlockUserWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -97,7 +95,7 @@ class _BottomReportandBlockUserWidgetState
                               return Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomReportWidget(
-                                  userRef: widget.user,
+                                  userRef: widget!.user,
                                   type: 'User',
                                 ),
                               );
@@ -142,7 +140,7 @@ class _BottomReportandBlockUserWidgetState
                               if ((currentUserDocument?.userBlockedUser
                                           ?.toList() ??
                                       [])
-                                  .contains(widget.user)) {
+                                  .contains(widget!.user)) {
                                 Navigator.pop(context);
                                 await showDialog(
                                   context: context,
@@ -154,12 +152,12 @@ class _BottomReportandBlockUserWidgetState
                                       alignment: AlignmentDirectional(0.0, 0.0)
                                           .resolve(Directionality.of(context)),
                                       child: PopupUnblockUserWidget(
-                                        name: widget.name!,
-                                        user: widget.user!,
+                                        name: widget!.name!,
+                                        user: widget!.user!,
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                );
                               } else {
                                 Navigator.pop(context);
                                 await showDialog(
@@ -172,18 +170,18 @@ class _BottomReportandBlockUserWidgetState
                                       alignment: AlignmentDirectional(0.0, 0.0)
                                           .resolve(Directionality.of(context)),
                                       child: PopupBlockUserWidget(
-                                        user: widget.user!,
-                                        name: widget.name!,
+                                        user: widget!.user!,
+                                        name: widget!.name!,
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                );
                               }
                             },
                             text: (currentUserDocument?.userBlockedUser
                                             ?.toList() ??
                                         [])
-                                    .contains(widget.user)
+                                    .contains(widget!.user)
                                 ? 'UNBLOCK'
                                 : 'BLOCK',
                             options: FFButtonOptions(

@@ -46,8 +46,6 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -77,6 +75,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                           fontFamily: 'NewYork',
                           color: FlutterFlowTheme.of(context).primary,
                           fontSize: 48.0,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                           useGoogleFonts: false,
                           lineHeight: 0.95,
@@ -434,6 +433,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.ease,
                               );
+                              safeSetState(() {});
                             },
                             effect: smooth_page_indicator.SlideEffect(
                               spacing: 6.0,
@@ -515,6 +515,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primary,
                                             fontSize: 17.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
@@ -527,6 +528,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .white52,
                                             fontSize: 12.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                     ),
@@ -539,8 +541,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 RichText(
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor,
+                                  textScaler: MediaQuery.of(context).textScaler,
                                   text: TextSpan(
                                     children: [
                                       TextSpan(
@@ -564,6 +565,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                             .override(
                                               fontFamily: 'Libre Franklin',
                                               fontSize: 17.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
@@ -574,6 +576,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                             .override(
                                               fontFamily: 'Libre Franklin',
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
                                             ),
                                       )
@@ -585,6 +588,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           fontSize: 14.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
@@ -598,6 +602,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                                         color: FlutterFlowTheme.of(context)
                                             .white52,
                                         fontSize: 12.0,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ],
@@ -657,7 +662,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                         }
                       }
 
-                      setState(() {});
+                      safeSetState(() {});
                     },
                     text: 'TRY 7-DAYS FREE',
                     options: FFButtonOptions(

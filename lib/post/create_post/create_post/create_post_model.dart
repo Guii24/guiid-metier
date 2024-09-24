@@ -22,7 +22,6 @@ import 'package:provider/provider.dart';
 class CreatePostModel extends FlutterFlowModel<CreatePostWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for PageView widget.
   PageController? pageViewController;
 
@@ -36,19 +35,12 @@ class CreatePostModel extends FlutterFlowModel<CreatePostWidget> {
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

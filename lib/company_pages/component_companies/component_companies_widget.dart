@@ -49,8 +49,6 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Material(
       color: Colors.transparent,
       elevation: 0.0,
@@ -82,7 +80,7 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
                     ),
                     child: Image.network(
                       valueOrDefault<String>(
-                        widget.companyDoc?.photoUrl,
+                        widget!.companyDoc?.photoUrl,
                         'https://firebasestorage.googleapis.com/v0/b/guiid-metier-9e72a.appspot.com/o/Photo.png?alt=media&token=5b0e8f6e-7128-4456-a7d5-373cb8fa901b',
                       ),
                       fit: BoxFit.cover,
@@ -97,7 +95,7 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
                       children: [
                         Text(
                           valueOrDefault<String>(
-                            widget.companyDoc?.displayName,
+                            widget!.companyDoc?.displayName,
                             'name error',
                           ),
                           style:
@@ -119,17 +117,18 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark68,
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                 ),
                           ),
                         ),
-                        if (widget.companyDoc?.userLocation != null &&
-                            widget.companyDoc?.userLocation != '')
+                        if (widget!.companyDoc?.userLocation != null &&
+                            widget!.companyDoc?.userLocation != '')
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 3.0, 0.0, 0.0),
                             child: Text(
                               valueOrDefault<String>(
-                                widget.companyDoc?.userLocation,
+                                widget!.companyDoc?.userLocation,
                                 'location error',
                               ),
                               style: FlutterFlowTheme.of(context)
@@ -138,6 +137,7 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
                           ),
@@ -155,19 +155,19 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
                       children: [
                         if (!(currentUserDocument?.userFollowing?.toList() ??
                                 [])
-                            .contains(widget.companyDoc?.reference))
+                            .contains(widget!.companyDoc?.reference))
                           FFButtonWidget(
                             onPressed: () async {
                               await currentUserReference!.update({
                                 ...mapToFirestore(
                                   {
                                     'user_following': FieldValue.arrayUnion(
-                                        [widget.companyDoc?.reference]),
+                                        [widget!.companyDoc?.reference]),
                                   },
                                 ),
                               });
 
-                              await widget.companyDoc!.reference.update({
+                              await widget!.companyDoc!.reference.update({
                                 ...mapToFirestore(
                                   {
                                     'user_followers': FieldValue.arrayUnion(
@@ -187,13 +187,13 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
                                     notificationCreationDate:
                                         getCurrentTimestamp,
                                     notificationTo:
-                                        widget.companyDoc?.reference,
+                                        widget!.companyDoc?.reference,
                                   ));
-                              if (widget.companyDoc!.userNotification) {
+                              if (widget!.companyDoc!.userNotification) {
                                 triggerPushNotification(
                                   notificationTitle: currentUserDisplayName,
                                   notificationText: 'started following you',
-                                  userRefs: [widget.companyDoc!.reference],
+                                  userRefs: [widget!.companyDoc!.reference],
                                   initialPageName: 'MainPage',
                                   parameterData: {},
                                 );
@@ -227,19 +227,19 @@ class _ComponentCompaniesWidgetState extends State<ComponentCompaniesWidget> {
                             ),
                           ),
                         if ((currentUserDocument?.userFollowing?.toList() ?? [])
-                            .contains(widget.companyDoc?.reference))
+                            .contains(widget!.companyDoc?.reference))
                           FFButtonWidget(
                             onPressed: () async {
                               await currentUserReference!.update({
                                 ...mapToFirestore(
                                   {
                                     'user_following': FieldValue.arrayRemove(
-                                        [widget.companyDoc?.reference]),
+                                        [widget!.companyDoc?.reference]),
                                   },
                                 ),
                               });
 
-                              await widget.companyDoc!.reference.update({
+                              await widget!.companyDoc!.reference.update({
                                 ...mapToFirestore(
                                   {
                                     'user_followers': FieldValue.arrayRemove(

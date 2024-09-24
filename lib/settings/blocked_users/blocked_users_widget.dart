@@ -38,12 +38,8 @@ class _BlockedUsersWidgetState extends State<BlockedUsersWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -69,6 +65,7 @@ class _BlockedUsersWidgetState extends State<BlockedUsersWidget> {
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -86,6 +83,7 @@ class _BlockedUsersWidgetState extends State<BlockedUsersWidget> {
                   final blockedUser =
                       (currentUserDocument?.userBlockedUser?.toList() ?? [])
                           .toList();
+
                   return ListView.separated(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.vertical,

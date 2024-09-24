@@ -39,12 +39,8 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -191,6 +187,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                                     }
                                     List<ArticlesRecord> rowArticlesRecordList =
                                         snapshot.data!;
+
                                     return SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
@@ -286,6 +283,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                               ),
@@ -314,6 +312,7 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                                 }
                                 List<ArticlesRecord>
                                     listViewArticlesRecordList = snapshot.data!;
+
                                 return ListView.separated(
                                   padding: EdgeInsets.zero,
                                   primary: false,
@@ -348,7 +347,8 @@ class _ArticlesUserWidgetState extends State<ArticlesUserWidget> {
                                           listViewArticlesRecord.reference.id,
                                           listViewIndex,
                                         ),
-                                        updateCallback: () => setState(() {}),
+                                        updateCallback: () =>
+                                            safeSetState(() {}),
                                         child: ArticlesComponentWidget(
                                           key: Key(
                                             'Keyxqp_${listViewArticlesRecord.reference.id}',

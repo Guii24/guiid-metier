@@ -34,12 +34,11 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().countryInfo = jsonDecode(
-            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-        FFAppState().countryInfoCompany = jsonDecode(
-            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-      });
+      FFAppState().countryInfo = jsonDecode(
+          '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+      FFAppState().countryInfoCompany = jsonDecode(
+          '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+      safeSetState(() {});
     });
 
     _model.textController ??= TextEditingController();
@@ -58,9 +57,7 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -86,6 +83,7 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -114,6 +112,7 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark68,
                               fontSize: 15.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -158,13 +157,8 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
-                                                    .unfocus(),
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -206,6 +200,7 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
                                             fontFamily: 'Libre Franklin',
                                             color: FlutterFlowTheme.of(context)
                                                 .dark88,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                     ),
@@ -228,13 +223,8 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
-                                                    .unfocus(),
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -276,8 +266,9 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
                                     onChanged: (_) => EasyDebounce.debounce(
                                       '_model.textController',
                                       Duration(milliseconds: 10),
-                                      () => setState(() {}),
+                                      () => safeSetState(() {}),
                                     ),
+                                    autofocus: false,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       isDense: true,
@@ -289,6 +280,7 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .dark38,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                             lineHeight: 1.0,
                                           ),
@@ -331,6 +323,7 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
                                           fontFamily: 'Libre Franklin',
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
                                           lineHeight: 1.0,
                                         ),
@@ -391,6 +384,7 @@ class _PhoneNumberEditWidgetState extends State<PhoneNumberEditWidget> {
                             buttonUsersRecordList.isNotEmpty
                                 ? buttonUsersRecordList.first
                                 : null;
+
                         return FFButtonWidget(
                           onPressed: () async {
                             if (buttonUsersRecord != null) {

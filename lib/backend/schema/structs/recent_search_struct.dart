@@ -29,36 +29,42 @@ class RecentSearchStruct extends FFFirebaseStruct {
   DocumentReference? _searchPost;
   DocumentReference? get searchPost => _searchPost;
   set searchPost(DocumentReference? val) => _searchPost = val;
+
   bool hasSearchPost() => _searchPost != null;
 
   // "search_text" field.
   String? _searchText;
   String get searchText => _searchText ?? '';
   set searchText(String? val) => _searchText = val;
+
   bool hasSearchText() => _searchText != null;
 
   // "search_date" field.
   DateTime? _searchDate;
   DateTime? get searchDate => _searchDate;
   set searchDate(DateTime? val) => _searchDate = val;
+
   bool hasSearchDate() => _searchDate != null;
 
   // "search_job" field.
   DocumentReference? _searchJob;
   DocumentReference? get searchJob => _searchJob;
   set searchJob(DocumentReference? val) => _searchJob = val;
+
   bool hasSearchJob() => _searchJob != null;
 
   // "search_aritcle" field.
   DocumentReference? _searchAritcle;
   DocumentReference? get searchAritcle => _searchAritcle;
   set searchAritcle(DocumentReference? val) => _searchAritcle = val;
+
   bool hasSearchAritcle() => _searchAritcle != null;
 
   // "search_user" field.
   DocumentReference? _searchUser;
   DocumentReference? get searchUser => _searchUser;
   set searchUser(DocumentReference? val) => _searchUser = val;
+
   bool hasSearchUser() => _searchUser != null;
 
   static RecentSearchStruct fromMap(Map<String, dynamic> data) =>

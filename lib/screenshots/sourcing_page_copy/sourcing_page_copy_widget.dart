@@ -38,12 +38,8 @@ class _SourcingPageCopyWidgetState extends State<SourcingPageCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -73,6 +69,7 @@ class _SourcingPageCopyWidgetState extends State<SourcingPageCopyWidget> {
                     fontFamily: 'NewYork',
                     color: FlutterFlowTheme.of(context).primaryText,
                     fontSize: 20.0,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.w600,
                     useGoogleFonts: false,
                   ),
@@ -189,6 +186,7 @@ class _SourcingPageCopyWidgetState extends State<SourcingPageCopyWidget> {
                                 ),
                               );
                             }
+
                             return ListView.separated(
                               padding: EdgeInsets.zero,
                               primary: false,

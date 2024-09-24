@@ -78,15 +78,13 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                               FFAppState().choosenjobtype1 != '') ||
                           (FFAppState().choosenjobType2 != null &&
                               FFAppState().choosenjobType2 != '')) {
-                        setState(() {
-                          FFAppState().choosenjobType2 = '';
-                          FFAppState().choosenjobtype1 = '';
-                          FFAppState().jobType3 = 'Not applicable';
-                        });
+                        FFAppState().choosenjobType2 = '';
+                        FFAppState().choosenjobtype1 = '';
+                        FFAppState().jobType3 = 'Not applicable';
+                        safeSetState(() {});
                       } else {
-                        setState(() {
-                          FFAppState().jobType3 = 'Not applicable';
-                        });
+                        FFAppState().jobType3 = 'Not applicable';
+                        safeSetState(() {});
                       }
                     },
                     child: Row(
@@ -104,6 +102,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 16.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                           ),
@@ -142,6 +141,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark88,
                         fontSize: 17.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -150,6 +150,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
             Builder(
               builder: (context) {
                 final jobTypes = FFAppState().jobTypeList.toList();
+
                 return ListView.builder(
                   padding: EdgeInsets.zero,
                   primary: false,
@@ -167,10 +168,9 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            setState(() {
-                              FFAppState().choosenjobtype1 = jobTypesItem;
-                              FFAppState().jobType3 = '';
-                            });
+                            FFAppState().choosenjobtype1 = jobTypesItem;
+                            FFAppState().jobType3 = '';
+                            safeSetState(() {});
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -188,6 +188,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
@@ -229,6 +230,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark88,
                         fontSize: 17.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -237,6 +239,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
             Builder(
               builder: (context) {
                 final jobTypes2 = FFAppState().jobTypelist2.toList();
+
                 return ListView.builder(
                   padding: EdgeInsets.zero,
                   primary: false,
@@ -254,10 +257,9 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            setState(() {
-                              FFAppState().choosenjobType2 = jobTypes2Item;
-                              FFAppState().jobType3 = '';
-                            });
+                            FFAppState().choosenjobType2 = jobTypes2Item;
+                            FFAppState().jobType3 = '';
+                            safeSetState(() {});
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -275,6 +277,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
@@ -313,14 +316,12 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                           FFAppState().choosenjobtype1 == '') ||
                       (FFAppState().choosenjobType2 == null ||
                           FFAppState().choosenjobType2 == '')) {
-                    setState(() {
-                      FFAppState().selectedJobType = FFAppState().jobType3;
-                    });
+                    FFAppState().selectedJobType = FFAppState().jobType3;
+                    safeSetState(() {});
                   } else {
-                    setState(() {
-                      FFAppState().selectedJobType =
-                          '${FFAppState().choosenjobtype1}, ${FFAppState().choosenjobType2}';
-                    });
+                    FFAppState().selectedJobType =
+                        '${FFAppState().choosenjobtype1}, ${FFAppState().choosenjobType2}';
+                    safeSetState(() {});
                   }
 
                   Navigator.pop(context);

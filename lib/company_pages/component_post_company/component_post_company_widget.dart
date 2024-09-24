@@ -56,10 +56,8 @@ class _ComponentPostCompanyWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<PostRecord>(
-      stream: PostRecord.getDocument(widget.postCompany!),
+      stream: PostRecord.getDocument(widget!.postCompany!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -75,7 +73,9 @@ class _ComponentPostCompanyWidgetState
             ),
           );
         }
+
         final containerPostRecord = snapshot.data!;
+
         return Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -99,7 +99,9 @@ class _ComponentPostCompanyWidgetState
                   ),
                 );
               }
+
               final columnUsersRecord = snapshot.data!;
+
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -113,14 +115,16 @@ class _ComponentPostCompanyWidgetState
                                 .toList()
                                 .take(5)
                                 .toList();
+
                             return Container(
                               width: double.infinity,
                               height: double.infinity,
                               child: PageView.builder(
                                 controller: _model.pageViewController ??=
                                     PageController(
-                                        initialPage: min(0, images.length - 1)),
-                                onPageChanged: (_) => setState(() {}),
+                                        initialPage:
+                                            max(0, min(0, images.length - 1))),
+                                onPageChanged: (_) => safeSetState(() {}),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: images.length,
                                 itemBuilder: (context, imagesIndex) {
@@ -170,6 +174,7 @@ class _ComponentPostCompanyWidgetState
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBackground,
                                             fontSize: 13.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -226,6 +231,7 @@ class _ComponentPostCompanyWidgetState
                                               .override(
                                                 fontFamily: 'Libre Franklin',
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                         ),
@@ -235,7 +241,7 @@ class _ComponentPostCompanyWidgetState
                                             0.0, 0.0, 0.0, 3.0),
                                         child: Text(
                                           dateTimeFormat(
-                                            'relative',
+                                            "relative",
                                             containerPostRecord.postTimePosted!,
                                             locale: FFLocalizations.of(context)
                                                 .languageCode,
@@ -248,6 +254,7 @@ class _ComponentPostCompanyWidgetState
                                                     FlutterFlowTheme.of(context)
                                                         .dark68,
                                                 fontSize: 14.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -331,6 +338,7 @@ class _ComponentPostCompanyWidgetState
                                                           context)
                                                       .primaryText,
                                                   fontSize: 12.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                             elevation: 0.0,
@@ -397,6 +405,7 @@ class _ComponentPostCompanyWidgetState
                                                           context)
                                                       .dark52,
                                                   fontSize: 12.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                             elevation: 0.0,
@@ -476,6 +485,7 @@ class _ComponentPostCompanyWidgetState
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                     lineHeight: 1.4,
                                   ),
                         ),
@@ -488,6 +498,7 @@ class _ComponentPostCompanyWidgetState
                                   .toList()
                                   .take(3)
                                   .toList();
+
                               return Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: List.generate(listcat.length,
@@ -507,6 +518,7 @@ class _ComponentPostCompanyWidgetState
                                           color: FlutterFlowTheme.of(context)
                                               .dark52,
                                           fontSize: 14.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   );
                                 }),
@@ -567,6 +579,7 @@ class _ComponentPostCompanyWidgetState
                                                     FlutterFlowTheme.of(context)
                                                         .primary,
                                                 fontSize: 14.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                         duration: Duration(milliseconds: 3000),
@@ -657,6 +670,7 @@ class _ComponentPostCompanyWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                             ),
@@ -687,6 +701,7 @@ class _ComponentPostCompanyWidgetState
                                                           context)
                                                       .primary,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                           duration:
@@ -823,6 +838,7 @@ class _ComponentPostCompanyWidgetState
                                                           context)
                                                       .dark68,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -858,6 +874,7 @@ class _ComponentPostCompanyWidgetState
                                                   FlutterFlowTheme.of(context)
                                                       .primary,
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                       duration: Duration(milliseconds: 3000),

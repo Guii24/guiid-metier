@@ -41,14 +41,13 @@ class _SignUPWidgetState extends State<SignUPWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().countryInfo = jsonDecode(
-            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-        FFAppState().countryInfoCompany = jsonDecode(
-            '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
-        FFAppState().profilePhoto = '';
-        FFAppState().profilePhotoCompany = '';
-      });
+      FFAppState().countryInfo = jsonDecode(
+          '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+      FFAppState().countryInfoCompany = jsonDecode(
+          '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
+      FFAppState().profilePhoto = '';
+      FFAppState().profilePhotoCompany = '';
+      safeSetState(() {});
       await actions.lockOrientation();
     });
 
@@ -56,17 +55,17 @@ class _SignUPWidgetState extends State<SignUPWidget>
       vsync: this,
       length: 2,
       initialIndex: 0,
-    )..addListener(() => setState(() {}));
-    _model.userNameController ??= TextEditingController();
+    )..addListener(() => safeSetState(() {}));
+    _model.userNameTextController ??= TextEditingController();
     _model.userNameFocusNode ??= FocusNode();
 
-    _model.userPhoneController ??= TextEditingController();
+    _model.userPhoneTextController ??= TextEditingController();
     _model.userPhoneFocusNode ??= FocusNode();
 
-    _model.companyNameController ??= TextEditingController();
+    _model.companyNameTextController ??= TextEditingController();
     _model.companyNameFocusNode ??= FocusNode();
 
-    _model.phoneCompanyController ??= TextEditingController();
+    _model.phoneCompanyTextController ??= TextEditingController();
     _model.phoneCompanyFocusNode ??= FocusNode();
   }
 
@@ -82,9 +81,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -111,6 +108,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
                   fontSize: 16.0,
+                  letterSpacing: 0.0,
                 ),
           ),
           actions: [],
@@ -130,6 +128,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark68,
                         fontSize: 15.0,
+                        letterSpacing: 0.0,
                       ),
                 ),
               ),
@@ -144,7 +143,11 @@ class _SignUPWidgetState extends State<SignUPWidget>
                           labelColor: FlutterFlowTheme.of(context).secondary,
                           unselectedLabelColor:
                               FlutterFlowTheme.of(context).dark88,
-                          labelStyle: FlutterFlowTheme.of(context).bodyMedium,
+                          labelStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Libre Franklin',
+                                    letterSpacing: 0.0,
+                                  ),
                           unselectedLabelStyle: TextStyle(),
                           indicatorColor:
                               FlutterFlowTheme.of(context).secondary,
@@ -214,15 +217,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return GestureDetector(
-                                                          onTap: () => _model
-                                                                  .unfocusNode
-                                                                  .canRequestFocus
-                                                              ? FocusScope.of(
-                                                                      context)
-                                                                  .requestFocus(
-                                                                      _model
-                                                                          .unfocusNode)
-                                                              : FocusScope.of(
+                                                          onTap: () =>
+                                                              FocusScope.of(
                                                                       context)
                                                                   .unfocus(),
                                                           child: Padding(
@@ -286,15 +282,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return GestureDetector(
-                                                          onTap: () => _model
-                                                                  .unfocusNode
-                                                                  .canRequestFocus
-                                                              ? FocusScope.of(
-                                                                      context)
-                                                                  .requestFocus(
-                                                                      _model
-                                                                          .unfocusNode)
-                                                              : FocusScope.of(
+                                                          onTap: () =>
+                                                              FocusScope.of(
                                                                       context)
                                                                   .unfocus(),
                                                           child: Padding(
@@ -321,6 +310,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -353,15 +343,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                       context: context,
                                                       builder: (context) {
                                                         return GestureDetector(
-                                                          onTap: () => _model
-                                                                  .unfocusNode
-                                                                  .canRequestFocus
-                                                              ? FocusScope.of(
-                                                                      context)
-                                                                  .requestFocus(
-                                                                      _model
-                                                                          .unfocusNode)
-                                                              : FocusScope.of(
+                                                          onTap: () =>
+                                                              FocusScope.of(
                                                                       context)
                                                                   .unfocus(),
                                                           child: Padding(
@@ -388,6 +371,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -414,16 +398,17 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               child: Container(
                                                 width: double.infinity,
                                                 child: TextFormField(
-                                                  controller:
-                                                      _model.userNameController,
+                                                  controller: _model
+                                                      .userNameTextController,
                                                   focusNode:
                                                       _model.userNameFocusNode,
                                                   onChanged: (_) =>
                                                       EasyDebounce.debounce(
-                                                    '_model.userNameController',
+                                                    '_model.userNameTextController',
                                                     Duration(milliseconds: 10),
-                                                    () => setState(() {}),
+                                                    () => safeSetState(() {}),
                                                   ),
+                                                  autofocus: false,
                                                   textCapitalization:
                                                       TextCapitalization.none,
                                                   obscureText: false,
@@ -440,6 +425,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                   .of(context)
                                                               .dark38,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
@@ -453,6 +439,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                   .of(context)
                                                               .dark38,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
@@ -520,13 +507,14 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
                                                   maxLines: 3,
                                                   minLines: 1,
                                                   validator: _model
-                                                      .userNameControllerValidator
+                                                      .userNameTextControllerValidator
                                                       .asValidator(context),
                                                   inputFormatters: [
                                                     FilteringTextInputFormatter
@@ -594,15 +582,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                           context: context,
                                                           builder: (context) {
                                                             return GestureDetector(
-                                                              onTap: () => _model
-                                                                      .unfocusNode
-                                                                      .canRequestFocus
-                                                                  ? FocusScope.of(
-                                                                          context)
-                                                                      .requestFocus(
-                                                                          _model
-                                                                              .unfocusNode)
-                                                                  : FocusScope.of(
+                                                              onTap: () =>
+                                                                  FocusScope.of(
                                                                           context)
                                                                       .unfocus(),
                                                               child: Padding(
@@ -648,6 +629,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                 .override(
                                                                   fontFamily:
                                                                       'Libre Franklin',
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
@@ -688,17 +671,19 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                     Expanded(
                                                       child: TextFormField(
                                                         controller: _model
-                                                            .userPhoneController,
+                                                            .userPhoneTextController,
                                                         focusNode: _model
                                                             .userPhoneFocusNode,
                                                         onChanged: (_) =>
                                                             EasyDebounce
                                                                 .debounce(
-                                                          '_model.userPhoneController',
+                                                          '_model.userPhoneTextController',
                                                           Duration(
                                                               milliseconds: 10),
-                                                          () => setState(() {}),
+                                                          () => safeSetState(
+                                                              () {}),
                                                         ),
+                                                        autofocus: false,
                                                         obscureText: false,
                                                         decoration:
                                                             InputDecoration(
@@ -717,6 +702,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                         .dark38,
                                                                     fontSize:
                                                                         15.0,
+                                                                    letterSpacing:
+                                                                        0.0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .normal,
@@ -786,6 +773,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                       .dark88,
                                                                   fontSize:
                                                                       15.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
@@ -795,7 +784,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                             TextInputType
                                                                 .number,
                                                         validator: _model
-                                                            .userPhoneControllerValidator
+                                                            .userPhoneTextControllerValidator
                                                             .asValidator(
                                                                 context),
                                                         inputFormatters: [
@@ -842,10 +831,17 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                         false,
                                                     onChanged:
                                                         (newValue) async {
-                                                      setState(() => _model
+                                                      safeSetState(() => _model
                                                               .checkboxuserValue =
                                                           newValue!);
                                                     },
+                                                    side: BorderSide(
+                                                      width: 2,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .dark12,
+                                                    ),
                                                     activeColor:
                                                         FlutterFlowTheme.of(
                                                                 context)
@@ -859,9 +855,9 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               ),
                                               Expanded(
                                                 child: RichText(
-                                                  textScaleFactor:
+                                                  textScaler:
                                                       MediaQuery.of(context)
-                                                          .textScaleFactor,
+                                                          .textScaler,
                                                   text: TextSpan(
                                                     children: [
                                                       TextSpan(
@@ -926,6 +922,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                   .of(context)
                                                               .dark38,
                                                           fontSize: 13.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
@@ -956,7 +953,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                 '${functions.deleteSpaceAndDivider('${getJsonField(
                                               FFAppState().countryInfo,
                                               r'''$.dial_code''',
-                                            ).toString()}${_model.userPhoneController.text}')}@gmail.com',
+                                            ).toString()}${_model.userPhoneTextController.text}')}@gmail.com',
                                           ),
                                           singleRecord: true,
                                         ),
@@ -986,6 +983,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               buttonUsersRecordList.isNotEmpty
                                                   ? buttonUsersRecordList.first
                                                   : null;
+
                                           return FFButtonWidget(
                                             onPressed: () async {
                                               if (_model.formKey2
@@ -1014,6 +1012,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primary,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .normal,
@@ -1026,8 +1026,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                   ),
                                                 );
                                               } else if (!functions.counter(
-                                                  _model
-                                                      .userPhoneController.text,
+                                                  _model.userPhoneTextController
+                                                      .text,
                                                   14)) {
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(
@@ -1044,6 +1044,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primary,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .normal,
@@ -1072,6 +1074,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primary,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .normal,
@@ -1085,7 +1089,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                 );
                                               } else if (functions
                                                   .containsProfanity(_model
-                                                      .userNameController
+                                                      .userNameTextController
                                                       .text)) {
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(
@@ -1102,6 +1106,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primary,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .normal,
@@ -1118,7 +1124,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                   'VerificationSignUp',
                                                   queryParameters: {
                                                     'userName': serializeParam(
-                                                      _model.userNameController
+                                                      _model
+                                                          .userNameTextController
                                                           .text,
                                                       ParamType.String,
                                                     ),
@@ -1129,7 +1136,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                         FFAppState()
                                                             .countryInfo,
                                                         r'''$.dial_code''',
-                                                      ).toString()}${_model.userPhoneController.text}'),
+                                                      ).toString()}${_model.userPhoneTextController.text}'),
                                                       ParamType.String,
                                                     ),
                                                     'profilePhoto':
@@ -1143,7 +1150,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                     ),
                                                     'phoneoriginal':
                                                         serializeParam(
-                                                      _model.userPhoneController
+                                                      _model
+                                                          .userPhoneTextController
                                                           .text,
                                                       ParamType.String,
                                                     ),
@@ -1240,13 +1248,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => _model
-                                                          .unfocusNode
-                                                          .canRequestFocus
-                                                      ? FocusScope.of(context)
-                                                          .requestFocus(_model
-                                                              .unfocusNode)
-                                                      : FocusScope.of(context)
+                                                  onTap: () =>
+                                                      FocusScope.of(context)
                                                           .unfocus(),
                                                   child: Padding(
                                                     padding:
@@ -1262,9 +1265,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                 (value) => safeSetState(() {}));
                                           },
                                           child: RichText(
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                    .textScaleFactor,
+                                            textScaler: MediaQuery.of(context)
+                                                .textScaler,
                                             text: TextSpan(
                                               children: [
                                                 TextSpan(
@@ -1293,6 +1295,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                             context)
                                                         .dark38,
                                                     fontSize: 15.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ),
@@ -1332,13 +1335,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => _model
-                                                          .unfocusNode
-                                                          .canRequestFocus
-                                                      ? FocusScope.of(context)
-                                                          .requestFocus(_model
-                                                              .unfocusNode)
-                                                      : FocusScope.of(context)
+                                                  onTap: () =>
+                                                      FocusScope.of(context)
                                                           .unfocus(),
                                                   child: Padding(
                                                     padding:
@@ -1393,13 +1391,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => _model
-                                                          .unfocusNode
-                                                          .canRequestFocus
-                                                      ? FocusScope.of(context)
-                                                          .requestFocus(_model
-                                                              .unfocusNode)
-                                                      : FocusScope.of(context)
+                                                  onTap: () =>
+                                                      FocusScope.of(context)
                                                           .unfocus(),
                                                   child: Padding(
                                                     padding:
@@ -1423,6 +1416,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                           context)
                                                       .dark88,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),
@@ -1448,13 +1442,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => _model
-                                                          .unfocusNode
-                                                          .canRequestFocus
-                                                      ? FocusScope.of(context)
-                                                          .requestFocus(_model
-                                                              .unfocusNode)
-                                                      : FocusScope.of(context)
+                                                  onTap: () =>
+                                                      FocusScope.of(context)
                                                           .unfocus(),
                                                   child: Padding(
                                                     padding:
@@ -1478,6 +1467,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                           context)
                                                       .dark88,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),
@@ -1503,15 +1493,16 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                 width: double.infinity,
                                                 child: TextFormField(
                                                   controller: _model
-                                                      .companyNameController,
+                                                      .companyNameTextController,
                                                   focusNode: _model
                                                       .companyNameFocusNode,
                                                   onChanged: (_) =>
                                                       EasyDebounce.debounce(
-                                                    '_model.companyNameController',
+                                                    '_model.companyNameTextController',
                                                     Duration(milliseconds: 10),
-                                                    () => setState(() {}),
+                                                    () => safeSetState(() {}),
                                                   ),
+                                                  autofocus: false,
                                                   textCapitalization:
                                                       TextCapitalization.none,
                                                   obscureText: false,
@@ -1528,6 +1519,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                   .of(context)
                                                               .dark38,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
@@ -1541,6 +1533,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                   .of(context)
                                                               .dark38,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
@@ -1608,13 +1601,14 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
                                                   maxLines: 3,
                                                   minLines: 1,
                                                   validator: _model
-                                                      .companyNameControllerValidator
+                                                      .companyNameTextControllerValidator
                                                       .asValidator(context),
                                                   inputFormatters: [
                                                     FilteringTextInputFormatter
@@ -1681,15 +1675,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                         context: context,
                                                         builder: (context) {
                                                           return GestureDetector(
-                                                            onTap: () => _model
-                                                                    .unfocusNode
-                                                                    .canRequestFocus
-                                                                ? FocusScope.of(
-                                                                        context)
-                                                                    .requestFocus(
-                                                                        _model
-                                                                            .unfocusNode)
-                                                                : FocusScope.of(
+                                                            onTap: () =>
+                                                                FocusScope.of(
                                                                         context)
                                                                     .unfocus(),
                                                             child: Padding(
@@ -1734,6 +1721,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                               .override(
                                                                 fontFamily:
                                                                     'Libre Franklin',
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
@@ -1773,16 +1762,18 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                   Expanded(
                                                     child: TextFormField(
                                                       controller: _model
-                                                          .phoneCompanyController,
+                                                          .phoneCompanyTextController,
                                                       focusNode: _model
                                                           .phoneCompanyFocusNode,
                                                       onChanged: (_) =>
                                                           EasyDebounce.debounce(
-                                                        '_model.phoneCompanyController',
+                                                        '_model.phoneCompanyTextController',
                                                         Duration(
                                                             milliseconds: 10),
-                                                        () => setState(() {}),
+                                                        () =>
+                                                            safeSetState(() {}),
                                                       ),
+                                                      autofocus: false,
                                                       obscureText: false,
                                                       decoration:
                                                           InputDecoration(
@@ -1801,6 +1792,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                       .dark38,
                                                                   fontSize:
                                                                       15.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
@@ -1858,26 +1851,25 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                       4.0),
                                                         ),
                                                       ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Libre Franklin',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .dark88,
-                                                                fontSize: 15.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Libre Franklin',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .dark88,
+                                                            fontSize: 15.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
                                                       minLines: 1,
                                                       keyboardType:
                                                           TextInputType.number,
                                                       validator: _model
-                                                          .phoneCompanyControllerValidator
+                                                          .phoneCompanyTextControllerValidator
                                                           .asValidator(context),
                                                       inputFormatters: [
                                                         _model.phoneCompanyMask
@@ -1916,10 +1908,16 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                         .checkboxcompanyValue ??=
                                                     false,
                                                 onChanged: (newValue) async {
-                                                  setState(() => _model
+                                                  safeSetState(() => _model
                                                           .checkboxcompanyValue =
                                                       newValue!);
                                                 },
+                                                side: BorderSide(
+                                                  width: 2,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .dark12,
+                                                ),
                                                 activeColor:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
@@ -1931,9 +1929,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                           ),
                                           Expanded(
                                             child: RichText(
-                                              textScaleFactor:
-                                                  MediaQuery.of(context)
-                                                      .textScaleFactor,
+                                              textScaler: MediaQuery.of(context)
+                                                  .textScaler,
                                               text: TextSpan(
                                                 children: [
                                                   TextSpan(
@@ -1997,6 +1994,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                                   .of(context)
                                                               .dark38,
                                                           fontSize: 13.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
@@ -2043,6 +2041,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primary,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -2053,7 +2052,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                           ),
                                         );
                                       } else if (!functions.counter(
-                                          _model.phoneCompanyController.text,
+                                          _model
+                                              .phoneCompanyTextController.text,
                                           14)) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
@@ -2070,6 +2070,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primary,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -2096,6 +2097,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primary,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -2106,7 +2108,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                           ),
                                         );
                                       } else if (functions.containsProfanity(
-                                          _model.companyNameController.text)) {
+                                          _model.companyNameTextController
+                                              .text)) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -2122,6 +2125,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primary,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -2140,7 +2144,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                   '${getJsonField(
                                                 FFAppState().countryInfoCompany,
                                                 r'''$.dial_code''',
-                                              ).toString()}${_model.phoneCompanyController.text}'),
+                                              ).toString()}${_model.phoneCompanyTextController.text}'),
                                               ParamType.String,
                                             ),
                                             'profilePhoto': serializeParam(
@@ -2152,12 +2156,13 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                               ParamType.String,
                                             ),
                                             'userName': serializeParam(
-                                              _model.companyNameController.text,
+                                              _model.companyNameTextController
+                                                  .text,
                                               ParamType.String,
                                             ),
                                             'phoneoriginal': serializeParam(
-                                              _model
-                                                  .phoneCompanyController.text,
+                                              _model.phoneCompanyTextController
+                                                  .text,
                                               ParamType.String,
                                             ),
                                             'phoneName': serializeParam(
@@ -2236,12 +2241,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                           context: context,
                                           builder: (context) {
                                             return GestureDetector(
-                                              onTap: () => _model.unfocusNode
-                                                      .canRequestFocus
-                                                  ? FocusScope.of(context)
-                                                      .requestFocus(
-                                                          _model.unfocusNode)
-                                                  : FocusScope.of(context)
+                                              onTap: () =>
+                                                  FocusScope.of(context)
                                                       .unfocus(),
                                               child: Padding(
                                                 padding:
@@ -2256,8 +2257,8 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                         ).then((value) => safeSetState(() {}));
                                       },
                                       child: RichText(
-                                        textScaleFactor: MediaQuery.of(context)
-                                            .textScaleFactor,
+                                        textScaler:
+                                            MediaQuery.of(context).textScaler,
                                         text: TextSpan(
                                           children: [
                                             TextSpan(
@@ -2284,6 +2285,7 @@ class _SignUPWidgetState extends State<SignUPWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .dark38,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                         ),

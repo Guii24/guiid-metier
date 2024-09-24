@@ -38,8 +38,6 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<List<NotificationRecord>>(
       stream: queryNotificationRecord(
         queryBuilder: (notificationRecord) => notificationRecord
@@ -69,10 +67,9 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
         }
         List<NotificationRecord> notificationsNotificationRecordList =
             snapshot.data!;
+
         return GestureDetector(
-          onTap: () => _model.unfocusNode.canRequestFocus
-              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-              : FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -98,6 +95,7 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Libre Franklin',
                       color: FlutterFlowTheme.of(context).dark88,
+                      letterSpacing: 0.0,
                       fontWeight: FontWeight.w500,
                     ),
               ),
@@ -124,6 +122,7 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 13.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                         ),
@@ -153,6 +152,7 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
                           }
                           List<NotificationRecord>
                               listViewNotificationRecordList = snapshot.data!;
+
                           return ListView.separated(
                             padding: EdgeInsets.fromLTRB(
                               0,

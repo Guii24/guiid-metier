@@ -43,10 +43,9 @@ class _EditWearWidgetState extends State<EditWearWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().wearItems =
-            widget.postDoc!.postWearItems.toList().cast<WearItemsStruct>();
-      });
+      FFAppState().wearItems =
+          widget!.postDoc!.postWearItems.toList().cast<WearItemsStruct>();
+      safeSetState(() {});
     });
   }
 
@@ -62,9 +61,7 @@ class _EditWearWidgetState extends State<EditWearWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -89,10 +86,7 @@ class _EditWearWidgetState extends State<EditWearWidget> {
                 context: context,
                 builder: (context) {
                   return GestureDetector(
-                    onTap: () => _model.unfocusNode.canRequestFocus
-                        ? FocusScope.of(context)
-                            .requestFocus(_model.unfocusNode)
-                        : FocusScope.of(context).unfocus(),
+                    onTap: () => FocusScope.of(context).unfocus(),
                     child: Padding(
                       padding: MediaQuery.viewInsetsOf(context),
                       child: PopupCancelWidget(),
@@ -108,6 +102,7 @@ class _EditWearWidgetState extends State<EditWearWidget> {
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
                   fontSize: 16.0,
+                  letterSpacing: 0.0,
                 ),
           ),
           actions: [
@@ -118,7 +113,7 @@ class _EditWearWidgetState extends State<EditWearWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      await widget.postDoc!.reference.update({
+                      await widget!.postDoc!.reference.update({
                         ...mapToFirestore(
                           {
                             'post_wear_items': getWearItemsListFirestoreData(
@@ -127,9 +122,8 @@ class _EditWearWidgetState extends State<EditWearWidget> {
                           },
                         ),
                       });
-                      setState(() {
-                        FFAppState().wearItems = [];
-                      });
+                      FFAppState().wearItems = [];
+                      safeSetState(() {});
                       context.safePop();
                       await actions.updatePage(
                         context,
@@ -146,15 +140,13 @@ class _EditWearWidgetState extends State<EditWearWidget> {
                             alignment: AlignmentDirectional(0.0, -1.0)
                                 .resolve(Directionality.of(context)),
                             child: GestureDetector(
-                              onTap: () => _model.unfocusNode.canRequestFocus
-                                  ? FocusScope.of(context)
-                                      .requestFocus(_model.unfocusNode)
-                                  : FocusScope.of(context).unfocus(),
+                              onTap: () =>
+                                  FocusScope.of(dialogContext).unfocus(),
                               child: CustomDialogEditWearWidget(),
                             ),
                           );
                         },
-                      ).then((value) => setState(() {}));
+                      );
                     },
                     text: 'SAVE',
                     options: FFButtonOptions(
@@ -207,17 +199,17 @@ class _EditWearWidgetState extends State<EditWearWidget> {
                         ),
                       );
                     }
+
                     return InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        setState(() {
-                          FFAppState().wearItems = widget.postDoc!.postWearItems
-                              .toList()
-                              .cast<WearItemsStruct>();
-                        });
+                        FFAppState().wearItems = widget!.postDoc!.postWearItems
+                            .toList()
+                            .cast<WearItemsStruct>();
+                        safeSetState(() {});
                       },
                       child: ListView.separated(
                         padding: EdgeInsets.zero,
@@ -277,11 +269,7 @@ class _EditWearWidgetState extends State<EditWearWidget> {
                               context: context,
                               builder: (context) {
                                 return GestureDetector(
-                                  onTap: () =>
-                                      _model.unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
+                                  onTap: () => FocusScope.of(context).unfocus(),
                                   child: Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
                                     child: TakePhotoWearWidget(),
@@ -334,6 +322,7 @@ class _EditWearWidgetState extends State<EditWearWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ],

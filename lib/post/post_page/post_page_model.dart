@@ -30,7 +30,6 @@ class PostPageModel extends FlutterFlowModel<PostPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   PostRecord? postPagePreviousSnapshot;
   // Stores action output result for [Firestore Query - Query a collection] action in PostPage widget.
   int? getCountCommentCopy;
@@ -49,19 +48,12 @@ class PostPageModel extends FlutterFlowModel<PostPageWidget> {
   // Stores action output result for [Backend Call - Create Document] action in IconButton widget.
   CommentPostRecord? comment;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

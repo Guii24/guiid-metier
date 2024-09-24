@@ -46,9 +46,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        _model.commentShoePost = false;
-      });
+      _model.commentShoePost = false;
+      safeSetState(() {});
     });
 
     _model.textController ??= TextEditingController();
@@ -64,19 +63,17 @@ class _PostPageWidgetState extends State<PostPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<PostRecord>(
-      stream: PostRecord.getDocument(widget.postRef!)
+      stream: PostRecord.getDocument(widget!.postRef!)
         ..listen((postPagePostRecord) async {
           if (_model.postPagePreviousSnapshot != null &&
               !PostRecordDocumentEquality().equals(
                   postPagePostRecord, _model.postPagePreviousSnapshot)) {
             _model.getCountCommentCopy = await queryCommentPostRecordCount(
-              parent: widget.postRef,
+              parent: widget!.postRef,
             );
 
-            setState(() {});
+            safeSetState(() {});
           }
           _model.postPagePreviousSnapshot = postPagePostRecord;
         }),
@@ -98,11 +95,11 @@ class _PostPageWidgetState extends State<PostPageWidget> {
             ),
           );
         }
+
         final postPagePostRecord = snapshot.data!;
+
         return GestureDetector(
-          onTap: () => _model.unfocusNode.canRequestFocus
-              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-              : FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFF4F3EC),
@@ -141,10 +138,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => _model.unfocusNode.canRequestFocus
-                                  ? FocusScope.of(context)
-                                      .requestFocus(_model.unfocusNode)
-                                  : FocusScope.of(context).unfocus(),
+                              onTap: () => FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomEditopDeletePostWidget(
@@ -162,10 +156,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => _model.unfocusNode.canRequestFocus
-                                  ? FocusScope.of(context)
-                                      .requestFocus(_model.unfocusNode)
-                                  : FocusScope.of(context).unfocus(),
+                              onTap: () => FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomReportPostWidget(
@@ -201,7 +192,9 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                     ),
                   );
                 }
+
                 final stackUsersRecord = snapshot.data!;
+
                 return Container(
                   width: double.infinity,
                   height: double.infinity,
@@ -241,6 +234,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                     postPagePostRecord
                                                         .postImagesList
                                                         .toList();
+
                                                 return Container(
                                                   width: double.infinity,
                                                   height: double.infinity,
@@ -248,12 +242,14 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                     controller: _model
                                                             .pageViewController ??=
                                                         PageController(
-                                                            initialPage: min(
+                                                            initialPage: max(
                                                                 0,
-                                                                images.length -
-                                                                    1)),
+                                                                min(
+                                                                    0,
+                                                                    images.length -
+                                                                        1))),
                                                     onPageChanged: (_) =>
-                                                        setState(() {}),
+                                                        safeSetState(() {}),
                                                     scrollDirection:
                                                         Axis.horizontal,
                                                     itemCount: images.length,
@@ -332,6 +328,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                         context)
                                                                     .primaryBackground,
                                                                 fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                         ),
                                                       ),
@@ -435,6 +433,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                         context)
                                                                     .primaryText,
                                                                 fontSize: 15.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
@@ -443,7 +443,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                       ),
                                                       Text(
                                                         dateTimeFormat(
-                                                          'relative',
+                                                          "relative",
                                                           postPagePostRecord
                                                               .postTimePosted!,
                                                           locale:
@@ -463,6 +463,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                       .dark68,
                                                                   fontSize:
                                                                       14.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                 ),
                                                       ),
                                                     ],
@@ -586,6 +588,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                           .primaryText,
                                                                       fontSize:
                                                                           12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .normal,
@@ -679,6 +683,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                           .dark52,
                                                                       fontSize:
                                                                           12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .normal,
@@ -714,6 +720,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                 .toList()
                                                 .take(3)
                                                 .toList();
+
                                             return Row(
                                               mainAxisSize: MainAxisSize.min,
                                               children: List.generate(
@@ -739,6 +746,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                     context)
                                                                 .dark52,
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 );
                                               }),
@@ -759,6 +767,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark68,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                                 lineHeight: 1.5,
                                               ),
                                         ),
@@ -804,6 +813,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                           context)
                                                       .dark88,
                                                   fontSize: 17.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
@@ -839,6 +849,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                             List<CommentPostRecord>
                                                 listViewCommentPostRecordList =
                                                 snapshot.data!;
+
                                             return ListView.separated(
                                               padding: EdgeInsets.fromLTRB(
                                                 0,
@@ -919,7 +930,10 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                       BoxShadow(
                                         blurRadius: 16.0,
                                         color: Color(0x1A000000),
-                                        offset: Offset(0.0, 1.0),
+                                        offset: Offset(
+                                          0.0,
+                                          1.0,
+                                        ),
                                       )
                                     ],
                                     borderRadius: BorderRadius.circular(28.0),
@@ -999,6 +1013,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                         context)
                                                                     .primary,
                                                                 fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                         ),
                                                         duration: Duration(
@@ -1076,15 +1092,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                         context: context,
                                                         builder: (context) {
                                                           return GestureDetector(
-                                                            onTap: () => _model
-                                                                    .unfocusNode
-                                                                    .canRequestFocus
-                                                                ? FocusScope.of(
-                                                                        context)
-                                                                    .requestFocus(
-                                                                        _model
-                                                                            .unfocusNode)
-                                                                : FocusScope.of(
+                                                            onTap: () =>
+                                                                FocusScope.of(
                                                                         context)
                                                                     .unfocus(),
                                                             child: Padding(
@@ -1124,6 +1133,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                             ),
@@ -1162,6 +1172,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                       .primary,
                                                                   fontSize:
                                                                       14.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                 ),
                                                       ),
                                                       duration: Duration(
@@ -1177,10 +1189,9 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                       currentUserDocument
                                                           ?.userSubscription,
                                                       false)) {
-                                                    setState(() {
-                                                      _model.commentShoePost =
-                                                          true;
-                                                    });
+                                                    _model.commentShoePost =
+                                                        true;
+                                                    safeSetState(() {});
                                                   } else {
                                                     showModalBottomSheet(
                                                       isScrollControlled: true,
@@ -1194,15 +1205,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                       context: context,
                                                       builder: (context) {
                                                         return GestureDetector(
-                                                          onTap: () => _model
-                                                                  .unfocusNode
-                                                                  .canRequestFocus
-                                                              ? FocusScope.of(
-                                                                      context)
-                                                                  .requestFocus(
-                                                                      _model
-                                                                          .unfocusNode)
-                                                              : FocusScope.of(
+                                                          onTap: () =>
+                                                              FocusScope.of(
                                                                       context)
                                                                   .unfocus(),
                                                           child: Padding(
@@ -1253,6 +1257,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                         context)
                                                                     .dark88,
                                                                 fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                     ),
                                                   ),
@@ -1292,6 +1298,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                                   ),
                                                   duration: Duration(
@@ -1318,15 +1325,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                   context: context,
                                                   builder: (context) {
                                                     return GestureDetector(
-                                                      onTap: () => _model
-                                                              .unfocusNode
-                                                              .canRequestFocus
-                                                          ? FocusScope.of(
-                                                                  context)
-                                                              .requestFocus(_model
-                                                                  .unfocusNode)
-                                                          : FocusScope.of(
-                                                                  context)
+                                                      onTap: () =>
+                                                          FocusScope.of(context)
                                                               .unfocus(),
                                                       child: Padding(
                                                         padding: MediaQuery
@@ -1358,15 +1358,8 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                   context: context,
                                                   builder: (context) {
                                                     return GestureDetector(
-                                                      onTap: () => _model
-                                                              .unfocusNode
-                                                              .canRequestFocus
-                                                          ? FocusScope.of(
-                                                                  context)
-                                                              .requestFocus(_model
-                                                                  .unfocusNode)
-                                                          : FocusScope.of(
-                                                                  context)
+                                                      onTap: () =>
+                                                          FocusScope.of(context)
                                                               .unfocus(),
                                                       child: Padding(
                                                         padding: MediaQuery
@@ -1450,7 +1443,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                   EasyDebounce.debounce(
                                                 '_model.textController',
                                                 Duration(milliseconds: 10),
-                                                () => setState(() {}),
+                                                () => safeSetState(() {}),
                                               ),
                                               autofocus: true,
                                               obscureText: false,
@@ -1467,6 +1460,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                   .of(context)
                                                               .dark38,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           lineHeight: 1.5,
                                                         ),
                                                 enabledBorder:
@@ -1537,6 +1531,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         lineHeight: 1.5,
                                                       ),
                                               maxLines: 2,
@@ -1567,11 +1562,10 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                     '')
                                             ? null
                                             : () async {
-                                                setState(() {
-                                                  _model.text = _model
-                                                      .textController.text;
-                                                });
-                                                setState(() {
+                                                _model.text =
+                                                    _model.textController.text;
+                                                safeSetState(() {});
+                                                safeSetState(() {
                                                   _model.textController
                                                       ?.clear();
                                                 });
@@ -1651,11 +1645,10 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                     },
                                                   ),
                                                 });
-                                                setState(() {
-                                                  _model.text = '';
-                                                });
+                                                _model.text = '';
+                                                safeSetState(() {});
 
-                                                setState(() {});
+                                                safeSetState(() {});
                                               },
                                       ),
                                     ],

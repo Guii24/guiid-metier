@@ -48,7 +48,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
       vsync: this,
       length: 3,
       initialIndex: 0,
-    )..addListener(() => setState(() {}));
+    )..addListener(() => safeSetState(() {}));
   }
 
   @override
@@ -60,10 +60,8 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<UsersRecord>(
-      stream: UsersRecord.getDocument(widget.userRef!),
+      stream: UsersRecord.getDocument(widget!.userRef!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -82,11 +80,11 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
             ),
           );
         }
+
         final otherProfileUsersRecord = snapshot.data!;
+
         return GestureDetector(
-          onTap: () => _model.unfocusNode.canRequestFocus
-              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-              : FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -131,14 +129,11 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => _model.unfocusNode.canRequestFocus
-                                  ? FocusScope.of(context)
-                                      .requestFocus(_model.unfocusNode)
-                                  : FocusScope.of(context).unfocus(),
+                              onTap: () => FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomReportandBlockUserWidget(
-                                  user: widget.userRef,
+                                  user: widget!.userRef,
                                   name: otherProfileUsersRecord.displayName,
                                 ),
                               ),
@@ -209,6 +204,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                             color: FlutterFlowTheme.of(context)
                                                 .dark88,
                                             fontSize: 19.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
@@ -302,6 +298,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                                   .of(context)
                                                               .dark68,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                             ),
@@ -382,6 +379,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                               );
                                             }
                                             int textCount = snapshot.data!;
+
                                             return Text(
                                               formatNumber(
                                                 textCount,
@@ -396,6 +394,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                         color:
                                                             Color(0xFF171A1F),
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             );
                                           },
@@ -408,6 +407,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                 fontFamily: 'Libre Franklin',
                                                 color: Color(0xFF9D9FA3),
                                                 fontSize: 11.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ],
@@ -456,7 +456,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                       .where(
                                                         'user_following',
                                                         arrayContains:
-                                                            widget.userRef,
+                                                            widget!.userRef,
                                                       ),
                                             ),
                                             builder: (context, snapshot) {
@@ -480,6 +480,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                 );
                                               }
                                               int textCount = snapshot.data!;
+
                                               return Text(
                                                 valueOrDefault<String>(
                                                   formatNumber(
@@ -498,6 +499,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                           color:
                                                               Color(0xFF171A1F),
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               );
                                             },
@@ -510,6 +512,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                   fontFamily: 'Libre Franklin',
                                                   color: Color(0xFF9D9FA3),
                                                   fontSize: 11.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ],
@@ -559,7 +562,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                       .where(
                                                         'user_followers',
                                                         arrayContains:
-                                                            widget.userRef,
+                                                            widget!.userRef,
                                                       ),
                                             ),
                                             builder: (context, snapshot) {
@@ -583,6 +586,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                 );
                                               }
                                               int textCount = snapshot.data!;
+
                                               return Text(
                                                 valueOrDefault<String>(
                                                   formatNumber(
@@ -601,6 +605,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                           color:
                                                               Color(0xFF171A1F),
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               );
                                             },
@@ -613,6 +618,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                   fontFamily: 'Libre Franklin',
                                                   color: Color(0xFF9D9FA3),
                                                   fontSize: 11.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ],
@@ -634,7 +640,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                               if (!(currentUserDocument?.userFollowing
                                           ?.toList() ??
                                       [])
-                                  .contains(widget.userRef))
+                                  .contains(widget!.userRef))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -645,7 +651,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                           {
                                             'user_following':
                                                 FieldValue.arrayUnion(
-                                                    [widget.userRef]),
+                                                    [widget!.userRef]),
                                           },
                                         ),
                                       });
@@ -725,7 +731,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                               if ((currentUserDocument?.userFollowing
                                           ?.toList() ??
                                       [])
-                                  .contains(widget.userRef))
+                                  .contains(widget!.userRef))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -736,7 +742,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                           {
                                             'user_following':
                                                 FieldValue.arrayRemove(
-                                                    [widget.userRef]),
+                                                    [widget!.userRef]),
                                           },
                                         ),
                                       });
@@ -783,7 +789,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                           ),
                         ),
                       if ((currentUserDocument?.userBlockedUser?.toList() ?? [])
-                          .contains(widget.userRef))
+                          .contains(widget!.userRef))
                         Builder(
                           builder: (context) => Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -803,22 +809,18 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                 .resolve(
                                                     Directionality.of(context)),
                                         child: GestureDetector(
-                                          onTap: () => _model
-                                                  .unfocusNode.canRequestFocus
-                                              ? FocusScope.of(context)
-                                                  .requestFocus(
-                                                      _model.unfocusNode)
-                                              : FocusScope.of(context)
+                                          onTap: () =>
+                                              FocusScope.of(dialogContext)
                                                   .unfocus(),
                                           child: PopupUnblockUserWidget(
                                             name: otherProfileUsersRecord
                                                 .displayName,
-                                            user: widget.userRef!,
+                                            user: widget!.userRef!,
                                           ),
                                         ),
                                       );
                                     },
-                                  ).then((value) => setState(() {}));
+                                  );
                                 },
                                 text: 'UNBLOCK',
                                 options: FFButtonOptions(
@@ -870,6 +872,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                       .override(
                                         fontFamily: 'Libre Franklin',
                                         fontSize: 17.0,
+                                        letterSpacing: 0.0,
                                       ),
                                   unselectedLabelStyle:
                                       FlutterFlowTheme.of(context)
@@ -877,6 +880,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                           .override(
                                             fontFamily: 'Libre Franklin',
                                             fontSize: 17.0,
+                                            letterSpacing: 0.0,
                                           ),
                                   indicatorColor:
                                       FlutterFlowTheme.of(context).secondary,
@@ -973,6 +977,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                           EmptyPostMyProfWidget(),
                                                     );
                                                   }
+
                                                   return ListView.separated(
                                                     padding:
                                                         EdgeInsets.fromLTRB(
@@ -1140,6 +1145,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                             context)
                                                         .dark88,
                                                     fontSize: 17.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                             ),
@@ -1163,6 +1169,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                                   .of(context)
                                                               .dark68,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                           lineHeight: 1.5,
@@ -1188,6 +1195,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                                   .of(context)
                                                               .dark68,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
@@ -1209,6 +1217,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                             context)
                                                         .dark88,
                                                     fontSize: 17.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                             ),
@@ -1226,6 +1235,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                       otherProfileUsersRecord
                                                           .userPreferences
                                                           .toList();
+
                                                   return Wrap(
                                                     spacing: 10.0,
                                                     runSpacing: 10.0,
@@ -1296,6 +1306,8 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                                         .dark88,
                                                                     fontSize:
                                                                         15.0,
+                                                                    letterSpacing:
+                                                                        0.0,
                                                                   ),
                                                             ),
                                                           ),
@@ -1325,6 +1337,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                                   .of(context)
                                                               .dark68,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
@@ -1346,6 +1359,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                             context)
                                                         .dark88,
                                                     fontSize: 17.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                             ),
@@ -1371,6 +1385,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                                   .of(context)
                                                               .dark68,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
@@ -1398,6 +1413,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                                   .of(context)
                                                               .dark68,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                           lineHeight: 1.5,
@@ -1420,6 +1436,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                             context)
                                                         .dark88,
                                                     fontSize: 17.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                             ),
@@ -1444,6 +1461,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                                   .of(context)
                                                               .dark68,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
@@ -1469,6 +1487,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                                   .of(context)
                                                               .dark68,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                           lineHeight: 1.5,
@@ -1554,6 +1573,7 @@ class _OtherProfileWidgetState extends State<OtherProfileWidget>
                                                         ),
                                                       );
                                                     }
+
                                                     return GridView.builder(
                                                       padding: EdgeInsets.zero,
                                                       gridDelegate:

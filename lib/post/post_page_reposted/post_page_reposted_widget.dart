@@ -44,9 +44,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        _model.commentShoePost = false;
-      });
+      _model.commentShoePost = false;
+      safeSetState(() {});
       await actions.updatePage(
         context,
       );
@@ -65,10 +64,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<PostRecord>(
-      stream: PostRecord.getDocument(widget.postRef!),
+      stream: PostRecord.getDocument(widget!.postRef!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -87,11 +84,11 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
             ),
           );
         }
+
         final postPageRepostedPostRecord = snapshot.data!;
+
         return GestureDetector(
-          onTap: () => _model.unfocusNode.canRequestFocus
-              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-              : FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFF4F3EC),
@@ -132,10 +129,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => _model.unfocusNode.canRequestFocus
-                                  ? FocusScope.of(context)
-                                      .requestFocus(_model.unfocusNode)
-                                  : FocusScope.of(context).unfocus(),
+                              onTap: () => FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomEditopDeletePostWidget(
@@ -152,10 +146,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                           context: context,
                           builder: (context) {
                             return GestureDetector(
-                              onTap: () => _model.unfocusNode.canRequestFocus
-                                  ? FocusScope.of(context)
-                                      .requestFocus(_model.unfocusNode)
-                                  : FocusScope.of(context).unfocus(),
+                              onTap: () => FocusScope.of(context).unfocus(),
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomReportPostWidget(
@@ -192,7 +183,9 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                     ),
                   );
                 }
+
                 final stackUsersRecord = snapshot.data!;
+
                 return Stack(
                   children: [
                     SingleChildScrollView(
@@ -229,7 +222,9 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                       ),
                                     );
                                   }
+
                                   final columnPostRecord = snapshot.data!;
+
                                   return SingleChildScrollView(
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
@@ -354,6 +349,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                             'Libre Franklin',
                                                                         fontSize:
                                                                             15.0,
+                                                                        letterSpacing:
+                                                                            0.0,
                                                                         fontWeight:
                                                                             FontWeight.w600,
                                                                       ),
@@ -369,7 +366,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                             3.0),
                                                                 child: Text(
                                                                   dateTimeFormat(
-                                                                    'relative',
+                                                                    "relative",
                                                                     postPageRepostedPostRecord
                                                                         .postTimePosted!,
                                                                     locale: FFLocalizations.of(
@@ -386,6 +383,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                             .dark68,
                                                                         fontSize:
                                                                             14.0,
+                                                                        letterSpacing:
+                                                                            0.0,
                                                                       ),
                                                                 ),
                                                               ),
@@ -475,6 +474,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                               FlutterFlowTheme.of(context).dark52,
                                                                           fontSize:
                                                                               12.0,
+                                                                          letterSpacing:
+                                                                              0.0,
                                                                           fontWeight:
                                                                               FontWeight.normal,
                                                                         ),
@@ -586,6 +587,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
                                                                               12.0,
+                                                                          letterSpacing:
+                                                                              0.0,
                                                                           fontWeight:
                                                                               FontWeight.normal,
                                                                         ),
@@ -628,6 +631,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                     context)
                                                                 .dark68,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         lineHeight: 1.5,
                                                       ),
                                                 ),
@@ -653,6 +657,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                         columnPostRecord
                                                             .postImagesList
                                                             .toList();
+
                                                     return Container(
                                                       width: double.infinity,
                                                       height: double.infinity,
@@ -660,12 +665,14 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                         controller: _model
                                                                 .pageViewController ??=
                                                             PageController(
-                                                                initialPage: min(
+                                                                initialPage: max(
                                                                     0,
-                                                                    images.length -
-                                                                        1)),
+                                                                    min(
+                                                                        0,
+                                                                        images.length -
+                                                                            1))),
                                                         onPageChanged: (_) =>
-                                                            setState(() {}),
+                                                            safeSetState(() {}),
                                                         scrollDirection:
                                                             Axis.horizontal,
                                                         itemCount:
@@ -753,6 +760,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                         .primaryBackground,
                                                                     fontSize:
                                                                         13.0,
+                                                                    letterSpacing:
+                                                                        0.0,
                                                                   ),
                                                             ),
                                                           ),
@@ -791,8 +800,10 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                   ),
                                                 );
                                               }
+
                                               final rowUsersRecord =
                                                   snapshot.data!;
+
                                               return InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -888,6 +899,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                           'Libre Franklin',
                                                                       fontSize:
                                                                           15.0,
+                                                                      letterSpacing:
+                                                                          0.0,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w600,
@@ -896,7 +909,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                             ),
                                                             Text(
                                                               dateTimeFormat(
-                                                                'relative',
+                                                                "relative",
                                                                 columnPostRecord
                                                                     .postTimePosted!,
                                                                 locale: FFLocalizations.of(
@@ -914,6 +927,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                         .dark68,
                                                                     fontSize:
                                                                         14.0,
+                                                                    letterSpacing:
+                                                                        0.0,
                                                                   ),
                                                             ),
                                                           ],
@@ -945,6 +960,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                   .toList()
                                                   .take(3)
                                                   .toList();
+
                                               return Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: List.generate(
@@ -969,6 +985,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                   .of(context)
                                                               .dark52,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                                   );
                                                 }),
@@ -990,6 +1007,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   lineHeight: 1.5,
                                                 ),
                                           ),
@@ -1036,6 +1054,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark88,
                                                 fontSize: 17.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                         ),
@@ -1070,6 +1089,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                           List<CommentPostRecord>
                                               listViewCommentPostRecordList =
                                               snapshot.data!;
+
                                           return ListView.separated(
                                             padding: EdgeInsets.zero,
                                             shrinkWrap: true,
@@ -1145,7 +1165,10 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                     BoxShadow(
                                       blurRadius: 16.0,
                                       color: Color(0x1A000000),
-                                      offset: Offset(0.0, 1.0),
+                                      offset: Offset(
+                                        0.0,
+                                        1.0,
+                                      ),
                                     )
                                   ],
                                   borderRadius: BorderRadius.circular(28.0),
@@ -1226,6 +1249,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                       .primary,
                                                                   fontSize:
                                                                       14.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                 ),
                                                       ),
                                                       duration: Duration(
@@ -1302,15 +1327,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                       context: context,
                                                       builder: (context) {
                                                         return GestureDetector(
-                                                          onTap: () => _model
-                                                                  .unfocusNode
-                                                                  .canRequestFocus
-                                                              ? FocusScope.of(
-                                                                      context)
-                                                                  .requestFocus(
-                                                                      _model
-                                                                          .unfocusNode)
-                                                              : FocusScope.of(
+                                                          onTap: () =>
+                                                              FocusScope.of(
                                                                       context)
                                                                   .unfocus(),
                                                           child: Padding(
@@ -1352,6 +1370,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -1388,6 +1407,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                         context)
                                                                     .primary,
                                                                 fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                     ),
                                                     duration: Duration(
@@ -1403,10 +1424,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                     currentUserDocument
                                                         ?.userSubscription,
                                                     false)) {
-                                                  setState(() {
-                                                    _model.commentShoePost =
-                                                        true;
-                                                  });
+                                                  _model.commentShoePost = true;
+                                                  safeSetState(() {});
                                                 } else {
                                                   showModalBottomSheet(
                                                     isScrollControlled: true,
@@ -1420,14 +1439,8 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                     context: context,
                                                     builder: (context) {
                                                       return GestureDetector(
-                                                        onTap: () => _model
-                                                                .unfocusNode
-                                                                .canRequestFocus
-                                                            ? FocusScope.of(
-                                                                    context)
-                                                                .requestFocus(_model
-                                                                    .unfocusNode)
-                                                            : FocusScope.of(
+                                                        onTap: () =>
+                                                            FocusScope.of(
                                                                     context)
                                                                 .unfocus(),
                                                         child: Padding(
@@ -1476,6 +1489,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                                   ),
                                                 ),
@@ -1549,7 +1563,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                 EasyDebounce.debounce(
                                               '_model.textController',
                                               Duration(milliseconds: 10),
-                                              () => setState(() {}),
+                                              () => safeSetState(() {}),
                                             ),
                                             autofocus: true,
                                             obscureText: false,
@@ -1567,6 +1581,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                                     context)
                                                                 .dark38,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         lineHeight: 1.5,
                                                       ),
                                               enabledBorder:
@@ -1629,6 +1644,7 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                           context)
                                                       .dark88,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   lineHeight: 1.5,
                                                 ),
                                             maxLines: 3,
@@ -1731,11 +1747,11 @@ class _PostPageRepostedWidgetState extends State<PostPageRepostedWidget> {
                                                   },
                                                 ),
                                               });
-                                              setState(() {
+                                              safeSetState(() {
                                                 _model.textController?.clear();
                                               });
 
-                                              setState(() {});
+                                              safeSetState(() {});
                                             },
                                     ),
                                   ],

@@ -49,8 +49,6 @@ class _BottomDeleteCommentPostWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -93,12 +91,12 @@ class _BottomDeleteCommentPostWidgetState
                             alignment: AlignmentDirectional(0.0, 0.0)
                                 .resolve(Directionality.of(context)),
                             child: PopupDeleteCommentPostWidget(
-                              postref: widget.postref,
-                              commentPostref: widget.commentref,
+                              postref: widget!.postref,
+                              commentPostref: widget!.commentref,
                             ),
                           );
                         },
-                      ).then((value) => setState(() {}));
+                      );
                     },
                     text: 'DELETE',
                     options: FFButtonOptions(

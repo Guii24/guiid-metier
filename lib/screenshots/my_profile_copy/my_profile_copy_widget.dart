@@ -35,19 +35,18 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().profilePhoto = valueOrDefault<String>(
-          currentUserPhoto,
-          'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
-        );
-      });
+      FFAppState().profilePhoto = valueOrDefault<String>(
+        currentUserPhoto,
+        'https://firebasestorage.googleapis.com/v0/b/guiid-metier.appspot.com/o/Photo.png?alt=media&token=06d1ab4a-f642-4092-b1a7-9176c3b62d2f',
+      );
+      safeSetState(() {});
     });
 
     _model.tabBarController = TabController(
       vsync: this,
       length: 3,
       initialIndex: 2,
-    )..addListener(() => setState(() {}));
+    )..addListener(() => safeSetState(() {}));
   }
 
   @override
@@ -62,9 +61,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -233,6 +230,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 19.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -253,6 +251,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark68,
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ),
@@ -326,6 +325,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                           );
                                         }
                                         int textCount = snapshot.data!;
+
                                         return Text(
                                           '20',
                                           style: FlutterFlowTheme.of(context)
@@ -334,6 +334,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                 fontFamily: 'Libre Franklin',
                                                 color: Color(0xFF171A1F),
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         );
                                       },
@@ -347,6 +348,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                           fontFamily: 'Libre Franklin',
                                           color: Color(0xFF9D9FA3),
                                           fontSize: 11.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ],
@@ -382,6 +384,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                               fontFamily: 'Libre Franklin',
                                               color: Color(0xFF171A1F),
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ),
@@ -393,6 +396,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                             fontFamily: 'Libre Franklin',
                                             color: Color(0xFF9D9FA3),
                                             fontSize: 11.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ],
@@ -429,6 +433,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                               fontFamily: 'Libre Franklin',
                                               color: Color(0xFF171A1F),
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ),
@@ -440,6 +445,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                             fontFamily: 'Libre Franklin',
                                             color: Color(0xFF9D9FA3),
                                             fontSize: 11.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ],
@@ -465,6 +471,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Libre Franklin',
                                     fontSize: 17.0,
+                                    letterSpacing: 0.0,
                                   ),
                           unselectedLabelStyle: TextStyle(),
                           indicatorColor:
@@ -536,6 +543,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                       child: EmptyPostMyProfWidget(),
                                     );
                                   }
+
                                   return ListView.separated(
                                     padding: EdgeInsets.fromLTRB(
                                       0,
@@ -692,6 +700,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
                                               fontSize: 17.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
@@ -720,6 +729,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                   lineHeight: 1.5,
                                                 ),
@@ -748,6 +758,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -766,6 +777,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
                                               fontSize: 17.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
@@ -787,6 +799,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                               ?.toList() ??
                                                           [])
                                                       .toList();
+
                                               return Wrap(
                                                 spacing: 10.0,
                                                 runSpacing: 10.0,
@@ -849,6 +862,8 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                                         context)
                                                                     .dark88,
                                                                 fontSize: 15.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                         ),
                                                       ),
@@ -879,6 +894,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -897,6 +913,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
                                               fontSize: 17.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
@@ -928,6 +945,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                   lineHeight: 1.5,
                                                 ),
@@ -958,6 +976,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -976,6 +995,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
                                               fontSize: 17.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
@@ -1002,6 +1022,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -1031,6 +1052,7 @@ class _MyProfileCopyWidgetState extends State<MyProfileCopyWidget>
                                                           context)
                                                       .dark68,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                   lineHeight: 1.5,
                                                 ),

@@ -38,12 +38,8 @@ class _FollowersWidgetState extends State<FollowersWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -69,6 +65,7 @@ class _FollowersWidgetState extends State<FollowersWidget> {
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -103,6 +100,7 @@ class _FollowersWidgetState extends State<FollowersWidget> {
                   );
                 }
                 List<UsersRecord> listViewUsersRecordList = snapshot.data!;
+
                 return ListView.separated(
                   padding: EdgeInsets.fromLTRB(
                     0,

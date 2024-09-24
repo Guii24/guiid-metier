@@ -45,12 +45,8 @@ class _SourcingMyJobDetailsWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -89,14 +85,11 @@ class _SourcingMyJobDetailsWidgetState
                   context: context,
                   builder: (context) {
                     return GestureDetector(
-                      onTap: () => _model.unfocusNode.canRequestFocus
-                          ? FocusScope.of(context)
-                              .requestFocus(_model.unfocusNode)
-                          : FocusScope.of(context).unfocus(),
+                      onTap: () => FocusScope.of(context).unfocus(),
                       child: Padding(
                         padding: MediaQuery.viewInsetsOf(context),
                         child: BottomEditorDeleteJobWidget(
-                          jobDoc: widget.jobDoc,
+                          jobDoc: widget!.jobDoc,
                         ),
                       ),
                     );
@@ -138,7 +131,7 @@ class _SourcingMyJobDetailsWidgetState
                                   0.0, 20.0, 0.0, 12.0),
                               child: Text(
                                 valueOrDefault<String>(
-                                  widget.jobDoc?.jobTittle,
+                                  widget!.jobDoc?.jobTittle,
                                   'tittle error',
                                 ),
                                 style: FlutterFlowTheme.of(context)
@@ -148,6 +141,7 @@ class _SourcingMyJobDetailsWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 21.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -157,7 +151,7 @@ class _SourcingMyJobDetailsWidgetState
                                   0.0, 0.0, 0.0, 16.0),
                               child: Text(
                                 valueOrDefault<String>(
-                                  widget.jobDoc?.jobLocation,
+                                  widget!.jobDoc?.jobLocation,
                                   'location error',
                                 ),
                                 style: FlutterFlowTheme.of(context)
@@ -167,6 +161,7 @@ class _SourcingMyJobDetailsWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                             ),
@@ -198,7 +193,7 @@ class _SourcingMyJobDetailsWidgetState
                                             6.0, 0.0, 0.0, 0.0),
                                         child: Text(
                                           valueOrDefault<String>(
-                                            widget.jobDoc?.jobSalaryRate,
+                                            widget!.jobDoc?.jobSalaryRate,
                                             'salary error',
                                           ),
                                           style: FlutterFlowTheme.of(context)
@@ -209,6 +204,7 @@ class _SourcingMyJobDetailsWidgetState
                                                     FlutterFlowTheme.of(context)
                                                         .dark88,
                                                 fontSize: 14.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -223,8 +219,8 @@ class _SourcingMyJobDetailsWidgetState
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  if (widget.jobDoc?.jobWorkLocation != null &&
-                                      widget.jobDoc?.jobWorkLocation != '')
+                                  if (widget!.jobDoc?.jobWorkLocation != null &&
+                                      widget!.jobDoc?.jobWorkLocation != '')
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 10.0, 0.0),
@@ -267,7 +263,7 @@ class _SourcingMyJobDetailsWidgetState
                                                           6.0, 0.0, 0.0, 0.0),
                                                   child: Text(
                                                     valueOrDefault<String>(
-                                                      widget.jobDoc
+                                                      widget!.jobDoc
                                                           ?.jobWorkLocation,
                                                       'null',
                                                     ),
@@ -282,6 +278,7 @@ class _SourcingMyJobDetailsWidgetState
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                                   ),
                                                 ),
@@ -291,9 +288,9 @@ class _SourcingMyJobDetailsWidgetState
                                         ),
                                       ),
                                     ),
-                                  if (widget.jobDoc?.jobEmploymentType !=
+                                  if (widget!.jobDoc?.jobEmploymentType !=
                                           null &&
-                                      widget.jobDoc?.jobEmploymentType != '')
+                                      widget!.jobDoc?.jobEmploymentType != '')
                                     Material(
                                       color: Colors.transparent,
                                       elevation: 0.0,
@@ -332,7 +329,7 @@ class _SourcingMyJobDetailsWidgetState
                                                         6.0, 0.0, 0.0, 0.0),
                                                 child: Text(
                                                   valueOrDefault<String>(
-                                                    widget.jobDoc
+                                                    widget!.jobDoc
                                                         ?.jobEmploymentType,
                                                     'null',
                                                   ),
@@ -348,6 +345,7 @@ class _SourcingMyJobDetailsWidgetState
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               ),
@@ -356,7 +354,7 @@ class _SourcingMyJobDetailsWidgetState
                                         ),
                                       ),
                                     ),
-                                  if (widget.jobDoc?.jobTypeNotApplicable ==
+                                  if (widget!.jobDoc?.jobTypeNotApplicable ==
                                       'Not applicable')
                                     Material(
                                       color: Colors.transparent,
@@ -397,6 +395,7 @@ class _SourcingMyJobDetailsWidgetState
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -416,7 +415,7 @@ class _SourcingMyJobDetailsWidgetState
                                   0.0, 12.0, 0.0, 12.0),
                               child: StreamBuilder<UsersRecord>(
                                 stream: UsersRecord.getDocument(
-                                    widget.jobDoc!.companyCreator!),
+                                    widget!.jobDoc!.companyCreator!),
                                 builder: (context, snapshot) {
                                   // Customize what your widget looks like when it's loading.
                                   if (!snapshot.hasData) {
@@ -434,7 +433,9 @@ class _SourcingMyJobDetailsWidgetState
                                       ),
                                     );
                                   }
+
                                   final rowUsersRecord = snapshot.data!;
+
                                   return Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -468,6 +469,7 @@ class _SourcingMyJobDetailsWidgetState
                                                           context)
                                                       .dark88,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),
@@ -475,8 +477,8 @@ class _SourcingMyJobDetailsWidgetState
                                       ),
                                       Text(
                                         dateTimeFormat(
-                                          'relative',
-                                          widget.jobDoc!.jobCreationDate!,
+                                          "relative",
+                                          widget!.jobDoc!.jobCreationDate!,
                                           locale: FFLocalizations.of(context)
                                               .languageCode,
                                         ),
@@ -488,6 +490,7 @@ class _SourcingMyJobDetailsWidgetState
                                                   FlutterFlowTheme.of(context)
                                                       .dark68,
                                               fontSize: 13.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ],
@@ -512,15 +515,16 @@ class _SourcingMyJobDetailsWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 17.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
                             ),
-                            if (widget.jobDoc?.jobDescription != null &&
-                                widget.jobDoc?.jobDescription != '')
+                            if (widget!.jobDoc?.jobDescription != null &&
+                                widget!.jobDoc?.jobDescription != '')
                               Text(
                                 valueOrDefault<String>(
-                                  widget.jobDoc?.jobDescription,
+                                  widget!.jobDoc?.jobDescription,
                                   'Description empty',
                                 ),
                                 style: FlutterFlowTheme.of(context)
@@ -530,12 +534,13 @@ class _SourcingMyJobDetailsWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                       lineHeight: 1.5,
                                     ),
                               ),
-                            if (widget.jobDoc?.jobDescription == null ||
-                                widget.jobDoc?.jobDescription == '')
+                            if (widget!.jobDoc?.jobDescription == null ||
+                                widget!.jobDoc?.jobDescription == '')
                               Text(
                                 'Information is not available',
                                 style: FlutterFlowTheme.of(context)
@@ -545,6 +550,7 @@ class _SourcingMyJobDetailsWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                               ),
@@ -560,6 +566,7 @@ class _SourcingMyJobDetailsWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 17.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -579,12 +586,12 @@ class _SourcingMyJobDetailsWidgetState
                                       size: 24.0,
                                     ),
                                   ),
-                                  if (widget.jobDoc?.jobContactPhoneNumber !=
+                                  if (widget!.jobDoc?.jobContactPhoneNumber !=
                                           null &&
-                                      widget.jobDoc?.jobContactPhoneNumber !=
+                                      widget!.jobDoc?.jobContactPhoneNumber !=
                                           '')
                                     Text(
-                                      '${widget.jobDoc?.jobContactDialCode}${widget.jobDoc?.jobContactPhoneNumber}',
+                                      '${widget!.jobDoc?.jobContactDialCode}${widget!.jobDoc?.jobContactPhoneNumber}',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -592,11 +599,12 @@ class _SourcingMyJobDetailsWidgetState
                                             color: FlutterFlowTheme.of(context)
                                                 .dark68,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
-                                  if (widget.jobDoc?.jobContactPhoneNumber ==
+                                  if (widget!.jobDoc?.jobContactPhoneNumber ==
                                           null ||
-                                      widget.jobDoc?.jobContactPhoneNumber ==
+                                      widget!.jobDoc?.jobContactPhoneNumber ==
                                           '')
                                     Text(
                                       'Information is not available',
@@ -607,6 +615,7 @@ class _SourcingMyJobDetailsWidgetState
                                             color: FlutterFlowTheme.of(context)
                                                 .dark68,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                     ),
@@ -625,11 +634,11 @@ class _SourcingMyJobDetailsWidgetState
                                     size: 24.0,
                                   ),
                                 ),
-                                if (widget.jobDoc?.jobContactEmail != null &&
-                                    widget.jobDoc?.jobContactEmail != '')
+                                if (widget!.jobDoc?.jobContactEmail != null &&
+                                    widget!.jobDoc?.jobContactEmail != '')
                                   Text(
                                     valueOrDefault<String>(
-                                      widget.jobDoc?.jobContactEmail,
+                                      widget!.jobDoc?.jobContactEmail,
                                       'Email empty',
                                     ),
                                     style: FlutterFlowTheme.of(context)
@@ -639,10 +648,11 @@ class _SourcingMyJobDetailsWidgetState
                                           color: FlutterFlowTheme.of(context)
                                               .dark68,
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
-                                if (widget.jobDoc?.jobContactEmail == null ||
-                                    widget.jobDoc?.jobContactEmail == '')
+                                if (widget!.jobDoc?.jobContactEmail == null ||
+                                    widget!.jobDoc?.jobContactEmail == '')
                                   Text(
                                     'Information is not available',
                                     style: FlutterFlowTheme.of(context)
@@ -652,6 +662,7 @@ class _SourcingMyJobDetailsWidgetState
                                           color: FlutterFlowTheme.of(context)
                                               .dark68,
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
@@ -665,7 +676,7 @@ class _SourcingMyJobDetailsWidgetState
                 ),
                 StreamBuilder<List<JobApplicantsRecord>>(
                   stream: queryJobApplicantsRecord(
-                    parent: widget.jobDoc?.reference,
+                    parent: widget!.jobDoc?.reference,
                   ),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
@@ -684,6 +695,7 @@ class _SourcingMyJobDetailsWidgetState
                     }
                     List<JobApplicantsRecord> containerJobApplicantsRecordList =
                         snapshot.data!;
+
                     return Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -712,6 +724,7 @@ class _SourcingMyJobDetailsWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 17.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -720,6 +733,7 @@ class _SourcingMyJobDetailsWidgetState
                               builder: (context) {
                                 final jobApplicants =
                                     containerJobApplicantsRecordList.toList();
+
                                 return ListView.separated(
                                   padding: EdgeInsets.fromLTRB(
                                     0,
@@ -757,7 +771,9 @@ class _SourcingMyJobDetailsWidgetState
                                             ),
                                           );
                                         }
+
                                         final rowUsersRecord = snapshot.data!;
+
                                         return InkWell(
                                           splashColor: Colors.transparent,
                                           focusColor: Colors.transparent,
@@ -776,13 +792,8 @@ class _SourcingMyJobDetailsWidgetState
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => _model
-                                                          .unfocusNode
-                                                          .canRequestFocus
-                                                      ? FocusScope.of(context)
-                                                          .requestFocus(_model
-                                                              .unfocusNode)
-                                                      : FocusScope.of(context)
+                                                  onTap: () =>
+                                                      FocusScope.of(context)
                                                           .unfocus(),
                                                   child: Padding(
                                                     padding:
@@ -853,6 +864,8 @@ class _SourcingMyJobDetailsWidgetState
                                                                       .dark88,
                                                                   fontSize:
                                                                       15.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
@@ -860,7 +873,7 @@ class _SourcingMyJobDetailsWidgetState
                                                       ),
                                                       Text(
                                                         dateTimeFormat(
-                                                          'relative',
+                                                          "relative",
                                                           jobApplicantsItem
                                                               .jobApplicantsCreationDate!,
                                                           locale:
@@ -880,6 +893,8 @@ class _SourcingMyJobDetailsWidgetState
                                                                       .dark68,
                                                                   fontSize:
                                                                       14.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                 ),
                                                       ),
                                                     ],

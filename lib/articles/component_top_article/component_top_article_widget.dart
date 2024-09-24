@@ -45,10 +45,8 @@ class _ComponentTopArticleWidgetState extends State<ComponentTopArticleWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<ArticlesRecord>(
-      stream: ArticlesRecord.getDocument(widget.topArticle!),
+      stream: ArticlesRecord.getDocument(widget!.topArticle!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -64,7 +62,9 @@ class _ComponentTopArticleWidgetState extends State<ComponentTopArticleWidget> {
             ),
           );
         }
+
         final stackArticlesRecord = snapshot.data!;
+
         return Container(
           width: MediaQuery.sizeOf(context).width * 0.53,
           height: MediaQuery.sizeOf(context).height * 0.23,

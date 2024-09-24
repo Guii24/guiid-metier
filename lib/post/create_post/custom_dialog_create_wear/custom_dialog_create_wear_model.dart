@@ -9,15 +9,9 @@ import 'package:provider/provider.dart';
 
 class CustomDialogCreateWearModel
     extends FlutterFlowModel<CustomDialogCreateWearWidget> {
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {}
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

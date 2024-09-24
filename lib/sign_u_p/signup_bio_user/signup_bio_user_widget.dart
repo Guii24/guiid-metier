@@ -36,13 +36,12 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().bornDate =
-            DateTime.fromMillisecondsSinceEpoch(1691612040000);
-        FFAppState().selectedlocation = '';
-        FFAppState().profilePhoto = currentUserPhoto;
-        FFAppState().activeCalendar = false;
-      });
+      FFAppState().bornDate =
+          DateTime.fromMillisecondsSinceEpoch(1691612040000);
+      FFAppState().selectedlocation = '';
+      FFAppState().profilePhoto = currentUserPhoto;
+      FFAppState().activeCalendar = false;
+      safeSetState(() {});
     });
 
     _model.textController1 ??= TextEditingController();
@@ -67,9 +66,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -82,6 +79,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
                   fontSize: 16.0,
+                  letterSpacing: 0.0,
                 ),
           ),
           actions: [
@@ -106,18 +104,18 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                       },
                     );
 
-                    setState(() {
-                      FFAppState().bornDate =
-                          DateTime.fromMillisecondsSinceEpoch(1691612040000);
-                      FFAppState().selectedlocation = '';
-                      FFAppState().choosenPreference = [];
-                    });
+                    FFAppState().bornDate =
+                        DateTime.fromMillisecondsSinceEpoch(1691612040000);
+                    FFAppState().selectedlocation = '';
+                    FFAppState().choosenPreference = [];
+                    safeSetState(() {});
                   },
                   child: Text(
                     'SKIP',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Libre Franklin',
                           fontSize: 15.0,
+                          letterSpacing: 0.0,
                         ),
                   ),
                 ),
@@ -160,11 +158,8 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                   context: context,
                                   builder: (context) {
                                     return GestureDetector(
-                                      onTap: () => _model
-                                              .unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
+                                      onTap: () =>
+                                          FocusScope.of(context).unfocus(),
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
@@ -204,6 +199,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
                                       fontSize: 19.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -241,18 +237,14 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                           Directionality.of(
                                                               context)),
                                               child: GestureDetector(
-                                                onTap: () => _model.unfocusNode
-                                                        .canRequestFocus
-                                                    ? FocusScope.of(context)
-                                                        .requestFocus(
-                                                            _model.unfocusNode)
-                                                    : FocusScope.of(context)
+                                                onTap: () =>
+                                                    FocusScope.of(dialogContext)
                                                         .unfocus(),
                                                 child: CalendarWidget(),
                                               ),
                                             );
                                           },
-                                        ).then((value) => setState(() {}));
+                                        );
                                       },
                                       child: Material(
                                         color: Colors.transparent,
@@ -295,12 +287,13 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .dark38,
+                                                          letterSpacing: 0.0,
                                                         ),
                                                   ),
                                                 if (FFAppState().activeCalendar)
                                                   Text(
                                                     dateTimeFormat(
-                                                      'yMd',
+                                                      "yMd",
                                                       FFAppState().bornDate,
                                                       locale:
                                                           FFLocalizations.of(
@@ -317,6 +310,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 16.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -357,6 +351,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                           context)
                                                       .dark68,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -391,13 +386,8 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
-                                                    .unfocus(),
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -458,6 +448,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .dark38,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               if (FFAppState()
@@ -485,6 +476,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -525,6 +517,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                           context)
                                                       .dark68,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -546,6 +539,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -561,10 +555,12 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController1',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
+                                isDense: false,
                                 hintText: 'Write about yourself',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .bodySmall
@@ -573,6 +569,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -612,6 +609,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                     lineHeight: 1.4,
                                   ),
@@ -636,6 +634,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark68,
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                           ),
@@ -651,6 +650,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -680,13 +680,8 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                         context: context,
                                         builder: (context) {
                                           return GestureDetector(
-                                            onTap: () => _model
-                                                    .unfocusNode.canRequestFocus
-                                                ? FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.unfocusNode)
-                                                : FocusScope.of(context)
-                                                    .unfocus(),
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
@@ -739,6 +734,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .dark38,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               if (FFAppState()
@@ -751,6 +747,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                       final item = FFAppState()
                                                           .choosenPreference
                                                           .toList();
+
                                                       return SingleChildScrollView(
                                                         scrollDirection:
                                                             Axis.horizontal,
@@ -783,6 +780,8 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                                                         .dark88,
                                                                     fontSize:
                                                                         15.0,
+                                                                    letterSpacing:
+                                                                        0.0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
@@ -832,6 +831,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -847,8 +847,9 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController2',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
@@ -860,6 +861,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -899,6 +901,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               maxLines: 2,
@@ -923,6 +926,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark68,
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                           ),
@@ -938,6 +942,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -953,8 +958,9 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.textController3',
                                 Duration(milliseconds: 10),
-                                () => setState(() {}),
+                                () => safeSetState(() {}),
                               ),
+                              autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
@@ -966,6 +972,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark38,
                                       fontSize: 15.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.normal,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -1005,6 +1012,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                               maxLines: 2,
@@ -1029,6 +1037,7 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark68,
                                   fontSize: 14.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                           ),
@@ -1051,7 +1060,10 @@ class _SignupBioUserWidgetState extends State<SignupBioUserWidget> {
                         BoxShadow(
                           blurRadius: 15.0,
                           color: Color(0x11000000),
-                          offset: Offset(0.0, -6.0),
+                          offset: Offset(
+                            0.0,
+                            -6.0,
+                          ),
                         )
                       ],
                     ),

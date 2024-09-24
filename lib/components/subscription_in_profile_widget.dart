@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -17,7 +16,12 @@ import 'subscription_in_profile_model.dart';
 export 'subscription_in_profile_model.dart';
 
 class SubscriptionInProfileWidget extends StatefulWidget {
-  const SubscriptionInProfileWidget({super.key});
+  const SubscriptionInProfileWidget({
+    super.key,
+    required this.expireDate,
+  });
+
+  final String? expireDate;
 
   @override
   State<SubscriptionInProfileWidget> createState() =>
@@ -40,11 +44,7 @@ class _SubscriptionInProfileWidgetState
     _model = createModel(context, () => SubscriptionInProfileModel());
 
     // On component load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.apiResult7qk = await RevenueCatGroup.infoCall.call(
-        userId: currentUserUid,
-      );
-    });
+    SchedulerBinding.instance.addPostFrameCallback((_) async {});
   }
 
   @override
@@ -56,8 +56,6 @@ class _SubscriptionInProfileWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -89,6 +87,7 @@ class _SubscriptionInProfileWidgetState
                             fontFamily: 'NewYork',
                             color: FlutterFlowTheme.of(context).primary,
                             fontSize: 48.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w600,
                             useGoogleFonts: false,
                             lineHeight: 0.95,
@@ -439,6 +438,7 @@ class _SubscriptionInProfileWidgetState
                                   duration: Duration(milliseconds: 500),
                                   curve: Curves.ease,
                                 );
+                                safeSetState(() {});
                               },
                               effect: smooth_page_indicator.SlideEffect(
                                 spacing: 6.0,
@@ -536,6 +536,7 @@ class _SubscriptionInProfileWidgetState
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 17.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
@@ -563,6 +564,7 @@ class _SubscriptionInProfileWidgetState
                                                           context)
                                                       .white52,
                                                   fontSize: 12.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -578,9 +580,8 @@ class _SubscriptionInProfileWidgetState
                                             CrossAxisAlignment.end,
                                         children: [
                                           RichText(
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                    .textScaleFactor,
+                                            textScaler: MediaQuery.of(context)
+                                                .textScaler,
                                             text: TextSpan(
                                               children: [
                                                 TextSpan(
@@ -609,6 +610,7 @@ class _SubscriptionInProfileWidgetState
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
@@ -622,6 +624,7 @@ class _SubscriptionInProfileWidgetState
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -638,6 +641,7 @@ class _SubscriptionInProfileWidgetState
                                                                     context)
                                                                 .primary,
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -660,6 +664,7 @@ class _SubscriptionInProfileWidgetState
                                                                     context)
                                                                 .white52,
                                                         fontSize: 12.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -678,8 +683,7 @@ class _SubscriptionInProfileWidgetState
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 15.0, 0.0, 0.0),
                                 child: RichText(
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor,
+                                  textScaler: MediaQuery.of(context).textScaler,
                                   text: TextSpan(
                                     children: [
                                       TextSpan(
@@ -693,14 +697,13 @@ class _SubscriptionInProfileWidgetState
                                                   FlutterFlowTheme.of(context)
                                                       .primary,
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
                                             ),
                                       ),
                                       TextSpan(
                                         text: functions.dateformatforSub(
-                                            RevenueCatGroup.infoCall.expireDate(
-                                          (_model.apiResult7qk?.jsonBody ?? ''),
-                                        )!),
+                                            widget!.expireDate!),
                                         style: TextStyle(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
@@ -714,6 +717,7 @@ class _SubscriptionInProfileWidgetState
                                           fontFamily: 'Libre Franklin',
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                   textAlign: TextAlign.center,
@@ -735,6 +739,7 @@ class _SubscriptionInProfileWidgetState
                             fontFamily: 'Libre Franklin',
                             color: Color(0x80FFFFFF),
                             fontSize: 14.0,
+                            letterSpacing: 0.0,
                           ),
                     ),
                   ),

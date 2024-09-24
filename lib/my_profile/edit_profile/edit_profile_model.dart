@@ -22,7 +22,6 @@ import 'package:provider/provider.dart';
 class EditProfileModel extends FlutterFlowModel<EditProfileWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
@@ -40,14 +39,11 @@ class EditProfileModel extends FlutterFlowModel<EditProfileWidget> {
   TextEditingController? textController4;
   String? Function(BuildContext, String?)? textController4Validator;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     textFieldFocusNode1?.dispose();
     textController1?.dispose();
 
@@ -60,8 +56,4 @@ class EditProfileModel extends FlutterFlowModel<EditProfileWidget> {
     textFieldFocusNode4?.dispose();
     textController4?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

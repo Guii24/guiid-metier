@@ -23,7 +23,6 @@ import 'package:provider/provider.dart';
 class SignUPModel extends FlutterFlowModel<SignUPWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   final formKey2 = GlobalKey<FormState>();
   final formKey1 = GlobalKey<FormState>();
   // State field(s) for TabBar widget.
@@ -33,9 +32,9 @@ class SignUPModel extends FlutterFlowModel<SignUPWidget> {
 
   // State field(s) for userName widget.
   FocusNode? userNameFocusNode;
-  TextEditingController? userNameController;
-  String? Function(BuildContext, String?)? userNameControllerValidator;
-  String? _userNameControllerValidator(BuildContext context, String? val) {
+  TextEditingController? userNameTextController;
+  String? Function(BuildContext, String?)? userNameTextControllerValidator;
+  String? _userNameTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Field is required';
     }
@@ -49,16 +48,17 @@ class SignUPModel extends FlutterFlowModel<SignUPWidget> {
 
   // State field(s) for UserPhone widget.
   FocusNode? userPhoneFocusNode;
-  TextEditingController? userPhoneController;
+  TextEditingController? userPhoneTextController;
   final userPhoneMask = MaskTextInputFormatter(mask: '(###) ###-####');
-  String? Function(BuildContext, String?)? userPhoneControllerValidator;
+  String? Function(BuildContext, String?)? userPhoneTextControllerValidator;
   // State field(s) for Checkboxuser widget.
   bool? checkboxuserValue;
   // State field(s) for companyName widget.
   FocusNode? companyNameFocusNode;
-  TextEditingController? companyNameController;
-  String? Function(BuildContext, String?)? companyNameControllerValidator;
-  String? _companyNameControllerValidator(BuildContext context, String? val) {
+  TextEditingController? companyNameTextController;
+  String? Function(BuildContext, String?)? companyNameTextControllerValidator;
+  String? _companyNameTextControllerValidator(
+      BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Field is required';
     }
@@ -72,38 +72,31 @@ class SignUPModel extends FlutterFlowModel<SignUPWidget> {
 
   // State field(s) for phoneCompany widget.
   FocusNode? phoneCompanyFocusNode;
-  TextEditingController? phoneCompanyController;
+  TextEditingController? phoneCompanyTextController;
   final phoneCompanyMask = MaskTextInputFormatter(mask: '(###) ###-####');
-  String? Function(BuildContext, String?)? phoneCompanyControllerValidator;
+  String? Function(BuildContext, String?)? phoneCompanyTextControllerValidator;
   // State field(s) for Checkboxcompany widget.
   bool? checkboxcompanyValue;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
-    userNameControllerValidator = _userNameControllerValidator;
-    companyNameControllerValidator = _companyNameControllerValidator;
+    userNameTextControllerValidator = _userNameTextControllerValidator;
+    companyNameTextControllerValidator = _companyNameTextControllerValidator;
   }
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     tabBarController?.dispose();
     userNameFocusNode?.dispose();
-    userNameController?.dispose();
+    userNameTextController?.dispose();
 
     userPhoneFocusNode?.dispose();
-    userPhoneController?.dispose();
+    userPhoneTextController?.dispose();
 
     companyNameFocusNode?.dispose();
-    companyNameController?.dispose();
+    companyNameTextController?.dispose();
 
     phoneCompanyFocusNode?.dispose();
-    phoneCompanyController?.dispose();
+    phoneCompanyTextController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

@@ -46,8 +46,6 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<List<ChatRecord>>(
       stream: queryChatRecord(
         queryBuilder: (chatRecord) => chatRecord.where(
@@ -78,10 +76,9 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
         final supportPageChatRecord = supportPageChatRecordList.isNotEmpty
             ? supportPageChatRecordList.first
             : null;
+
         return GestureDetector(
-          onTap: () => _model.unfocusNode.canRequestFocus
-              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-              : FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -120,6 +117,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                           fontFamily: 'Libre Franklin',
                           color: FlutterFlowTheme.of(context).success,
                           fontSize: 13.0,
+                          letterSpacing: 0.0,
                         ),
                   ),
                 ],
@@ -181,6 +179,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                         }
                         List<MessageRecord> containerMessageRecordList =
                             snapshot.data!;
+
                         return Container(
                           decoration: BoxDecoration(),
                           child: Builder(
@@ -198,6 +197,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                                   ),
                                 );
                               }
+
                               return ListView.builder(
                                 padding: EdgeInsets.fromLTRB(
                                   0,
@@ -235,6 +235,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                                                             context)
                                                         .dark38,
                                                     fontSize: 13.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ),
@@ -275,6 +276,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                                               List<MessageRecord>
                                                   listViewMessageRecordList =
                                                   snapshot.data!;
+
                                               return ListView.builder(
                                                 padding: EdgeInsets.zero,
                                                 primary: false,
@@ -323,7 +325,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                   Expanded(
                     child: wrapWithModel(
                       model: _model.emptySupportMessagesModel,
-                      updateCallback: () => setState(() {}),
+                      updateCallback: () => safeSetState(() {}),
                       child: EmptySupportMessagesWidget(),
                     ),
                   ),
@@ -339,7 +341,10 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                         boxShadow: [
                           BoxShadow(
                             color: FlutterFlowTheme.of(context).dark12,
-                            offset: Offset(0.0, -1.0),
+                            offset: Offset(
+                              0.0,
+                              -1.0,
+                            ),
                           )
                         ],
                       ),
@@ -361,8 +366,9 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                                     onChanged: (_) => EasyDebounce.debounce(
                                       '_model.textController',
                                       Duration(milliseconds: 10),
-                                      () => setState(() {}),
+                                      () => safeSetState(() {}),
                                     ),
+                                    autofocus: false,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       hintText: 'Message',
@@ -373,6 +379,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .dark38,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                           ),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -422,6 +429,7 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                         ),
                                     maxLines: 3,
                                     minLines: 1,
@@ -489,11 +497,11 @@ class _SupportPageWidgetState extends State<SupportPageWidget> {
                                     ));
                                   }
 
-                                  setState(() {
+                                  safeSetState(() {
                                     _model.textController?.clear();
                                   });
 
-                                  setState(() {});
+                                  safeSetState(() {});
                                 },
                                 child: Icon(
                                   FFIcons.kbiArrowUpCircleFill,

@@ -42,9 +42,8 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        _model.commentShow = false;
-      });
+      _model.commentShow = false;
+      safeSetState(() {});
       await actions.updatePage(
         context,
       );
@@ -66,7 +65,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
     context.watch<FFAppState>();
 
     return StreamBuilder<ArticlesRecord>(
-      stream: ArticlesRecord.getDocument(widget.article!),
+      stream: ArticlesRecord.getDocument(widget!.article!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -85,11 +84,11 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
             ),
           );
         }
+
         final articlePageArticlesRecord = snapshot.data!;
+
         return GestureDetector(
-          onTap: () => _model.unfocusNode.canRequestFocus
-              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-              : FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Color(0xFFF4F3EC),
@@ -149,19 +148,24 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                 articlePageArticlesRecord.videos
                                                     .toList())
                                             .toList();
+
                                         return Container(
                                           width: double.infinity,
                                           height: MediaQuery.sizeOf(context)
                                                   .height *
                                               0.45,
                                           child: PageView.builder(
-                                            controller: _model
-                                                    .pageViewController ??=
-                                                PageController(
-                                                    initialPage: min(
-                                                        0, images.length - 1)),
+                                            controller:
+                                                _model.pageViewController ??=
+                                                    PageController(
+                                                        initialPage: max(
+                                                            0,
+                                                            min(
+                                                                0,
+                                                                images.length -
+                                                                    1))),
                                             onPageChanged: (_) async {
-                                              setState(() {});
+                                              safeSetState(() {});
                                             },
                                             scrollDirection: Axis.horizontal,
                                             itemCount: images.length,
@@ -299,6 +303,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                                 .of(context)
                                                             .primaryBackground,
                                                         fontSize: 13.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               ),
@@ -339,6 +344,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark68,
                                         fontSize: 15.0,
+                                        letterSpacing: 0.0,
                                         lineHeight: 1.4,
                                       ),
                                 ),
@@ -379,6 +385,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 17.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -410,6 +417,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                     List<CommentArticleRecord>
                                         listViewCommentArticleRecordList =
                                         snapshot.data!;
+
                                     return ListView.separated(
                                       padding: EdgeInsets.fromLTRB(
                                         0,
@@ -436,7 +444,8 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                 .reference.id,
                                             listViewIndex,
                                           ),
-                                          updateCallback: () => setState(() {}),
+                                          updateCallback: () =>
+                                              safeSetState(() {}),
                                           updateOnChange: true,
                                           child: CommentArticleWidget(
                                             key: Key(
@@ -499,7 +508,10 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                   BoxShadow(
                                     blurRadius: 16.0,
                                     color: Color(0x1A000000),
-                                    offset: Offset(0.0, 1.0),
+                                    offset: Offset(
+                                      0.0,
+                                      1.0,
+                                    ),
                                   )
                                 ],
                                 borderRadius: BorderRadius.circular(28.0),
@@ -578,6 +590,8 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                                         context)
                                                                     .primary,
                                                                 fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                     ),
                                                     duration: Duration(
@@ -622,14 +636,8 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                     context: context,
                                                     builder: (context) {
                                                       return GestureDetector(
-                                                        onTap: () => _model
-                                                                .unfocusNode
-                                                                .canRequestFocus
-                                                            ? FocusScope.of(
-                                                                    context)
-                                                                .requestFocus(_model
-                                                                    .unfocusNode)
-                                                            : FocusScope.of(
+                                                        onTap: () =>
+                                                            FocusScope.of(
                                                                     context)
                                                                 .unfocus(),
                                                         child: Padding(
@@ -672,6 +680,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                           context)
                                                       .dark88,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -702,6 +711,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                               duration:
@@ -716,9 +726,8 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                               currentUserDocument
                                                   ?.userSubscription,
                                               false)) {
-                                            setState(() {
-                                              _model.commentShow = true;
-                                            });
+                                            _model.commentShow = true;
+                                            safeSetState(() {});
                                           } else {
                                             showModalBottomSheet(
                                               isScrollControlled: true,
@@ -731,13 +740,8 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                               context: context,
                                               builder: (context) {
                                                 return GestureDetector(
-                                                  onTap: () => _model
-                                                          .unfocusNode
-                                                          .canRequestFocus
-                                                      ? FocusScope.of(context)
-                                                          .requestFocus(_model
-                                                              .unfocusNode)
-                                                      : FocusScope.of(context)
+                                                  onTap: () =>
+                                                      FocusScope.of(context)
                                                           .unfocus(),
                                                   child: Padding(
                                                     padding:
@@ -782,6 +786,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                                     context)
                                                                 .dark88,
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -852,8 +857,9 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                         onChanged: (_) => EasyDebounce.debounce(
                                           '_model.textController',
                                           Duration(milliseconds: 10),
-                                          () => setState(() {}),
+                                          () => safeSetState(() {}),
                                         ),
+                                        autofocus: false,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           isDense: true,
@@ -867,6 +873,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark38,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                           enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
@@ -922,6 +929,7 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                             ),
                                         maxLines: 3,
                                         minLines: 1,
@@ -987,11 +995,11 @@ class _ArticlePageWidgetState extends State<ArticlePageWidget> {
                                               },
                                             ),
                                           });
-                                          setState(() {
+                                          safeSetState(() {
                                             _model.textController?.clear();
                                           });
 
-                                          setState(() {});
+                                          safeSetState(() {});
                                         },
                                 ),
                               ],

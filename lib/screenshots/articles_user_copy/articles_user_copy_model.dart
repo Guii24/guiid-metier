@@ -13,7 +13,6 @@ import 'package:provider/provider.dart';
 class ArticlesUserCopyModel extends FlutterFlowModel<ArticlesUserCopyWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for PageView widget.
   PageController? pageViewController;
 
@@ -25,8 +24,6 @@ class ArticlesUserCopyModel extends FlutterFlowModel<ArticlesUserCopyWidget> {
   // Models for ArticlesComponent dynamic component.
   late FlutterFlowDynamicModels<ArticlesComponentModel> articlesComponentModels;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     articlesComponentModels =
@@ -35,11 +32,6 @@ class ArticlesUserCopyModel extends FlutterFlowModel<ArticlesUserCopyWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     articlesComponentModels.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

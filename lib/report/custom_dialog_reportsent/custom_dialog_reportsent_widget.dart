@@ -46,8 +46,6 @@ class _CustomDialogReportsentWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16.0, 55.0, 16.0, 0.0),
       child: Container(
@@ -59,7 +57,10 @@ class _CustomDialogReportsentWidgetState
             BoxShadow(
               blurRadius: 25.0,
               color: Color(0x19000000),
-              offset: Offset(0.0, 12.0),
+              offset: Offset(
+                0.0,
+                12.0,
+              ),
               spreadRadius: 0.0,
             )
           ],
@@ -91,6 +92,7 @@ class _CustomDialogReportsentWidgetState
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Libre Franklin',
                           fontSize: 15.0,
+                          letterSpacing: 0.0,
                         ),
                   ),
                 ),

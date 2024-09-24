@@ -49,15 +49,14 @@ class _ComponentNotificationWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: MediaQuery.sizeOf(context).width * 1.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
       ),
       child: StreamBuilder<UsersRecord>(
-        stream: UsersRecord.getDocument(widget.notification!.notificationFrom!),
+        stream:
+            UsersRecord.getDocument(widget!.notification!.notificationFrom!),
         builder: (context, snapshot) {
           // Customize what your widget looks like when it's loading.
           if (!snapshot.hasData) {
@@ -73,14 +72,16 @@ class _ComponentNotificationWidgetState
               ),
             );
           }
+
           final columnUsersRecord = snapshot.data!;
+
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (widget.notification?.notificationType == 'commented')
+              if (widget!.notification?.notificationType == 'commented')
                 StreamBuilder<PostRecord>(
                   stream: PostRecord.getDocument(
-                      widget.notification!.notificationPost!),
+                      widget!.notification!.notificationPost!),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
@@ -96,7 +97,9 @@ class _ComponentNotificationWidgetState
                         ),
                       );
                     }
+
                     final columnPostRecord = snapshot.data!;
+
                     return InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -177,14 +180,15 @@ class _ComponentNotificationWidgetState
                                                           fontFamily:
                                                               'Libre Franklin',
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
                                               ),
                                               Text(
                                                 dateTimeFormat(
-                                                  'relative',
-                                                  widget.notification!
+                                                  "relative",
+                                                  widget!.notification!
                                                       .notificationCreationDate!,
                                                   locale: FFLocalizations.of(
                                                           context)
@@ -200,6 +204,7 @@ class _ComponentNotificationWidgetState
                                                                   .of(context)
                                                               .dark38,
                                                           fontSize: 13.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                             ],
@@ -221,6 +226,7 @@ class _ComponentNotificationWidgetState
                                                                     context)
                                                                 .dark68,
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -263,7 +269,7 @@ class _ComponentNotificationWidgetState
                                                         child: Text(
                                                           valueOrDefault<
                                                               String>(
-                                                            widget.notification
+                                                            widget!.notification
                                                                 ?.notificationText,
                                                             'null',
                                                           ).maybeHandleOverflow(
@@ -282,6 +288,8 @@ class _ComponentNotificationWidgetState
                                                                         context)
                                                                     .dark88,
                                                                 fontSize: 15.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 lineHeight: 1.0,
                                                               ),
                                                         ),
@@ -310,10 +318,10 @@ class _ComponentNotificationWidgetState
                     );
                   },
                 ),
-              if (widget.notification?.notificationType == 'liked')
+              if (widget!.notification?.notificationType == 'liked')
                 StreamBuilder<PostRecord>(
                   stream: PostRecord.getDocument(
-                      widget.notification!.notificationPost!),
+                      widget!.notification!.notificationPost!),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
@@ -329,7 +337,9 @@ class _ComponentNotificationWidgetState
                         ),
                       );
                     }
+
                     final columnPostRecord = snapshot.data!;
+
                     return InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -394,14 +404,15 @@ class _ComponentNotificationWidgetState
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
                                             ),
                                             Text(
                                               dateTimeFormat(
-                                                'relative',
-                                                widget.notification!
+                                                "relative",
+                                                widget!.notification!
                                                     .notificationCreationDate!,
                                                 locale:
                                                     FFLocalizations.of(context)
@@ -418,6 +429,7 @@ class _ComponentNotificationWidgetState
                                                                     context)
                                                                 .dark38,
                                                         fontSize: 13.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ],
@@ -436,6 +448,7 @@ class _ComponentNotificationWidgetState
                                                           context)
                                                       .dark68,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -457,7 +470,7 @@ class _ComponentNotificationWidgetState
                     );
                   },
                 ),
-              if (widget.notification?.notificationType == 'following')
+              if (widget!.notification?.notificationType == 'following')
                 InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -519,13 +532,14 @@ class _ComponentNotificationWidgetState
                                               .override(
                                                 fontFamily: 'Libre Franklin',
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                         ),
                                         Text(
                                           dateTimeFormat(
-                                            'relative',
-                                            widget.notification!
+                                            "relative",
+                                            widget!.notification!
                                                 .notificationCreationDate!,
                                             locale: FFLocalizations.of(context)
                                                 .languageCode,
@@ -538,6 +552,7 @@ class _ComponentNotificationWidgetState
                                                     FlutterFlowTheme.of(context)
                                                         .dark38,
                                                 fontSize: 13.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ],
@@ -555,6 +570,7 @@ class _ComponentNotificationWidgetState
                                                   FlutterFlowTheme.of(context)
                                                       .dark68,
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
                                             ),
                                       ),
@@ -772,10 +788,10 @@ class _ComponentNotificationWidgetState
                     ],
                   ),
                 ),
-              if (widget.notification?.notificationType == 'published')
+              if (widget!.notification?.notificationType == 'published')
                 StreamBuilder<PostRecord>(
                   stream: PostRecord.getDocument(
-                      widget.notification!.notificationPost!),
+                      widget!.notification!.notificationPost!),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
@@ -791,7 +807,9 @@ class _ComponentNotificationWidgetState
                         ),
                       );
                     }
+
                     final columnPostRecord = snapshot.data!;
+
                     return InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -856,14 +874,15 @@ class _ComponentNotificationWidgetState
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
                                             ),
                                             Text(
                                               dateTimeFormat(
-                                                'relative',
-                                                widget.notification!
+                                                "relative",
+                                                widget!.notification!
                                                     .notificationCreationDate!,
                                                 locale:
                                                     FFLocalizations.of(context)
@@ -880,6 +899,7 @@ class _ComponentNotificationWidgetState
                                                                     context)
                                                                 .dark38,
                                                         fontSize: 13.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ],
@@ -889,7 +909,7 @@ class _ComponentNotificationWidgetState
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 3.0, 0.0, 0.0),
                                           child: Text(
-                                            'published the ${widget.notification?.notificationType == 'published wear' ? 'wear' : 'post'}',
+                                            'published the ${widget!.notification?.notificationType == 'published wear' ? 'wear' : 'post'}',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -898,6 +918,7 @@ class _ComponentNotificationWidgetState
                                                           context)
                                                       .dark68,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -919,10 +940,10 @@ class _ComponentNotificationWidgetState
                     );
                   },
                 ),
-              if (widget.notification?.notificationType == 'applied')
+              if (widget!.notification?.notificationType == 'applied')
                 StreamBuilder<JobRecord>(
                   stream: JobRecord.getDocument(
-                      widget.notification!.notificationJob!),
+                      widget!.notification!.notificationJob!),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
@@ -938,7 +959,9 @@ class _ComponentNotificationWidgetState
                         ),
                       );
                     }
+
                     final columnJobRecord = snapshot.data!;
+
                     return InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -1006,14 +1029,15 @@ class _ComponentNotificationWidgetState
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
                                             ),
                                             Text(
                                               dateTimeFormat(
-                                                'relative',
-                                                widget.notification!
+                                                "relative",
+                                                widget!.notification!
                                                     .notificationCreationDate!,
                                                 locale:
                                                     FFLocalizations.of(context)
@@ -1030,6 +1054,7 @@ class _ComponentNotificationWidgetState
                                                                     context)
                                                                 .dark38,
                                                         fontSize: 13.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ],
@@ -1048,6 +1073,7 @@ class _ComponentNotificationWidgetState
                                                           context)
                                                       .dark68,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           ),
@@ -1111,6 +1137,8 @@ class _ComponentNotificationWidgetState
                                                                         context)
                                                                     .dark88,
                                                                 fontSize: 15.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                         ),
                                                       ),

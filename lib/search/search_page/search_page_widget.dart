@@ -32,7 +32,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
+      safeSetState(() {
         _model.textController?.clear();
       });
     });
@@ -53,9 +53,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -77,16 +75,15 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                       _model.textController.text,
                     );
 
-                    setState(() {});
+                    safeSetState(() {});
                   },
                 ),
                 onFieldSubmitted: (_) async {
-                  setState(() {
-                    FFAppState().addToSearchItems(RecentSearchStruct(
-                      searchText: _model.textController.text,
-                      searchDate: getCurrentTimestamp,
-                    ));
-                  });
+                  FFAppState().addToSearchItems(RecentSearchStruct(
+                    searchText: _model.textController.text,
+                    searchDate: getCurrentTimestamp,
+                  ));
+                  safeSetState(() {});
 
                   context.pushNamed(
                     'SearchResultPage',
@@ -98,18 +95,21 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                     }.withoutNulls,
                   );
 
-                  setState(() {
+                  safeSetState(() {
                     _model.textController?.clear();
                   });
                 },
+                autofocus: false,
                 textInputAction: TextInputAction.done,
                 obscureText: false,
                 decoration: InputDecoration(
+                  isDense: false,
                   hintText: 'Search',
                   hintStyle: FlutterFlowTheme.of(context).bodySmall.override(
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark38,
                         fontSize: 16.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
                       ),
                   enabledBorder: InputBorder.none,
@@ -130,8 +130,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                               _model.textController.text,
                             );
 
-                            setState(() {});
-                            setState(() {});
+                            safeSetState(() {});
+                            safeSetState(() {});
                           },
                           child: Icon(
                             Icons.clear,
@@ -144,6 +144,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Libre Franklin',
                       color: FlutterFlowTheme.of(context).dark88,
+                      letterSpacing: 0.0,
                       fontWeight: FontWeight.normal,
                     ),
                 minLines: 1,
@@ -165,7 +166,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        setState(() {
+                        safeSetState(() {
                           _model.textController?.clear();
                         });
                       },
@@ -174,6 +175,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -232,6 +234,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .dark88,
                                             fontSize: 15.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                     ),
@@ -241,6 +244,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                 builder: (context) {
                                   final search =
                                       FFAppState().SearchItems.toList();
+
                                   return ListView.builder(
                                     padding: EdgeInsets.zero,
                                     reverse: true,
@@ -291,6 +295,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .dark88,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               ),
@@ -308,11 +313,10 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                 size: 18.0,
                                               ),
                                               onPressed: () async {
-                                                setState(() {
-                                                  FFAppState()
-                                                      .removeFromSearchItems(
-                                                          searchItem);
-                                                });
+                                                FFAppState()
+                                                    .removeFromSearchItems(
+                                                        searchItem);
+                                                safeSetState(() {});
                                               },
                                             ),
                                           ],

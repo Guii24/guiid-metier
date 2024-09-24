@@ -47,8 +47,6 @@ class _BottomEditopDeletePostWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -96,11 +94,11 @@ class _BottomEditopDeletePostWidgetState
                                   alignment: AlignmentDirectional(0.0, 0.0)
                                       .resolve(Directionality.of(context)),
                                   child: PopupDeletePostWidget(
-                                    postfer: widget.post,
+                                    postfer: widget!.post,
                                   ),
                                 );
                               },
-                            ).then((value) => setState(() {}));
+                            );
                           },
                           text: 'DELETE',
                           options: FFButtonOptions(
@@ -142,12 +140,12 @@ class _BottomEditopDeletePostWidgetState
                             'EditPost',
                             queryParameters: {
                               'postRef': serializeParam(
-                                widget.post,
+                                widget!.post,
                                 ParamType.Document,
                               ),
                             }.withoutNulls,
                             extra: <String, dynamic>{
-                              'postRef': widget.post,
+                              'postRef': widget!.post,
                             },
                           );
                         },

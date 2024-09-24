@@ -41,16 +41,15 @@ class _EditPostWidgetState extends State<EditPostWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().uploadPhotoPost =
-            widget.postRef!.postImagesList.toList().cast<String>();
-        FFAppState().choosenPreference =
-            widget.postRef!.postCategory.toList().cast<String>();
-      });
+      FFAppState().uploadPhotoPost =
+          widget!.postRef!.postImagesList.toList().cast<String>();
+      FFAppState().choosenPreference =
+          widget!.postRef!.postCategory.toList().cast<String>();
+      safeSetState(() {});
     });
 
     _model.textController ??=
-        TextEditingController(text: widget.postRef?.postText);
+        TextEditingController(text: widget!.postRef?.postText);
     _model.textFieldFocusNode ??= FocusNode();
   }
 
@@ -66,9 +65,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -97,15 +94,12 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                       alignment: AlignmentDirectional(0.0, 0.0)
                           .resolve(Directionality.of(context)),
                       child: GestureDetector(
-                        onTap: () => _model.unfocusNode.canRequestFocus
-                            ? FocusScope.of(context)
-                                .requestFocus(_model.unfocusNode)
-                            : FocusScope.of(context).unfocus(),
+                        onTap: () => FocusScope.of(dialogContext).unfocus(),
                         child: PopupCancelWidget(),
                       ),
                     );
                   },
-                ).then((value) => setState(() {}));
+                );
               },
             ),
           ),
@@ -115,6 +109,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
                   fontSize: 16.0,
+                  letterSpacing: 0.0,
                 ),
           ),
           actions: [
@@ -124,7 +119,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    await widget.postRef!.reference.update({
+                    await widget!.postRef!.reference.update({
                       ...createPostRecordData(
                         postText: _model.textController.text,
                       ),
@@ -135,10 +130,9 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                         },
                       ),
                     });
-                    setState(() {
-                      FFAppState().choosenPreference = [];
-                      FFAppState().uploadPhotoPost = [];
-                    });
+                    FFAppState().choosenPreference = [];
+                    FFAppState().uploadPhotoPost = [];
+                    safeSetState(() {});
                     context.safePop();
                   },
                   text: 'SAVE',
@@ -181,7 +175,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      if (widget.postRef!.postImagesList.length >= 1)
+                      if (widget!.postRef!.postImagesList.length >= 1)
                         Container(
                           width: double.infinity,
                           height: MediaQuery.sizeOf(context).height * 0.69,
@@ -191,15 +185,16 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                 builder: (context) {
                                   final img =
                                       FFAppState().uploadPhotoPost.toList();
+
                                   return Container(
                                     width: double.infinity,
                                     height: double.infinity,
                                     child: PageView.builder(
                                       controller: _model.pageViewController ??=
                                           PageController(
-                                              initialPage:
-                                                  min(0, img.length - 1)),
-                                      onPageChanged: (_) => setState(() {}),
+                                              initialPage: max(
+                                                  0, min(0, img.length - 1))),
+                                      onPageChanged: (_) => safeSetState(() {}),
                                       scrollDirection: Axis.horizontal,
                                       itemCount: img.length,
                                       itemBuilder: (context, imgIndex) {
@@ -258,6 +253,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                                           context)
                                                       .primaryBackground,
                                                   fontSize: 13.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -276,11 +272,10 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      setState(() {
-                                        FFAppState()
-                                            .removeAtIndexFromUploadPhotoPost(
-                                                _model.pageViewCurrentIndex);
-                                      });
+                                      FFAppState()
+                                          .removeAtIndexFromUploadPhotoPost(
+                                              _model.pageViewCurrentIndex);
+                                      safeSetState(() {});
                                     },
                                     child: Material(
                                       color: Colors.transparent,
@@ -323,8 +318,9 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.textController',
                               Duration(milliseconds: 10),
-                              () => setState(() {}),
+                              () => safeSetState(() {}),
                             ),
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               hintText: 'Description',
@@ -334,6 +330,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark38,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                   ),
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -382,6 +379,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark68,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   lineHeight: 1.4,
                                 ),
                             maxLines: 15,
@@ -435,11 +433,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                               context: context,
                               builder: (context) {
                                 return GestureDetector(
-                                  onTap: () =>
-                                      _model.unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
+                                  onTap: () => FocusScope.of(context).unfocus(),
                                   child: Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
                                     child: TakePhotoPPostUserWidget(),
@@ -492,6 +486,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ],
@@ -520,11 +515,8 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                   context: context,
                                   builder: (context) {
                                     return GestureDetector(
-                                      onTap: () => _model
-                                              .unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
+                                      onTap: () =>
+                                          FocusScope.of(context).unfocus(),
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
@@ -578,6 +570,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                                           context)
                                                       .dark88,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         if (FFAppState()
@@ -590,6 +583,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                                 final item = FFAppState()
                                                     .choosenPreference
                                                     .toList();
+
                                                 return SingleChildScrollView(
                                                   scrollDirection:
                                                       Axis.horizontal,
@@ -622,6 +616,8 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                                                       .dark88,
                                                                   fontSize:
                                                                       15.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                 ),
                                                       );
                                                     }),

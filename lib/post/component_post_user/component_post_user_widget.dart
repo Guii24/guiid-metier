@@ -55,10 +55,8 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<PostRecord>(
-      stream: PostRecord.getDocument(widget.postDoc!),
+      stream: PostRecord.getDocument(widget!.postDoc!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -74,7 +72,9 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
             ),
           );
         }
+
         final containerPostRecord = snapshot.data!;
+
         return Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -98,7 +98,9 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                   ),
                 );
               }
+
               final columnUsersRecord = snapshot.data!;
+
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -113,14 +115,16 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                 .toList()
                                 .take(5)
                                 .toList();
+
                             return Container(
                               width: double.infinity,
                               height: double.infinity,
                               child: PageView.builder(
                                 controller: _model.pageViewController ??=
                                     PageController(
-                                        initialPage: min(0, images.length - 1)),
-                                onPageChanged: (_) => setState(() {}),
+                                        initialPage:
+                                            max(0, min(0, images.length - 1))),
+                                onPageChanged: (_) => safeSetState(() {}),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: images.length,
                                 itemBuilder: (context, imagesIndex) {
@@ -172,6 +176,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBackground,
                                             fontSize: 13.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -221,6 +226,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                         .override(
                                           fontFamily: 'Libre Franklin',
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -230,7 +236,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                       0.0, 0.0, 0.0, 3.0),
                                   child: Text(
                                     dateTimeFormat(
-                                      'relative',
+                                      "relative",
                                       containerPostRecord.postTimePosted!,
                                       locale: FFLocalizations.of(context)
                                           .languageCode,
@@ -242,6 +248,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark68,
                                           fontSize: 14.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ),
@@ -328,6 +335,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                             fontSize: 12.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                       elevation: 0.0,
@@ -387,6 +395,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .dark52,
                                             fontSize: 12.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                       elevation: 0.0,
@@ -468,6 +477,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                     lineHeight: 1.4,
                                   ),
                         ),
@@ -480,6 +490,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                   .toList()
                                   .take(3)
                                   .toList();
+
                               return Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children:
@@ -499,6 +510,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark52,
                                           fontSize: 14.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   );
                                 }),
@@ -559,6 +571,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .primary,
                                                 fontSize: 14.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                         duration: Duration(milliseconds: 3000),
@@ -649,6 +662,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                             ),
@@ -679,6 +693,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                                           context)
                                                       .primary,
                                                   fontSize: 14.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                           duration:
@@ -758,6 +773,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .dark68,
                                                 fontSize: 14.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -792,6 +808,7 @@ class _ComponentPostUserWidgetState extends State<ComponentPostUserWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .primary,
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                       duration: Duration(milliseconds: 3000),

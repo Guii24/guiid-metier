@@ -26,8 +26,6 @@ class BottomCommentModel extends FlutterFlowModel<BottomCommentWidget> {
   // Stores action output result for [Backend Call - Create Document] action in IconButton widget.
   CommentPostRecord? comment;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
@@ -36,8 +34,4 @@ class BottomCommentModel extends FlutterFlowModel<BottomCommentWidget> {
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

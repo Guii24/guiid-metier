@@ -47,8 +47,6 @@ class _BottomEditorDeleteJobWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -95,11 +93,11 @@ class _BottomEditorDeleteJobWidgetState
                                   alignment: AlignmentDirectional(0.0, 0.0)
                                       .resolve(Directionality.of(context)),
                                   child: PopupDeleteJobPostWidget(
-                                    jobDoc: widget.jobDoc!,
+                                    jobDoc: widget!.jobDoc!,
                                   ),
                                 );
                               },
-                            ).then((value) => setState(() {}));
+                            );
                           },
                           text: 'DELETE',
                           options: FFButtonOptions(
@@ -143,12 +141,12 @@ class _BottomEditorDeleteJobWidgetState
                             'EditPostJobPage',
                             queryParameters: {
                               'jobDoc': serializeParam(
-                                widget.jobDoc,
+                                widget!.jobDoc,
                                 ParamType.Document,
                               ),
                             }.withoutNulls,
                             extra: <String, dynamic>{
-                              'jobDoc': widget.jobDoc,
+                              'jobDoc': widget!.jobDoc,
                             },
                           );
                         },

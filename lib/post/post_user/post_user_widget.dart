@@ -38,8 +38,6 @@ class _PostUserWidgetState extends State<PostUserWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -155,6 +153,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                 .override(
                                   fontFamily: 'Libre Franklin',
                                   fontSize: 17.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
                           ),
@@ -173,9 +172,8 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  setState(() {
-                                    _model.choosenCategory = '';
-                                  });
+                                  _model.choosenCategory = '';
+                                  safeSetState(() {});
                                 },
                                 child: Material(
                                   color: Colors.transparent,
@@ -222,6 +220,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                                             context)
                                                         .primaryText,
                                                 fontSize: 15.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -237,6 +236,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                                 ?.toList() ??
                                             [])
                                         .toList();
+
                                     return Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: List.generate(category.length,
@@ -249,10 +249,9 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
-                                            setState(() {
-                                              _model.choosenCategory =
-                                                  categoryItem;
-                                            });
+                                            _model.choosenCategory =
+                                                categoryItem;
+                                            safeSetState(() {});
                                           },
                                           child: Material(
                                             color: Colors.transparent,
@@ -315,6 +314,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                                                                 .primaryText,
                                                           ),
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                                   ),
                                                 ),
@@ -366,6 +366,7 @@ class _PostUserWidgetState extends State<PostUserWidget> {
                           }
                           List<PostRecord> listViewPostRecordList =
                               snapshot.data!;
+
                           return ListView.builder(
                             padding: EdgeInsets.fromLTRB(
                               0,

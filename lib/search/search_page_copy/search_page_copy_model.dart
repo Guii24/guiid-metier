@@ -21,7 +21,6 @@ class SearchPageCopyModel extends FlutterFlowModel<SearchPageCopyWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // Stores action output result for [Custom Action - searchTitles] action in SearchPageCopy widget.
   List<String>? searchValues;
   // State field(s) for TextField widget.
@@ -29,19 +28,12 @@ class SearchPageCopyModel extends FlutterFlowModel<SearchPageCopyWidget> {
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

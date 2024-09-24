@@ -53,8 +53,6 @@ class _BottomReportPostWidgetState extends State<BottomReportPostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -91,11 +89,11 @@ class _BottomReportPostWidgetState extends State<BottomReportPostWidget> {
                       return Padding(
                         padding: MediaQuery.viewInsetsOf(context),
                         child: BottomReportWidget(
-                          commentPost: widget.commentPost,
-                          type: widget.typeReport!,
-                          post: widget.post,
-                          userRef: widget.user,
-                          job: widget.job,
+                          commentPost: widget!.commentPost,
+                          type: widget!.typeReport!,
+                          post: widget!.post,
+                          userRef: widget!.user,
+                          job: widget!.job,
                         ),
                       );
                     },

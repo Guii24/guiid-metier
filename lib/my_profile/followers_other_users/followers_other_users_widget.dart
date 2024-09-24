@@ -43,12 +43,8 @@ class _FollowersOtherUsersWidgetState extends State<FollowersOtherUsersWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -74,6 +70,7 @@ class _FollowersOtherUsersWidgetState extends State<FollowersOtherUsersWidget> {
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
                 ),
           ),
@@ -89,7 +86,7 @@ class _FollowersOtherUsersWidgetState extends State<FollowersOtherUsersWidget> {
               stream: queryUsersRecord(
                 queryBuilder: (usersRecord) => usersRecord.where(
                   'user_following',
-                  arrayContains: widget.userDoc?.reference,
+                  arrayContains: widget!.userDoc?.reference,
                 ),
               ),
               builder: (context, snapshot) {
@@ -108,6 +105,7 @@ class _FollowersOtherUsersWidgetState extends State<FollowersOtherUsersWidget> {
                   );
                 }
                 List<UsersRecord> listViewUsersRecordList = snapshot.data!;
+
                 return ListView.separated(
                   padding: EdgeInsets.fromLTRB(
                     0,

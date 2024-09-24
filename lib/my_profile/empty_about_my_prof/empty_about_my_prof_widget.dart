@@ -37,8 +37,6 @@ class _EmptyAboutMyProfWidgetState extends State<EmptyAboutMyProfWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -66,6 +64,7 @@ class _EmptyAboutMyProfWidgetState extends State<EmptyAboutMyProfWidget> {
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark68,
                   fontSize: 15.0,
+                  letterSpacing: 0.0,
                 ),
           ),
         ),

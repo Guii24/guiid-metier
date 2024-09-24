@@ -21,7 +21,6 @@ import 'package:provider/provider.dart';
 class MyProfileCompanyModel extends FlutterFlowModel<MyProfileCompanyWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for TabBar widget.
   TabController? tabBarController;
   int get tabBarCurrentIndex =>
@@ -44,22 +43,15 @@ class MyProfileCompanyModel extends FlutterFlowModel<MyProfileCompanyWidget> {
   void clearJobsCacheKey(String? uniqueKey) =>
       _jobsManager.clearRequest(uniqueKey);
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     tabBarController?.dispose();
 
     /// Dispose query cache managers for this widget.
 
     clearJobsCache();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

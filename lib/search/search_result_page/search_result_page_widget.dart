@@ -46,7 +46,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
       vsync: this,
       length: 5,
       initialIndex: 0,
-    )..addListener(() => setState(() {}));
+    )..addListener(() => safeSetState(() {}));
   }
 
   @override
@@ -58,12 +58,8 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -85,13 +81,14 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
             },
           ),
           title: Text(
-            widget.searchingText!.maybeHandleOverflow(
+            widget!.searchingText!.maybeHandleOverflow(
               maxChars: 30,
               replacement: '…',
             ),
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
+                  letterSpacing: 0.0,
                 ),
           ),
           actions: [],
@@ -117,6 +114,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
             }
             List<UsersRecord> containerUsersRecordList =
                 snapshot.data!.where((u) => u.uid != currentUserUid).toList();
+
             return Container(
               width: double.infinity,
               height: double.infinity,
@@ -142,12 +140,14 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                           FlutterFlowTheme.of(context).titleMedium.override(
                                 fontFamily: 'Libre Franklin',
                                 fontSize: 15.0,
+                                letterSpacing: 0.0,
                                 fontWeight: FontWeight.normal,
                               ),
                       unselectedLabelStyle:
                           FlutterFlowTheme.of(context).titleMedium.override(
                                 fontFamily: 'Libre Franklin',
                                 fontSize: 15.0,
+                                letterSpacing: 0.0,
                                 fontWeight: FontWeight.normal,
                               ),
                       labelColor: FlutterFlowTheme.of(context).primary,
@@ -206,7 +206,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                               children: [
                                 if (functions
                                         .searchUser(
-                                            widget.searchingText!,
+                                            widget!.searchingText!,
                                             containerUsersRecordList
                                                 .where(
                                                     (e) => e.userType == 'User')
@@ -228,6 +228,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),
@@ -240,7 +241,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                     builder: (context) {
                                       final users = functions
                                           .searchUser(
-                                              widget.searchingText!,
+                                              widget!.searchingText!,
                                               containerUsersRecordList
                                                   .where((e) =>
                                                       e.userType == 'User')
@@ -257,6 +258,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                           ),
                                         );
                                       }
+
                                       return ListView.separated(
                                         padding: EdgeInsets.fromLTRB(
                                           0,
@@ -310,7 +312,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                               children: [
                                 if (functions
                                         .searchUser(
-                                            widget.searchingText!,
+                                            widget!.searchingText!,
                                             containerUsersRecordList
                                                 .where((e) =>
                                                     e.userType == 'Company')
@@ -332,6 +334,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
                                               fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),
@@ -344,7 +347,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                     builder: (context) {
                                       final company = functions
                                           .searchUser(
-                                              widget.searchingText!,
+                                              widget!.searchingText!,
                                               containerUsersRecordList
                                                   .where((e) =>
                                                       e.userType == 'Company')
@@ -359,6 +362,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                           child: EmptySearchWidget(),
                                         );
                                       }
+
                                       return ListView.separated(
                                         padding: EdgeInsets.fromLTRB(
                                           0,
@@ -436,6 +440,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                       List<ArticlesRecord>
                                           containerArticlesRecordList =
                                           snapshot.data!;
+
                                       return Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(),
@@ -444,7 +449,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                           children: [
                                             if (functions
                                                     .searchArticles(
-                                                        widget.searchingText!,
+                                                        widget!.searchingText!,
                                                         containerArticlesRecordList
                                                             .toList())
                                                     .length !=
@@ -468,6 +473,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -478,7 +484,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                               builder: (context) {
                                                 final articles = functions
                                                     .searchArticles(
-                                                        widget.searchingText!,
+                                                        widget!.searchingText!,
                                                         containerArticlesRecordList
                                                             .toList())
                                                     .toList();
@@ -492,6 +498,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                     child: EmptySearchWidget(),
                                                   );
                                                 }
+
                                                 return ListView.separated(
                                                   padding: EdgeInsets.fromLTRB(
                                                     0,
@@ -584,6 +591,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                       }
                                       List<PostRecord> containerPostRecordList =
                                           snapshot.data!;
+
                                       return Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(),
@@ -592,7 +600,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                           children: [
                                             if (functions
                                                     .searchPosts(
-                                                        widget.searchingText!,
+                                                        widget!.searchingText!,
                                                         containerPostRecordList
                                                             .toList())
                                                     .length !=
@@ -616,6 +624,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -626,7 +635,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                               builder: (context) {
                                                 final posts = functions
                                                     .searchPosts(
-                                                        widget.searchingText!,
+                                                        widget!.searchingText!,
                                                         containerPostRecordList
                                                             .toList())
                                                     .toList();
@@ -640,6 +649,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                     child: EmptySearchWidget(),
                                                   );
                                                 }
+
                                                 return ListView.separated(
                                                   padding: EdgeInsets.fromLTRB(
                                                     0,
@@ -706,6 +716,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                       }
                                       List<JobRecord> containerJobRecordList =
                                           snapshot.data!;
+
                                       return Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(),
@@ -714,7 +725,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                           children: [
                                             if (functions
                                                     .searchJob(
-                                                        widget.searchingText!,
+                                                        widget!.searchingText!,
                                                         containerJobRecordList
                                                             .toList())
                                                     .length !=
@@ -738,6 +749,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                                   .of(context)
                                                               .dark88,
                                                           fontSize: 15.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -748,7 +760,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                               builder: (context) {
                                                 final jobs = functions
                                                     .searchJob(
-                                                        widget.searchingText!,
+                                                        widget!.searchingText!,
                                                         containerJobRecordList
                                                             .toList())
                                                     .toList();
@@ -761,6 +773,7 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                     child: EmptySearchWidget(),
                                                   );
                                                 }
+
                                                 return ListView.separated(
                                                   padding: EdgeInsets.fromLTRB(
                                                     0,
@@ -828,14 +841,8 @@ class _SearchResultPageWidgetState extends State<SearchResultPageWidget>
                                                             context: context,
                                                             builder: (context) {
                                                               return GestureDetector(
-                                                                onTap: () => _model
-                                                                        .unfocusNode
-                                                                        .canRequestFocus
-                                                                    ? FocusScope.of(
-                                                                            context)
-                                                                        .requestFocus(_model
-                                                                            .unfocusNode)
-                                                                    : FocusScope.of(
+                                                                onTap: () =>
+                                                                    FocusScope.of(
                                                                             context)
                                                                         .unfocus(),
                                                                 child: Padding(

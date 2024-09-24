@@ -17,8 +17,6 @@ class PostTypesForSearchModel
   // Model for ComponentPostCompany component.
   late ComponentPostCompanyModel componentPostCompanyModel;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     componentPostUserModel =
@@ -32,8 +30,4 @@ class PostTypesForSearchModel
     componentPostUserModel.dispose();
     componentPostCompanyModel.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

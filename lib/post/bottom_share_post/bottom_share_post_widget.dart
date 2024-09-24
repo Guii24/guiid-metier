@@ -51,8 +51,6 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -84,6 +82,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                       fontFamily: 'Libre Franklin',
                       color: FlutterFlowTheme.of(context).dark88,
                       fontSize: 17.0,
+                      letterSpacing: 0.0,
                       fontWeight: FontWeight.w600,
                     ),
               ),
@@ -131,6 +130,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark38,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                   lineHeight: 1.5,
                                 ),
                             enabledBorder: UnderlineInputBorder(
@@ -179,6 +179,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     lineHeight: 1.5,
                                   ),
                           maxLines: 2,
@@ -193,7 +194,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
               ),
             ),
             StreamBuilder<UsersRecord>(
-              stream: UsersRecord.getDocument(widget.user!),
+              stream: UsersRecord.getDocument(widget!.user!),
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.
                 if (!snapshot.hasData) {
@@ -209,7 +210,9 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                     ),
                   );
                 }
+
                 final containerUsersRecord = snapshot.data!;
+
                 return Material(
                   color: Colors.transparent,
                   elevation: 0.0,
@@ -270,6 +273,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                                         .override(
                                           fontFamily: 'Libre Franklin',
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -285,6 +289,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .dark68,
                                             fontSize: 14.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -308,8 +313,8 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                         postCreator: currentUserReference,
                         postTimePosted: getCurrentTimestamp,
                         postIsReposted: true,
-                        postRepostedCreator: widget.user,
-                        postRepostedPost: widget.repostpost,
+                        postRepostedCreator: widget!.user,
+                        postRepostedPost: widget!.repostpost,
                         postType: 'post',
                       ));
                   Navigator.pop(context);
@@ -326,6 +331,7 @@ class _BottomSharePostWidgetState extends State<BottomSharePostWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark88,
                         fontSize: 14.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
                       ),
                   elevation: 0.0,

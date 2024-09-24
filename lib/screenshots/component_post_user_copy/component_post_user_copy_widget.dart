@@ -55,10 +55,8 @@ class _ComponentPostUserCopyWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<PostRecord>(
-      stream: PostRecord.getDocument(widget.postDoc!),
+      stream: PostRecord.getDocument(widget!.postDoc!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -74,7 +72,9 @@ class _ComponentPostUserCopyWidgetState
             ),
           );
         }
+
         final containerPostRecord = snapshot.data!;
+
         return Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -98,7 +98,9 @@ class _ComponentPostUserCopyWidgetState
                   ),
                 );
               }
+
               final columnUsersRecord = snapshot.data!;
+
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -113,6 +115,7 @@ class _ComponentPostUserCopyWidgetState
                                 .toList()
                                 .take(5)
                                 .toList();
+
                             return Container(
                               width: double.infinity,
                               height: MediaQuery.sizeOf(context).height * 0.55,
@@ -120,7 +123,8 @@ class _ComponentPostUserCopyWidgetState
                                 physics: const NeverScrollableScrollPhysics(),
                                 controller: _model.pageViewController ??=
                                     PageController(
-                                        initialPage: min(0, images.length - 1)),
+                                        initialPage:
+                                            max(0, min(0, images.length - 1))),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: images.length,
                                 itemBuilder: (context, imagesIndex) {
@@ -190,6 +194,7 @@ class _ComponentPostUserCopyWidgetState
                                         .override(
                                           fontFamily: 'Libre Franklin',
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -206,6 +211,7 @@ class _ComponentPostUserCopyWidgetState
                                           color: FlutterFlowTheme.of(context)
                                               .dark68,
                                           fontSize: 14.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ),
@@ -292,6 +298,7 @@ class _ComponentPostUserCopyWidgetState
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                             fontSize: 12.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                       elevation: 0.0,
@@ -351,6 +358,7 @@ class _ComponentPostUserCopyWidgetState
                                             color: FlutterFlowTheme.of(context)
                                                 .dark52,
                                             fontSize: 12.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                       elevation: 0.0,
@@ -429,6 +437,7 @@ class _ComponentPostUserCopyWidgetState
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 14.0,
+                                    letterSpacing: 0.0,
                                     lineHeight: 1.4,
                                   ),
                         ),
@@ -447,6 +456,7 @@ class _ComponentPostUserCopyWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark52,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                             ],
@@ -561,6 +571,7 @@ class _ComponentPostUserCopyWidgetState
                                       color:
                                           FlutterFlowTheme.of(context).dark68,
                                       fontSize: 14.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                             ),
@@ -586,6 +597,7 @@ class _ComponentPostUserCopyWidgetState
                                         color:
                                             FlutterFlowTheme.of(context).dark68,
                                         fontSize: 14.0,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ),

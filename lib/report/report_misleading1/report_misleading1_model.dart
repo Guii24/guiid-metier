@@ -17,15 +17,9 @@ class ReportMisleading1Model extends FlutterFlowModel<ReportMisleading1Widget> {
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   ReportRecord? report;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {}
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

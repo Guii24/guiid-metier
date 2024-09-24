@@ -19,7 +19,6 @@ import 'package:provider/provider.dart';
 class SignupBioUserModel extends FlutterFlowModel<SignupBioUserWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
@@ -33,14 +32,11 @@ class SignupBioUserModel extends FlutterFlowModel<SignupBioUserWidget> {
   TextEditingController? textController3;
   String? Function(BuildContext, String?)? textController3Validator;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     textFieldFocusNode1?.dispose();
     textController1?.dispose();
 
@@ -50,8 +46,4 @@ class SignupBioUserModel extends FlutterFlowModel<SignupBioUserWidget> {
     textFieldFocusNode3?.dispose();
     textController3?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

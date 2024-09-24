@@ -52,12 +52,8 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -74,7 +70,7 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
                 onChanged: (_) => EasyDebounce.debounce(
                   '_model.textController',
                   Duration(milliseconds: 10),
-                  () => setState(() {}),
+                  () => safeSetState(() {}),
                 ),
                 onFieldSubmitted: (_) async {
                   await currentUserReference!.update({
@@ -106,14 +102,17 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
                     }.withoutNulls,
                   );
                 },
+                autofocus: false,
                 textInputAction: TextInputAction.done,
                 obscureText: false,
                 decoration: InputDecoration(
+                  isDense: false,
                   hintText: 'Search',
                   hintStyle: FlutterFlowTheme.of(context).bodySmall.override(
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark38,
                         fontSize: 16.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
                       ),
                   enabledBorder: InputBorder.none,
@@ -129,7 +128,7 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
                       ? InkWell(
                           onTap: () async {
                             _model.textController?.clear();
-                            setState(() {});
+                            safeSetState(() {});
                           },
                           child: Icon(
                             Icons.clear,
@@ -142,6 +141,7 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Libre Franklin',
                       color: FlutterFlowTheme.of(context).dark88,
+                      letterSpacing: 0.0,
                       fontWeight: FontWeight.normal,
                     ),
                 minLines: 1,
@@ -158,6 +158,7 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Libre Franklin',
                           color: FlutterFlowTheme.of(context).dark88,
+                          letterSpacing: 0.0,
                         ),
                   ),
                 ),
@@ -207,6 +208,7 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 15.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,
                                       ),
                                 ),
@@ -221,6 +223,7 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
                                                 ?.toList() ??
                                             [])
                                         .toList();
+
                                     return ListView.separated(
                                       padding: EdgeInsets.fromLTRB(
                                         0,
@@ -275,6 +278,7 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .dark88,
+                                                          letterSpacing: 0.0,
                                                         ),
                                                   ),
                                                 ),
@@ -353,6 +357,7 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
                               Builder(
                                 builder: (context) {
                                   final search = _model.searchValues!.toList();
+
                                   return ListView.separated(
                                     padding: EdgeInsets.fromLTRB(
                                       0,
@@ -391,6 +396,7 @@ class _SearchPageCopyWidgetState extends State<SearchPageCopyWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .dark88,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                             ),

@@ -47,8 +47,6 @@ class _ComponentSourcingCopyWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Material(
       color: Colors.transparent,
       elevation: 0.0,
@@ -80,18 +78,19 @@ class _ComponentSourcingCopyWidgetState
                     Expanded(
                       child: Text(
                         valueOrDefault<String>(
-                          widget.jobDoc?.jobTittle,
+                          widget!.jobDoc?.jobTittle,
                           'tittle error',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
                               fontSize: 17.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
                     ),
-                    if (widget.jobDoc?.companyCreator == currentUserReference)
+                    if (widget!.jobDoc?.companyCreator == currentUserReference)
                       InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -107,7 +106,7 @@ class _ComponentSourcingCopyWidgetState
                               return Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: BottomEditorDeleteJobWidget(
-                                  jobDoc: widget.jobDoc,
+                                  jobDoc: widget!.jobDoc,
                                 ),
                               );
                             },
@@ -124,13 +123,14 @@ class _ComponentSourcingCopyWidgetState
               ),
               Text(
                 valueOrDefault<String>(
-                  widget.jobDoc?.jobLocation,
+                  widget!.jobDoc?.jobLocation,
                   'location error',
                 ),
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Libre Franklin',
                       color: FlutterFlowTheme.of(context).dark88,
                       fontSize: 14.0,
+                      letterSpacing: 0.0,
                     ),
               ),
               Padding(
@@ -173,7 +173,7 @@ class _ComponentSourcingCopyWidgetState
                                     6.0, 0.0, 0.0, 0.0),
                                 child: Text(
                                   valueOrDefault<String>(
-                                    widget.jobDoc?.jobSalaryRate,
+                                    widget!.jobDoc?.jobSalaryRate,
                                     '0',
                                   ),
                                   style: FlutterFlowTheme.of(context)
@@ -183,6 +183,7 @@ class _ComponentSourcingCopyWidgetState
                                         color:
                                             FlutterFlowTheme.of(context).dark88,
                                         fontSize: 13.0,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ),
@@ -191,8 +192,8 @@ class _ComponentSourcingCopyWidgetState
                         ),
                       ),
                     ),
-                    if (widget.jobDoc?.jobWorkLocation != null &&
-                        widget.jobDoc?.jobWorkLocation != '')
+                    if (widget!.jobDoc?.jobWorkLocation != null &&
+                        widget!.jobDoc?.jobWorkLocation != '')
                       Material(
                         color: Colors.transparent,
                         elevation: 0.0,
@@ -226,7 +227,7 @@ class _ComponentSourcingCopyWidgetState
                                       6.0, 0.0, 0.0, 0.0),
                                   child: Text(
                                     valueOrDefault<String>(
-                                      widget.jobDoc?.jobWorkLocation,
+                                      widget!.jobDoc?.jobWorkLocation,
                                       'null',
                                     ),
                                     textAlign: TextAlign.center,
@@ -237,6 +238,7 @@ class _ComponentSourcingCopyWidgetState
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 14.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ),
@@ -245,8 +247,8 @@ class _ComponentSourcingCopyWidgetState
                           ),
                         ),
                       ),
-                    if (widget.jobDoc?.jobEmploymentType != null &&
-                        widget.jobDoc?.jobEmploymentType != '')
+                    if (widget!.jobDoc?.jobEmploymentType != null &&
+                        widget!.jobDoc?.jobEmploymentType != '')
                       Material(
                         color: Colors.transparent,
                         elevation: 0.0,
@@ -279,7 +281,7 @@ class _ComponentSourcingCopyWidgetState
                                       6.0, 0.0, 0.0, 0.0),
                                   child: Text(
                                     valueOrDefault<String>(
-                                      widget.jobDoc?.jobEmploymentType,
+                                      widget!.jobDoc?.jobEmploymentType,
                                       'null',
                                     ),
                                     textAlign: TextAlign.center,
@@ -290,6 +292,7 @@ class _ComponentSourcingCopyWidgetState
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 14.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ),
@@ -305,7 +308,7 @@ class _ComponentSourcingCopyWidgetState
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                 child: StreamBuilder<UsersRecord>(
                   stream:
-                      UsersRecord.getDocument(widget.jobDoc!.companyCreator!),
+                      UsersRecord.getDocument(widget!.jobDoc!.companyCreator!),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
@@ -321,7 +324,9 @@ class _ComponentSourcingCopyWidgetState
                         ),
                       );
                     }
+
                     final rowUsersRecord = snapshot.data!;
+
                     return Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -349,6 +354,7 @@ class _ComponentSourcingCopyWidgetState
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark88,
                                     fontSize: 15.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),
@@ -360,8 +366,8 @@ class _ComponentSourcingCopyWidgetState
                           children: [
                             Text(
                               dateTimeFormat(
-                                'relative',
-                                widget.jobDoc!.jobCreationDate!,
+                                "relative",
+                                widget!.jobDoc!.jobCreationDate!,
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
@@ -371,16 +377,18 @@ class _ComponentSourcingCopyWidgetState
                                     fontFamily: 'Libre Franklin',
                                     color: FlutterFlowTheme.of(context).dark68,
                                     fontSize: 13.0,
+                                    letterSpacing: 0.0,
                                   ),
                             ),
-                            if (widget.jobDoc?.companyCreator ==
+                            if (widget!.jobDoc?.companyCreator ==
                                 currentUserReference)
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 3.0, 0.0, 0.0),
                                 child: Text(
                                   '${valueOrDefault<String>(
-                                    widget.jobDoc?.jobApplicantsUserList?.length
+                                    widget!
+                                        .jobDoc?.jobApplicantsUserList?.length
                                         ?.toString(),
                                     '0',
                                   )} Applicants',
@@ -391,6 +399,7 @@ class _ComponentSourcingCopyWidgetState
                                         color: FlutterFlowTheme.of(context)
                                             .success,
                                         fontSize: 13.0,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ),

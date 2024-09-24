@@ -103,6 +103,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark88,
                         fontSize: 17.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -113,8 +114,9 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                 onChanged: (_) => EasyDebounce.debounce(
                   '_model.textController',
                   Duration(milliseconds: 100),
-                  () => setState(() {}),
+                  () => safeSetState(() {}),
                 ),
+                autofocus: false,
                 obscureText: false,
                 decoration: InputDecoration(
                   isDense: true,
@@ -123,6 +125,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark68,
                         fontSize: 15.0,
+                        letterSpacing: 0.0,
                       ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
@@ -172,7 +175,10 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                     size: 20.0,
                   ),
                 ),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Libre Franklin',
+                      letterSpacing: 0.0,
+                    ),
                 validator: _model.textControllerValidator.asValidator(context),
               ),
               Divider(
@@ -190,6 +196,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                               functions.getPhoneNumberCountriesList()!.toList(),
                               _model.textController.text)
                           .toList();
+
                       return ListView.builder(
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.vertical,
@@ -206,8 +213,17 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  if (widget.signin!) {
-                                    setState(() {
+                                  if (widget!.signin!) {
+                                    FFAppState().countryInfo = countryCodeItem;
+                                    FFAppState().countryCode =
+                                        functions.deleteSPlus(getJsonField(
+                                      countryCodeItem,
+                                      r'''$.dial_code''',
+                                    ).toString());
+                                    safeSetState(() {});
+                                    Navigator.pop(context);
+                                  } else {
+                                    if (widget!.userType == 'User') {
                                       FFAppState().countryInfo =
                                           countryCodeItem;
                                       FFAppState().countryCode =
@@ -215,47 +231,32 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                         countryCodeItem,
                                         r'''$.dial_code''',
                                       ).toString());
-                                    });
-                                    Navigator.pop(context);
-                                  } else {
-                                    if (widget.userType == 'User') {
-                                      setState(() {
-                                        FFAppState().countryInfo =
+                                      safeSetState(() {});
+                                      Navigator.pop(context);
+                                    } else {
+                                      if (widget!.editprofCompany!) {
+                                        FFAppState().countryInfoCompany =
+                                            countryCodeItem;
+                                        safeSetState(() {});
+                                        FFAppState().countryCode =
+                                            '${getJsonField(
+                                          FFAppState().countryInfoCompany,
+                                          r'''$.code''',
+                                        ).toString()} ${getJsonField(
+                                          FFAppState().countryInfoCompany,
+                                          r'''$.dial_code''',
+                                        ).toString()}';
+                                        safeSetState(() {});
+                                        Navigator.pop(context);
+                                      } else {
+                                        FFAppState().countryInfoCompany =
                                             countryCodeItem;
                                         FFAppState().countryCode =
                                             functions.deleteSPlus(getJsonField(
                                           countryCodeItem,
                                           r'''$.dial_code''',
                                         ).toString());
-                                      });
-                                      Navigator.pop(context);
-                                    } else {
-                                      if (widget.editprofCompany!) {
-                                        setState(() {
-                                          FFAppState().countryInfoCompany =
-                                              countryCodeItem;
-                                        });
-                                        setState(() {
-                                          FFAppState().countryCode =
-                                              '${getJsonField(
-                                            FFAppState().countryInfoCompany,
-                                            r'''$.code''',
-                                          ).toString()} ${getJsonField(
-                                            FFAppState().countryInfoCompany,
-                                            r'''$.dial_code''',
-                                          ).toString()}';
-                                        });
-                                        Navigator.pop(context);
-                                      } else {
-                                        setState(() {
-                                          FFAppState().countryInfoCompany =
-                                              countryCodeItem;
-                                          FFAppState().countryCode = functions
-                                              .deleteSPlus(getJsonField(
-                                            countryCodeItem,
-                                            r'''$.dial_code''',
-                                          ).toString());
-                                        });
+                                        safeSetState(() {});
                                         Navigator.pop(context);
                                       }
                                     }
@@ -282,6 +283,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .dark88,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ),
@@ -301,6 +303,7 @@ class _CountryCodeWidgetState extends State<CountryCodeWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .dark88,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),

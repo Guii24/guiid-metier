@@ -47,8 +47,6 @@ class _BottomEditorDeleteWearWidgetState
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -96,11 +94,11 @@ class _BottomEditorDeleteWearWidgetState
                                   alignment: AlignmentDirectional(0.0, 0.0)
                                       .resolve(Directionality.of(context)),
                                   child: PopupWardrobeDeleteWidget(
-                                    wearDoc: widget.postDoc,
+                                    wearDoc: widget!.postDoc,
                                   ),
                                 );
                               },
-                            ).then((value) => setState(() {}));
+                            );
                           },
                           text: 'DELETE',
                           options: FFButtonOptions(
@@ -142,12 +140,12 @@ class _BottomEditorDeleteWearWidgetState
                             'EditWear',
                             queryParameters: {
                               'postDoc': serializeParam(
-                                widget.postDoc,
+                                widget!.postDoc,
                                 ParamType.Document,
                               ),
                             }.withoutNulls,
                             extra: <String, dynamic>{
-                              'postDoc': widget.postDoc,
+                              'postDoc': widget!.postDoc,
                             },
                           );
                         },

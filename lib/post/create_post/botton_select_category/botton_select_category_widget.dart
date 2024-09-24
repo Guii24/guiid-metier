@@ -94,6 +94,7 @@ class _BottonSelectCategoryWidgetState
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
                               fontSize: 17.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -101,6 +102,7 @@ class _BottonSelectCategoryWidgetState
                     Builder(
                       builder: (context) {
                         final purpose = FFAppState().ListPurpose.toList();
+
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           primary: false,
@@ -117,13 +119,11 @@ class _BottonSelectCategoryWidgetState
                               onTap: () async {
                                 if (FFAppState().choosenPurpose !=
                                     purposeItem) {
-                                  setState(() {
-                                    FFAppState().choosenPurpose = purposeItem;
-                                  });
+                                  FFAppState().choosenPurpose = purposeItem;
+                                  safeSetState(() {});
                                 } else {
-                                  setState(() {
-                                    FFAppState().choosenPurpose = '';
-                                  });
+                                  FFAppState().choosenPurpose = '';
+                                  safeSetState(() {});
                                 }
                               },
                               child: Column(
@@ -146,6 +146,7 @@ class _BottonSelectCategoryWidgetState
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .dark88,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -189,6 +190,7 @@ class _BottonSelectCategoryWidgetState
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
                               fontSize: 17.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -199,11 +201,13 @@ class _BottonSelectCategoryWidgetState
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).dark38,
                             fontSize: 15.0,
+                            letterSpacing: 0.0,
                           ),
                     ),
                     Builder(
                       builder: (context) {
                         final category = FFAppState().preference.toList();
+
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           primary: false,
@@ -221,17 +225,15 @@ class _BottonSelectCategoryWidgetState
                                 if (FFAppState()
                                     .choosenPreference
                                     .contains(categoryItem)) {
-                                  setState(() {
-                                    FFAppState().removeFromChoosenPreference(
-                                        categoryItem);
-                                  });
+                                  FFAppState().removeFromChoosenPreference(
+                                      categoryItem);
+                                  safeSetState(() {});
                                 } else {
                                   if (FFAppState().choosenPreference.length <
                                       2) {
-                                    setState(() {
-                                      FFAppState()
-                                          .addToChoosenPreference(categoryItem);
-                                    });
+                                    FFAppState()
+                                        .addToChoosenPreference(categoryItem);
+                                    safeSetState(() {});
                                   }
                                 }
                               },
@@ -255,6 +257,7 @@ class _BottonSelectCategoryWidgetState
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .dark88,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),

@@ -44,8 +44,6 @@ class _PopupDeletePostWidgetState extends State<PopupDeletePostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
       child: Material(
@@ -75,6 +73,7 @@ class _PopupDeletePostWidgetState extends State<PopupDeletePostWidget> {
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Libre Franklin',
                           fontSize: 17.0,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                           lineHeight: 1.5,
                         ),
@@ -89,7 +88,7 @@ class _PopupDeletePostWidgetState extends State<PopupDeletePostWidget> {
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 7.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            await widget.postfer!.reference.delete();
+                            await widget!.postfer!.reference.delete();
                             Navigator.pop(context);
                             context.safePop();
                           },

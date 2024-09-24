@@ -81,6 +81,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).primaryText,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.w500,
                       ),
                 ),
@@ -180,6 +181,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Libre Franklin',
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                     ),
@@ -196,6 +198,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Libre Franklin',
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                     ),
@@ -228,11 +231,12 @@ class _LogInWidgetState extends State<LogInWidget> {
                                 onChanged: (_) => EasyDebounce.debounce(
                                   '_model.textController',
                                   Duration(milliseconds: 10),
-                                  () => setState(() {}),
+                                  () => safeSetState(() {}),
                                 ),
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  isDense: false,
                                   hintText: 'Phone number *',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodySmall
@@ -241,6 +245,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).dark38,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                   enabledBorder: OutlineInputBorder(
@@ -281,6 +286,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                       fontFamily: 'Libre Franklin',
                                       color:
                                           FlutterFlowTheme.of(context).dark88,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w500,
                                     ),
                                 maxLines: null,
@@ -307,6 +313,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                             fontFamily: 'Libre Franklin',
                             color: FlutterFlowTheme.of(context).alternate,
                             fontSize: 13.0,
+                            letterSpacing: 0.0,
                           ),
                     ),
                   ),
@@ -343,6 +350,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                       final buttonUsersRecord = buttonUsersRecordList.isNotEmpty
                           ? buttonUsersRecordList.first
                           : null;
+
                       return FFButtonWidget(
                         onPressed: () async {
                           if (buttonUsersRecord != null) {
@@ -364,9 +372,8 @@ class _LogInWidgetState extends State<LogInWidget> {
                               }.withoutNulls,
                             );
                           } else {
-                            setState(() {
-                              _model.showValid = true;
-                            });
+                            _model.showValid = true;
+                            safeSetState(() {});
                           }
                         },
                         text: 'SIGN IN',
@@ -404,7 +411,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       Navigator.pop(context);
-                      if (widget.back!) {
+                      if (widget!.back!) {
                         context.pushNamed('SignUP');
                       } else {
                         context.goNamed(
@@ -421,7 +428,10 @@ class _LogInWidgetState extends State<LogInWidget> {
                     },
                     child: Text(
                       'Not yet a member? Sign up',
-                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Libre Franklin',
+                            letterSpacing: 0.0,
+                          ),
                     ),
                   ),
                 ),

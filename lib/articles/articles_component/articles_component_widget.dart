@@ -53,7 +53,7 @@ class _ArticlesComponentWidgetState extends State<ArticlesComponentWidget> {
     context.watch<FFAppState>();
 
     return StreamBuilder<ArticlesRecord>(
-      stream: ArticlesRecord.getDocument(widget.articleDoc!),
+      stream: ArticlesRecord.getDocument(widget!.articleDoc!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -69,7 +69,9 @@ class _ArticlesComponentWidgetState extends State<ArticlesComponentWidget> {
             ),
           );
         }
+
         final containerArticlesRecord = snapshot.data!;
+
         return Container(
           width: MediaQuery.sizeOf(context).width * 1.0,
           decoration: BoxDecoration(
@@ -231,6 +233,7 @@ class _ArticlesComponentWidgetState extends State<ArticlesComponentWidget> {
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
                                         fontSize: 14.0,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                                 duration: Duration(milliseconds: 3000),
@@ -311,6 +314,7 @@ class _ArticlesComponentWidgetState extends State<ArticlesComponentWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
                               fontSize: 14.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -332,6 +336,7 @@ class _ArticlesComponentWidgetState extends State<ArticlesComponentWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).dark88,
                               fontSize: 14.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),

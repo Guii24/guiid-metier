@@ -38,8 +38,6 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -95,6 +93,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                                       .override(
                                         fontFamily: 'NewYork',
                                         fontSize: 20.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w600,
                                         useGoogleFonts: false,
                                       ),
@@ -134,9 +133,8 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    setState(() {
-                                      _model.choosenCategory = '';
-                                    });
+                                    _model.choosenCategory = '';
+                                    safeSetState(() {});
                                   },
                                   child: Material(
                                     color: Colors.transparent,
@@ -186,6 +184,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                                                                   context)
                                                               .primaryText,
                                                   fontSize: 15.0,
+                                                  letterSpacing: 0.0,
                                                 ),
                                           ),
                                         ),
@@ -201,6 +200,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                                                   ?.toList() ??
                                               [])
                                           .toList();
+
                                       return Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: List.generate(category.length,
@@ -213,10 +213,9 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              setState(() {
-                                                _model.choosenCategory =
-                                                    categoryItem;
-                                              });
+                                              _model.choosenCategory =
+                                                  categoryItem;
+                                              safeSetState(() {});
                                             },
                                             child: Material(
                                               color: Colors.transparent,
@@ -261,30 +260,30 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                                                                 12.0, 5.0),
                                                     child: Text(
                                                       categoryItem,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Libre Franklin',
-                                                                color:
-                                                                    valueOrDefault<
-                                                                        Color>(
-                                                                  _model.choosenCategory ==
-                                                                          categoryItem
-                                                                      ? FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary
-                                                                      : FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                  FlutterFlowTheme.of(
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Libre Franklin',
+                                                            color:
+                                                                valueOrDefault<
+                                                                    Color>(
+                                                              _model.choosenCategory ==
+                                                                      categoryItem
+                                                                  ? FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary
+                                                                  : FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
-                                                                ),
-                                                                fontSize: 15.0,
-                                                              ),
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryText,
+                                                            ),
+                                                            fontSize: 15.0,
+                                                            letterSpacing: 0.0,
+                                                          ),
                                                     ),
                                                   ),
                                                 ),
@@ -363,6 +362,7 @@ class _PostUserCopyWidgetState extends State<PostUserCopyWidget> {
                             }
                             List<PostRecord> listViewPostRecordList =
                                 snapshot.data!;
+
                             return ListView.separated(
                               padding: EdgeInsets.fromLTRB(
                                 0,

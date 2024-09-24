@@ -14,11 +14,8 @@ import 'package:provider/provider.dart';
 class ArticlesUserModel extends FlutterFlowModel<ArticlesUserWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // Models for ArticlesComponent dynamic component.
   late FlutterFlowDynamicModels<ArticlesComponentModel> articlesComponentModels;
-
-  /// Initialization and disposal methods.
 
   @override
   void initState(BuildContext context) {
@@ -28,11 +25,6 @@ class ArticlesUserModel extends FlutterFlowModel<ArticlesUserWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     articlesComponentModels.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

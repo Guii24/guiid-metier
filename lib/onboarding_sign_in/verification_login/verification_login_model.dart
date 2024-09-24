@@ -22,8 +22,8 @@ class VerificationLoginModel extends FlutterFlowModel<VerificationLoginWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for Timer widget.
+  final timerInitialTimeMs = 60000;
   int timerMilliseconds = 60000;
   String timerValue = StopWatchTimer.getDisplayTime(
     60000,
@@ -34,18 +34,11 @@ class VerificationLoginModel extends FlutterFlowModel<VerificationLoginWidget> {
   FlutterFlowTimerController timerController =
       FlutterFlowTimerController(StopWatchTimer(mode: StopWatchMode.countDown));
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     timerController.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

@@ -19,7 +19,6 @@ import 'package:provider/provider.dart';
 class MyProfileModel extends FlutterFlowModel<MyProfileWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for TabBar widget.
   TabController? tabBarController;
   int get tabBarCurrentIndex =>
@@ -31,8 +30,6 @@ class MyProfileModel extends FlutterFlowModel<MyProfileWidget> {
   late FlutterFlowDynamicModels<ComponentPostRepostedModel>
       componentPostRepostedModels;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     componentPostUserModels =
@@ -43,13 +40,8 @@ class MyProfileModel extends FlutterFlowModel<MyProfileWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     tabBarController?.dispose();
     componentPostUserModels.dispose();
     componentPostRepostedModels.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

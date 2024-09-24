@@ -46,10 +46,8 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<UsersRecord>(
-      stream: UsersRecord.getDocument(widget.postDoc!.postCreator!),
+      stream: UsersRecord.getDocument(widget!.postDoc!.postCreator!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -65,14 +63,16 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
             ),
           );
         }
+
         final columnUsersRecord = snapshot.data!;
+
         return SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               if ((columnUsersRecord.userType == 'User') &&
-                  (widget.postDoc?.postIsReposted == false) &&
-                  (widget.postDoc?.postType == 'post'))
+                  (widget!.postDoc?.postIsReposted == false) &&
+                  (widget!.postDoc?.postType == 'post'))
                 InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -83,7 +83,7 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
                       'PostPage',
                       queryParameters: {
                         'postRef': serializeParam(
-                          widget.postDoc?.reference,
+                          widget!.postDoc?.reference,
                           ParamType.DocumentReference,
                         ),
                       }.withoutNulls,
@@ -91,15 +91,15 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
                   },
                   child: wrapWithModel(
                     model: _model.componentPostUserModel,
-                    updateCallback: () => setState(() {}),
+                    updateCallback: () => safeSetState(() {}),
                     child: ComponentPostUserWidget(
-                      postDoc: widget.postDoc!.reference,
+                      postDoc: widget!.postDoc!.reference,
                     ),
                   ),
                 ),
               if ((columnUsersRecord.userType == 'Company') &&
-                  (widget.postDoc?.postIsReposted == false) &&
-                  (widget.postDoc?.postType == 'post'))
+                  (widget!.postDoc?.postIsReposted == false) &&
+                  (widget!.postDoc?.postType == 'post'))
                 InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -110,7 +110,7 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
                       'PostPage',
                       queryParameters: {
                         'postRef': serializeParam(
-                          widget.postDoc?.reference,
+                          widget!.postDoc?.reference,
                           ParamType.DocumentReference,
                         ),
                       }.withoutNulls,
@@ -118,14 +118,14 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
                   },
                   child: wrapWithModel(
                     model: _model.componentPostCompanyModel,
-                    updateCallback: () => setState(() {}),
+                    updateCallback: () => safeSetState(() {}),
                     child: ComponentPostCompanyWidget(
-                      postCompany: widget.postDoc?.reference,
+                      postCompany: widget!.postDoc?.reference,
                     ),
                   ),
                 ),
-              if ((widget.postDoc?.postType == 'post') &&
-                  widget.postDoc!.postIsReposted)
+              if ((widget!.postDoc?.postType == 'post') &&
+                  widget!.postDoc!.postIsReposted)
                 InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -136,7 +136,7 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
                       'PostPageReposted',
                       queryParameters: {
                         'postRef': serializeParam(
-                          widget.postDoc?.reference,
+                          widget!.postDoc?.reference,
                           ParamType.DocumentReference,
                         ),
                       }.withoutNulls,
@@ -144,9 +144,9 @@ class _PostTypesWidgetState extends State<PostTypesWidget> {
                   },
                   child: wrapWithModel(
                     model: _model.componentPostRepostedModel,
-                    updateCallback: () => setState(() {}),
+                    updateCallback: () => safeSetState(() {}),
                     child: ComponentPostRepostedWidget(
-                      postReposted: widget.postDoc?.reference,
+                      postReposted: widget!.postDoc?.reference,
                     ),
                   ),
                 ),

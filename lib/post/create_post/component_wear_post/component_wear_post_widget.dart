@@ -38,7 +38,7 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
     _model = createModel(context, () => ComponentWearPostModel());
 
     _model.textController ??=
-        TextEditingController(text: widget.wearItem?.wearText);
+        TextEditingController(text: widget!.wearItem?.wearText);
     _model.textFieldFocusNode ??= FocusNode();
   }
 
@@ -51,8 +51,6 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -69,7 +67,7 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(0.0),
                   child: Image.network(
-                    widget.wearItem!.wearImage,
+                    widget!.wearItem!.wearImage,
                     width: double.infinity,
                     height: double.infinity,
                     fit: BoxFit.cover,
@@ -85,6 +83,7 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
               child: TextFormField(
                 controller: _model.textController,
                 focusNode: _model.textFieldFocusNode,
+                autofocus: false,
                 readOnly: true,
                 obscureText: false,
                 decoration: InputDecoration(
@@ -93,6 +92,7 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
                         fontFamily: 'Libre Franklin',
                         color: FlutterFlowTheme.of(context).dark38,
                         fontSize: 15.0,
+                        letterSpacing: 0.0,
                       ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
@@ -139,6 +139,7 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
                       fontFamily: 'Libre Franklin',
                       color: FlutterFlowTheme.of(context).dark68,
                       fontSize: 15.0,
+                      letterSpacing: 0.0,
                     ),
                 maxLines: null,
                 validator: _model.textControllerValidator.asValidator(context),
@@ -156,7 +157,7 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                await launchURL(widget.wearItem!.wearLink);
+                await launchURL(widget!.wearItem!.wearLink);
               },
               child: Container(
                 width: double.infinity,
@@ -181,6 +182,7 @@ class _ComponentWearPostWidgetState extends State<ComponentWearPostWidget> {
                               fontFamily: 'Libre Franklin',
                               color: FlutterFlowTheme.of(context).primaryText,
                               fontSize: 14.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),

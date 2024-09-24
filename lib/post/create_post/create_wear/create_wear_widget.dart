@@ -48,9 +48,7 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -79,15 +77,12 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                       alignment: AlignmentDirectional(0.0, 0.0)
                           .resolve(Directionality.of(context)),
                       child: GestureDetector(
-                        onTap: () => _model.unfocusNode.canRequestFocus
-                            ? FocusScope.of(context)
-                                .requestFocus(_model.unfocusNode)
-                            : FocusScope.of(context).unfocus(),
+                        onTap: () => FocusScope.of(dialogContext).unfocus(),
                         child: PopupCancelWidget(),
                       ),
                     );
                   },
-                ).then((value) => setState(() {}));
+                );
               },
             ),
           ),
@@ -97,6 +92,7 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                   fontFamily: 'Libre Franklin',
                   color: FlutterFlowTheme.of(context).dark88,
                   fontSize: 16.0,
+                  letterSpacing: 0.0,
                 ),
           ),
           actions: [
@@ -128,6 +124,7 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                         );
                       }
                       List<UsersRecord> buttonUsersRecordList = snapshot.data!;
+
                       return FFButtonWidget(
                         onPressed: (FFAppState().wearItems.length == 0)
                             ? null
@@ -151,9 +148,8 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                                     },
                                   ),
                                 });
-                                setState(() {
-                                  FFAppState().wearItems = [];
-                                });
+                                FFAppState().wearItems = [];
+                                safeSetState(() {});
                                 context.safePop();
                                 showDialog(
                                   barrierColor: Color(0x02000000),
@@ -167,17 +163,14 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                                       alignment: AlignmentDirectional(0.0, -1.0)
                                           .resolve(Directionality.of(context)),
                                       child: GestureDetector(
-                                        onTap: () => _model
-                                                .unfocusNode.canRequestFocus
-                                            ? FocusScope.of(context)
-                                                .requestFocus(
-                                                    _model.unfocusNode)
-                                            : FocusScope.of(context).unfocus(),
+                                        onTap: () =>
+                                            FocusScope.of(dialogContext)
+                                                .unfocus(),
                                         child: CustomDialogCreateWearWidget(),
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                );
 
                                 await NotificationRecord.collection
                                     .doc()
@@ -261,6 +254,7 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                         ),
                       );
                     }
+
                     return ListView.separated(
                       padding: EdgeInsets.fromLTRB(
                         0,
@@ -323,11 +317,7 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                               context: context,
                               builder: (context) {
                                 return GestureDetector(
-                                  onTap: () =>
-                                      _model.unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
+                                  onTap: () => FocusScope.of(context).unfocus(),
                                   child: Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
                                     child: TakePhotoWearWidget(),
@@ -380,6 +370,7 @@ class _CreateWearWidgetState extends State<CreateWearWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .dark88,
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ],

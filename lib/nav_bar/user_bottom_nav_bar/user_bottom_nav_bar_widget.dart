@@ -79,7 +79,10 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                 BoxShadow(
                                   blurRadius: 15.0,
                                   color: Color(0x13000000),
-                                  offset: Offset(0.0, -6.0),
+                                  offset: Offset(
+                                    0.0,
+                                    -6.0,
+                                  ),
                                 )
                               ],
                               borderRadius: BorderRadius.circular(0.0),
@@ -98,10 +101,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Articles';
-                                        FFAppState().pageIndex = 0;
-                                      });
+                                      FFAppState().page = 'Articles';
+                                      FFAppState().pageIndex = 0;
+                                      FFAppState().update(() {});
                                       Navigator.pop(context);
                                     },
                                     child: Container(
@@ -155,6 +157,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -172,10 +175,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Posts';
-                                        FFAppState().pageIndex = 1;
-                                      });
+                                      FFAppState().page = 'Posts';
+                                      FFAppState().pageIndex = 1;
+                                      FFAppState().update(() {});
                                       Navigator.pop(context);
                                     },
                                     child: Container(
@@ -229,6 +231,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -254,10 +257,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Sourcing';
-                                        FFAppState().pageIndex = 2;
-                                      });
+                                      FFAppState().page = 'Sourcing';
+                                      FFAppState().pageIndex = 2;
+                                      FFAppState().update(() {});
                                       Navigator.pop(context);
                                     },
                                     child: Container(
@@ -313,6 +315,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -330,10 +333,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Directory';
-                                        FFAppState().pageIndex = 3;
-                                      });
+                                      FFAppState().page = 'Directory';
+                                      FFAppState().pageIndex = 3;
+                                      FFAppState().update(() {});
                                       Navigator.pop(context);
                                     },
                                     child: Container(
@@ -389,6 +391,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -413,7 +416,10 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                               BoxShadow(
                                 blurRadius: 15.0,
                                 color: Color(0x13000000),
-                                offset: Offset(0.0, -6.0),
+                                offset: Offset(
+                                  0.0,
+                                  -6.0,
+                                ),
                               )
                             ],
                             shape: BoxShape.circle,
@@ -457,7 +463,10 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     BoxShadow(
                                       blurRadius: 64.0,
                                       color: Color(0x19000000),
-                                      offset: Offset(0.0, 8.0),
+                                      offset: Offset(
+                                        0.0,
+                                        8.0,
+                                      ),
                                     )
                                   ],
                                   borderRadius: BorderRadius.circular(12.0),
@@ -491,6 +500,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                               duration:
@@ -506,11 +516,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                   ?.userSubscription,
                                               false)) {
                                             Navigator.pop(context);
-                                            setState(() {
-                                              FFAppState().choosenPreference =
-                                                  [];
-                                              FFAppState().choosenPurpose = '';
-                                            });
+                                            FFAppState().choosenPreference = [];
+                                            FFAppState().choosenPurpose = '';
+                                            safeSetState(() {});
 
                                             context.pushNamed('CreatePost');
                                           } else {
@@ -554,6 +562,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -600,6 +609,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                               duration:
@@ -658,6 +668,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -700,7 +711,10 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     BoxShadow(
                                       blurRadius: 64.0,
                                       color: Color(0x19000000),
-                                      offset: Offset(0.0, 8.0),
+                                      offset: Offset(
+                                        0.0,
+                                        8.0,
+                                      ),
                                     )
                                   ],
                                   borderRadius: BorderRadius.circular(12.0),
@@ -734,6 +748,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                               duration:
@@ -749,11 +764,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                   ?.userSubscription,
                                               false)) {
                                             Navigator.pop(context);
-                                            setState(() {
-                                              FFAppState().choosenPreference =
-                                                  [];
-                                              FFAppState().choosenPurpose = '';
-                                            });
+                                            FFAppState().choosenPreference = [];
+                                            FFAppState().choosenPurpose = '';
+                                            safeSetState(() {});
 
                                             context.pushNamed('CreatePost');
                                           } else {
@@ -797,6 +810,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -843,6 +857,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                               duration:
@@ -904,6 +919,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -952,7 +968,10 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                 BoxShadow(
                                   blurRadius: 15.0,
                                   color: Color(0x13000000),
-                                  offset: Offset(0.0, -6.0),
+                                  offset: Offset(
+                                    0.0,
+                                    -6.0,
+                                  ),
                                 )
                               ],
                               borderRadius: BorderRadius.circular(0.0),
@@ -971,10 +990,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Articles';
-                                        FFAppState().pageIndex = 0;
-                                      });
+                                      FFAppState().page = 'Articles';
+                                      FFAppState().pageIndex = 0;
+                                      FFAppState().update(() {});
                                     },
                                     child: Container(
                                       width: 70.0,
@@ -1028,6 +1046,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -1045,10 +1064,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Posts';
-                                        FFAppState().pageIndex = 1;
-                                      });
+                                      FFAppState().page = 'Posts';
+                                      FFAppState().pageIndex = 1;
+                                      FFAppState().update(() {});
                                     },
                                     child: Container(
                                       width: 70.0,
@@ -1102,6 +1120,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -1127,10 +1146,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Sourcing';
-                                        FFAppState().pageIndex = 2;
-                                      });
+                                      FFAppState().page = 'Sourcing';
+                                      FFAppState().pageIndex = 2;
+                                      FFAppState().update(() {});
                                     },
                                     child: Container(
                                       width: 70.0,
@@ -1186,6 +1204,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -1203,10 +1222,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      FFAppState().update(() {
-                                        FFAppState().page = 'Directory';
-                                        FFAppState().pageIndex = 3;
-                                      });
+                                      FFAppState().page = 'Directory';
+                                      FFAppState().pageIndex = 3;
+                                      FFAppState().update(() {});
                                       Navigator.pop(context);
                                     },
                                     child: Container(
@@ -1263,6 +1281,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                           .dark38,
                                                     ),
                                                     fontSize: 10.0,
+                                                    letterSpacing: 0.0,
                                                   ),
                                             ),
                                           ),
@@ -1287,7 +1306,10 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                               BoxShadow(
                                 blurRadius: 15.0,
                                 color: Color(0x13000000),
-                                offset: Offset(0.0, -6.0),
+                                offset: Offset(
+                                  0.0,
+                                  -6.0,
+                                ),
                               )
                             ],
                             shape: BoxShape.circle,
@@ -1330,7 +1352,10 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     BoxShadow(
                                       blurRadius: 64.0,
                                       color: Color(0x19000000),
-                                      offset: Offset(0.0, 8.0),
+                                      offset: Offset(
+                                        0.0,
+                                        8.0,
+                                      ),
                                     )
                                   ],
                                   borderRadius: BorderRadius.circular(12.0),
@@ -1364,6 +1389,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                               duration:
@@ -1379,11 +1405,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                   ?.userSubscription,
                                               false)) {
                                             Navigator.pop(context);
-                                            setState(() {
-                                              FFAppState().choosenPreference =
-                                                  [];
-                                              FFAppState().choosenPurpose = '';
-                                            });
+                                            FFAppState().choosenPreference = [];
+                                            FFAppState().choosenPurpose = '';
+                                            safeSetState(() {});
 
                                             context.pushNamed('CreatePost');
                                           } else {
@@ -1427,6 +1451,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -1473,6 +1498,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                               duration:
@@ -1531,6 +1557,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -1573,7 +1600,10 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                     BoxShadow(
                                       blurRadius: 64.0,
                                       color: Color(0x19000000),
-                                      offset: Offset(0.0, 8.0),
+                                      offset: Offset(
+                                        0.0,
+                                        8.0,
+                                      ),
                                     )
                                   ],
                                   borderRadius: BorderRadius.circular(12.0),
@@ -1607,6 +1637,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                               duration:
@@ -1622,11 +1653,9 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                   ?.userSubscription,
                                               false)) {
                                             Navigator.pop(context);
-                                            setState(() {
-                                              FFAppState().choosenPreference =
-                                                  [];
-                                              FFAppState().choosenPurpose = '';
-                                            });
+                                            FFAppState().choosenPreference = [];
+                                            FFAppState().choosenPurpose = '';
+                                            safeSetState(() {});
 
                                             context.pushNamed('CreatePost');
                                           } else {
@@ -1670,6 +1699,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -1716,6 +1746,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                                   .of(context)
                                                               .primary,
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                               duration:
@@ -1774,6 +1805,7 @@ class _UserBottomNavBarWidgetState extends State<UserBottomNavBarWidget> {
                                                         fontFamily:
                                                             'Libre Franklin',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),

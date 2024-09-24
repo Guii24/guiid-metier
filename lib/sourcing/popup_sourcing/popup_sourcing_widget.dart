@@ -38,8 +38,6 @@ class _PopupSourcingWidgetState extends State<PopupSourcingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
       child: Column(
@@ -73,6 +71,7 @@ class _PopupSourcingWidgetState extends State<PopupSourcingWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Libre Franklin',
                               fontSize: 17.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                               lineHeight: 1.5,
                             ),
@@ -96,6 +95,7 @@ class _PopupSourcingWidgetState extends State<PopupSourcingWidget> {
                                   fontFamily: 'Libre Franklin',
                                   color: FlutterFlowTheme.of(context).dark88,
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                 ),
                         elevation: 0.0,
                         borderSide: BorderSide(

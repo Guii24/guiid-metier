@@ -47,49 +47,49 @@ class FFAppState extends ChangeNotifier {
 
   String _selectedlocation = '';
   String get selectedlocation => _selectedlocation;
-  set selectedlocation(String _value) {
-    _selectedlocation = _value;
+  set selectedlocation(String value) {
+    _selectedlocation = value;
   }
 
   List<String> _postreport = [];
   List<String> get postreport => _postreport;
-  set postreport(List<String> _value) {
-    _postreport = _value;
+  set postreport(List<String> value) {
+    _postreport = value;
   }
 
-  void addToPostreport(String _value) {
-    _postreport.add(_value);
+  void addToPostreport(String value) {
+    postreport.add(value);
   }
 
-  void removeFromPostreport(String _value) {
-    _postreport.remove(_value);
+  void removeFromPostreport(String value) {
+    postreport.remove(value);
   }
 
-  void removeAtIndexFromPostreport(int _index) {
-    _postreport.removeAt(_index);
+  void removeAtIndexFromPostreport(int index) {
+    postreport.removeAt(index);
   }
 
   void updatePostreportAtIndex(
-    int _index,
+    int index,
     String Function(String) updateFn,
   ) {
-    _postreport[_index] = updateFn(_postreport[_index]);
+    postreport[index] = updateFn(_postreport[index]);
   }
 
-  void insertAtIndexInPostreport(int _index, String _value) {
-    _postreport.insert(_index, _value);
+  void insertAtIndexInPostreport(int index, String value) {
+    postreport.insert(index, value);
   }
 
   String _popupSelected = '';
   String get popupSelected => _popupSelected;
-  set popupSelected(String _value) {
-    _popupSelected = _value;
+  set popupSelected(String value) {
+    _popupSelected = value;
   }
 
   String _profilePhoto = '';
   String get profilePhoto => _profilePhoto;
-  set profilePhoto(String _value) {
-    _profilePhoto = _value;
+  set profilePhoto(String value) {
+    _profilePhoto = value;
   }
 
   List<String> _preference = [
@@ -108,238 +108,238 @@ class FFAppState extends ChangeNotifier {
     'Hair & Makeup'
   ];
   List<String> get preference => _preference;
-  set preference(List<String> _value) {
-    _preference = _value;
+  set preference(List<String> value) {
+    _preference = value;
   }
 
-  void addToPreference(String _value) {
-    _preference.add(_value);
+  void addToPreference(String value) {
+    preference.add(value);
   }
 
-  void removeFromPreference(String _value) {
-    _preference.remove(_value);
+  void removeFromPreference(String value) {
+    preference.remove(value);
   }
 
-  void removeAtIndexFromPreference(int _index) {
-    _preference.removeAt(_index);
+  void removeAtIndexFromPreference(int index) {
+    preference.removeAt(index);
   }
 
   void updatePreferenceAtIndex(
-    int _index,
+    int index,
     String Function(String) updateFn,
   ) {
-    _preference[_index] = updateFn(_preference[_index]);
+    preference[index] = updateFn(_preference[index]);
   }
 
-  void insertAtIndexInPreference(int _index, String _value) {
-    _preference.insert(_index, _value);
+  void insertAtIndexInPreference(int index, String value) {
+    preference.insert(index, value);
   }
 
   dynamic _countryInfo = jsonDecode(
       '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
   dynamic get countryInfo => _countryInfo;
-  set countryInfo(dynamic _value) {
-    _countryInfo = _value;
+  set countryInfo(dynamic value) {
+    _countryInfo = value;
   }
 
   String _profilePhotoCompany = '';
   String get profilePhotoCompany => _profilePhotoCompany;
-  set profilePhotoCompany(String _value) {
-    _profilePhotoCompany = _value;
+  set profilePhotoCompany(String value) {
+    _profilePhotoCompany = value;
   }
 
   List<String> _choosenPreference = [];
   List<String> get choosenPreference => _choosenPreference;
-  set choosenPreference(List<String> _value) {
-    _choosenPreference = _value;
+  set choosenPreference(List<String> value) {
+    _choosenPreference = value;
   }
 
-  void addToChoosenPreference(String _value) {
-    _choosenPreference.add(_value);
+  void addToChoosenPreference(String value) {
+    choosenPreference.add(value);
   }
 
-  void removeFromChoosenPreference(String _value) {
-    _choosenPreference.remove(_value);
+  void removeFromChoosenPreference(String value) {
+    choosenPreference.remove(value);
   }
 
-  void removeAtIndexFromChoosenPreference(int _index) {
-    _choosenPreference.removeAt(_index);
+  void removeAtIndexFromChoosenPreference(int index) {
+    choosenPreference.removeAt(index);
   }
 
   void updateChoosenPreferenceAtIndex(
-    int _index,
+    int index,
     String Function(String) updateFn,
   ) {
-    _choosenPreference[_index] = updateFn(_choosenPreference[_index]);
+    choosenPreference[index] = updateFn(_choosenPreference[index]);
   }
 
-  void insertAtIndexInChoosenPreference(int _index, String _value) {
-    _choosenPreference.insert(_index, _value);
+  void insertAtIndexInChoosenPreference(int index, String value) {
+    choosenPreference.insert(index, value);
   }
 
   bool _activeCalendar = false;
   bool get activeCalendar => _activeCalendar;
-  set activeCalendar(bool _value) {
-    _activeCalendar = _value;
+  set activeCalendar(bool value) {
+    _activeCalendar = value;
   }
 
   DateTime? _bornDate = DateTime.fromMillisecondsSinceEpoch(1691612040000);
   DateTime? get bornDate => _bornDate;
-  set bornDate(DateTime? _value) {
-    _bornDate = _value;
+  set bornDate(DateTime? value) {
+    _bornDate = value;
   }
 
   String _page = 'Articles';
   String get page => _page;
-  set page(String _value) {
-    _page = _value;
+  set page(String value) {
+    _page = value;
   }
 
   int _pageIndex = 0;
   int get pageIndex => _pageIndex;
-  set pageIndex(int _value) {
-    _pageIndex = _value;
+  set pageIndex(int value) {
+    _pageIndex = value;
   }
 
   List<DocumentReference> _activitiesArticle = [];
   List<DocumentReference> get activitiesArticle => _activitiesArticle;
-  set activitiesArticle(List<DocumentReference> _value) {
-    _activitiesArticle = _value;
+  set activitiesArticle(List<DocumentReference> value) {
+    _activitiesArticle = value;
   }
 
-  void addToActivitiesArticle(DocumentReference _value) {
-    _activitiesArticle.add(_value);
+  void addToActivitiesArticle(DocumentReference value) {
+    activitiesArticle.add(value);
   }
 
-  void removeFromActivitiesArticle(DocumentReference _value) {
-    _activitiesArticle.remove(_value);
+  void removeFromActivitiesArticle(DocumentReference value) {
+    activitiesArticle.remove(value);
   }
 
-  void removeAtIndexFromActivitiesArticle(int _index) {
-    _activitiesArticle.removeAt(_index);
+  void removeAtIndexFromActivitiesArticle(int index) {
+    activitiesArticle.removeAt(index);
   }
 
   void updateActivitiesArticleAtIndex(
-    int _index,
+    int index,
     DocumentReference Function(DocumentReference) updateFn,
   ) {
-    _activitiesArticle[_index] = updateFn(_activitiesArticle[_index]);
+    activitiesArticle[index] = updateFn(_activitiesArticle[index]);
   }
 
-  void insertAtIndexInActivitiesArticle(int _index, DocumentReference _value) {
-    _activitiesArticle.insert(_index, _value);
+  void insertAtIndexInActivitiesArticle(int index, DocumentReference value) {
+    activitiesArticle.insert(index, value);
   }
 
   List<String> _uploadPhotoPost = [];
   List<String> get uploadPhotoPost => _uploadPhotoPost;
-  set uploadPhotoPost(List<String> _value) {
-    _uploadPhotoPost = _value;
+  set uploadPhotoPost(List<String> value) {
+    _uploadPhotoPost = value;
   }
 
-  void addToUploadPhotoPost(String _value) {
-    _uploadPhotoPost.add(_value);
+  void addToUploadPhotoPost(String value) {
+    uploadPhotoPost.add(value);
   }
 
-  void removeFromUploadPhotoPost(String _value) {
-    _uploadPhotoPost.remove(_value);
+  void removeFromUploadPhotoPost(String value) {
+    uploadPhotoPost.remove(value);
   }
 
-  void removeAtIndexFromUploadPhotoPost(int _index) {
-    _uploadPhotoPost.removeAt(_index);
+  void removeAtIndexFromUploadPhotoPost(int index) {
+    uploadPhotoPost.removeAt(index);
   }
 
   void updateUploadPhotoPostAtIndex(
-    int _index,
+    int index,
     String Function(String) updateFn,
   ) {
-    _uploadPhotoPost[_index] = updateFn(_uploadPhotoPost[_index]);
+    uploadPhotoPost[index] = updateFn(_uploadPhotoPost[index]);
   }
 
-  void insertAtIndexInUploadPhotoPost(int _index, String _value) {
-    _uploadPhotoPost.insert(_index, _value);
+  void insertAtIndexInUploadPhotoPost(int index, String value) {
+    uploadPhotoPost.insert(index, value);
   }
 
   List<WearItemsStruct> _wearItems = [];
   List<WearItemsStruct> get wearItems => _wearItems;
-  set wearItems(List<WearItemsStruct> _value) {
-    _wearItems = _value;
+  set wearItems(List<WearItemsStruct> value) {
+    _wearItems = value;
   }
 
-  void addToWearItems(WearItemsStruct _value) {
-    _wearItems.add(_value);
+  void addToWearItems(WearItemsStruct value) {
+    wearItems.add(value);
   }
 
-  void removeFromWearItems(WearItemsStruct _value) {
-    _wearItems.remove(_value);
+  void removeFromWearItems(WearItemsStruct value) {
+    wearItems.remove(value);
   }
 
-  void removeAtIndexFromWearItems(int _index) {
-    _wearItems.removeAt(_index);
+  void removeAtIndexFromWearItems(int index) {
+    wearItems.removeAt(index);
   }
 
   void updateWearItemsAtIndex(
-    int _index,
+    int index,
     WearItemsStruct Function(WearItemsStruct) updateFn,
   ) {
-    _wearItems[_index] = updateFn(_wearItems[_index]);
+    wearItems[index] = updateFn(_wearItems[index]);
   }
 
-  void insertAtIndexInWearItems(int _index, WearItemsStruct _value) {
-    _wearItems.insert(_index, _value);
+  void insertAtIndexInWearItems(int index, WearItemsStruct value) {
+    wearItems.insert(index, value);
   }
 
   List<DocumentReference> _activitiesPost = [];
   List<DocumentReference> get activitiesPost => _activitiesPost;
-  set activitiesPost(List<DocumentReference> _value) {
-    _activitiesPost = _value;
+  set activitiesPost(List<DocumentReference> value) {
+    _activitiesPost = value;
   }
 
-  void addToActivitiesPost(DocumentReference _value) {
-    _activitiesPost.add(_value);
+  void addToActivitiesPost(DocumentReference value) {
+    activitiesPost.add(value);
   }
 
-  void removeFromActivitiesPost(DocumentReference _value) {
-    _activitiesPost.remove(_value);
+  void removeFromActivitiesPost(DocumentReference value) {
+    activitiesPost.remove(value);
   }
 
-  void removeAtIndexFromActivitiesPost(int _index) {
-    _activitiesPost.removeAt(_index);
+  void removeAtIndexFromActivitiesPost(int index) {
+    activitiesPost.removeAt(index);
   }
 
   void updateActivitiesPostAtIndex(
-    int _index,
+    int index,
     DocumentReference Function(DocumentReference) updateFn,
   ) {
-    _activitiesPost[_index] = updateFn(_activitiesPost[_index]);
+    activitiesPost[index] = updateFn(_activitiesPost[index]);
   }
 
-  void insertAtIndexInActivitiesPost(int _index, DocumentReference _value) {
-    _activitiesPost.insert(_index, _value);
+  void insertAtIndexInActivitiesPost(int index, DocumentReference value) {
+    activitiesPost.insert(index, value);
   }
 
   dynamic _countryInfoCompany = jsonDecode(
       '{\"name\":\"United States\",\"flag\":\"🇺🇸\",\"code\":\"US\",\"dial_code\":\"+1\"}');
   dynamic get countryInfoCompany => _countryInfoCompany;
-  set countryInfoCompany(dynamic _value) {
-    _countryInfoCompany = _value;
+  set countryInfoCompany(dynamic value) {
+    _countryInfoCompany = value;
   }
 
   String _phonenumber = '';
   String get phonenumber => _phonenumber;
-  set phonenumber(String _value) {
-    _phonenumber = _value;
+  set phonenumber(String value) {
+    _phonenumber = value;
   }
 
   String _email = '';
   String get email => _email;
-  set email(String _value) {
-    _email = _value;
+  set email(String value) {
+    _email = value;
   }
 
   String _countryCode = '';
   String get countryCode => _countryCode;
-  set countryCode(String _value) {
-    _countryCode = _value;
+  set countryCode(String value) {
+    _countryCode = value;
   }
 
   List<String> _listTypeReport = [
@@ -360,271 +360,271 @@ class FFAppState extends ChangeNotifier {
     'Other'
   ];
   List<String> get listTypeReport => _listTypeReport;
-  set listTypeReport(List<String> _value) {
-    _listTypeReport = _value;
+  set listTypeReport(List<String> value) {
+    _listTypeReport = value;
   }
 
-  void addToListTypeReport(String _value) {
-    _listTypeReport.add(_value);
+  void addToListTypeReport(String value) {
+    listTypeReport.add(value);
   }
 
-  void removeFromListTypeReport(String _value) {
-    _listTypeReport.remove(_value);
+  void removeFromListTypeReport(String value) {
+    listTypeReport.remove(value);
   }
 
-  void removeAtIndexFromListTypeReport(int _index) {
-    _listTypeReport.removeAt(_index);
+  void removeAtIndexFromListTypeReport(int index) {
+    listTypeReport.removeAt(index);
   }
 
   void updateListTypeReportAtIndex(
-    int _index,
+    int index,
     String Function(String) updateFn,
   ) {
-    _listTypeReport[_index] = updateFn(_listTypeReport[_index]);
+    listTypeReport[index] = updateFn(_listTypeReport[index]);
   }
 
-  void insertAtIndexInListTypeReport(int _index, String _value) {
-    _listTypeReport.insert(_index, _value);
+  void insertAtIndexInListTypeReport(int index, String value) {
+    listTypeReport.insert(index, value);
   }
 
   String _choosenListReport = '';
   String get choosenListReport => _choosenListReport;
-  set choosenListReport(String _value) {
-    _choosenListReport = _value;
+  set choosenListReport(String value) {
+    _choosenListReport = value;
   }
 
   List<DocumentReference> _listPostWear = [];
   List<DocumentReference> get listPostWear => _listPostWear;
-  set listPostWear(List<DocumentReference> _value) {
-    _listPostWear = _value;
+  set listPostWear(List<DocumentReference> value) {
+    _listPostWear = value;
   }
 
-  void addToListPostWear(DocumentReference _value) {
-    _listPostWear.add(_value);
+  void addToListPostWear(DocumentReference value) {
+    listPostWear.add(value);
   }
 
-  void removeFromListPostWear(DocumentReference _value) {
-    _listPostWear.remove(_value);
+  void removeFromListPostWear(DocumentReference value) {
+    listPostWear.remove(value);
   }
 
-  void removeAtIndexFromListPostWear(int _index) {
-    _listPostWear.removeAt(_index);
+  void removeAtIndexFromListPostWear(int index) {
+    listPostWear.removeAt(index);
   }
 
   void updateListPostWearAtIndex(
-    int _index,
+    int index,
     DocumentReference Function(DocumentReference) updateFn,
   ) {
-    _listPostWear[_index] = updateFn(_listPostWear[_index]);
+    listPostWear[index] = updateFn(_listPostWear[index]);
   }
 
-  void insertAtIndexInListPostWear(int _index, DocumentReference _value) {
-    _listPostWear.insert(_index, _value);
+  void insertAtIndexInListPostWear(int index, DocumentReference value) {
+    listPostWear.insert(index, value);
   }
 
   List<String> _jobTypeList = ['Remote', 'Onsite', 'Hybrid'];
   List<String> get jobTypeList => _jobTypeList;
-  set jobTypeList(List<String> _value) {
-    _jobTypeList = _value;
+  set jobTypeList(List<String> value) {
+    _jobTypeList = value;
   }
 
-  void addToJobTypeList(String _value) {
-    _jobTypeList.add(_value);
+  void addToJobTypeList(String value) {
+    jobTypeList.add(value);
   }
 
-  void removeFromJobTypeList(String _value) {
-    _jobTypeList.remove(_value);
+  void removeFromJobTypeList(String value) {
+    jobTypeList.remove(value);
   }
 
-  void removeAtIndexFromJobTypeList(int _index) {
-    _jobTypeList.removeAt(_index);
+  void removeAtIndexFromJobTypeList(int index) {
+    jobTypeList.removeAt(index);
   }
 
   void updateJobTypeListAtIndex(
-    int _index,
+    int index,
     String Function(String) updateFn,
   ) {
-    _jobTypeList[_index] = updateFn(_jobTypeList[_index]);
+    jobTypeList[index] = updateFn(_jobTypeList[index]);
   }
 
-  void insertAtIndexInJobTypeList(int _index, String _value) {
-    _jobTypeList.insert(_index, _value);
+  void insertAtIndexInJobTypeList(int index, String value) {
+    jobTypeList.insert(index, value);
   }
 
   String _imgBase64 = '';
   String get imgBase64 => _imgBase64;
-  set imgBase64(String _value) {
-    _imgBase64 = _value;
+  set imgBase64(String value) {
+    _imgBase64 = value;
   }
 
   List<String> _ListPurpose = ['Legacy', 'Memoir', 'Guiid'];
   List<String> get ListPurpose => _ListPurpose;
-  set ListPurpose(List<String> _value) {
-    _ListPurpose = _value;
+  set ListPurpose(List<String> value) {
+    _ListPurpose = value;
   }
 
-  void addToListPurpose(String _value) {
-    _ListPurpose.add(_value);
+  void addToListPurpose(String value) {
+    ListPurpose.add(value);
   }
 
-  void removeFromListPurpose(String _value) {
-    _ListPurpose.remove(_value);
+  void removeFromListPurpose(String value) {
+    ListPurpose.remove(value);
   }
 
-  void removeAtIndexFromListPurpose(int _index) {
-    _ListPurpose.removeAt(_index);
+  void removeAtIndexFromListPurpose(int index) {
+    ListPurpose.removeAt(index);
   }
 
   void updateListPurposeAtIndex(
-    int _index,
+    int index,
     String Function(String) updateFn,
   ) {
-    _ListPurpose[_index] = updateFn(_ListPurpose[_index]);
+    ListPurpose[index] = updateFn(_ListPurpose[index]);
   }
 
-  void insertAtIndexInListPurpose(int _index, String _value) {
-    _ListPurpose.insert(_index, _value);
+  void insertAtIndexInListPurpose(int index, String value) {
+    ListPurpose.insert(index, value);
   }
 
   String _choosenPurpose = '';
   String get choosenPurpose => _choosenPurpose;
-  set choosenPurpose(String _value) {
-    _choosenPurpose = _value;
+  set choosenPurpose(String value) {
+    _choosenPurpose = value;
   }
 
   List<String> _choosenPurposeAndPref = [];
   List<String> get choosenPurposeAndPref => _choosenPurposeAndPref;
-  set choosenPurposeAndPref(List<String> _value) {
-    _choosenPurposeAndPref = _value;
+  set choosenPurposeAndPref(List<String> value) {
+    _choosenPurposeAndPref = value;
   }
 
-  void addToChoosenPurposeAndPref(String _value) {
-    _choosenPurposeAndPref.add(_value);
+  void addToChoosenPurposeAndPref(String value) {
+    choosenPurposeAndPref.add(value);
   }
 
-  void removeFromChoosenPurposeAndPref(String _value) {
-    _choosenPurposeAndPref.remove(_value);
+  void removeFromChoosenPurposeAndPref(String value) {
+    choosenPurposeAndPref.remove(value);
   }
 
-  void removeAtIndexFromChoosenPurposeAndPref(int _index) {
-    _choosenPurposeAndPref.removeAt(_index);
+  void removeAtIndexFromChoosenPurposeAndPref(int index) {
+    choosenPurposeAndPref.removeAt(index);
   }
 
   void updateChoosenPurposeAndPrefAtIndex(
-    int _index,
+    int index,
     String Function(String) updateFn,
   ) {
-    _choosenPurposeAndPref[_index] = updateFn(_choosenPurposeAndPref[_index]);
+    choosenPurposeAndPref[index] = updateFn(_choosenPurposeAndPref[index]);
   }
 
-  void insertAtIndexInChoosenPurposeAndPref(int _index, String _value) {
-    _choosenPurposeAndPref.insert(_index, _value);
+  void insertAtIndexInChoosenPurposeAndPref(int index, String value) {
+    choosenPurposeAndPref.insert(index, value);
   }
 
   List<String> _jobTypelist2 = ['Part-time', 'Full-time', 'Project based'];
   List<String> get jobTypelist2 => _jobTypelist2;
-  set jobTypelist2(List<String> _value) {
-    _jobTypelist2 = _value;
+  set jobTypelist2(List<String> value) {
+    _jobTypelist2 = value;
   }
 
-  void addToJobTypelist2(String _value) {
-    _jobTypelist2.add(_value);
+  void addToJobTypelist2(String value) {
+    jobTypelist2.add(value);
   }
 
-  void removeFromJobTypelist2(String _value) {
-    _jobTypelist2.remove(_value);
+  void removeFromJobTypelist2(String value) {
+    jobTypelist2.remove(value);
   }
 
-  void removeAtIndexFromJobTypelist2(int _index) {
-    _jobTypelist2.removeAt(_index);
+  void removeAtIndexFromJobTypelist2(int index) {
+    jobTypelist2.removeAt(index);
   }
 
   void updateJobTypelist2AtIndex(
-    int _index,
+    int index,
     String Function(String) updateFn,
   ) {
-    _jobTypelist2[_index] = updateFn(_jobTypelist2[_index]);
+    jobTypelist2[index] = updateFn(_jobTypelist2[index]);
   }
 
-  void insertAtIndexInJobTypelist2(int _index, String _value) {
-    _jobTypelist2.insert(_index, _value);
+  void insertAtIndexInJobTypelist2(int index, String value) {
+    jobTypelist2.insert(index, value);
   }
 
   String _choosenjobType2 = '';
   String get choosenjobType2 => _choosenjobType2;
-  set choosenjobType2(String _value) {
-    _choosenjobType2 = _value;
+  set choosenjobType2(String value) {
+    _choosenjobType2 = value;
   }
 
   String _choosenjobtype1 = '';
   String get choosenjobtype1 => _choosenjobtype1;
-  set choosenjobtype1(String _value) {
-    _choosenjobtype1 = _value;
+  set choosenjobtype1(String value) {
+    _choosenjobtype1 = value;
   }
 
   String _selectedJobType = '';
   String get selectedJobType => _selectedJobType;
-  set selectedJobType(String _value) {
-    _selectedJobType = _value;
+  set selectedJobType(String value) {
+    _selectedJobType = value;
   }
 
   List<RecentSearchStruct> _SearchItems = [];
   List<RecentSearchStruct> get SearchItems => _SearchItems;
-  set SearchItems(List<RecentSearchStruct> _value) {
-    _SearchItems = _value;
+  set SearchItems(List<RecentSearchStruct> value) {
+    _SearchItems = value;
     prefs.setStringList(
-        'ff_SearchItems', _value.map((x) => x.serialize()).toList());
+        'ff_SearchItems', value.map((x) => x.serialize()).toList());
   }
 
-  void addToSearchItems(RecentSearchStruct _value) {
-    _SearchItems.add(_value);
-    prefs.setStringList(
-        'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
-  }
-
-  void removeFromSearchItems(RecentSearchStruct _value) {
-    _SearchItems.remove(_value);
+  void addToSearchItems(RecentSearchStruct value) {
+    SearchItems.add(value);
     prefs.setStringList(
         'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
   }
 
-  void removeAtIndexFromSearchItems(int _index) {
-    _SearchItems.removeAt(_index);
+  void removeFromSearchItems(RecentSearchStruct value) {
+    SearchItems.remove(value);
+    prefs.setStringList(
+        'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
+  }
+
+  void removeAtIndexFromSearchItems(int index) {
+    SearchItems.removeAt(index);
     prefs.setStringList(
         'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
   }
 
   void updateSearchItemsAtIndex(
-    int _index,
+    int index,
     RecentSearchStruct Function(RecentSearchStruct) updateFn,
   ) {
-    _SearchItems[_index] = updateFn(_SearchItems[_index]);
+    SearchItems[index] = updateFn(_SearchItems[index]);
     prefs.setStringList(
         'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
   }
 
-  void insertAtIndexInSearchItems(int _index, RecentSearchStruct _value) {
-    _SearchItems.insert(_index, _value);
+  void insertAtIndexInSearchItems(int index, RecentSearchStruct value) {
+    SearchItems.insert(index, value);
     prefs.setStringList(
         'ff_SearchItems', _SearchItems.map((x) => x.serialize()).toList());
   }
 
   dynamic _videoJson = jsonDecode('{\"type\":\"video\"}');
   dynamic get videoJson => _videoJson;
-  set videoJson(dynamic _value) {
-    _videoJson = _value;
+  set videoJson(dynamic value) {
+    _videoJson = value;
   }
 
   dynamic _imageJson = jsonDecode('{\"type\":\"photo\"}');
   dynamic get imageJson => _imageJson;
-  set imageJson(dynamic _value) {
-    _imageJson = _value;
+  set imageJson(dynamic value) {
+    _imageJson = value;
   }
 
   String _jobType3 = '';
   String get jobType3 => _jobType3;
-  set jobType3(String _value) {
-    _jobType3 = _value;
+  set jobType3(String value) {
+    _jobType3 = value;
   }
 }
 
